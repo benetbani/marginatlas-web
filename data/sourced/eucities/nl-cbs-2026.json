@@ -1,0 +1,763 @@
+{
+ "id": "eucities-nl-cbs-2026",
+ "source": {
+  "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+  "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+  "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED",
+  "table": "81575NED (gemeente, SBI sections), 81578NED (COROP, SBI classes), 1 January 2026; 03759ned population 1 January 2026; 82061NED hotel guests 2024 and 2025; CBS OData https://opendata.cbs.nl/ODataApi/odata/",
+  "licence": "CC BY 4.0, CBS copyright https://www.cbs.nl/en-gb/about-us/website/copyright"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 A-U Alle economische activiteiten",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 216360,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Amsterdam. The municipal table goes no finer than SBI sections.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 A-U Alle economische activiteiten",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 110815,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Rotterdam. The municipal table goes no finer than SBI sections.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 I Horeca",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 11805,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Amsterdam. The municipal table goes no finer than SBI sections. Section I, hotels and restaurants together (horeca).",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 I Horeca",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 4210,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Rotterdam. The municipal table goes no finer than SBI sections. Section I, hotels and restaurants together (horeca).",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 S Overige dienstverlening",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 8380,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Amsterdam. The municipal table goes no finer than SBI sections. Section S, other service activities.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 S Overige dienstverlening",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 4840,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "Gemeente Rotterdam. The municipal table goes no finer than SBI sections. Section S, other service activities.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 A-U Alle economische activiteiten",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 302040,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 A-U Alle economische activiteiten",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 219600,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 56 Eet- en drinkgelegenheden",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 13095,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 56 Eet- en drinkgelegenheden",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 6455,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 56101 Restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 2865,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 56101 Restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 1515,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 5630 Cafés",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 1115,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 5630 Cafés",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 655,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 9602 Kappers en schoonheidsverzorging",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 6465,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 9602 Kappers en schoonheidsverzorging",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 6790,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 96021 Kappers",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 2655,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class. Kappers: hairdressers and barbers, beauty salons apart (96022).",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 96021 Kappers",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 2865,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class. Kappers: hairdressers and barbers, beauty salons apart (96022).",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 96022 Schoonheidssalons en pedicures",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 3815,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Amsterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SBI 2008 96022 Schoonheidssalons en pedicures",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 3930,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register, 1 January 2026, provisional",
+   "note": "The COROP area around Rotterdam, wider than the gemeente: the finest level at which the register is published by SBI class.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Vestigingen van bedrijven; bedrijfstak, regio (81578NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/81578NED"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 941927,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Same boundary as the establishment rows of this file, same date.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Bevolking op 1 januari en gemiddeld; geslacht, leeftijd en regio (03759ned)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/03759ned"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 673804,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Same boundary as the establishment rows of this file, same date.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Bevolking op 1 januari en gemiddeld; geslacht, leeftijd en regio (03759ned)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/03759ned"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CR23",
+    "name": "Groot-Amsterdam (COROP area)"
+   },
+   "value": 1490752,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Same boundary as the establishment rows of this file, same date.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Bevolking op 1 januari en gemiddeld; geslacht, leeftijd en regio (03759ned)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/03759ned"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CR29",
+    "name": "Groot-Rijnmond (COROP area)"
+   },
+   "value": 1517537,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Same boundary as the establishment rows of this file, same date.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Bevolking op 1 januari en gemiddeld; geslacht, leeftijd en regio (03759ned)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/03759ned"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 9305000,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 21258000,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 9546000,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 22200000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 1763000,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 3090000,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 1762000,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 3169000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of all guests, residents of the Netherlands included in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 7367000,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 17683000,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 7701000,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 18811000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 898000,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 1804000,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 931000,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series. A guest counts once per stay.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 1894000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of guests resident abroad in hotels, motels, pensions, hotel apartments, youth hostels and B&Bs with at least 5 beds",
+   "note": "Published in thousands (x 1 000), written here multiplied out. Hotel-type accommodation only: holiday parks and campsites are not in the municipal series.",
+   "source": {
+    "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+    "title": "Hotels; gasten, overnachtingen, woonland, regio (82061NED)",
+    "url": "https://opendata.cbs.nl/ODataApi/odata/82061NED"
+   }
+  }
+ ]
+}

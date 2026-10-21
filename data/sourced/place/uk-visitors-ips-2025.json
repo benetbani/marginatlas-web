@@ -1,0 +1,253 @@
+{
+ "id": "place-uk-visitors-ips-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+  "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+  "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1229000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Manchester by overseas residents (all purposes)",
+   "note": "Manchester as a city visited, the survey's own place name; number 3 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 6872000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Manchester by overseas residents (all purposes)",
+   "note": "Manchester as a city visited, the survey's own place name; number 3 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 664000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Birmingham by overseas residents (all purposes)",
+   "note": "Birmingham as a city visited, the survey's own place name; number 6 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 5035000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Birmingham by overseas residents (all purposes)",
+   "note": "Birmingham as a city visited, the survey's own place name; number 6 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 270000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Leeds by overseas residents (all purposes)",
+   "note": "Leeds as a city visited, the survey's own place name; number 15 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1869000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Leeds by overseas residents (all purposes)",
+   "note": "Leeds as a city visited, the survey's own place name; number 15 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 434000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Bristol by overseas residents (all purposes)",
+   "note": "Bristol as a city visited, the survey's own place name; number 9 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 2769000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Bristol by overseas residents (all purposes)",
+   "note": "Bristol as a city visited, the survey's own place name; number 9 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 2377000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Edinburgh by overseas residents (all purposes)",
+   "note": "Edinburgh as a city visited, the survey's own place name; number 2 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 11552000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Edinburgh by overseas residents (all purposes)",
+   "note": "Edinburgh as a city visited, the survey's own place name; number 2 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 693000,
+   "unit": "visits",
+   "year": "2025",
+   "measure": "visits to Glasgow by overseas residents (all purposes)",
+   "note": "Glasgow as a city visited, the survey's own place name; number 5 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026; completed visits, not visitors: anyone coming more than once is counted on each visit (the publisher's definition)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 3843000,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent in Glasgow by overseas residents (all purposes)",
+   "note": "Glasgow as a city visited, the survey's own place name; number 5 of the top 50 by visits (estimates lower in the list rest on smaller samples, the publisher's note 7); International Passenger Survey, 2025 estimates published 16 October 2026",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17, columns 'All Purpose of Visit: Visits' and 'All Purpose of Visit: Nights'",
+    "licence": "Open Government Licence v3.0"
+   }
+  }
+ ]
+}

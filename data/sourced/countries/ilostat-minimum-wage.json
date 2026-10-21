@@ -1,0 +1,1183 @@
+{
+ "id": "ilostat-minimum-wage",
+ "source": {
+  "publisher": "International Labour Organization (ILOSTAT)",
+  "title": "Statutory nominal gross monthly minimum wage (local currency), annual",
+  "url": "https://sdmx.ilo.org/rest/data/ILO,DF_EAR_INEE_NOC_NB,1.0/?startPeriod=2015&format=csv",
+  "table": "DF_EAR_INEE_NOC_NB, measure EAR_INEE_NB, unit LC",
+  "licence": "ILO rights and permissions: databases and datasets with their metadata, from 3 May 2023, under Creative Commons CC BY 4.0, https://www.ilo.org/node/9321 (read through a search summary; ilostat.ilo.org refuses scripted requests)"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 50000,
+   "unit": "ALL per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "AO",
+    "name": "Angola"
+   },
+   "value": 70000,
+   "unit": "AOA per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 271571,
+   "unit": "ARS per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Registros Administrativos y Fuentes Relacionadas. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 4023.436,
+   "unit": "AUD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor. ILO calculation: Weekly figure multiplied by 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 345,
+   "unit": "AZN per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 626,
+   "unit": "BAM per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Legislation du Travail. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BD",
+    "name": "Bangladesh"
+   },
+   "value": 12500,
+   "unit": "BDT per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 2234,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July. Institutional sector coverage: Private sector only."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 620,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BH",
+    "name": "Bahrain"
+   },
+   "value": 300,
+   "unit": "BHD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Institutional sector coverage: Public sector only."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 1412,
+   "unit": "BRL per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "BY",
+    "name": "Belarus"
+   },
+   "value": 626,
+   "unit": "BYN per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 2884,
+   "unit": "CAD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. Central tendency measure: Median. ILO calculation: Hourly figure multiplied by 40 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 4212.224,
+   "unit": "CHF per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. ILO calculation: Hourly figure multiplied by 40 hours and 4.33 weeks. Geographical coverage: Main city or metropolitan area."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CI",
+    "name": "Côte d'Ivoire"
+   },
+   "value": 75000,
+   "unit": "XOF per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Rate of the SMIG when SMIG/SMAG system."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 500000,
+   "unit": "CLP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ILO - SIALC Estimates. Type of minimum wage: For adults."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 1930,
+   "unit": "CNY per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. Central tendency measure: Median."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 1300000,
+   "unit": "COP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Registros de Relaciones Laborales. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 358609,
+   "unit": "CRC per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Decretos de salarios mínimos. Type of minimum wage: Occupational (unskilled workers)."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 1088,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 22400,
+   "unit": "CZK per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 2343,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Minimum Wage Act. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "DO",
+    "name": "Dominican Republic"
+   },
+   "value": 19450,
+   "unit": "DOP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM-LIR - Registros del Ministerio de Trabajo. Type of minimum wage: Average of minimum wages based on establishment size. Central tendency measure: Mean. Data reference period: End of the year. Institutional sector coverage: Private sector only."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "DZ",
+    "name": "Algeria"
+   },
+   "value": 20000,
+   "unit": "DZD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 946,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "EG",
+    "name": "Egypt"
+   },
+   "value": 6000,
+   "unit": "EGP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 1425,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: Other - Otras Fuentes Oficiales. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 1867,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1981.4,
+   "unit": "GBP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor. ILO calculation: Hourly figure multiplied by 40 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 20,
+   "unit": "GEL per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Administrative Records. Type of minimum wage: Singular national minimum wage. Geographical coverage: Total national, excluding overseas territories. Reference group coverage: Employees."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "GH",
+    "name": "Ghana"
+   },
+   "value": 471.53,
+   "unit": "GHS per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 1073,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July. Institutional sector coverage: Private sector only."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 1050,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 322800,
+   "unit": "HUF per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 5067381,
+   "unit": "IDR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. Central tendency measure: Median."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 2391,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 5880.02,
+   "unit": "ILS per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 4628,
+   "unit": "INR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 350000,
+   "unit": "IQD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: OE - Official Estimates. Type of minimum wage: Occupational (unskilled workers)."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 53073300,
+   "unit": "IRR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: Other - Annual Review. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 425985,
+   "unit": "ISK per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM-CA - Collective agreement between the Confedration of Employers and the Confederation of Labour. Type of minimum wage: Sectoral. Economic activity coverage: Excluding agriculture."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "JO",
+    "name": "Jordan"
+   },
+   "value": 260,
+   "unit": "JOD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 182726,
+   "unit": "JPY per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. ILO calculation: Hourly figure multiplied by 40 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 16033.14,
+   "unit": "KES per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Occupational. Geographical coverage: Mavoko & Riuru & Limuru."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 2060740,
+   "unit": "KRW per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ES - Survey on labor conditions by employment type. Type of minimum wage: Singular national minimum wage. Data reference period: June. Institutional sector coverage: Private sector only. Economic activity coverage: Excluding public administration. Reference group coverage: Employees. Establishment size coverage: All establishments with at least 5 employees."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 75,
+   "unit": "KWD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Sectoral (private and oil sectors)."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "KZ",
+    "name": "Kazakhstan"
+   },
+   "value": 85000,
+   "unit": "KZT per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "LA",
+    "name": "Laos"
+   },
+   "value": 1600000,
+   "unit": "LAK per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "LB",
+    "name": "Lebanon"
+   },
+   "value": 18000000,
+   "unit": "LBP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 17500,
+   "unit": "LKR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 1153,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 780,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 3120,
+   "unit": "MAD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Rate of the SMIG when SMIG/SMAG system."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 6300,
+   "unit": "MDL per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 670,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 38507,
+   "unit": "MKD per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MM",
+    "name": "Myanmar"
+   },
+   "value": 124800,
+   "unit": "MMK per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Legislation du Travail. Type of minimum wage: Singular national minimum wage. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 660000,
+   "unit": "MNT per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 994,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 6467.201,
+   "unit": "MXN per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ILO - SIALC Estimates. Type of minimum wage: National floor. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 1500,
+   "unit": "MYR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. "
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "NG",
+    "name": "Nigeria"
+   },
+   "value": 65000,
+   "unit": "NGN per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 2338,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "NP",
+    "name": "Nepal"
+   },
+   "value": 17300,
+   "unit": "NPR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 4009.58,
+   "unit": "NZD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: For adults. ILO calculation: Hourly figure multiplied by 40 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "OM",
+    "name": "Oman"
+   },
+   "value": 325,
+   "unit": "OMR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: OE - Official Estimates. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PA",
+    "name": "Panama"
+   },
+   "value": 482.18,
+   "unit": "PAB per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ILO - SIALC Estimates. Type of minimum wage: Sectoral (manufacturing). ILO calculation: Hourly figure multiplied by 48 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 1025,
+   "unit": "PEN per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Registros de Relaciones Laborales. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 8302,
+   "unit": "PHP per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional (lowest provincial rate in non-agriculture). ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PK",
+    "name": "Pakistan"
+   },
+   "value": 37000,
+   "unit": "PKR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Occupational (unskilled workers)."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 4806,
+   "unit": "PLN per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 1073,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "QA",
+    "name": "Qatar"
+   },
+   "value": 1000,
+   "unit": "QAR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Legislation du Travail. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 4325,
+   "unit": "RON per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 87207,
+   "unit": "RSD per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 19242,
+   "unit": "RUB per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: National floor."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 4000,
+   "unit": "SAR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Population coverage: Nationals only."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 1482,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 915,
+   "unit": "EUR per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 64175,
+   "unit": "XOF per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Rate of the SMIG when SMIG/SMAG system."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 8963,
+   "unit": "THB per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Central tendency measure: Median. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "TN",
+    "name": "Tunisia"
+   },
+   "value": 491.504,
+   "unit": "TND per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Rate of the SMIG when SMIG/SMAG system. ILO calculation: Hourly figure multiplied by 48 hours and 4.33 weeks."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 33030,
+   "unit": "TRY per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "TW",
+    "name": "Taiwan"
+   },
+   "value": 27400,
+   "unit": "TWD per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Data reference period: January. Reference group coverage: Industrial, agricultural, and institution-based employees."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "TZ",
+    "name": "Tanzania"
+   },
+   "value": 150000,
+   "unit": "TZS per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Sectoral (manufacturing)."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 8647,
+   "unit": "UAH per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1257,
+   "unit": "USD per month",
+   "year": "2026",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Singular national minimum wage. Repository: Eurostat. Data reference period: July."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "VE",
+    "name": "Venezuela"
+   },
+   "value": 130,
+   "unit": "VES per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: OE - Estimaciones Oficiales. Type of minimum wage: Singular national minimum wage."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "VN",
+    "name": "Viet Nam"
+   },
+   "value": 4960000,
+   "unit": "VND per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Regional. Central tendency measure: Median. Geographical coverage: Main cities or metropolitan areas."
+  },
+  {
+   "item": "minimum_wage_monthly",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 4776.85,
+   "unit": "ZAR per month",
+   "year": "2024",
+   "measure": "statutory nominal gross monthly minimum wage, local currency (ILOSTAT, harmonised series)",
+   "note": "Source of the figure: ADM - Labour legislation. Type of minimum wage: Occupational. ILO calculation: Daily figure multiplied by 6 days and 4.33 weeks."
+  }
+ ]
+}

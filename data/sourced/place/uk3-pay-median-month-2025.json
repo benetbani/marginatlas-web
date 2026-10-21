@@ -1,0 +1,117 @@
+{
+  "id": "place-uk3-ashe-pay-month-2025",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Annual Survey of Hours and Earnings 2025 (provisional), resident analysis (ASHE table 8, place of residence by local authority), via Nomis dataset NM_30_1",
+    "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_30_1.data.csv?geography=E12000007,E08000003,E08000025,E08000035,E06000023,S12000036,S12000049,K02000001&date=latest&sex=8&item=2&pay=7,1&measures=20100,20701&select=date_name,geography_name,geography_code,sex_name,item_name,pay_name,measures_name,obs_value,obs_status_name",
+    "table": "NM_30_1: sex 8 full-time workers, item 2 median, pay 7 annual pay gross (pay 1 weekly read beside it)",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3868,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 46,414 a year, over 12 (rounded to the pound); employees who live in London, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 902.7 (not used); measured for the London region (Greater London); 2025 figures are provisional; coefficient of variation 1.2%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 3023,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 36,278 a year, over 12 (rounded to the pound); employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 715.6 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.1%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 2999,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 35,989 a year, over 12 (rounded to the pound); employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 707.9 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.7%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 3060,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 36,716 a year, over 12 (rounded to the pound); employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 723.0 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.6%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 3292,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 39,509 a year, over 12 (rounded to the pound); employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 780.5 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.4%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 3597,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 43,169 a year, over 12 (rounded to the pound); employees who live in Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 819.8 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.9%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 3177,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 38,125 a year, over 12 (rounded to the pound); employees who live in Glasgow, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 745.5 (not used); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.3%"
+    },
+    {
+      "item": "pay_median_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3253,
+      "unit": "GBP per month",
+      "year": "2025",
+      "measure": "median gross annual pay of full-time employees by place of residence, over 12",
+      "note": "the publisher's median gross annual pay, GBP 39,039 a year, over 12 (rounded to the pound); employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); annual pay counts employees in the same job for at least a year; the weekly median is GBP 766.6 (not used); measured for the country; 2025 figures are provisional; coefficient of variation 0.3%"
+    }
+  ]
+}

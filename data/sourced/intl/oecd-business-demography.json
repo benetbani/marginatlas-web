@@ -1,0 +1,1153 @@
+{
+ "id": "oecd-business-demography",
+ "source": {
+  "publisher": "OECD",
+  "title": "Employer business demography: enterprise survival (ISIC Rev. 4), Structural and Demographic Business Statistics (SDBS)",
+  "url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_SDBSBD_ISIC4%40DF_BD_EMP_S&df[ag]=OECD.SDD.TPS",
+  "table": "DSD_SDBSBD_ISIC4@DF_BD_EMP_S v1.0, unit PT_ENT_B (percentage of enterprise births), size class total, employer enterprises; API https://sdmx.oecd.org/public/rest/data/OECD.SDD.TPS,DSD_SDBSBD_ISIC4@DF_BD_EMP_S,1.0/",
+  "licence": "OECD terms and conditions: OECD data are free to reuse with attribution (CC BY 4.0), https://www.oecd.org/en/about/terms-conditions.html"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 55.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 42.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 36.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of employer enterprises (reference year 2023, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2023, as a share of employer-enterprise births in 2020. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 26.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "5-year survival rate of employer enterprises (reference year 2023, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2023, as a share of employer-enterprise births in 2018. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 55.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 42.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 36.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of employer enterprises (reference year 2023, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2023, as a share of employer-enterprise births in 2020. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 26.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "5-year survival rate of employer enterprises (reference year 2023, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2023, as a share of employer-enterprise births in 2018. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 57.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 46.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 40.6,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of employer enterprises (reference year 2023, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2023, as a share of employer-enterprise births in 2020. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 32.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "5-year survival rate of employer enterprises (reference year 2023, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2023, as a share of employer-enterprise births in 2018. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 62.0,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 51.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 45.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of employer enterprises (reference year 2023, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2023, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 35.0,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "5-year survival rate of employer enterprises (reference year 2023, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2023, as a share of employer-enterprise births in 2018."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 76.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of employer enterprises (reference year 2022, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2022, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 64.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of employer enterprises (reference year 2022, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2022, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 60.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of employer enterprises (reference year 2022, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2022, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 38.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "5-year survival rate of employer enterprises (reference year 2022, cohort born 2017)",
+   "note": "Employer enterprises born in 2017 still active in 2022, as a share of employer-enterprise births in 2017."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 83.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of employer enterprises (reference year 2022, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2022, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 59.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of employer enterprises (reference year 2022, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2022, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 56.2,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of employer enterprises (reference year 2022, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2022, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 42.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "5-year survival rate of employer enterprises (reference year 2022, cohort born 2017)",
+   "note": "Employer enterprises born in 2017 still active in 2022, as a share of employer-enterprise births in 2017."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 76.6,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of employer enterprises (reference year 2022, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2022, as a share of employer-enterprise births in 2021. ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 62.2,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of employer enterprises (reference year 2022, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2022, as a share of employer-enterprise births in 2020. ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other)."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 62.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of employer enterprises (reference year 2022, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2022, as a share of employer-enterprise births in 2019. ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other)."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 38.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "5-year survival rate of employer enterprises (reference year 2022, cohort born 2017)",
+   "note": "Employer enterprises born in 2017 still active in 2022, as a share of employer-enterprise births in 2017. ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 74.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of employer enterprises (reference year 2022, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2022, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 62.0,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of employer enterprises (reference year 2022, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2022, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 56.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of employer enterprises (reference year 2022, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2022, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 40.6,
+   "unit": "percent of employer enterprises born",
+   "year": "2022",
+   "measure": "5-year survival rate of employer enterprises (reference year 2022, cohort born 2017)",
+   "note": "Employer enterprises born in 2017 still active in 2022, as a share of employer-enterprise births in 2017."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 81.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of employer enterprises (reference year 2024, cohort born 2023)",
+   "note": "Employer enterprises born in 2023 still active in 2024, as a share of employer-enterprise births in 2023. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 61.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of employer enterprises (reference year 2024, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2024, as a share of employer-enterprise births in 2022. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 49.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of employer enterprises (reference year 2024, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2024, as a share of employer-enterprise births in 2021. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 34.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of employer enterprises (reference year 2024, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2024, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 81.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of employer enterprises (reference year 2024, cohort born 2023)",
+   "note": "Employer enterprises born in 2023 still active in 2024, as a share of employer-enterprise births in 2023. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 61.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of employer enterprises (reference year 2024, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2024, as a share of employer-enterprise births in 2022. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 49.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of employer enterprises (reference year 2024, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2024, as a share of employer-enterprise births in 2021. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 34.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of employer enterprises (reference year 2024, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2024, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 75.0,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of employer enterprises (reference year 2024, cohort born 2023)",
+   "note": "Employer enterprises born in 2023 still active in 2024, as a share of employer-enterprise births in 2023. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 60.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of employer enterprises (reference year 2024, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2024, as a share of employer-enterprise births in 2022. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 54.0,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of employer enterprises (reference year 2024, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2024, as a share of employer-enterprise births in 2021. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 37.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of employer enterprises (reference year 2024, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2024, as a share of employer-enterprise births in 2019. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 81.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of employer enterprises (reference year 2024, cohort born 2023)",
+   "note": "Employer enterprises born in 2023 still active in 2024, as a share of employer-enterprise births in 2023."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 65.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of employer enterprises (reference year 2024, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2024, as a share of employer-enterprise births in 2022."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 55.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of employer enterprises (reference year 2024, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2024, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 43.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of employer enterprises (reference year 2024, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2024, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 63.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 55.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 63.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 I: Accommodation and food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 55.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section I (accommodation and food service): the figure covers hotels as well as restaurants and bars."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 66.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 54.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 64.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of employer enterprises (reference year 2023, cohort born 2022)",
+   "note": "Employer enterprises born in 2022 still active in 2023, as a share of employer-enterprise births in 2022."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 _T: Total - All activities",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 53.7,
+   "unit": "percent of employer enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of employer enterprises (reference year 2023, cohort born 2021)",
+   "note": "Employer enterprises born in 2021 still active in 2023, as a share of employer-enterprise births in 2021."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 73.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 61.2,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 73.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 61.2,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 74.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 64.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 77.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 72.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 45.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 33.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 27.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "3-year survival rate of employer enterprises (reference year 2021, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2021, as a share of employer-enterprise births in 2018. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 45.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 33.3,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 27.8,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "3-year survival rate of employer enterprises (reference year 2021, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2021, as a share of employer-enterprise births in 2018. Whole division 56 (food and beverage service): the figure covers restaurants, catering and bars together."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 58.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 41.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 S: Other service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 36.9,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "3-year survival rate of employer enterprises (reference year 2021, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2021, as a share of employer-enterprise births in 2018. Whole section S (other service activities: membership organisations, repair of personal goods and all other personal services, hairdressing among them)."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 63.5,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of employer enterprises (reference year 2021, cohort born 2020)",
+   "note": "Employer enterprises born in 2020 still active in 2021, as a share of employer-enterprise births in 2020."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 47.1,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of employer enterprises (reference year 2021, cohort born 2019)",
+   "note": "Employer enterprises born in 2019 still active in 2021, as a share of employer-enterprise births in 2019."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 38.4,
+   "unit": "percent of employer enterprises born",
+   "year": "2021",
+   "measure": "3-year survival rate of employer enterprises (reference year 2021, cohort born 2018)",
+   "note": "Employer enterprises born in 2018 still active in 2021, as a share of employer-enterprise births in 2018."
+  }
+ ]
+}

@@ -1,0 +1,392 @@
+{
+ "id": "eucities-dk-dst-2024",
+ "source": {
+  "publisher": "Danmarks Statistik (Statistics Denmark)",
+  "title": "Statbank Denmark: GF12 general enterprise statistics, FOLK1A population, HOTEL1 hotel nights",
+  "url": "https://www.statbank.dk/",
+  "table": "API https://api.statbank.dk/v1/data, tables GF12 (2024), FOLK1A (2025Q1, 2026Q1), HOTEL1 (2024, 2025)",
+  "licence": "Statistics Denmark terms of use: free reuse with the source given (https://www.dst.dk/en)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "DB07 TOT Industry total",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 52896,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 56000 Restaurants",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 2580,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The whole restaurant grouping (DB07 127-grouping 56000).",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 561010 Restaurants",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 1259,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "Restaurants alone: pizzerias and takeaways (561020) apart.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 561020 Pizzerias, takeaways, ice-cream parlours, etc.",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 441,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 563000 Pubs, bars, cafés, coffee shops, discotheques, etc.",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 645,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "Pubs, bars, cafés, coffee shops and discotheques together.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 960210 Hairdresssing",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 841,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 960220 Beauty treatment and skin care",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 394,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 TOT Industry total",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 64443,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. ",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 56000 Restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 3026,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. The whole restaurant grouping (DB07 127-grouping 56000).",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 561010 Restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 1477,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. Restaurants alone: pizzerias and takeaways (561020) apart.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 561020 Pizzerias, takeaways, ice-cream parlours, etc.",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 543,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. ",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 563000 Pubs, bars, cafés, coffee shops, discotheques, etc.",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 722,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. Pubs, bars, cafés, coffee shops and discotheques together.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 960210 Hairdresssing",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 1075,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "DB07 960220 Beauty treatment and skin care",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 531,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises (firms) in the general enterprise statistics, by municipality, reference year 2024",
+   "note": "The province (landsdel) holding the city: Copenhagen with Frederiksberg, Dragør and Tårnby. ",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank GF12: General enterprise statistics by municipality, industry (DB07 10-, 19- and 127-grouping and detailed) and time",
+    "url": "https://www.statbank.dk/GF12"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 667099,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on the first day of the quarter, 1 January 2025",
+   "note": "Copenhagen municipality, the boundary of the enterprise rows. 1 January 2025 closes the enterprise reference year 2024.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank FOLK1A: Population at the first day of the quarter by region, sex, age, marital status and time",
+    "url": "https://www.statbank.dk/FOLK1A"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "101",
+    "name": "København (Copenhagen municipality)"
+   },
+   "value": 671714,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on the first day of the quarter, 1 January 2026",
+   "note": "Copenhagen municipality, the boundary of the enterprise rows. 1 January 2025 closes the enterprise reference year 2024.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank FOLK1A: Population at the first day of the quarter by region, sex, age, marital status and time",
+    "url": "https://www.statbank.dk/FOLK1A"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 10188590,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent at hotels and holiday resorts by all guests, residents of Denmark included, whole year",
+   "note": "Published for the province Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby), not the municipality. Table footnote: only hotels with a minimum of 40 beds participate.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank HOTEL1: Nights spent at hotels and holiday resorts by region, nationality of the guest, unit, period and time",
+    "url": "https://www.statbank.dk/HOTEL1"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 10782282,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent at hotels and holiday resorts by all guests, residents of Denmark included, whole year",
+   "note": "Published for the province Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby), not the municipality. Table footnote: only hotels with a minimum of 40 beds participate.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank HOTEL1: Nights spent at hotels and holiday resorts by region, nationality of the guest, unit, period and time",
+    "url": "https://www.statbank.dk/HOTEL1"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 6182720,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent at hotels and holiday resorts by guests resident outside Denmark, whole year",
+   "note": "Published for the province Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby), not the municipality. Table footnote: only hotels with a minimum of 40 beds participate.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank HOTEL1: Nights spent at hotels and holiday resorts by region, nationality of the guest, unit, period and time",
+    "url": "https://www.statbank.dk/HOTEL1"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "metro",
+    "code": "DK-PROV-01",
+    "name": "Landsdel Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby)"
+   },
+   "value": 6581827,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent at hotels and holiday resorts by guests resident outside Denmark, whole year",
+   "note": "Published for the province Byen København (Copenhagen, Frederiksberg, Dragør, Tårnby), not the municipality. Table footnote: only hotels with a minimum of 40 beds participate.",
+   "source": {
+    "publisher": "Danmarks Statistik (Statistics Denmark)",
+    "title": "Statbank HOTEL1: Nights spent at hotels and holiday resorts by region, nationality of the guest, unit, period and time",
+    "url": "https://www.statbank.dk/HOTEL1"
+   }
+  }
+ ]
+}

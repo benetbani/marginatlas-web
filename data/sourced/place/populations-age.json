@@ -1,0 +1,607 @@
+{
+  "id": "place-populations-age",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population and age: national statistics offices of the UK, US, Italy and Hungary, and Eurostat (each row names its own source)",
+    "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+    "table": "NM_2002_1",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "population",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 9122909,
+      "unit": "persons",
+      "year": "2025",
+      "measure": "usual residents at mid-year (30 June)",
+      "note": "Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 17.8,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 15",
+      "note": "computed from the published counts: 1,628,316 of 9,122,909",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 12.6,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 1,152,518 of 9,122,909",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 69483939,
+      "unit": "persons",
+      "year": "2025",
+      "measure": "usual residents at mid-year (30 June)",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 17.7,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 15",
+      "note": "computed from the published counts: 12,330,454 of 69,483,939",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 19.4,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 13,460,704 of 69,483,939",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,201,203,209,210&measures=20100",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": 3857263,
+      "unit": "persons",
+      "year": "2020-2024",
+      "measure": "residents, five-year survey estimate (average over 2020 to 2024)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=place:44000&in=state:06",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": 19.2,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents under 18",
+      "note": "computed from the published counts: 739,163 of 3,857,263 (the survey's bands under 5, 5 to 9, 10 to 14 and 15 to 17)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=place:44000&in=state:06",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": 14.2,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 549,590 of 3,857,263",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=place:44000&in=state:06",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "metro",
+        "code": "31080",
+        "name": "Los Angeles-Long Beach-Anaheim, CA Metro Area"
+      },
+      "value": 12974487,
+      "unit": "persons",
+      "year": "2020-2024",
+      "measure": "residents, five-year survey estimate (average over 2020 to 2024)",
+      "note": "metropolitan statistical area as defined by the U.S. Office of Management and Budget (Los Angeles and Orange counties)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=metropolitan%20statistical%20area/micropolitan%20statistical%20area:31080",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "metro",
+        "code": "31080",
+        "name": "Los Angeles-Long Beach-Anaheim, CA Metro Area"
+      },
+      "value": 20.7,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents under 18",
+      "note": "computed from the published counts: 2,684,273 of 12,974,487 (the survey's bands under 5, 5 to 9, 10 to 14 and 15 to 17)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=metropolitan%20statistical%20area/micropolitan%20statistical%20area:31080",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "metro",
+        "code": "31080",
+        "name": "Los Angeles-Long Beach-Anaheim, CA Metro Area"
+      },
+      "value": 15.4,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 2,002,524 of 12,974,487",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=metropolitan%20statistical%20area/micropolitan%20statistical%20area:31080",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 334922499,
+      "unit": "persons",
+      "year": "2020-2024",
+      "measure": "residents, five-year survey estimate (average over 2020 to 2024)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=us:1",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 22.0,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents under 18",
+      "note": "computed from the published counts: 73,517,834 of 334,922,499 (the survey's bands under 5, 5 to 9, 10 to 14 and 15 to 17)",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=us:1",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 17.2,
+      "unit": "percent",
+      "year": "2020-2024",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 57,633,628 of 334,922,499",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B01001 Sex by Age",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B01001)&for=us:1",
+        "table": "B01001",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 2747290,
+      "unit": "persons",
+      "year": "2025",
+      "measure": "resident population on 1 January",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_15,1.0/A.058091.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_15",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 11.8,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published single-year counts: 324,917 of 2,747,290",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_15,1.0/A.058091.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_15",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 24.0,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published single-year counts: 658,871 of 2,747,290",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_15,1.0/A.058091.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_15",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 58943464,
+      "unit": "persons",
+      "year": "2025",
+      "measure": "resident population on 1 January",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_1,1.0/A.IT.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_1",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 11.9,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published single-year counts: 7,020,049 of 58,943,464",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_1,1.0/A.IT.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_1",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 24.7,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published single-year counts: 14,579,867 of 58,943,464",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Popolazione residente al 1 gennaio (Resident population on 1st January), by single year of age",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_1,1.0/A.IT.JAN.9..99/?startPeriod=2025",
+        "table": "22_289_DF_DCIS_POPRES1_1",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1675777,
+      "unit": "persons",
+      "year": "2026",
+      "measure": "resident population on 1 January",
+      "note": "Budapest, the capital, is its own county-level unit; city and county share one boundary",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 12.1,
+      "unit": "percent",
+      "year": "2026",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published counts: 201,978 of 1,675,777",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 20.8,
+      "unit": "percent",
+      "year": "2026",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 349,250 of 1,675,777",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "country",
+        "code": "HU",
+        "name": "Hungary"
+      },
+      "value": 9488428,
+      "unit": "persons",
+      "year": "2026",
+      "measure": "resident population on 1 January",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "HU",
+        "name": "Hungary"
+      },
+      "value": 14.2,
+      "unit": "percent",
+      "year": "2026",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published counts: 1,351,548 of 9,488,428",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "age_share",
+      "geo": {
+        "level": "country",
+        "code": "HU",
+        "name": "Hungary"
+      },
+      "value": 21.1,
+      "unit": "percent",
+      "year": "2026",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 1,998,125 of 9,488,428",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 22.1.2.2. Resident population by age group, county and region, 1 January",
+        "url": "https://www.ksh.hu/stadat_files/nep/en/nep0035.html",
+        "table": "22.1.2.2 (nep0035)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "metro",
+        "code": "IT001F",
+        "name": "Roma functional urban area"
+      },
+      "value": 4380590,
+      "unit": "persons",
+      "year": "2025",
+      "measure": "resident population on 1 January",
+      "note": "functional urban area: the city and its commuting zone, as defined by Eurostat and the OECD",
+      "source": {
+        "publisher": "Eurostat",
+        "title": "Population on 1 January by age groups and sex - functional urban areas (urb_lpop1)",
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_lpop1?format=JSON&cities=IT001F&indic_ur=DE1001V",
+        "table": "urb_lpop1",
+        "licence": "Eurostat reuse policy: Creative Commons Attribution 4.0 (CC BY 4.0), source acknowledged"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "metro",
+        "code": "HU001F",
+        "name": "Budapest functional urban area"
+      },
+      "value": 3067751,
+      "unit": "persons",
+      "year": "2024",
+      "measure": "resident population on 1 January",
+      "note": "functional urban area: the city and its commuting zone, as defined by Eurostat and the OECD",
+      "source": {
+        "publisher": "Eurostat",
+        "title": "Population on 1 January by age groups and sex - functional urban areas (urb_lpop1)",
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_lpop1?format=JSON&cities=HU001F&indic_ur=DE1001V",
+        "table": "urb_lpop1",
+        "licence": "Eurostat reuse policy: Creative Commons Attribution 4.0 (CC BY 4.0), source acknowledged"
+      }
+    },
+    {
+      "item": "population",
+      "geo": {
+        "level": "metro",
+        "code": "UK001F",
+        "name": "London functional urban area"
+      },
+      "value": 12434823,
+      "unit": "persons",
+      "year": "2018",
+      "measure": "resident population on 1 January",
+      "note": "functional urban area: the city and its commuting zone, as defined by Eurostat and the OECD; 2018 is the last year published for a UK city after the UK left the EU",
+      "source": {
+        "publisher": "Eurostat",
+        "title": "Population on 1 January by age groups and sex - functional urban areas (urb_lpop1)",
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_lpop1?format=JSON&cities=UK001F&indic_ur=DE1001V",
+        "table": "urb_lpop1",
+        "licence": "Eurostat reuse policy: Creative Commons Attribution 4.0 (CC BY 4.0), source acknowledged"
+      }
+    }
+  ]
+}

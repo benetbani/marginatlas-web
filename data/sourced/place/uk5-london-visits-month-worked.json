@@ -1,0 +1,655 @@
+{
+  "id": "place-uk5-london-visits-month-worked",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+    "table": "Table 7, London, Total World",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "notes": [
+    "WORKED OUT, NOT PUBLISHED. The ONS publishes London's overseas visits by quarter only. Each month here is London's 2025 quarter shared out in the proportions the UK's visits fell across that quarter's three months: London in month m = London's quarter x (the UK's month m / the UK's quarter). The three months of a quarter sum back to London's quarter (up to the rounding to 1,000).",
+    "The UK's monthly pattern is 2023's, not 2025's: the ONS has published no month after June 2024. 2023 is the latest calendar year published monthly in full and as final estimates; Easter fell in April in 2023 as in 2025 (in March in 2024), so the March and April shares compare.",
+    "What it assumes: London's visits fall across a quarter's months as the UK's did in 2023. A London-only event (a month heavier in London than in the rest of the UK) cannot show. The quarters are provisional, under the survey's new design.",
+    "Every row keeps both inputs (London's quarter, the UK's month and quarter) and the unrounded result in `inputs`. Raw files and their URLs: data/raw/uk5-visitors/SOURCES.md."
+  ],
+  "rows": [
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1511000,
+      "unit": "visits",
+      "year": "2025-01",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q1 (4,008,000 visits, Table 7) x the UK's January 2023 (2,898,000) / the UK's 2023 Q1 (7,686,000, the sum of its three months, Table 1) = 1,511,213.1, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4008000,
+          "period": "2025-Q1",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 2898000,
+          "period": "2023-01",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 7686000,
+          "period": "2023-Q1",
+          "months": [
+            "2023-01",
+            "2023-02",
+            "2023-03"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1511213.115
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1143000,
+      "unit": "visits",
+      "year": "2025-02",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q1 (4,008,000 visits, Table 7) x the UK's February 2023 (2,192,000) / the UK's 2023 Q1 (7,686,000, the sum of its three months, Table 1) = 1,143,057.0, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4008000,
+          "period": "2025-Q1",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 2192000,
+          "period": "2023-02",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 7686000,
+          "period": "2023-Q1",
+          "months": [
+            "2023-01",
+            "2023-02",
+            "2023-03"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1143056.987
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1354000,
+      "unit": "visits",
+      "year": "2025-03",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q1 (4,008,000 visits, Table 7) x the UK's March 2023 (2,596,000) / the UK's 2023 Q1 (7,686,000, the sum of its three months, Table 1) = 1,353,729.9, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4008000,
+          "period": "2025-Q1",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 2596000,
+          "period": "2023-03",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 7686000,
+          "period": "2023-Q1",
+          "months": [
+            "2023-01",
+            "2023-02",
+            "2023-03"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1353729.899
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1543000,
+      "unit": "visits",
+      "year": "2025-04",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q2 (4,888,000 visits, Table 7) x the UK's April 2023 (3,126,000) / the UK's 2023 Q2 (9,905,000, the sum of its three months, Table 1) = 1,542,643.9, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4888000,
+          "period": "2025-Q2",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3126000,
+          "period": "2023-04",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9905000,
+          "period": "2023-Q2",
+          "months": [
+            "2023-04",
+            "2023-05",
+            "2023-06"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1542643.917
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1629000,
+      "unit": "visits",
+      "year": "2025-05",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q2 (4,888,000 visits, Table 7) x the UK's May 2023 (3,300,000) / the UK's 2023 Q2 (9,905,000, the sum of its three months, Table 1) = 1,628,510.9, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4888000,
+          "period": "2025-Q2",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3300000,
+          "period": "2023-05",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9905000,
+          "period": "2023-Q2",
+          "months": [
+            "2023-04",
+            "2023-05",
+            "2023-06"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1628510.853
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1717000,
+      "unit": "visits",
+      "year": "2025-06",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q2 (4,888,000 visits, Table 7) x the UK's June 2023 (3,479,000) / the UK's 2023 Q2 (9,905,000, the sum of its three months, Table 1) = 1,716,845.2, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4888000,
+          "period": "2025-Q2",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3479000,
+          "period": "2023-06",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9905000,
+          "period": "2023-Q2",
+          "months": [
+            "2023-04",
+            "2023-05",
+            "2023-06"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1716845.23
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1991000,
+      "unit": "visits",
+      "year": "2025-07",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q3 (5,424,000 visits, Table 7) x the UK's July 2023 (4,012,000) / the UK's 2023 Q3 (10,928,000, the sum of its three months, Table 1) = 1,991,314.8, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 5424000,
+          "period": "2025-Q3",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 4012000,
+          "period": "2023-07",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 10928000,
+          "period": "2023-Q3",
+          "months": [
+            "2023-07",
+            "2023-08",
+            "2023-09"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1991314.788
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1891000,
+      "unit": "visits",
+      "year": "2025-08",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q3 (5,424,000 visits, Table 7) x the UK's August 2023 (3,810,000) / the UK's 2023 Q3 (10,928,000, the sum of its three months, Table 1) = 1,891,054.2, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 5424000,
+          "period": "2025-Q3",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3810000,
+          "period": "2023-08",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 10928000,
+          "period": "2023-Q3",
+          "months": [
+            "2023-07",
+            "2023-08",
+            "2023-09"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1891054.173
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1542000,
+      "unit": "visits",
+      "year": "2025-09",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q3 (5,424,000 visits, Table 7) x the UK's September 2023 (3,106,000) / the UK's 2023 Q3 (10,928,000, the sum of its three months, Table 1) = 1,541,631.0, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 5424000,
+          "period": "2025-Q3",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3106000,
+          "period": "2023-09",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 10928000,
+          "period": "2023-Q3",
+          "months": [
+            "2023-07",
+            "2023-08",
+            "2023-09"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1541631.04
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1957000,
+      "unit": "visits",
+      "year": "2025-10",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q4 (4,973,000 visits, Table 7) x the UK's October 2023 (3,715,000) / the UK's 2023 Q4 (9,441,000, the sum of its three months, Table 1) = 1,956,857.9, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4973000,
+          "period": "2025-Q4",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 3715000,
+          "period": "2023-10",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9441000,
+          "period": "2023-Q4",
+          "months": [
+            "2023-10",
+            "2023-11",
+            "2023-12"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1956857.854
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1472000,
+      "unit": "visits",
+      "year": "2025-11",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q4 (4,973,000 visits, Table 7) x the UK's November 2023 (2,795,000) / the UK's 2023 Q4 (9,441,000, the sum of its three months, Table 1) = 1,472,252.4, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4973000,
+          "period": "2025-Q4",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 2795000,
+          "period": "2023-11",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9441000,
+          "period": "2023-Q4",
+          "months": [
+            "2023-10",
+            "2023-11",
+            "2023-12"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1472252.41
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visits_month_worked",
+      "kind": "worked out",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1544000,
+      "unit": "visits",
+      "year": "2025-12",
+      "measure": "worked out: visits to London by overseas residents, a month (London's quarter spread by the UK's monthly pattern)",
+      "note": "worked out, not published: London's 2025 Q4 (4,973,000 visits, Table 7) x the UK's December 2023 (2,931,000) / the UK's 2023 Q4 (9,441,000, the sum of its three months, Table 1) = 1,543,889.7, rounded to the nearest 1,000 as the ONS rounds its inputs; the ONS publishes no 2025 month, so the pattern is 2023's, the latest year published monthly in full and final; read from data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx and data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "inputs": {
+        "london_quarter": {
+          "value": 4973000,
+          "period": "2025-Q4",
+          "unit": "visits",
+          "status": "provisional",
+          "file": "data/raw/uk5-visitors/ons/overseas-residents-visits-2025-quarters-released-2026-10-16.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+          "table": "Table 7, London, Total World"
+        },
+        "uk_month": {
+          "value": 2931000,
+          "period": "2023-12",
+          "unit": "visits",
+          "status": "final",
+          "file": "data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx",
+          "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+          "table": "Table 1, column World Total"
+        },
+        "uk_quarter": {
+          "value": 9441000,
+          "period": "2023-Q4",
+          "months": [
+            "2023-10",
+            "2023-11",
+            "2023-12"
+          ],
+          "unit": "visits",
+          "how": "the sum of the three UK months of the quarter, Table 1"
+        },
+        "exact": 1543889.736
+      },
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits, spending and nights, 2025, quarters 1 to 4 (released 16 October 2026), Table 7: visits by region of Great Britain visited",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Table 7, London, Total World",
+        "licence": "Open Government Licence v3.0"
+      }
+    }
+  ]
+}

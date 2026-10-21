@@ -1,0 +1,2757 @@
+{
+ "id": "oecd-household-spending",
+ "source": {
+  "publisher": "OECD (national accounts)",
+  "title": "Annual household final consumption expenditure by purpose, current prices, national currency",
+  "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels",
+  "table": "DSD_NAMAIN10@DF_TABLE5_T501 (COICOP 1999) and DF_TABLE5A_T501 (COICOP 2018, Japan and Korea); transaction P31DC, price base V",
+  "licence": "OECD open by default policy (CC BY 4.0 default from 1 July 2024), https://www.oecd.org/en/about/oecd-open-by-default-policy.html"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 137878.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 41361.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 51223.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 350453.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 61466.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 104766.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 152309.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 26210.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 147422.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 51036.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 121861.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 195007.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 1440991.0,
+   "unit": "AUD million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 168680.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 54181.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 64008.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 464637.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 86751.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 83632.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 261888.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 46739.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 134014.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 30757.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 128922.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 252589.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1776798.0,
+   "unit": "CAD million",
+   "year": "2025",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 38926759.086,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 5209332.875,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 6665438.457,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 28252666.105,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 9712084.867,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 15417209.094,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 20044927.334,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 5818791.538,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 11017242.491,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 6425252.286,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 12469187.935,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 21172461.22,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 181131353.288,
+   "unit": "CLP million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 279374000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 40009000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 58603000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 172940000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 43062000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 107760000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 88108000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 28644000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 109446000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 42838000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 146002000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 120200000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 1236986000.0,
+   "unit": "COP million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 5685954.3,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 501421.975,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 760513.984,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 3986199.756,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1396840.69,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1817775.141,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 3056969.782,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 869717.23,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1907527.72,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1164889.049,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1024109.966,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 3361426.167,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 25533345.76,
+   "unit": "CRC million",
+   "year": "2021",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 138323.66,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 22885.862,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 18889.384,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 226437.559,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 43385.47,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 29199.333,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 120091.455,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 18273.88,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 55205.099,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 23952.948,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 56900.791,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 112320.222,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 865865.662,
+   "unit": "ILS million",
+   "year": "2023",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 6068222.091,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 500351.341,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 450200.045,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 3709612.118,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 1363786.425,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 745980.924,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 5052896.27,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 525029.701,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 1184939.379,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 322225.237,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 1364853.376,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 2766807.583,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 24054904.49,
+   "unit": "MXN million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 30480.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 10760.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 8400.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 65771.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 12213.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 7442.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 29475.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 4139.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 22060.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 3437.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 16085.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 27403.0,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 250045.743,
+   "unit": "NZD million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999; the OECD marks it provisional. The 12 divisions as published add to 95.0% of this total; a share drawn from them must divide by this total and show the rest as not allocated by purpose.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 13381861.3,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 3860369.7,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 3226458.6,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 9039337.7,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 3112310.4,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 2571949.7,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 6324099.0,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 1916210.9,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 3428130.3,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Recreation and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 358264.5,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Education",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 1597253.6,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 5002952.1,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 1999 12"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 53918562.42,
+   "unit": "RUB million",
+   "year": "2019",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 1999.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP), DSD_NAMAIN10@DF_TABLE5_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5_T501,1.0/all?startPeriod=2018&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 54069500.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 7375400.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 10370900.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 88353600.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 10650700.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 12038300.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 31078300.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 22478100.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Information and communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 19841200.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Recreation, sport and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 7006400.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Education services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 22535200.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Restaurants and accommodation services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 20387100.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Insurance and financial services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 12"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 24831700.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Personal care, social protection and miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 13"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 331016300.0,
+   "unit": "JPY million",
+   "year": "2024",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   }
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 154745000.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 01"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 15658400.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 02"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 63580100.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Clothing and footwear",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 03"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 206901200.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 04"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 41081000.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Furnishings, household equipment and routine household maintenance",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 05"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 74985600.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Health",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 06"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 114382900.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Transport",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 07"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 62992300.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Information and communication",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 08"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 97491600.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Recreation, sport and culture",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 09"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 66343900.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Education services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 10"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 147433500.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Restaurants and accommodation services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 11"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 88170600.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Insurance and financial services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 12"
+  },
+  {
+   "item": "household_spending",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 72621800.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Personal care, social protection and miscellaneous goods and services",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   },
+   "officialClass": "COICOP 2018 13"
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1206388000.0,
+   "unit": "KRW million",
+   "year": "2025",
+   "measure": "Household final consumption expenditure, domestic concept",
+   "note": "National accounts, domestic concept (residents and non-residents on the territory), current prices, COICOP 2018; the OECD marks it provisional.",
+   "source": {
+    "publisher": "OECD",
+    "title": "Annual household final consumption expenditure by purpose (COICOP 2018), DSD_NAMAIN10@DF_TABLE5A_T501",
+    "url": "https://sdmx.oecd.org/public/rest/data/OECD.SDD.NAD,DSD_NAMAIN10@DF_TABLE5A_T501,2.0/all?startPeriod=2020&format=csvfilewithlabels"
+   }
+  }
+ ]
+}

@@ -1,0 +1,634 @@
+{
+ "id": "eu-tedb-vat-rates",
+ "source": {
+  "publisher": "European Commission (Directorate-General for Taxation and Customs Union)",
+  "title": "Taxes in Europe Database (TEDB), VAT rates retrieval service, situation on 19 October 2026",
+  "url": "https://ec.europa.eu/taxation_customs/tedb/ws/VatRetrievalService.wsdl",
+  "table": "retrieveVatRates, all 27 member states, situationOn 2026-10-19: type STANDARD, and REDUCED rows of categories RESTAURANT and FOOD_SERVICE",
+  "licence": "European Commission reuse policy (Decision 2011/833/EU): reuse allowed with acknowledgement of the source, https://commission.europa.eu/legal-notice_en"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Royal Decree N° 20, Table B, category I excluded the provision of beverages"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "Article 1, paragraph 1, of the Royal Decree n° 20 of 20 July 1970"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026-01-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Until 31/8/2022 was 5% - from 1/9/2022 is 9%"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2026-01-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "Art. 47 of the VAT Act."
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Restaurant and catering services except serving beverages other than drinking water and selected drinks; serving drinking water and selected drinks. Selected drinks (non-alcoholic beverage) are milk and liquid milk products, plant-based milk alternatives (CN 2202 99 11 and 2202 99 15), even if they contain added sugar or other sweetening matter, additive or other food, provided they retain the essential character of such beverages."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2025-01-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "The reduced rate (RR) applies to restaurant and catering services, excluding night clubs. Moreover, the RR applies to the delivery or take-away of non-alcoholic beverages (nAB) from companies that are dealing with restaurant and catering services. The standard rate still applies to alcoholic beverages IN ANY CASE (i.e. serving, delivery or take away) and ONLY in the serving of nAB"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2025-01-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 13.5,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Excluding alcoholic beverages."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 25.5,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "http://bofip.impots.gouv.fr/bofip/1379-PGP Article 278 of the General Tax Code"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Article 279 m of the general tax code (alcoholic beverages excluded)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Preparation and serving of food and desserts in and outside of catering facilities in accordance with special regulation."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "in restaurants meals and food, and supply of non-alcoholic beverages prepared on site"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 27,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "9% VAT from 01/07/2026"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "The Standard Rate of VAT was temporarily reduced from 23% to 21% from 1 September 2020 to 28 February 2021. It has been restored to 23% from 1 March 2021."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 22,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Administration of food and beverages, carried out also through vending machines; provision of services dependent on procurement contracts relating to the supply or administration of food and beverages. Limited to food and beverage administration and catering services."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 3,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, excluding services involving alcoholic beverages",
+   "measure": "VAT rate on restaurant and catering services (super reduced rate), in force on 2026-10-19"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 17,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "Art. 39(3) of VAT law"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)",
+   "note": "Section 41, Paragraph 1, Clause 1 of the Law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 18,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Tabel I prov. b.12: serving out foodstuffs for human consumption, for use on site within the context of a hotel, café, restaurant, guesthouse and related businesses. The supply of freshly prepared food or edible products for immediate consumption in snack bars, snack vans, cinema foyers, sports club canteens and such is considered a supply of goods, unless the services accompanying the delivery of the foodstuffs predominate."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 8,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "CPA Code 56 (except for tea, coffee, alcoholic drinks, carbonated soft drinks, mineral water, other unprocessed products, seafood meals)"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2026-01-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "The reduced rate excludes alcoholic beverages and soft drinks ."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026-01-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 11,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "The reduced VAT rate is applied for restaurant and catering services, excluding alcoholic beverages as well as non-alcoholic beverages, falling within CN codes 2202. For details see art. 291 para. (2) letter n) of the Fiscal Code corroborated with point 37 para. (15) of the Methodological Norms."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Reduced VAT rate on restaurant services (only non-alcoholic beverages). Alcoholic beverages in restaurants to be taxed at a standard rate of 23 %."
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 9.5,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Applies to the preparation of meals, supply of alcoholic and non-alcoholic beverages excluded."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 22,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Reduced VAT rate on restaurant and catering services (only food provided)."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2026-07-01",
+   "officialClass": "Restaurant and catering services, it being possible to exclude the supply of (alcoholic and/or non-alcoholic) beverages",
+   "measure": "VAT rate on restaurant and catering services (reduced rate), in force on 2026-10-19",
+   "note": "Excluding alcoholic beverages. Please see chapter 9 section 5 in the Swedish VAT Act (https://www.riksdagen.se/sv/dokument-lagar/dokument/svensk-forfattningssamling/mervardesskattelag-2023200_sfs-2023-200#K9)."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2026-07-01",
+   "measure": "standard VAT rate, in force on 2026-10-19 (the year is the date the database gives the rate from)"
+  }
+ ]
+}

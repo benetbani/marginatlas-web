@@ -1,0 +1,348 @@
+{
+ "id": "registration",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Registering a business by legal form: fees, minimum capital, wait where the registry states one",
+  "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 100,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Private limited company, incorporation online",
+   "note": "Companies House: online 100, software 100, paper 124, same-day 156.",
+   "source": {
+    "publisher": "Companies House",
+    "title": "Companies House fees",
+    "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Sole trader, registration for Self Assessment",
+   "note": "A sole trader registers for Self Assessment with HMRC once self-employed income passes GBP 1,000 in a tax year. The page names no fee.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up as a sole trader",
+    "url": "https://www.gov.uk/set-up-sole-trader"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 70,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Limited liability company, Articles of Organization, online",
+   "note": "California Secretary of State.",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Limited Liability Companies (LLC) - California: forms and fees",
+    "url": "https://www.sos.ca.gov/business-programs/cannabizfile/cannabis-forms-and-fees/limited-liability-companies-llc-california"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 20,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Limited liability company, Statement of Information",
+   "note": "Due within 90 days of registration and every two years after.",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Limited Liability Companies (LLC) - California: forms and fees",
+    "url": "https://www.sos.ca.gov/business-programs/cannabizfile/cannabis-forms-and-fees/limited-liability-companies-llc-california"
+   }
+  },
+  {
+   "item": "annual_company_tax",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 800,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "LLC annual tax, Franchise Tax Board",
+   "note": "Every LLC doing business or organized in California pays it. The first is due by the 15th day of the 4th month after filing with the Secretary of State.",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Limited liability company (LLC)",
+    "url": "https://www.ftb.ca.gov/file/business/types/limited-liability-company/index.html"
+   }
+  },
+  {
+   "item": "registration_required",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "City business tax registration (Business Tax Registration Certificate)",
+   "note": "Every business in the City of Los Angeles registers with the Office of Finance for a Business Tax Registration Certificate. The FAQ read names no registration fee.",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Finance",
+    "title": "Business Registration Requirements FAQ",
+    "url": "https://finance.lacity.gov/frequently-asked-questions/business-registration-requirements-faq"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 18,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Sole trader (impresa individuale), registration: diritti di segreteria",
+   "note": "Camera di Commercio di Roma. Stamp duty 17.50 on top. Yearly chamber fee 53 (special section) or 120 (ordinary section).",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli imprese individuali",
+    "url": "https://www.rm.camcom.it/pagina3375_diritti-di-segreteria-e-bolli-imprese-individuali.html"
+   }
+  },
+  {
+   "item": "registration_stamp_duty",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 17.5,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Sole trader (impresa individuale), registration: imposta di bollo",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli imprese individuali",
+    "url": "https://www.rm.camcom.it/pagina3375_diritti-di-segreteria-e-bolli-imprese-individuali.html"
+   }
+  },
+  {
+   "item": "chamber_annual_fee",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 53,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Sole trader, diritto annuale, special section (sezione speciale)",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli imprese individuali",
+    "url": "https://www.rm.camcom.it/pagina3375_diritti-di-segreteria-e-bolli-imprese-individuali.html"
+   }
+  },
+  {
+   "item": "chamber_annual_fee",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 120,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Sole trader, diritto annuale, ordinary section (sezione ordinaria)",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli imprese individuali",
+    "url": "https://www.rm.camcom.it/pagina3375_diritti-di-segreteria-e-bolli-imprese-individuali.html"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 90,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Company (S.r.l.), registration: diritti di segreteria",
+   "note": "Camera di Commercio di Roma. Stamp duty 65 for capital companies. The notary's deed and its registration tax are not on this page and were not read.",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli società",
+    "url": "https://www.rm.camcom.it/pagina3431_diritti-di-segreteria-e-bolli-societ.html"
+   }
+  },
+  {
+   "item": "registration_stamp_duty",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 65,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Company (S.r.l.), registration: imposta di bollo",
+   "source": {
+    "publisher": "Camera di Commercio di Roma",
+    "title": "Diritti di segreteria e bolli società",
+    "url": "https://www.rm.camcom.it/pagina3431_diritti-di-segreteria-e-bolli-societ.html"
+   }
+  },
+  {
+   "item": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 10000,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "S.r.l., standard minimum share capital",
+   "note": "An S.r.l. (and the simplified S.r.l.s.) may also be formed with capital of 1 euro up to 10,000, paid in full in cash (art. 2463 and 2463-bis of the civil code, per the Chamber of Commerce).",
+   "source": {
+    "publisher": "Camera di Commercio di Bologna",
+    "title": "Le nuove SRL",
+    "url": "https://www.bo.camcom.gov.it/it/node/1145"
+   }
+  },
+  {
+   "item": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "S.r.l. or S.r.l.s. with reduced capital, lowest amount",
+   "note": "Contributions in cash, paid in full to the directors.",
+   "source": {
+    "publisher": "Camera di Commercio di Bologna",
+    "title": "Le nuove SRL",
+    "url": "https://www.bo.camcom.gov.it/it/node/1145"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Sole trader (egyéni vállalkozó), notice of starting",
+   "note": "The notice of starting, change, suspension and ending of a sole trader's activity is free of fees and duties (Act CXV of 2009, s. 8).",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2009. évi CXV. törvény az egyéni vállalkozóról és az egyéni cégről, 8. §",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2009-115-00-00"
+   }
+  },
+  {
+   "item": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Company (Kft), court registration duty and publication fee, simplified procedure",
+   "note": "The simplified procedure uses the model articles. For a Kft the duty and the publication fee are both free, in the general procedure too. The lawyer's fee is not set by law and was not read.",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   }
+  },
+  {
+   "item": "registration_wait_days",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1,
+   "unit": "working days",
+   "year": "2026",
+   "measure": "Company (Kft), court's deadline to decide, simplified procedure",
+   "note": "General procedure: 15 working days.",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   }
+  },
+  {
+   "item": "registration_wait_days",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 15,
+   "unit": "working days",
+   "year": "2026",
+   "measure": "Company (Kft), court's deadline to decide, general procedure",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   }
+  },
+  {
+   "item": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3000000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Kft, minimum share capital (törzstőke)",
+   "note": "Civil Code 3:161 (4): at least three million forints. Each member's contribution at least HUF 100,000.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről, 3:161. § (4)",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   }
+  }
+ ]
+}

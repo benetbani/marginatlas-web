@@ -1,0 +1,1033 @@
+{
+ "id": "eurostat-fte-salary",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Average full time adjusted salary per employee (nama_10_fte)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/nama_10_fte/default/table",
+  "table": "nama_10_fte, unit EUR (and NAC outside the euro), 2023 and 2024",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 37840,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 39808,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "eu",
+    "code": "EA20",
+    "name": "Euro area – 20 countries (2023-2025)"
+   },
+   "value": 41782,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "eu",
+    "code": "EA20",
+    "name": "Euro area – 20 countries (2023-2025)"
+   },
+   "value": 43512,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 57756,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 59632,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 13503,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 15387,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 23609,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 23998,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 67940,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 71565,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 50996,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 53791,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 24873,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 26546,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 58586,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 61051,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 17070,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 17954,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 32216,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 33700,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 42771,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 43790,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 21662,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 23446,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 32650,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 33523,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 26668,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 27611,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 20209,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 22262,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 27225,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 29104,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 80243,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 82969,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 16991,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 18461,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 31250,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 33499,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 54478,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 58600,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 18226,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 21246,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 23184,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 24818,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 18093,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 21108,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 33094,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 35133,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 19027,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 20287,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 48312,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 49428,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 44520,
+   "unit": "EUR per year",
+   "year": "2023",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 46525,
+   "unit": "EUR per year",
+   "year": "2024",
+   "currency": "EUR",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 566699,
+   "unit": "CZK per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 602841,
+   "unit": "CZK per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 506211,
+   "unit": "DKK per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 533793,
+   "unit": "DKK per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 6488155,
+   "unit": "HUF per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 7297665,
+   "unit": "HUF per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 82782,
+   "unit": "PLN per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 91482,
+   "unit": "PLN per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 89501,
+   "unit": "RON per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 105006,
+   "unit": "RON per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 511033,
+   "unit": "SEK per year",
+   "year": "2023",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2023 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, total economy (full-time equivalent)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 531892,
+   "unit": "SEK per year",
+   "year": "2024",
+   "currency": "NAC",
+   "measure": "average full-time adjusted gross annual salary per employee, 2024 (a mean)",
+   "note": "National accounts: wages and salaries divided by employees in full-time equivalents (part-time jobs counted as fractions), so it reads as the mean pay of a full-time job, before tax and employee contributions. In the country's own currency as Eurostat publishes it."
+  }
+ ]
+}

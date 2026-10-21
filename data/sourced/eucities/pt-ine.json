@@ -1,0 +1,367 @@
+{
+ "id": "eucities-pt-ine",
+ "source": {
+  "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+  "title": "Statistics Portugal database: enterprises (SCIE) by municipality and NUTS III; resident population estimates",
+  "url": "https://www.ine.pt/",
+  "table": "JSON API https://www.ine.pt/ine/json_indicador/pindica.jsp, indicators 0008511 (2022, municipalities 1701106 Lisboa, 11A1312 Porto), 0013838 (2024, NUTS III 1A0 and 11A), 0008273 (2022)",
+  "licence": "Statistics Portugal terms: reuse permitted with the source cited (https://www.ine.pt)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3, all sections A to S except K and O (Total)",
+   "geo": {
+    "level": "city",
+    "code": "1106",
+    "name": "Lisboa (município)"
+   },
+   "value": 131582,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "1106",
+    "name": "Lisboa (município)"
+   },
+   "value": 6287,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The whole division 56: restaurants, cafés and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "1106",
+    "name": "Lisboa (município)"
+   },
+   "value": 6287,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The whole division 56: restaurants, cafés and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 96: Other personal service activities",
+   "geo": {
+    "level": "city",
+    "code": "1106",
+    "name": "Lisboa (município)"
+   },
+   "value": 3561,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. Hairdressing (96.021) cannot be separated at municipal level.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "1106",
+    "name": "Lisboa (município)"
+   },
+   "value": 638400,
+   "unit": "persons",
+   "year": "2022",
+   "measure": "annual estimate of the resident population, 2022",
+   "note": "Same municipality and year as the enterprise rows of this file.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Resident population (No.) by Place of residence (NUTS - 2013), Sex and Age group; Annual estimates of resident population (indicator 0008273)",
+    "url": "https://www.ine.pt/xurl/indx/0008273/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3, all sections A to S except K and O (Total)",
+   "geo": {
+    "level": "city",
+    "code": "1312",
+    "name": "Porto (município)"
+   },
+   "value": 48748,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "1312",
+    "name": "Porto (município)"
+   },
+   "value": 2368,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The whole division 56: restaurants, cafés and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "1312",
+    "name": "Porto (município)"
+   },
+   "value": 2368,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The whole division 56: restaurants, cafés and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "CAE Rev. 3 division 96: Other personal service activities",
+   "geo": {
+    "level": "city",
+    "code": "1312",
+    "name": "Porto (município)"
+   },
+   "value": 1501,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE), legal form total",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. Hairdressing (96.021) cannot be separated at municipal level.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2013), Economic activity (Division - CAE Rev. 3) and Legal form; Annual, Integrated business accounts system (indicator 0008511)",
+    "url": "https://www.ine.pt/xurl/indx/0008511/EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "1312",
+    "name": "Porto (município)"
+   },
+   "value": 256269,
+   "unit": "persons",
+   "year": "2022",
+   "measure": "annual estimate of the resident population, 2022",
+   "note": "Same municipality and year as the enterprise rows of this file.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Resident population (No.) by Place of residence (NUTS - 2013), Sex and Age group; Annual estimates of resident population (indicator 0008273)",
+    "url": "https://www.ine.pt/xurl/indx/0008273/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "CAE Rev. 3 Total",
+   "geo": {
+    "level": "metro",
+    "code": "PT1A0",
+    "name": "Grande Lisboa (NUTS III, 2024)"
+   },
+   "value": 376509,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "CAE Rev. 3 subclass 56101: Traditional restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "PT1A0",
+    "name": "Grande Lisboa (NUTS III, 2024)"
+   },
+   "value": 5533,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "CAE Rev. 3 subclass 56301: Cafés",
+   "geo": {
+    "level": "metro",
+    "code": "PT1A0",
+    "name": "Grande Lisboa (NUTS III, 2024)"
+   },
+   "value": 3524,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "CAE Rev. 3 subclass 96021: Hairdressing",
+   "geo": {
+    "level": "metro",
+    "code": "PT1A0",
+    "name": "Grande Lisboa (NUTS III, 2024)"
+   },
+   "value": 4921,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass. Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "CAE Rev. 3 Total",
+   "geo": {
+    "level": "metro",
+    "code": "PT11A",
+    "name": "Área Metropolitana do Porto (NUTS III)"
+   },
+   "value": 263032,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "CAE Rev. 3 subclass 56101: Traditional restaurants",
+   "geo": {
+    "level": "metro",
+    "code": "PT11A",
+    "name": "Área Metropolitana do Porto (NUTS III)"
+   },
+   "value": 2850,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "CAE Rev. 3 subclass 56301: Cafés",
+   "geo": {
+    "level": "metro",
+    "code": "PT11A",
+    "name": "Área Metropolitana do Porto (NUTS III)"
+   },
+   "value": 4436,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "CAE Rev. 3 subclass 96021: Hairdressing",
+   "geo": {
+    "level": "metro",
+    "code": "PT11A",
+    "name": "Área Metropolitana do Porto (NUTS III)"
+   },
+   "value": 5095,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises in the integrated business accounts system (SCIE)",
+   "note": "Enterprises of CAE sections A to S, financial and insurance (K) and public administration (O) left out, sole traders included, located by their registered seat. The NUTS III region around the city, the finest level published by subclass. Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Instituto Nacional de Estatística (INE), Statistics Portugal",
+    "title": "Enterprises (No.) by Geographic localization (NUTS - 2024) and Economic activity (Subclass - CAE Rev. 3); Annual, Integrated business accounts system (indicator 0013838)",
+    "url": "https://www.ine.pt/xurl/indx/0013838/EN"
+   }
+  }
+ ]
+}

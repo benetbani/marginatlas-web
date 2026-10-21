@@ -1,0 +1,41 @@
+{
+ "id": "ons-ashe-annual-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Annual Survey of Hours and Earnings (ASHE) 2025 provisional, Table 1: all employees",
+  "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/allemployeesashetable1",
+  "table": "ashetable12025provisional.zip, file 'PROV - Total Table 1.7a   Annual pay - Gross 2025.xlsx', sheet Full-Time, row All Employees, columns Median and Mean",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, full-time",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 39039,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay of full-time employees, UK, tax year to April 2025",
+   "note": "Full-time employee jobs on adult rates, in the same job for more than a year, April 2025 (provisional); 18,154 thousand jobs. Employees only, the self-employed not covered."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "All employees, full-time",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 48512,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "mean gross annual pay of full-time employees, UK, tax year to April 2025",
+   "note": "Full-time employee jobs on adult rates, in the same job for more than a year, April 2025 (provisional); 18,154 thousand jobs. Employees only, the self-employed not covered."
+  }
+ ]
+}

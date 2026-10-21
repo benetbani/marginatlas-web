@@ -1,0 +1,149 @@
+{
+ "id": "eucities-de-berlin-urs-2024",
+ "source": {
+  "publisher": "Amt für Statistik Berlin-Brandenburg",
+  "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+  "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx",
+  "table": "SB_D02-01-00_2024j01_BE.xlsx, sheet T14 (Niederlassungen nach ausgewählten Gliederungsebenen der WZ2008)",
+  "licence": "Creative Commons Namensnennung 3.0 Deutschland (CC BY 3.0 DE), stated in the report's Impressum"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008, all sections (Insgesamt)",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 196449,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008 56.10: Restaurants, Gaststätten, Imbissstuben, Cafés, Eissalons u. Ä.",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 8770,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Restaurants, inns, snack bars, cafés and ice-cream parlours together: German cafés sit in this class. Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008 56.30: Ausschank von Getränken",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 2256,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Bars and pubs serving drinks (Ausschank von Getränken). Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008 96.02: Frisör- und Kosmetiksalons",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 4081,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Hairdressing and beauty salons together: barbers are not counted apart. Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008 56: Gastronomie",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 12160,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "WZ 2008 96.0: Erbringung von sonstigen überwiegend persönlichen Dienstleistungen",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 7987,
+   "unit": "establishments (Niederlassungen)",
+   "year": "2024",
+   "measure": "number of establishments (Niederlassungen) with employees subject to social insurance and/or taxable turnover in 2024, statistical business register as of 30 September 2025",
+   "note": "Units with neither employees nor turnover above the VAT threshold are not in the register's count. Methodological changes with reporting year 2024 (the report's own warning).",
+   "source": {
+    "publisher": "Amt für Statistik Berlin-Brandenburg",
+    "title": "Statistischer Bericht D II 1 – j / 24: Rechtliche Einheiten und Niederlassungen im Land Berlin 2024 (Stand: Unternehmensregister 30.09.2025), table 14",
+    "url": "https://download.statistik-berlin-brandenburg.de/b95aaa817d45ec56/891f6493c29b/SB_D02-01-00_2024j01_BE.xlsx"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "11000",
+    "name": "Berlin (Land and city)"
+   },
+   "value": 3685265,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January 2025",
+   "note": "Eurostat Urban Audit city DE001C (Berlin), from the German statistical offices; 1 January 2025 closes the register's reporting year 2024. The state office's own table sits in the login-only regional database.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit: Population on 1 January by age groups and sex - cities and greater cities (urb_cpop1)",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  }
+ ]
+}

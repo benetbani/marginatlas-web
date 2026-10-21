@@ -1,0 +1,1665 @@
+{
+ "id": "ons-business-counts-2026",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "UK Business Counts (Inter-Departmental Business Register), via Nomis",
+  "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_141_1",
+  "table": "NM_141_1 (local units) and NM_142_1 (enterprises), employment size band Total, legal status Total, date latest (March 2026)",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 611340,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 9560,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 7780,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs). Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 7460,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 3625,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 9895,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs). Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 45590,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 575,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 660,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 990,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 325,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 925,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 22300,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 410,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 300,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority). Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 380,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 305,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 365,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority). Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 23615,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 575,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 510,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 425,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 390,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 435,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 26595,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 555,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 520,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 700,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 390,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 700,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 35980,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 440,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 465,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 670,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 465,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 675,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 29740,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 545,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 440,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 730,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 355,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 505,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 552505,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 7865,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 6280,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs). Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 6810,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 2355,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 9695,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Greater London, the London region (all 33 boroughs). Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 38605,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 470,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 545,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 950,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 200,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 900,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Birmingham local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 18295,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 345,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 220,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority). Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 350,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 230,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 355,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Bristol, City of (unitary authority). Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 18635,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 465,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 385,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 390,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 270,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 415,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "City of Edinburgh council area. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 20585,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 465,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 395,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 680,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 305,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 675,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Glasgow City council area. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 29830,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 355,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 350,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 645,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 340,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 665,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Leeds local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 24550,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 420,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 310,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district. Cafes are not counted apart from unlicensed restaurants.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56103 : Take away food shops and mobile food stands",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 705,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 56302 : Public houses and bars",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 260,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 490,
+   "unit": "enterprises",
+   "year": "2026",
+   "measure": "count of enterprises registered for VAT or PAYE, snapshot of March 2026",
+   "note": "Manchester local authority district. Barbers are not counted apart: the class is hairdressing and other beauty treatment.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, enterprises by industry and employment size band (NM_142_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrent"
+   },
+   "trade": "barbershops"
+  }
+ ]
+}

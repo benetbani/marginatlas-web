@@ -1,0 +1,373 @@
+{
+ "id": "eucities-es-ine-2025",
+ "source": {
+  "publisher": "Instituto Nacional de Estadística (INE), Spain",
+  "title": "INEbase: Encuesta de Ocupación Hotelera by tourist point; municipal population (Padrón)",
+  "url": "https://www.ine.es/",
+  "table": "API https://servicios.ine.es/wstempus/js/ES/, EOH series EOT2659-2662, 2743-2746, 2851-2854, 2879-2882; DPOP tables 2861, 2881, 2895, 2903",
+  "licence": "INE terms: reuse permitted with the source cited, https://www.ine.es/aviso_legal"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "08019",
+    "name": "Barcelona (municipio)"
+   },
+   "value": 19029926,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2662 (Nacional. Pernoctaciones. Barcelona. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2662?nult=24"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "08019",
+    "name": "Barcelona (municipio)"
+   },
+   "value": 7456875,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2660 (Nacional. Viajeros. Barcelona. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2660?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "08019",
+    "name": "Barcelona (municipio)"
+   },
+   "value": 2670170,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2661 (Nacional. Pernoctaciones. Barcelona. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2661?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "08019",
+    "name": "Barcelona (municipio)"
+   },
+   "value": 1542449,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2659 (Nacional. Viajeros. Barcelona. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2659?nult=24"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "08019",
+    "name": "Barcelona (municipio)"
+   },
+   "value": 1731649,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "official population figure from the municipal register (Padrón), 1 January 2025",
+   "note": "Series DPOP2665.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Cifras oficiales de población de los municipios españoles: revisión del Padrón municipal (table 2861)",
+    "url": "https://www.ine.es/jaxiT3/Tabla.htm?t=2861"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "28079",
+    "name": "Madrid (municipio)"
+   },
+   "value": 14081047,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2746 (Nacional. Pernoctaciones. Madrid. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2746?nult=24"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "28079",
+    "name": "Madrid (municipio)"
+   },
+   "value": 6072934,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2744 (Nacional. Viajeros. Madrid. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2744?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "28079",
+    "name": "Madrid (municipio)"
+   },
+   "value": 7234644,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2745 (Nacional. Pernoctaciones. Madrid. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2745?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "28079",
+    "name": "Madrid (municipio)"
+   },
+   "value": 4242819,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2743 (Nacional. Viajeros. Madrid. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2743?nult=24"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "28079",
+    "name": "Madrid (municipio)"
+   },
+   "value": 3506730,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "official population figure from the municipal register (Padrón), 1 January 2025",
+   "note": "Series DPOP13156.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Cifras oficiales de población de los municipios españoles: revisión del Padrón municipal (table 2881)",
+    "url": "https://www.ine.es/jaxiT3/Tabla.htm?t=2881"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "41091",
+    "name": "Sevilla (municipio)"
+   },
+   "value": 4589616,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2854 (Nacional. Pernoctaciones. Sevilla. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2854?nult=24"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "41091",
+    "name": "Sevilla (municipio)"
+   },
+   "value": 1953437,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2852 (Nacional. Viajeros. Sevilla. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2852?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "41091",
+    "name": "Sevilla (municipio)"
+   },
+   "value": 2015332,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2853 (Nacional. Pernoctaciones. Sevilla. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2853?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "41091",
+    "name": "Sevilla (municipio)"
+   },
+   "value": 1169399,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2851 (Nacional. Viajeros. Sevilla. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2851?nult=24"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "41091",
+    "name": "Sevilla (municipio)"
+   },
+   "value": 689423,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "official population figure from the municipal register (Padrón), 1 January 2025",
+   "note": "Series DPOP18571.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Cifras oficiales de población de los municipios españoles: revisión del Padrón municipal (table 2895)",
+    "url": "https://www.ine.es/jaxiT3/Tabla.htm?t=2895"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "46250",
+    "name": "València (municipio)"
+   },
+   "value": 3259858,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2882 (Nacional. Pernoctaciones. Valencia. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2882?nult=24"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "46250",
+    "name": "València (municipio)"
+   },
+   "value": 1200177,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents abroad in hotel establishments, calendar year 2025",
+   "note": "Series EOT2880 (Nacional. Viajeros. Valencia. Residentes en el extranjero.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2880?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "46250",
+    "name": "València (municipio)"
+   },
+   "value": 1682176,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2881 (Nacional. Pernoctaciones. Valencia. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2881?nult=24"
+   }
+  },
+  {
+   "item": "visitors_resident",
+   "geo": {
+    "level": "city",
+    "code": "46250",
+    "name": "València (municipio)"
+   },
+   "value": 934291,
+   "unit": "travellers",
+   "year": "2025",
+   "measure": "arrivals of residents of Spain in hotel establishments, calendar year 2025",
+   "note": "Series EOT2879 (Nacional. Viajeros. Valencia. Residentes en España.): the sum of the twelve published definitive months of 2025. Hotels only (EOH tourist point = the municipality); flats and hostels outside the survey. A traveller counts once per stay.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Encuesta de Ocupación Hotelera (EOH): viajeros y pernoctaciones por puntos turísticos (table 75197)",
+    "url": "https://servicios.ine.es/wstempus/js/ES/DATOS_SERIE/EOT2879?nult=24"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "46250",
+    "name": "València (municipio)"
+   },
+   "value": 840792,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "official population figure from the municipal register (Padrón), 1 January 2025",
+   "note": "Series DPOP21796.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística (INE), Spain",
+    "title": "Cifras oficiales de población de los municipios españoles: revisión del Padrón municipal (table 2903)",
+    "url": "https://www.ine.es/jaxiT3/Tabla.htm?t=2903"
+   }
+  }
+ ]
+}

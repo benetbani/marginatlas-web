@@ -1,0 +1,104 @@
+{
+ "id": "hmrc-tax-gap-2026",
+ "source": {
+  "publisher": "HM Revenue & Customs",
+  "title": "Measuring tax gaps 2026 edition: online tables",
+  "url": "https://www.gov.uk/government/statistics/measuring-tax-gaps-tables",
+  "table": "Measuring_tax_gap_online_tables_2026.xlsx (published 23 June 2026), Tables 1.2, 1.3 and 7.1, tax year 2024 to 2025",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "tax_gap_share",
+   "value": 6.4,
+   "unit": "percent of total theoretical tax liabilities",
+   "measure": "the tax gap: tax that should be paid to HMRC but is not, as a share of all tax owed (provisional), tax year 2024 to 2025",
+   "note": "Table 1.2: GBP 59.2 billion of GBP 924.4 billion owed."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "tax_gap_gbp",
+   "value": 59.2,
+   "unit": "GBP billion",
+   "measure": "the tax gap, all taxes, tax year 2024 to 2025 (provisional)",
+   "note": "Table 1.2."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "tax_owed_gbp",
+   "value": 924.4,
+   "unit": "GBP billion",
+   "measure": "total theoretical tax liability, tax year 2024 to 2025",
+   "note": "Table 1.2."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "hidden_economy_gap_gbp",
+   "value": 3.6,
+   "unit": "GBP billion",
+   "measure": "the tax gap from the hidden economy (economic activity entirely undeclared to HMRC), tax year 2024 to 2025",
+   "note": "Table 7.1, illustrative tax gap by behaviour."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "hidden_economy_share_of_gap",
+   "value": 6.0,
+   "unit": "percent of the tax gap",
+   "measure": "the hidden economy's share of the tax gap, tax year 2024 to 2025",
+   "note": "Table 7.1, rounded by the publisher to the nearest 1%."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "hidden_economy_share_of_tax",
+   "value": 0.39,
+   "unit": "percent of total theoretical tax liabilities",
+   "measure": "the hidden economy's tax gap as a share of all tax owed, tax year 2024 to 2025",
+   "note": "Derived: GBP 3.6 billion (Table 7.1) over GBP 924.4 billion owed (Table 1.2)."
+  },
+  {
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024/25",
+   "item": "small_business_share_of_gap",
+   "value": 62.0,
+   "unit": "percent of the tax gap",
+   "measure": "small businesses' share of the tax gap, tax year 2024 to 2025",
+   "note": "Table 1.3: GBP 36.7 billion of GBP 59.2 billion."
+  }
+ ]
+}

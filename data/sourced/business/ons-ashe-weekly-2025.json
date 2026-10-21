@@ -1,0 +1,190 @@
+{
+ "id": "ons-ashe-weekly-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Annual Survey of Hours and Earnings (ASHE) 2025 provisional, Table 15: region by occupation (4-digit SOC 2020), table 15 (4).1a weekly pay, gross, full-time",
+  "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/regionbyoccupation4digitsoc2010ashetable15",
+  "table": "ashetable152025provisional.zip, file 'Table 15 (4).1a Weekly pay - Gross 2025', sheet Full-Time; quality from table 15 (4).1b (CV); estimates with CV above 20 percent are suppressed by the publisher",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 1222: Restaurant and catering establishment managers and proprietors",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 737.5,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Restaurant and catering establishment managers and proprietors",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 7.2 percent (reasonably precise). Mean 856.8 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 1253: Hairdressing and beauty salon managers and proprietors",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 564.3,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Hairdressing and beauty salon managers and proprietors",
+   "note": "Employees only, by place of work; self-employed workers are not covered. No coefficient of variation printed for the median (the publisher prints a median only within its 20 percent rule). Mean 606.8 GBP.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 5434: Chefs",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 644.1,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Chefs",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 3.6 percent (precise). Mean 687.1 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 5435: Cooks",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 466.2,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Cooks",
+   "note": "Employees only, by place of work; self-employed workers are not covered. No coefficient of variation printed for the median (the publisher prints a median only within its 20 percent rule). Mean 576.5 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 5436: Catering and bar managers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 667.1,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Catering and bar managers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 6.2 percent (reasonably precise). Mean 685.7 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 6221: Hairdressers and barbers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 447.5,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Hairdressers and barbers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. No coefficient of variation printed for the median (the publisher prints a median only within its 20 percent rule). Mean 472.3 GBP.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 6222: Beauticians and related occupations",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 500.7,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Beauticians and related occupations",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 15.1 percent (acceptable). Mean 533.3 GBP."
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 9261: Bar and catering supervisors",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 552.5,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Bar and catering supervisors",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 9.6 percent (reasonably precise). Mean 617.1 GBP."
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 9263: Kitchen and catering assistants",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 559.2,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Kitchen and catering assistants",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 3.5 percent (precise). Mean 573.2 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 9264: Waiters and waitresses",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 540.2,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Waiters and waitresses",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 4.6 percent (precise). Mean 549.2 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 9265: Bar staff",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 536.5,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Bar staff",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 5.8 percent (reasonably precise). Mean 551.5 GBP."
+  },
+  {
+   "item": "pay_weekly",
+   "officialClass": "SOC 2020 9266: Coffee shop workers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 497.7,
+   "unit": "GBP per week",
+   "year": "2025",
+   "measure": "median gross weekly pay, full-time employee jobs, April 2025 (provisional): Coffee shop workers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 8.4 percent (reasonably precise). Mean 511.7 GBP.",
+   "trade": "cafes"
+  }
+ ]
+}

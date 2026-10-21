@@ -1,0 +1,1345 @@
+{
+ "id": "eucities-fr-sirene-2026",
+ "source": {
+  "publisher": "Insee (Institut national de la statistique et des études économiques)",
+  "title": "Base Sirene des entreprises et de leurs établissements (SIREN, SIRET), fichier StockEtablissement, 1 octobre 2026 (parquet)",
+  "url": "https://www.data.gouv.fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/",
+  "table": "stock-stocketablissement-parquet.parquet, file of 1 October 2026 (https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073823/stock-stocketablissement-parquet.parquet); counts made by grouping the file, script /srv/atlas/runs/data-eucities/scripts/fr_counts.py",
+  "licence": "Licence Ouverte / Open Licence 2.0 (Etalab)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 1389,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 13 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 743,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 7,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 1 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 2,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 1644,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 54 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 695,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 367,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 11 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 174,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 886,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 76 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 299,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 1348,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 311 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 118,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 2114,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 96 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 1106,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 13,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 2 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 4,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 3431,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 131 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 1367,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 874,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 39 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 422,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 1439,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 139 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 517,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 1960,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 511 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 205,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 1173,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 30 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 759,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 9,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 5,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 1854,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 115 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 845,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 312,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 10 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 205,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 780,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 73 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 331,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 817,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 246 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 99,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 645,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 5 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 407,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 5,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 2,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 793,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 42 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 405,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 344,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 4 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 204,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 422,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 51 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 174,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 350,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 120 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 47,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 2268,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 121 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 1410,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 6,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 4,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 1883,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 54 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 997,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 677,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 26 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 407,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 967,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 68 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 530,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 893,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 221 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 193,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 16688,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 439 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10A: Restauration traditionnelle (traditional restaurants)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 10560,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 53,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 2 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10B: Cafétérias et autres libres-services (cafeterias and other self-service)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 29,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 11926,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 247 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.10C: Restauration de type rapide (fast food)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 7094,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 3251,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 126 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 56.30Z: Débits de boissons (beverage serving: bars and cafes)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 1883,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune.",
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 4697,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 268 of them are partially diffusible (address detail hidden, commune kept).",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02A: Coiffure (hairdressing)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 2600,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 4870,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. The register holds every establishment declared active, sole traders and micro-entrepreneurs without staff included. 681 of them are partially diffusible (address detail hidden, commune kept)."
+  },
+  {
+   "item": "business_count_employer",
+   "officialClass": "NAF rév. 2, 96.02B: Soins de beauté (beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 1995,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 135251,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nice. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 15872,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nice. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 243249,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 30557,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Marseille. The 16 arrondissements (132xx) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 155580,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Toulouse. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 19940,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Toulouse. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 90654,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Nantes. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 10466,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Nantes. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 190704,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 27376,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Lyon. The 9 arrondissements (6938x) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 1346500,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "business_count_employer",
+   "trade": "all",
+   "officialClass": "All activities (whole Sirene register)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 226868,
+   "unit": "establishments",
+   "year": "2026-10",
+   "measure": "number of active establishments (etatAdministratifEtablissement = A) whose main activity (APE, NAF rév. 2) is the class, by the commune of the establishment's address, stock of 1 October 2026, of which employers (caractereEmployeurEtablissement = O)",
+   "note": "Commune de Paris. The 20 arrondissements (751xx) are summed into the commune. Every active establishment, including property holding companies (SCI) and registered offices without premises, so the whole count is far above the number of shopfronts."
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 357737,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 514819,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 327734,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 2103778,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 886040,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 519127,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population municipale (usual residents), reference date 1 January 2023, in force from 1 January 2026",
+   "note": "Same commune boundary as the establishment counts in this file. Three years older than the register stock.",
+   "source": {
+    "publisher": "Insee (Institut national de la statistique et des études économiques)",
+    "title": "Populations de référence 2023 (en vigueur au 1er janvier 2026), DS_POPULATIONS_REFERENCE",
+    "url": "https://api.insee.fr/melodi/file/DS_POPULATIONS_REFERENCE/DS_POPULATIONS_REFERENCE_2023_CSV_FR"
+   }
+  }
+ ]
+}

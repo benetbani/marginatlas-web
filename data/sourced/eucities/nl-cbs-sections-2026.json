@@ -1,0 +1,643 @@
+{
+ "id": "eucities-nl-cbs-sections-2026",
+ "source": {
+  "publisher": "CBS (Centraal Bureau voor de Statistiek)",
+  "title": "Vestigingen van bedrijven; bedrijfstak, gemeente (81575NED), by SBI section",
+  "url": "https://opendata.cbs.nl/ODataApi/odata/81575NED",
+  "table": "81575NED, Perioden 2026JJ00, RegioS GM0363 and GM0599, the SBI 2008 sections A to U",
+  "licence": "CC BY 4.0"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "SBI 2008 section A Landbouw, bosbouw en visserij (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 245,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "SBI 2008 section A Landbouw, bosbouw en visserij (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 410,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "SBI 2008 section B Delfstoffenwinning (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 20,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "SBI 2008 section B Delfstoffenwinning (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 105,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "SBI 2008 section C Industrie (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 4170,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "SBI 2008 section C Industrie (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 3330,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "SBI 2008 section D Energievoorziening (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 160,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "SBI 2008 section D Energievoorziening (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 115,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "SBI 2008 section E Waterbedrijven en afvalbeheer (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 170,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "SBI 2008 section E Waterbedrijven en afvalbeheer (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 135,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "SBI 2008 section F Bouwnijverheid (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 10715,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "SBI 2008 section F Bouwnijverheid (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 12390,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "SBI 2008 section G Handel (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 20175,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "SBI 2008 section G Handel (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 12835,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "SBI 2008 section H Vervoer en opslag (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 9445,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "SBI 2008 section H Vervoer en opslag (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 5085,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "SBI 2008 section I Horeca (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 11805,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "SBI 2008 section I Horeca (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 4210,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "SBI 2008 section J Informatie en communicatie (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 18555,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "SBI 2008 section J Informatie en communicatie (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 6080,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "SBI 2008 section K Financiële dienstverlening (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 5645,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "SBI 2008 section K Financiële dienstverlening (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 2125,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "SBI 2008 section L Verhuur en handel van onroerend goed (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 3915,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "SBI 2008 section L Verhuur en handel van onroerend goed (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 1435,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "SBI 2008 section M Specialistische zakelijke diensten (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 54560,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "SBI 2008 section M Specialistische zakelijke diensten (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 23145,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "SBI 2008 section N Verhuur en overige zakelijke diensten (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 12230,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "SBI 2008 section N Verhuur en overige zakelijke diensten (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 7095,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "SBI 2008 section O Openbaar bestuur en overheidsdiensten (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 190,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "SBI 2008 section O Openbaar bestuur en overheidsdiensten (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 165,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "SBI 2008 section P Onderwijs (Education)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 13195,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "SBI 2008 section P Onderwijs (Education)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 6200,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "SBI 2008 section Q Gezondheids- en welzijnszorg (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 19200,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "SBI 2008 section Q Gezondheids- en welzijnszorg (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 13335,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "SBI 2008 section R Cultuur, sport en recreatie (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 23585,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "SBI 2008 section R Cultuur, sport en recreatie (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 7775,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "SBI 2008 section S Overige dienstverlening (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 8380,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "SBI 2008 section S Overige dienstverlening (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 4840,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "T",
+   "officialClass": "SBI 2008 section T Huishoudens (Activities of households as employers)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 5,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "T",
+   "officialClass": "SBI 2008 section T Huishoudens (Activities of households as employers)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 0,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "SBI 2008 section U Extraterritoriale organisaties (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "GM0363",
+    "name": "Amsterdam (gemeente)"
+   },
+   "value": 10,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "SBI 2008 section U Extraterritoriale organisaties (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "GM0599",
+    "name": "Rotterdam (gemeente)"
+   },
+   "value": 5,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of business establishments (vestigingen) in the business register by SBI section, 1 January 2026, provisional",
+   "note": "The gemeente's establishments by section, the finest the municipal table publishes."
+  }
+ ]
+}

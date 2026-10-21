@@ -1,0 +1,2338 @@
+{
+ "id": "statcan-canada",
+ "source": {
+  "publisher": "Statistics Canada",
+  "title": "Canadian Business Counts (June 2026), Food services and drinking places summary statistics, Population estimates (1 July 2025)",
+  "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601",
+  "table": "Each row names its own table: 33-10-1174, 33-10-1175, 33-10-1176, 21-10-0171, 17-10-0148, 17-10-0155",
+  "licence": "Statistics Canada Open Licence, https://www.statcan.gc.ca/en/terms-conditions/open-licence"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1366418,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 2523,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 69686,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 20851,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants [722511]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 35359,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Limited-service eating places [722512]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 34327,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Barber shops [812114]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1440,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Beauty salons [812115]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 9748,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Unisex hair salons [812116]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 4841,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, June 2026 (table 33-10-1174-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117401"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 3782386,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1135,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 21030,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 54981,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants [722511]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 11810,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Limited-service eating places [722512]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 9220,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Barber shops [812114]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 5110,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Beauty salons [812115]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 17491,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NAICS Canada 2022 Unisex hair salons [812116]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 14450,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations without employees (owner-operated or no payroll), June 2026",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, without employees, June 2026 (table 33-10-1175-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117501"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503462",
+    "name": "Montréal (census metropolitan area)"
+   },
+   "value": 139898,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503462",
+    "name": "Montréal (census metropolitan area)"
+   },
+   "value": 549,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503462",
+    "name": "Montréal (census metropolitan area)"
+   },
+   "value": 8326,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503462",
+    "name": "Montréal (census metropolitan area)"
+   },
+   "value": 2333,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00052466023",
+    "name": "Montréal (city)"
+   },
+   "value": 57886,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00052466023",
+    "name": "Montréal (city)"
+   },
+   "value": 339,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00052466023",
+    "name": "Montréal (city)"
+   },
+   "value": 3998,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00052466023",
+    "name": "Montréal (city)"
+   },
+   "value": 950,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503535",
+    "name": "Toronto (census metropolitan area)"
+   },
+   "value": 262535,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503535",
+    "name": "Toronto (census metropolitan area)"
+   },
+   "value": 243,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503535",
+    "name": "Toronto (census metropolitan area)"
+   },
+   "value": 13987,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503535",
+    "name": "Toronto (census metropolitan area)"
+   },
+   "value": 4382,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00053520005",
+    "name": "Toronto (city)"
+   },
+   "value": 109280,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00053520005",
+    "name": "Toronto (city)"
+   },
+   "value": 173,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00053520005",
+    "name": "Toronto (city)"
+   },
+   "value": 6257,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00053520005",
+    "name": "Toronto (city)"
+   },
+   "value": 1839,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503825",
+    "name": "Calgary (census metropolitan area)"
+   },
+   "value": 65650,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503825",
+    "name": "Calgary (census metropolitan area)"
+   },
+   "value": 82,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503825",
+    "name": "Calgary (census metropolitan area)"
+   },
+   "value": 3335,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503825",
+    "name": "Calgary (census metropolitan area)"
+   },
+   "value": 1202,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00054806016",
+    "name": "Calgary (city)"
+   },
+   "value": 57817,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00054806016",
+    "name": "Calgary (city)"
+   },
+   "value": 74,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00054806016",
+    "name": "Calgary (city)"
+   },
+   "value": 2986,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00054806016",
+    "name": "Calgary (city)"
+   },
+   "value": 1086,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503933",
+    "name": "Vancouver (census metropolitan area)"
+   },
+   "value": 121423,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503933",
+    "name": "Vancouver (census metropolitan area)"
+   },
+   "value": 143,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503933",
+    "name": "Vancouver (census metropolitan area)"
+   },
+   "value": 6358,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503933",
+    "name": "Vancouver (census metropolitan area)"
+   },
+   "value": 2155,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NAICS Canada 2022 Total, all industries [1]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00055915022",
+    "name": "Vancouver (city)"
+   },
+   "value": 36879,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada 2022 Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00055915022",
+    "name": "Vancouver (city)"
+   },
+   "value": 58,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada 2022 Full-service restaurants and limited-service eating places [7225]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00055915022",
+    "name": "Vancouver (city)"
+   },
+   "value": 1992,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 7225 holds full-service restaurants and limited-service eating places (fast food, takeaway, coffee shops) together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "NAICS Canada 2022 Personal care services [8121]",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00055915022",
+    "name": "Vancouver (city)"
+   },
+   "value": 669,
+   "unit": "business locations",
+   "year": "2026-06",
+   "measure": "active business locations with employees, June 2026 (locations without employees are not published below the province)",
+   "note": "NAICS 8121 holds barber shops, hair salons, beauty salons, nail salons and other personal care together: the finest class published by metropolitan area and city. Statistics Canada counts statistical locations: a business with ten stores and a head office counts eleven times. Statistics Canada advises not to read these counts as a time series.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Canadian Business Counts, with employees, census metropolitan areas and census subdivisions, June 2026 (table 33-10-1176-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=3310117601"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503462",
+    "name": "Montréal (census metropolitan area)"
+   },
+   "value": 4597837,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries (table 17-10-0148-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503535",
+    "name": "Toronto (census metropolitan area)"
+   },
+   "value": 7108874,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries (table 17-10-0148-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503825",
+    "name": "Calgary (census metropolitan area)"
+   },
+   "value": 1836012,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries (table 17-10-0148-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "CA-2021S0503933",
+    "name": "Vancouver (census metropolitan area)"
+   },
+   "value": 3088036,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census metropolitan area and census agglomeration, 2021 boundaries (table 17-10-0148-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710014801"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 41651653,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census subdivision, 2021 boundaries (table 17-10-0155-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00052466023",
+    "name": "Montréal (city)"
+   },
+   "value": 1915366,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census subdivision, 2021 boundaries (table 17-10-0155-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00053520005",
+    "name": "Toronto (city)"
+   },
+   "value": 3271830,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census subdivision, 2021 boundaries (table 17-10-0155-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00054806016",
+    "name": "Calgary (city)"
+   },
+   "value": 1612834,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census subdivision, 2021 boundaries (table 17-10-0155-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CA-2021A00055915022",
+    "name": "Vancouver (city)"
+   },
+   "value": 740454,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population estimate, 1 July 2025 (2021 boundaries)",
+   "note": "Same boundary and code as the business counts of table 33-10-1176-01.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Population estimates, July 1, by census subdivision, 2021 boundaries (table 17-10-0155-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=1710015501"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 33.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "14,869.2 million CAD over operating revenue of 44,191.3 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 3.9,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 44191.3,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 29.5,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. 796.1 million CAD over operating revenue of 2,697.4 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 5.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 2697.4,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 30.2,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. 13,564.0 million CAD over operating revenue of 44,862.8 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 3.7,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 44862.8,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 32.2,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "32,110.4 million CAD over operating revenue of 99,567.4 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 4.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 99567.4,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 32.0,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "5,330.7 million CAD over operating revenue of 16,652.5 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 2.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 16652.5,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 29.5,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. 150.5 million CAD over operating revenue of 509.7 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 4.8,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 509.7,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 29.5,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. 5,452.8 million CAD over operating revenue of 18,455.5 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 3.0,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 18455.5,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 31.4,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "12,293.3 million CAD over operating revenue of 39,187.4 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 3.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario"
+   },
+   "value": 39187.4,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 36.5,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "3,182.4 million CAD over operating revenue of 8,727.2 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 3.4,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 8727.2,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 30.3,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. 260.9 million CAD over operating revenue of 861.5 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 7.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 861.5,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 31.3,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. 2,417.0 million CAD over operating revenue of 7,721.0 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 3.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 7721.0,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 33.8,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "6,392.4 million CAD over operating revenue of 18,934.9 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 4.0,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec"
+   },
+   "value": 18934.9,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 35.3,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "3,185.9 million CAD over operating revenue of 9,021.6 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 5.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 9021.6,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 29.4,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. 199.6 million CAD over operating revenue of 679.8 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 4.8,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 679.8,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 32.4,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. 2,135.7 million CAD over operating revenue of 6,600.2 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 3.5,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 6600.2,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 34.0,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "5,978.2 million CAD over operating revenue of 17,567.5 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 5.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia"
+   },
+   "value": 17567.5,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 31.1,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "1,771.6 million CAD over operating revenue of 5,699.8 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 5.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "restaurants",
+   "officialClass": "NAICS Canada Full-service restaurants [722511]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 5699.8,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 28.9,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here. 93.9 million CAD over operating revenue of 324.6 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 1.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "trade": "cafes",
+   "officialClass": "NAICS Canada Drinking places (alcoholic beverages) [7224]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 324.6,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Drinking places (bars, pubs, taverns), the counterpart of ISIC 5630 beverage serving. Canada's coffee shops sit in limited-service eating places (722512), not here.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 29.2,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone. 1,764.6 million CAD over operating revenue of 6,041.4 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 4.9,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Limited-service eating places [722512]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 6041.4,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "Canada's NAICS 722512 holds fast food, takeaway and coffee shops together: no class for cafes alone.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 30.6,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "salaries, wages, commissions and benefits divided by operating revenue",
+   "note": "3,913.8 million CAD over operating revenue of 12,794.8 million CAD.",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 5.2,
+   "unit": "percent of operating revenue",
+   "year": "2024",
+   "measure": "operating profit margin as published: operating revenue minus operating expenses (depreciation included), divided by operating revenue. Not the gross operating rate: it is after depreciation and after all staff pay",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  },
+  {
+   "item": "operating_revenue_total",
+   "officialClass": "NAICS Canada Food services and drinking places [722]",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta"
+   },
+   "value": 12794.8,
+   "unit": "million CAD",
+   "year": "2024",
+   "measure": "total operating revenue of the industry (no business count is published with it, so no mean per business)",
+   "note": "",
+   "source": {
+    "publisher": "Statistics Canada",
+    "title": "Food services and drinking places, summary statistics (table 21-10-0171-01)",
+    "url": "https://www150.statcan.gc.ca/t1/tbl1/en/tv.action?pid=2110017101"
+   }
+  }
+ ]
+}

@@ -1,0 +1,263 @@
+{
+  "id": "place-uk3-visitor-pull-index-2025",
+  "source": {
+    "publisher": "Office for National Statistics (visits and population); worked by the method of data/sourced/place/README-uk3-indices.md",
+    "title": "Visitor pull index of the UK catalog cities, 0 to 100, with its ratio",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2.11,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 19,292,000 visits by overseas residents in 2025 (visitors, unit visits, visitors.json) over 9,122,909 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names London as a town visited, while the population is the London region's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 66,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 2.115 visits per resident (the row visitor_pull_ratio of this file: 19,292,000 visits by overseas residents in 2025 (visitors, unit visits, visitors.json) over 9,122,909 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names London as a town visited, while the population is the London region's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 2.09,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 1,229,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 588,256 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Manchester as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 66,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 2.089 visits per resident (the row visitor_pull_ratio of this file: 1,229,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 588,256 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Manchester as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 0.56,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 664,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 1,176,960 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Birmingham as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 38,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 0.564 visits per resident (the row visitor_pull_ratio of this file: 664,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 1,176,960 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Birmingham as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 0.32,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 270,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 840,550 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Leeds as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 25,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Low: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 0.321 visits per resident (the row visitor_pull_ratio of this file: 270,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 840,550 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Leeds as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 0.88,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 434,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 495,260 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Bristol as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 47,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 0.876 visits per resident (the row visitor_pull_ratio of this file: 434,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 495,260 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Bristol as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 4.47,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 2,377,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 531,370 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Edinburgh as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 83,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (High: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 4.473 visits per resident (the row visitor_pull_ratio of this file: 2,377,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 531,370 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Edinburgh as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_ratio",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 1.06,
+      "unit": "overseas visits per resident a year",
+      "year": "2025",
+      "measure": "overseas visits a year for each resident",
+      "note": "Computed: 693,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 654,330 residents at mid-2025 (population, data/sourced/business/populations.json); the survey names Glasgow as a town visited, while the population is the local authority's; the survey does not state its area",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    },
+    {
+      "item": "visitor_pull_index",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 51,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "visitor pull index (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: 1.059 visits per resident (the row visitor_pull_ratio of this file: 693,000 visits by overseas residents in 2025 (visitors, unit visits, uk-visitors-ips-2025.json) over 654,330 residents at mid-2025 (population, data/sourced/business/populations.json)) on the log scale from 0.1 (0) to 10 (100), one visit per resident scoring 50; the survey names Glasgow as a town visited, while the population is the local authority's; the survey does not state its area; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK 2025 (Table 17), with the ONS mid-2025 population estimates",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx"
+      }
+    }
+  ]
+}

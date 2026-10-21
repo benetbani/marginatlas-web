@@ -1,0 +1,183 @@
+{
+ "id": "rules-scotland-business-rates-2026",
+ "source": {
+  "publisher": "Scottish Ministers (legislation.gov.uk)",
+  "title": "The Non-Domestic Rate (Scotland) Order 2026 (SSI 2026/39)",
+  "url": "https://www.legislation.gov.uk/ssi/2026/39/made",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 48.1,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Non-domestic rates poundage, basic (the national non-domestic rate), rateable value up to GBP 51,000",
+   "note": "Business rates in Scotland (non-domestic rates): rateable value times the poundage, billed by the council; the national rate applies to every property, and the additional factors of SSI 2026/68 add to it above GBP 51,000; 49.8p in 2025-26 (the Order's explanatory note)",
+   "source": {
+    "publisher": "Scottish Ministers (legislation.gov.uk)",
+    "title": "The Non-Domestic Rate (Scotland) Order 2026 (SSI 2026/39)",
+    "url": "https://www.legislation.gov.uk/ssi/2026/39/made",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 53.5,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Non-domestic rates poundage, intermediate (basic plus the additional factor), rateable value GBP 51,001 to 100,000",
+   "note": "the basic 48.1p (SSI 2026/39) plus the additional factor of 0.054 (5.4p, regulation 5 of SSI 2026/68); the sum is worked here, the two parts are each in law",
+   "source": {
+    "publisher": "Scottish Ministers (legislation.gov.uk)",
+    "title": "The Non-Domestic Rates (Levying and Miscellaneous Amendment) (Scotland) Regulations 2026 (SSI 2026/68), regulations 5 and 6",
+    "url": "https://www.legislation.gov.uk/ssi/2026/68/made",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 54.8,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Non-domestic rates poundage, higher (basic plus the additional factor), rateable value over GBP 100,000",
+   "note": "the basic 48.1p (SSI 2026/39) plus the additional factor of 0.067 (6.7p, regulation 6 of SSI 2026/68); the sum is worked here, the two parts are each in law",
+   "source": {
+    "publisher": "Scottish Ministers (legislation.gov.uk)",
+    "title": "The Non-Domestic Rates (Levying and Miscellaneous Amendment) (Scotland) Regulations 2026 (SSI 2026/68), regulations 5 and 6",
+    "url": "https://www.legislation.gov.uk/ssi/2026/68/made",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief_threshold",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 12000,
+   "unit": "GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Small Business Bonus Scheme: no rates at or below this rateable value (one property)",
+   "note": "100% relief where the ratepayer's only entry in the valuation roll has a rateable value of GBP 12,000 or less",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief_threshold",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 15000,
+   "unit": "GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Small Business Bonus Scheme: relief tapers from 100% to 25% up to this rateable value (one property)",
+   "note": "relief percentage = 100 - (75 x (1 - ((15000 - RV) / 3000))) between GBP 12,001 and 15,000",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief_threshold",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 20000,
+   "unit": "GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Small Business Bonus Scheme: relief tapers from 25% to 0 up to this rateable value",
+   "note": "relief percentage = 25 x ((20000 - RV) / 5000) between GBP 15,001 and 20,000",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief_threshold",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 35000,
+   "unit": "GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Small Business Bonus Scheme: the most a business's properties may be worth together and qualify",
+   "note": "with several properties: 100% where they total GBP 12,000 or less; 25% on each property of GBP 15,000 or less where they total GBP 12,001 to 35,000 (tapering to 0 for a property of GBP 15,001 to 20,000); the scheme runs 1 April 2026 to 31 March 2029 under regulations made for 2026-27",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 15,
+   "unit": "percent of the rates bill",
+   "year": "2026-27",
+   "measure": "Retail, hospitality and leisure relief on the mainland, rateable value up to GBP 100,000, licensed premises and music venues excepted",
+   "note": "the purposes of Schedule 1 of the regulations (bed and breakfast, guest house, camping and the like in the circular's list); restaurants and cafes are in the 40% class below, not this one; applies 2026-27, the scheme set for 1 April 2026 to 31 March 2029",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "local_tax_relief",
+   "geo": {
+    "level": "region",
+    "code": "GB-SCT",
+    "name": "Scotland"
+   },
+   "value": 40,
+   "unit": "percent of the rates bill",
+   "year": "2026-27",
+   "measure": "Licensed hospitality and music venue relief, rateable value up to GBP 100,000",
+   "note": "hotel, hostel, live music venue, public house, night club or restaurant (cafe, coffee shop, bistro, fast food restaurant or snack bar included, the circular's words for Schedule 1A)",
+   "source": {
+    "publisher": "Scottish Government",
+    "title": "Local government finance circular 7/2026: non-domestic rates relief guidance, Annex A (Tables 3 and 4)",
+    "url": "https://www.gov.scot/publications/local-government-finance-circular-7-2026-non-domestic-rates-relief-guidance/pages/non-domestic-rates-relief-information-for-scottish-local-authorities/",
+    "licence": "Open Government Licence v3.0"
+   }
+  }
+ ]
+}

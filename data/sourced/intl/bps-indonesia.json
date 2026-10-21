@@ -1,0 +1,132 @@
+{
+ "id": "bps-indonesia",
+ "source": {
+  "publisher": "BPS-Statistics Indonesia",
+  "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+  "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html",
+  "licence": "BPS: free use of published statistics with citation of the source (Law 16 of 1997 on Statistics)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "trade": "restaurants",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "business_count",
+   "value": 4850000,
+   "unit": "businesses",
+   "measure": "food and beverage service businesses, as published rounded to 4.85 million"
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "sales_per_business",
+   "value": 205849000,
+   "unit": "IDR",
+   "measure": "mean sales per business, derived: 998.37 trillion IDR of sales over 4.85 million businesses (both as published)"
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "persons_per_business",
+   "value": 2.0,
+   "unit": "workers per business",
+   "measure": "workers per business, derived: 9.80 million workers over 4.85 million businesses (both as published, rounded)"
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "business_count",
+   "value": 4850000,
+   "unit": "businesses",
+   "measure": "food and beverage service businesses, as published rounded to 4.85 million"
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "sales_per_business",
+   "value": 205849000,
+   "unit": "IDR",
+   "measure": "mean sales per business, derived: 998.37 trillion IDR of sales over 4.85 million businesses (both as published)"
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "KBLI 2020 food and beverage service activities (restaurants and eateries, mobile food, catering, food stalls, cafes, drink shops and the rest)",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "year": "2023",
+   "source": {
+    "publisher": "BPS-Statistics Indonesia",
+    "title": "Food and Beverage Service Activities Statistics 2023 (Statistik Penyediaan Makanan dan Minuman 2023), catalogue 8204008, abstract",
+    "url": "https://www.bps.go.id/en/publication/2024/12/23/f2c7743c4712aaeaa4abf694/food-and-beverage-service-actvities-statistics-2023.html"
+   },
+   "note": "All food and beverage service businesses, from the 2024 Survey of Food and Beverage Service Activities, reference year 2023. The abstract rounds the count (4.85 million) and the workers (9.80 million): the derived means carry that rounding. Restaurants and eateries are 24.75 percent of the businesses. Written under restaurants and under cafes. Confirmed by a second route (data note 34): the Internet Archive copy of the Indonesian publication page of 2 October 2026 reads 4,85 juta usaha, 9,80 juta pekerja and nilai penjualan 998,37 triliun rupiah.",
+   "item": "persons_per_business",
+   "value": 2.0,
+   "unit": "workers per business",
+   "measure": "workers per business, derived: 9.80 million workers over 4.85 million businesses (both as published, rounded)"
+  }
+ ]
+}

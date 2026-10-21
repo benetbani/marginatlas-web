@@ -1,0 +1,1203 @@
+{
+ "id": "istat-asia-2024",
+ "source": {
+  "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+  "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+  "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/",
+  "table": "ASIA local units, DATA_TYPE LU, size class TOTAL, 2023 and 2024 (comune, NACE 3-digit) and 2024 (province, ATECO 5-digit); SDMX REST https://esploradati.istat.it/SDMXWS/rest; browser https://esploradati.istat.it/databrowser/",
+  "licence": "Creative Commons Attribution 4.0 (CC BY 4.0), ISTAT legal notes https://www.istat.it/note-legali/"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 94957,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 96614,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3182,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3317,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 1820,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 1803,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3701,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3804,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Torino. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 228428,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 234906,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 6057,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 6257,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 3087,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 3151,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 6688,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 6721,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Milano. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 49047,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 49541,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1726,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1812,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 734,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 804,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1513,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1539,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Firenze. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 303432,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 310504,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 10132,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 10300,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 4568,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 4716,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 10999,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 11136,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Roma. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 83166,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 85625,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2928,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.1: ristoranti e attività di ristorazione mobile (restaurants and mobile food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2961,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. Includes takeaway and mobile food (ATECO 56.1), not only table-service restaurants.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 1650,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.3: bar e altri esercizi simili senza cucina (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 1835,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. The Italian bar is the cafe: coffee and drinks served without a kitchen.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2741,
+   "unit": "local units",
+   "year": "2023",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.0: altre attività di servizi per la persona (other personal service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2910,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Comune di Napoli. Hairdressing and beauty cannot be separated at comune level: this is all other personal services.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by comune and NACE 3-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 202606,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Torino, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.10.1: ristorazione con somministrazione",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 5028,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Torino, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.30.0: bar e altri esercizi simili senza cucina",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 3558,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Torino, wider than the comune. The Italian bar is the cafe.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.02: servizi dei parrucchieri e di altri trattamenti estetici (hairdressing and other beauty treatment)",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 5781,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Torino, wider than the comune. Barbers are not separate: ATECO 96.02 is hairdressing and other beauty treatment together.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 387916,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Milano, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.10.1: ristorazione con somministrazione",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 7511,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Milano, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.30.0: bar e altri esercizi simili senza cucina",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 5586,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Milano, wider than the comune. The Italian bar is the cafe.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.02: servizi dei parrucchieri e di altri trattamenti estetici (hairdressing and other beauty treatment)",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 7893,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Milano, wider than the comune. Barbers are not separate: ATECO 96.02 is hairdressing and other beauty treatment together.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 105979,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Firenze, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.10.1: ristorazione con somministrazione",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 2606,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Firenze, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.30.0: bar e altri esercizi simili senza cucina",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 1476,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Firenze, wider than the comune. The Italian bar is the cafe.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.02: servizi dei parrucchieri e di altri trattamenti estetici (hairdressing and other beauty treatment)",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 2432,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Firenze, wider than the comune. Barbers are not separate: ATECO 96.02 is hairdressing and other beauty treatment together.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 413652,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Roma, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.10.1: ristorazione con somministrazione",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 10718,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Roma, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.30.0: bar e altri esercizi simili senza cucina",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 7075,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Roma, wider than the comune. The Italian bar is the cafe.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.02: servizi dei parrucchieri e di altri trattamenti estetici (hairdressing and other beauty treatment)",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 10799,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Roma, wider than the comune. Barbers are not separate: ATECO 96.02 is hairdressing and other beauty treatment together.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 total",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 224227,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Napoli, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.10.1: ristorazione con somministrazione",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 5583,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Napoli, wider than the comune.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 56.30.0: bar e altri esercizi simili senza cucina",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 4645,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Napoli, wider than the comune. The Italian bar is the cafe.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ATECO 2007 96.02: servizi dei parrucchieri e di altri trattamenti estetici (hairdressing and other beauty treatment)",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 6034,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises), annual",
+   "note": "Province (città metropolitana) of Napoli, wider than the comune. Barbers are not separate: ATECO 96.02 is hairdressing and other beauty treatment together.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Local units of active enterprises (ASIA local units), by province and ATECO 5-digit (183_1163_DF_DICA_ASIAULP_TERRIFDATA_2)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_2,1.0/"
+   },
+   "trade": "barbershops"
+  }
+ ]
+}

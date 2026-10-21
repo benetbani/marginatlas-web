@@ -1,0 +1,205 @@
+{
+ "id": "eu-season-estimate-2025",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Turnover in services, monthly data (sts_setu_m), weighted by Enterprises by detailed NACE Rev. 2 activity (sbs_ovw_act)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/sts_setu_m/default/table",
+  "table": "worked out by Margin Atlas from business/eurostat-sts-turnover-month.json and business/eurostat-sbs-2023.json (scripts/eu_season_estimate.py)",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-21",
+ "rows": [
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 82.0,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-01",
+   "measure": "estimate: the month's sales against the year's average month, 2025-01",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 82.9,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-02",
+   "measure": "estimate: the month's sales against the year's average month, 2025-02",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 96.3,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-03",
+   "measure": "estimate: the month's sales against the year's average month, 2025-03",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 97.3,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-04",
+   "measure": "estimate: the month's sales against the year's average month, 2025-04",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 108.9,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-05",
+   "measure": "estimate: the month's sales against the year's average month, 2025-05",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 106.1,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-06",
+   "measure": "estimate: the month's sales against the year's average month, 2025-06",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 103.1,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-07",
+   "measure": "estimate: the month's sales against the year's average month, 2025-07",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 119.7,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-08",
+   "measure": "estimate: the month's sales against the year's average month, 2025-08",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 104.5,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-09",
+   "measure": "estimate: the month's sales against the year's average month, 2025-09",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 101.1,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-10",
+   "measure": "estimate: the month's sales against the year's average month, 2025-10",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 94.3,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-11",
+   "measure": "estimate: the month's sales against the year's average month, 2025-11",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  },
+  {
+   "item": "season_index_month",
+   "trade": "restaurants",
+   "officialClass": "NACE Rev. 2 I56: Food and beverage service activities",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 103.8,
+   "unit": "index, the year's average month = 100",
+   "year": "2025-12",
+   "measure": "estimate: the month's sales against the year's average month, 2025-12",
+   "estimate": true,
+   "note": "An estimate: 26 members' own indexes, each over its own average month of 2025, averaged month by month and weighted by its restaurants' 2023 sales; together they hold 98.3% of the EU restaurants' sales. Left out (no twelve months of 2025, or no sales figure): Ireland. The index counts restaurants, cafes and bars together (division 56: no class below it is published monthly)."
+  }
+ ]
+}

@@ -1,0 +1,2653 @@
+{
+ "id": "eurostat-gas-business",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Gas prices for non-household consumers - bi-annual data (from 2007 onwards) (nrg_pc_203)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_203/default/table",
+  "table": "nrg_pc_203, unit KWH, tax X_VAT, currency EUR and NAC (NAC only where the country is outside the euro), nrg_cons GJ_LT1000, GJ1000-9999; the latest two semesters each country publishes",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.0793,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.0786,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.0946,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.0936,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.0532,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.104,
+   "unit": "BAM per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.0545,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.1066,
+   "unit": "BAM per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.0532,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.104,
+   "unit": "BAM per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.0545,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.1066,
+   "unit": "BAM per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.0603,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.0548,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.07,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.0677,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.0468,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.0483,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.0515,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.0512,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.0715,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.7438,
+   "unit": "CZK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.0637,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.548,
+   "unit": "CZK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.077,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.8772,
+   "unit": "CZK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.0606,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.4743,
+   "unit": "CZK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.086,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.0811,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.095,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.0915,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.076,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.5674,
+   "unit": "DKK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.0813,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.6075,
+   "unit": "DKK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.0857,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.6396,
+   "unit": "DKK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.0878,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.6564,
+   "unit": "DKK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.0558,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.0619,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.0611,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.0624,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.0603,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.0592,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.06,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.0549,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.0546,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.0562,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.0401,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.0469,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.0782,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.0754,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.089,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.0851,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.0939,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.0992,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.1034,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.1044,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.0916,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.0799,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.1115,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.0955,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0313,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0988,
+   "unit": "GEL per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0318,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0997,
+   "unit": "GEL per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0312,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0985,
+   "unit": "GEL per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0315,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0987,
+   "unit": "GEL per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.052,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.053,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.0569,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.0594,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.0626,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 24.5004,
+   "unit": "HUF per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.0623,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 23.18,
+   "unit": "HUF per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.0729,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 28.5311,
+   "unit": "HUF per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.0858,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 31.9214,
+   "unit": "HUF per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.0829,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.075,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.1073,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.0951,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.07,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.0751,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.0965,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.0917,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.0552,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.0493,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.0628,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.0541,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.0809,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.0733,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.0861,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.0822,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.062,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.0619,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.0667,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.0654,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.0699,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 1.3749,
+   "unit": "MDL per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.0626,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 1.2584,
+   "unit": "MDL per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.0747,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 1.471,
+   "unit": "MDL per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.0732,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 1.4716,
+   "unit": "MDL per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.057,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 3.5079,
+   "unit": "MKD per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.067,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 4.1306,
+   "unit": "MKD per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.0794,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 4.8896,
+   "unit": "MKD per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.0856,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 5.2811,
+   "unit": "MKD per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.1133,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.1146,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.1265,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.1254,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.0776,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.3295,
+   "unit": "PLN per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.071,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.301,
+   "unit": "PLN per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.075,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.3187,
+   "unit": "PLN per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.0734,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.3113,
+   "unit": "PLN per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.0709,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.0741,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.0923,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.0973,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.0538,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2731,
+   "unit": "RON per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.055,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2831,
+   "unit": "RON per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.0552,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2802,
+   "unit": "RON per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.0552,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2841,
+   "unit": "RON per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.0472,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.5373,
+   "unit": "RSD per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.0486,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.71,
+   "unit": "RSD per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.0447,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.2425,
+   "unit": "RSD per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.0441,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.1782,
+   "unit": "RSD per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.132,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.4564,
+   "unit": "SEK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.1301,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.4035,
+   "unit": "SEK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.1439,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.5876,
+   "unit": "SEK per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.1522,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.6423,
+   "unit": "SEK per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.0658,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.0683,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.0787,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.0751,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.0731,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.0668,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.0781,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.0708,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0297,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 1.4397,
+   "unit": "TRY per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0306,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I2",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 1.5925,
+   "unit": "TRY per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I2, consumption 1,000 to 9,999 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I2, consumption 1,000 to 9,999 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0344,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 1.6651,
+   "unit": "TRY per kWh",
+   "year": "2025-S2",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2025 second half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0331,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "natural gas, non-household consumers, band I1",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 1.7219,
+   "unit": "TRY per kWh",
+   "year": "2026-S1",
+   "measure": "average natural gas price a kWh for a business, band I1, consumption below 1,000 GJ a year, 2026 first half",
+   "note": "Non-household consumers, band I1, consumption below 1,000 GJ a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  }
+ ]
+}

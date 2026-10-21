@@ -1,0 +1,3483 @@
+{
+ "id": "ons-abs-2024",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+  "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas",
+  "table": "abssectionsas.xlsx (released 26 May 2026), sheets Sections A to S, Section I, Section S; absregionalsectionas2024.xlsx (released 4 June 2026), one sheet per region; year 2024",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "officialClass": "SIC 2007 A-S (part): Agriculture, fishing, production, construction, distribution and Non-Financial Service industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "all",
+   "item": "business_count",
+   "value": 2504066,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "UK non-financial business economy."
+  },
+  {
+   "officialClass": "SIC 2007 A-S (part): Agriculture, fishing, production, construction, distribution and Non-Financial Service industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "all",
+   "item": "sales_per_business",
+   "value": 2032300,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "UK non-financial business economy. Turnover 5088995 million GBP over 2504066 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 A-S (part): Agriculture, fishing, production, construction, distribution and Non-Financial Service industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 65.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "UK non-financial business economy. Purchases 3346733 million GBP over turnover 5088995 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A-S (part): Agriculture, fishing, production, construction, distribution and Non-Financial Service industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 19.0,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "UK non-financial business economy. Employment costs 967549 million GBP over turnover 5088995 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A-S (part): Agriculture, fishing, production, construction, distribution and Non-Financial Service industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 14.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "UK non-financial business economy. aGVA 1725172 million GBP minus employment costs 967549 million GBP, over turnover 5088995 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "business_count",
+   "value": 155404,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "UK."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "sales_per_business",
+   "value": 624500,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "Turnover 97052 million GBP over 155404 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "purchases_share",
+   "value": 52.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": " Purchases 50564 million GBP over turnover 97052 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "staff_cost_share",
+   "value": 34.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": " Employment costs 33561 million GBP over turnover 97052 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "gross_operating_rate",
+   "value": 13.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": " aGVA 46138 million GBP minus employment costs 33561 million GBP, over turnover 97052 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.1: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "restaurants",
+   "item": "business_count",
+   "value": 105334,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "Restaurants, cafes and takeaways (group 56.1, one class 56.10)."
+  },
+  {
+   "officialClass": "SIC 2007 56.1: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "restaurants",
+   "item": "sales_per_business",
+   "value": 528000,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "Restaurants, cafes and takeaways (group 56.1, one class 56.10). Turnover 55617 million GBP over 105334 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 56.1: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 52.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Restaurants, cafes and takeaways (group 56.1, one class 56.10). Purchases 29005 million GBP over turnover 55617 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.1: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 33.7,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Restaurants, cafes and takeaways (group 56.1, one class 56.10). Employment costs 18756 million GBP over turnover 55617 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.1: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 13.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Restaurants, cafes and takeaways (group 56.1, one class 56.10). aGVA 26485 million GBP minus employment costs 18756 million GBP, over turnover 55617 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.3: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "cafes",
+   "item": "business_count",
+   "value": 36087,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "Beverage serving: pubs, bars and clubs (UK cafes sit inside 56.1)."
+  },
+  {
+   "officialClass": "SIC 2007 56.3: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "cafes",
+   "item": "sales_per_business",
+   "value": 743800,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "Beverage serving: pubs, bars and clubs (UK cafes sit inside 56.1). Turnover 26842 million GBP over 36087 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 56.3: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 53.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Beverage serving: pubs, bars and clubs (UK cafes sit inside 56.1). Purchases 14229 million GBP over turnover 26842 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.3: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 32.5,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Beverage serving: pubs, bars and clubs (UK cafes sit inside 56.1). Employment costs 8714 million GBP over turnover 26842 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56.3: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 13.7,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Beverage serving: pubs, bars and clubs (UK cafes sit inside 56.1). aGVA 12390 million GBP minus employment costs 8714 million GBP, over turnover 26842 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "business_count",
+   "value": 83741,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "UK."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "sales_per_business",
+   "value": 247500,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "Turnover 20726 million GBP over 83741 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "purchases_share",
+   "value": 40.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": " Purchases 8314 million GBP over turnover 20726 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "staff_cost_share",
+   "value": 34.4,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": " Employment costs 7136 million GBP over turnover 20726 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "item": "gross_operating_rate",
+   "value": 25.7,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": " aGVA 12455 million GBP minus employment costs 7136 million GBP, over turnover 20726 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96.02: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "barbershops",
+   "item": "business_count",
+   "value": 50438,
+   "unit": "enterprises",
+   "measure": "number of enterprises",
+   "note": "Barbers are not separate from hairdressing and beauty."
+  },
+  {
+   "officialClass": "SIC 2007 96.02: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "barbershops",
+   "item": "sales_per_business",
+   "value": 101800,
+   "unit": "GBP",
+   "measure": "mean total turnover per enterprise (turnover divided by enterprises), rounded to 100 GBP",
+   "note": "Barbers are not separate from hairdressing and beauty. Turnover 5133 million GBP over 50438 enterprises."
+  },
+  {
+   "officialClass": "SIC 2007 96.02: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 36.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Barbers are not separate from hairdressing and beauty. Purchases 1847 million GBP over turnover 5133 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96.02: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 42.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Barbers are not separate from hairdressing and beauty. Employment costs 2169 million GBP over turnover 5133 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96.02: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK: Sections A to S (Annual Business Survey), 2024 results",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveysectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 21.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Barbers are not separate from hairdressing and beauty. aGVA 3273 million GBP minus employment costs 2169 million GBP, over turnover 5133 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 61.9,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 76269 million GBP over turnover 123158 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 21.8,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 26825 million GBP over turnover 123158 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 16.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 47117 million GBP minus employment costs 26825 million GBP, over turnover 123158 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 51.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1503 million GBP over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 40.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1195 million GBP over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 7.8,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 1426 million GBP minus employment costs 1195 million GBP, over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 51.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1503 million GBP over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 40.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1195 million GBP over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 7.8,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 1426 million GBP minus employment costs 1195 million GBP, over turnover 2945 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 46.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 233 million GBP over turnover 498 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 40.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 200 million GBP over turnover 498 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLC",
+    "name": "North East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 9.2,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 246 million GBP minus employment costs 200 million GBP, over turnover 498 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 62.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 304441 million GBP over turnover 490435 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 20.7,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 101710 million GBP over turnover 490435 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 16.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 181580 million GBP minus employment costs 101710 million GBP, over turnover 490435 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 50.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 4527 million GBP over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 32.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2901 million GBP over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 16.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 4424 million GBP minus employment costs 2901 million GBP, over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 50.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 4527 million GBP over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 32.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2901 million GBP over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 16.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 4424 million GBP minus employment costs 2901 million GBP, over turnover 8992 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 30.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 551 million GBP over turnover 1838 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 35.7,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 656 million GBP over turnover 1838 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLD",
+    "name": "North West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 35.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 1307 million GBP minus employment costs 656 million GBP, over turnover 1838 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 65.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 201501 million GBP over turnover 308693 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 19.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 60639 million GBP over turnover 308693 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 14.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 106488 million GBP minus employment costs 60639 million GBP, over turnover 308693 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 50.4,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3143 million GBP over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 33.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2079 million GBP over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 15.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 3036 million GBP minus employment costs 2079 million GBP, over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 50.4,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3143 million GBP over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 33.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2079 million GBP over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 15.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 3036 million GBP minus employment costs 2079 million GBP, over turnover 6240 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 56.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 594 million GBP over turnover 1046 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 43.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 452 million GBP over turnover 1046 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLE",
+    "name": "Yorkshire and The Humber"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": -1.2,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 439 million GBP minus employment costs 452 million GBP, over turnover 1046 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 64.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 178227 million GBP over turnover 276293 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 20.5,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 56503 million GBP over turnover 276293 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 15.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 99157 million GBP minus employment costs 56503 million GBP, over turnover 276293 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 54.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 2466 million GBP over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 36.7,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1669 million GBP over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 9.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2097 million GBP minus employment costs 1669 million GBP, over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 54.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 2466 million GBP over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 36.7,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1669 million GBP over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 9.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2097 million GBP minus employment costs 1669 million GBP, over turnover 4549 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 48.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 782 million GBP over turnover 1621 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 42.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 691 million GBP over turnover 1621 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLF",
+    "name": "East Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 9.7,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 848 million GBP minus employment costs 691 million GBP, over turnover 1621 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 65.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 242847 million GBP over turnover 368917 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 19.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 71082 million GBP over turnover 368917 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 15.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 126583 million GBP minus employment costs 71082 million GBP, over turnover 368917 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 54.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3547 million GBP over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 32.9,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2143 million GBP over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 12.8,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2974 million GBP minus employment costs 2143 million GBP, over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 54.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3547 million GBP over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 32.9,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2143 million GBP over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 12.8,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2974 million GBP minus employment costs 2143 million GBP, over turnover 6511 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 41.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 637 million GBP over turnover 1547 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 50.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 783 million GBP over turnover 1547 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLG",
+    "name": "West Midlands"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 8.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 916 million GBP minus employment costs 783 million GBP, over turnover 1547 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 67.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 299852 million GBP over turnover 445320 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 18.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 81009 million GBP over turnover 445320 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 13.7,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 141820 million GBP minus employment costs 81009 million GBP, over turnover 445320 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 53.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3328 million GBP over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 37.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2333 million GBP over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 9.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2919 million GBP minus employment costs 2333 million GBP, over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 53.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3328 million GBP over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 37.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2333 million GBP over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 9.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2919 million GBP minus employment costs 2333 million GBP, over turnover 6272 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 32.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 669 million GBP over turnover 2089 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 38.8,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 811 million GBP over turnover 2089 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLH",
+    "name": "East of England"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 27.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 1384 million GBP minus employment costs 811 million GBP, over turnover 2089 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 69.7,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 1075014 million GBP over turnover 1542231 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 16.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 251352 million GBP over turnover 1542231 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 13.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 459972 million GBP minus employment costs 251352 million GBP, over turnover 1542231 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 53.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 12999 million GBP over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 31.5,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 7682 million GBP over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 14.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 11259 million GBP minus employment costs 7682 million GBP, over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 53.2,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 12999 million GBP over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 31.5,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 7682 million GBP over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 14.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 11259 million GBP minus employment costs 7682 million GBP, over turnover 24426 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 38.1,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 1519 million GBP over turnover 3984 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 38.4,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 1530 million GBP over turnover 3984 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London (Greater London)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 23.9,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 2481 million GBP minus employment costs 1530 million GBP, over turnover 3984 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 65.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 469028 million GBP over turnover 721943 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 19.2,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 138833 million GBP over turnover 721943 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 15.2,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 248296 million GBP minus employment costs 138833 million GBP, over turnover 721943 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 49.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 6275 million GBP over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 37.4,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 4714 million GBP over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 12.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 6293 million GBP minus employment costs 4714 million GBP, over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 49.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 6275 million GBP over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 37.4,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 4714 million GBP over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 12.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 6293 million GBP minus employment costs 4714 million GBP, over turnover 12609 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 35.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 858 million GBP over turnover 2451 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 36.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 898 million GBP over turnover 2451 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLJ",
+    "name": "South East"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 29.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 1620 million GBP minus employment costs 898 million GBP, over turnover 2451 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 60.9,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 182082 million GBP over turnover 298827 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 22.4,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 66915 million GBP over turnover 298827 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 16.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 114759 million GBP minus employment costs 66915 million GBP, over turnover 298827 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 56.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3936 million GBP over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 35.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2475 million GBP over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 8.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 3029 million GBP minus employment costs 2475 million GBP, over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 56.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 3936 million GBP over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 35.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2475 million GBP over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 8.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 3029 million GBP minus employment costs 2475 million GBP, over turnover 6961 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 54.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 1138 million GBP over turnover 2109 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 21.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 450 million GBP over turnover 2109 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "TLK",
+    "name": "South West"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 24.8,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 974 million GBP minus employment costs 450 million GBP, over turnover 2109 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 62.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 84221 million GBP over turnover 135274 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 20.8,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 28088 million GBP over turnover 135274 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 17.4,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 51606 million GBP minus employment costs 28088 million GBP, over turnover 135274 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 53.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1662 million GBP over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 36.9,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1157 million GBP over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 10.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 1469 million GBP minus employment costs 1157 million GBP, over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 53.0,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1662 million GBP over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 36.9,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 1157 million GBP over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 10.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 1469 million GBP minus employment costs 1157 million GBP, over turnover 3134 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 40.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 168 million GBP over turnover 412 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 49.5,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 204 million GBP over turnover 412 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLL",
+    "name": "Wales"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 10.0,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 245 million GBP minus employment costs 204 million GBP, over turnover 412 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 59.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 173631 million GBP over turnover 292587 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 22.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 65147 million GBP over turnover 292587 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 19.1,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 121051 million GBP minus employment costs 65147 million GBP, over turnover 292587 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 51.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 2810 million GBP over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 38.8,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2117 million GBP over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 9.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2640 million GBP minus employment costs 2117 million GBP, over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 51.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 2810 million GBP over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 38.8,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 2117 million GBP over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 9.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 2640 million GBP minus employment costs 2117 million GBP, over turnover 5460 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 39.9,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 513 million GBP over turnover 1286 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 36.3,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 467 million GBP over turnover 1286 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLM",
+    "name": "Scotland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 24.3,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 779 million GBP minus employment costs 467 million GBP, over turnover 1286 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "purchases_share",
+   "value": 62.8,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Purchases 59936 million GBP over turnover 95438 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "staff_cost_share",
+   "value": 20.6,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. Employment costs 19618 million GBP over turnover 95438 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 A to S (Exc K): Agriculture, fishing, production, construction, distribution and non-financial service industries",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "all",
+   "item": "gross_operating_rate",
+   "value": 17.6,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Non-financial business economy. Regional figures are apportioned from enterprise returns by employment. aGVA 36454 million GBP minus employment costs 19618 million GBP, over turnover 95438 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "purchases_share",
+   "value": 55.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1067 million GBP over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "staff_cost_share",
+   "value": 35.1,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 678 million GBP over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "restaurants",
+   "item": "gross_operating_rate",
+   "value": 9.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 862 million GBP minus employment costs 678 million GBP, over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "purchases_share",
+   "value": 55.3,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Purchases 1067 million GBP over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "staff_cost_share",
+   "value": 35.1,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. Employment costs 678 million GBP over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "cafes",
+   "item": "gross_operating_rate",
+   "value": 9.5,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 56 (restaurants, cafes, takeaways, pubs, bars, catering). Regional figures are apportioned from enterprise returns by employment. aGVA 862 million GBP minus employment costs 678 million GBP, over turnover 1929 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "purchases_share",
+   "value": 31.5,
+   "unit": "percent of turnover",
+   "measure": "total purchases of goods, materials and services divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Purchases 68 million GBP over turnover 216 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "staff_cost_share",
+   "value": 37.0,
+   "unit": "percent of turnover",
+   "measure": "total employment costs (wages, salaries, employer social contributions and pensions) divided by total turnover",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. Employment costs 80 million GBP over turnover 216 million GBP."
+  },
+  {
+   "officialClass": "SIC 2007 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TLN",
+    "name": "Northern Ireland"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Non-financial business economy, UK and regional (Annual Business Survey): Sections A to S, regional results 2024",
+    "url": "https://www.ons.gov.uk/businessindustryandtrade/business/businessservices/datasets/uknonfinancialbusinesseconomyannualbusinesssurveyregionalresultssectionsas"
+   },
+   "trade": "barbershops",
+   "item": "gross_operating_rate",
+   "value": 30.1,
+   "unit": "percent of turnover",
+   "measure": "gross operating rate, derived: approximate gross value added minus total employment costs, as a share of total turnover (before the owner's own pay, depreciation, interest and tax; the survey publishes no operating surplus itself)",
+   "note": "Whole division 96 (hairdressing and beauty, laundries, funeral, wellbeing and others). Regional figures are apportioned from enterprise returns by employment. aGVA 145 million GBP minus employment costs 80 million GBP, over turnover 216 million GBP."
+  }
+ ]
+}

@@ -1,0 +1,1698 @@
+{
+  "id": "place-uk5-london-airports-month",
+  "source": {
+    "publisher": "Civil Aviation Authority",
+    "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+    "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+    "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+    "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+  },
+  "retrieved": "2026-10-20",
+  "notes": [
+    "Source: Civil Aviation Authority, UK airport data (monthly), Table 09. The CAA asks to be referenced in any publication that refers to its statistics, and that its data is never sold on to a third party: any page using this file names the Civil Aviation Authority as its source.",
+    "Terminal passengers are every person joining or leaving a flight at the airport: London's residents flying out and back count as well as visitors, and a domestic traveller counts at both ends. This is traffic through London's airports, not a count of visitors.",
+    "The six airports are the CAA's own group 'London Area Airports'. The latest 12 months the CAA has published: September 2025 to August 2026 (August 2026 run on 14 October 2026). Raw files and their URLs: data/raw/uk5-visitors/SOURCES.md."
+  ],
+  "rows": [
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 4146994,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 630 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7348252,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 261 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 343573,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1611432,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 81097,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2679150,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 16210498,
+      "unit": "terminal passengers a month",
+      "year": "2025-09",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-09.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, September 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24003/a90c0dd7-e580-4607-b1d9-0b4fc72566fc/17357",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/september-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3787837,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 449 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7365769,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 1,214 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 339500,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1584398,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 78789,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2657489,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 15813782,
+      "unit": "terminal passengers a month",
+      "year": "2025-10",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-10.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, October 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24004/1aab68b5-a600-4dc1-bff6-d4a25993cf43/17387",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/october-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2625662,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 645 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 6634021,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 2,295 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 306326,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1217573,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 53103,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2124932,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 12961617,
+      "unit": "terminal passengers a month",
+      "year": "2025-11",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-11.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, November 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24005/7ac785d1-1474-4246-b873-af523d7fda31/17432",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/november-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3114381,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 729 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7188658,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 2,420 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 289450,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1358757,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 57979,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2248328,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 14257553,
+      "unit": "terminal passengers a month",
+      "year": "2025-12",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2025-12.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, December 2025, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/24006/5e4b38df-f940-4834-ab26-724a2b84c6a1/17502",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/december-2025/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2439426,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 316 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 6460541,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 2,748 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 227038,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1185332,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 201 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 42903,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1881453,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 12236693,
+      "unit": "terminal passengers a month",
+      "year": "2026-01",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-01.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, January 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26829/e2548804-d8c7-42bf-ab81-566bfa71f2a8/17587",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/january-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2619836,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 351 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 5818778,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 2,523 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 253456,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1219081,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 49352,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1982613,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 11943116,
+      "unit": "terminal passengers a month",
+      "year": "2026-02",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-02.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, February 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26830/c0f92078-96bc-487d-a2a8-3322fe1f515d/17626",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/february-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3067248,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 599 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 6645228,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 3,322 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 302387,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1357889,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 58623,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2257554,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 13688929,
+      "unit": "terminal passengers a month",
+      "year": "2026-03",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-03.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, March 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26831/02fd6f2a-38da-479a-adf4-71b3044fee9a/17662",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/march-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3318547,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 138 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 6720994,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 746 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 298002,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1562991,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 358 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 76875,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2592667,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 14570076,
+      "unit": "terminal passengers a month",
+      "year": "2026-04",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-04.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, April 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26832/08bbd4e2-a71a-419d-804a-07be45481ef9/17698",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/april-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3738837,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 502 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7120998,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 544 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 298065,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1753706,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 132 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 86674,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2829477,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 15827757,
+      "unit": "terminal passengers a month",
+      "year": "2026-05",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-05.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, May 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26833/11a95c0b-983c-49fc-ba36-4599da419397/17746",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/may-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3873178,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 465 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7227310,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 226 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 320728,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1789437,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 83575,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 2854451,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 16148679,
+      "unit": "terminal passengers a month",
+      "year": "2026-06",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-06.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, June 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26834/a4abec12-44d2-47fc-acd0-e4a9d246d7c4/17785",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/june-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 4288373,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 177 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7859325,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 336460,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1875193,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 425 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 88496,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3082100,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 17529947,
+      "unit": "terminal passengers a month",
+      "year": "2026-07",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-07.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, July 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26835/3da8b582-a7bc-4678-8f53-2873ddc395d5/17823",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/july-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 4607435,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at Gatwick airport, a month",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 1,141 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 7866510,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at Heathrow airport, a month",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 209 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 284585,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at London City airport, a month",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1970665,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at Luton airport, a month",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 326 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 95968,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at Southend airport, a month",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3243143,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at Stansted airport, a month",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers join or leave a flight at the airport, residents and visitors together (transit passengers, 0 here, are left out); Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    },
+    {
+      "item": "airport_passengers_month_london",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 18068306,
+      "unit": "terminal passengers a month",
+      "year": "2026-08",
+      "measure": "terminal passengers at the six London airports, a month",
+      "note": "Computed: the sum of this month's six airport rows of this file (Heathrow, Gatwick, Stansted, Luton, London City, Southend: the CAA's group 'London Area Airports'); residents and visitors together; Source: Civil Aviation Authority, UK airport data; read from data/raw/uk5-visitors/caa/caa-table09-2026-08.csv, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, August 2026, Table 09: terminal and transit passengers (CSV)",
+        "url": "https://www.caa.co.uk/Documents/Download/26836/b61a64e5-6594-4741-9e56-8dd672c053dd/17884",
+        "table": "Table 09, column terminal_pax_this_period; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2026/august-2026/",
+        "licence": "CAA conditions on its UK airport data pages: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+      }
+    }
+  ]
+}

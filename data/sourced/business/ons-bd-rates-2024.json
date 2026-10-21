@@ -1,0 +1,763 @@
+{
+ "id": "ons-bd-rates-2024",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Business demography, UK: 2024 (reference tables)",
+  "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable",
+  "table": "Tables 1.2, 2.2, 3.2 (births, deaths, active by SIC 2007 group, 2019 to 2024) and 1.1d, 2.1d, 3.1d (London region, 2024)",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.92,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise births in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,105 enterprise births of 107,035 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.0,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise deaths in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,130 enterprise deaths of 107,035 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.92,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise births in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,105 enterprise births of 107,035 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.0,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise deaths in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,130 enterprise deaths of 107,035 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.84,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise births in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 15,785 enterprise births of 106,345 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.34,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise deaths in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 13,120 enterprise deaths of 106,345 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.84,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise births in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 15,785 enterprise births of 106,345 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.34,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise deaths in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 13,120 enterprise deaths of 106,345 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.62,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise births in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,845 enterprise births of 113,360 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9.95,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise deaths in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 11,280 enterprise deaths of 113,360 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 16.62,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise births in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,845 enterprise births of 113,360 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9.95,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise deaths in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 11,280 enterprise deaths of 113,360 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.77,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise births in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,520 enterprise births of 118,580 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.23,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise deaths in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 16,870 enterprise deaths of 118,580 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.77,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise births in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,520 enterprise births of 118,580 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.23,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise deaths in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 16,870 enterprise deaths of 118,580 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15.89,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise births in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 19,240 enterprise births of 121,070 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15.65,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise deaths in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,945 enterprise deaths of 121,070 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15.89,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise births in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 19,240 enterprise births of 121,070 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15.65,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise deaths in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 18,945 enterprise deaths of 121,070 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 17.1,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 21,105 enterprise births of 123,420 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.41,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise deaths in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,790 enterprise deaths of 123,420 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 17.1,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 21,105 enterprise births of 123,420 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 14.41,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise deaths in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 561 holds licensed restaurants (56.10/1), unlicensed restaurants and cafes (56.10/2), takeaways and mobile food together; the subclasses are not published. Derived from the release's own counts: 17,790 enterprise deaths of 123,420 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8.27,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise births in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 6,755 enterprise births of 81,725 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9.33,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise deaths in 2019 divided by active enterprises in 2019, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 7,625 enterprise deaths of 81,725 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7.62,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise births in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 6,195 enterprise births of 81,250 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8.18,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise deaths in 2020 divided by active enterprises in 2020, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 6,650 enterprise deaths of 81,250 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.5,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise births in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 8,945 enterprise births of 85,200 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7.39,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise deaths in 2021 divided by active enterprises in 2021, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 6,295 enterprise deaths of 85,200 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.8,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise births in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 9,465 enterprise births of 87,675 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.64,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise deaths in 2022 divided by active enterprises in 2022, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 9,330 enterprise deaths of 87,675 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.09,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise births in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 9,910 enterprise births of 89,390 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.28,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise deaths in 2023 divided by active enterprises in 2023, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 9,190 enterprise deaths of 89,390 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.65,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 10,680 enterprise births of 91,680 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.02,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise deaths in 2024 divided by active enterprises in 2024, percent",
+   "note": "Group 960 holds hairdressing and beauty (96.02) with laundries, funeral and other personal services; 96.02 is not published. Derived from the release's own counts: 9,190 enterprise deaths of 91,680 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.59,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise births in 2019 divided by active enterprises in 2019, percent",
+   "note": "Derived from the release's own counts: 363,825 enterprise births of 2,889,120 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.5,
+   "unit": "per 100 active enterprises",
+   "year": "2019",
+   "measure": "enterprise deaths in 2019 divided by active enterprises in 2019, percent",
+   "note": "Derived from the release's own counts: 303,495 enterprise deaths of 2,889,120 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.49,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise births in 2020 divided by active enterprises in 2020, percent",
+   "note": "Derived from the release's own counts: 333,015 enterprise births of 2,897,115 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.37,
+   "unit": "per 100 active enterprises",
+   "year": "2020",
+   "measure": "enterprise deaths in 2020 divided by active enterprises in 2020, percent",
+   "note": "Derived from the release's own counts: 300,475 enterprise deaths of 2,897,115 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.38,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise births in 2021 divided by active enterprises in 2021, percent",
+   "note": "Derived from the release's own counts: 363,995 enterprise births of 2,939,675 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.17,
+   "unit": "per 100 active enterprises",
+   "year": "2021",
+   "measure": "enterprise deaths in 2021 divided by active enterprises in 2021, percent",
+   "note": "Derived from the release's own counts: 328,495 enterprise deaths of 2,939,675 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.52,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise births in 2022 divided by active enterprises in 2022, percent",
+   "note": "Derived from the release's own counts: 336,925 enterprise births of 2,924,685 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.92,
+   "unit": "per 100 active enterprises",
+   "year": "2022",
+   "measure": "enterprise deaths in 2022 divided by active enterprises in 2022, percent",
+   "note": "Derived from the release's own counts: 348,675 enterprise deaths of 2,924,685 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.01,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise births in 2023 divided by active enterprises in 2023, percent",
+   "note": "Derived from the release's own counts: 316,025 enterprise births of 2,870,295 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.79,
+   "unit": "per 100 active enterprises",
+   "year": "2023",
+   "measure": "enterprise deaths in 2023 divided by active enterprises in 2023, percent",
+   "note": "Derived from the release's own counts: 309,685 enterprise deaths of 2,870,295 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 11.1,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "Derived from the release's own counts: 317,435 enterprise births of 2,859,535 active enterprises (both control rounded to base 5; Tables 1.2 and 3.2)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9.8,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise deaths in 2024 divided by active enterprises in 2024, percent",
+   "note": "Derived from the release's own counts: 280,375 enterprise deaths of 2,859,535 active enterprises (both control rounded to base 5; Tables 2.2 and 3.2). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "region",
+    "code": "E12000007",
+    "name": "London"
+   },
+   "value": 12.69,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "London region; no industry detail is published for a region. Derived from the release's own counts: 75,550 enterprise births of 595,280 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "region",
+    "code": "E12000007",
+    "name": "London"
+   },
+   "value": 10.29,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise deaths in 2024 divided by active enterprises in 2024, percent",
+   "note": "London region; no industry detail is published for a region. Derived from the release's own counts: 61,245 enterprise deaths of 595,280 active enterprises (both control rounded to base 5; Tables 2.1d and 3.1d). Deaths for the latest years are adjusted by the ONS for later re-activations (its Table 9)."
+  }
+ ]
+}

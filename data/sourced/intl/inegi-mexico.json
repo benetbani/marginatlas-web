@@ -1,0 +1,1871 @@
+{
+ "id": "inegi-mexico",
+ "source": {
+  "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+  "title": "Censos Económicos 2024 (reference year 2023) and Censo de Población y Vivienda 2020",
+  "url": "https://www.inegi.org.mx/programas/ce/2024/",
+  "table": "Open-data CSVs: national and Ciudad de México economic census; ITER 2020 for Ciudad de México",
+  "licence": "INEGI terms of free use of information, https://www.inegi.org.mx/inegi/terminos.html"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 5468180,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 7483700,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. Income 40,922,028.254 million MXN over 5,468,180 units."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 5.1,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 27,965,433 persons over 5,468,180 units."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 8.5,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 3,474,422.828 million MXN over 40,922,028.254 million MXN."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 65.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 26,983,511.446 million MXN over 40,922,028.254 million MXN."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 29.8,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. Gross value added 15,667,989.992, remuneration 3,474,422.828, income 40,922,028.254 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 689683,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest)."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 1146500,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). Income 790,711.009 million MXN over 689,683 units."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 3.5,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 2,392,489 persons over 689,683 units."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 14.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 117,571.058 million MXN over 790,711.009 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 50.2,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 396,663.936 million MXN over 790,711.009 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 35.0,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). Gross value added 394,365.914, remuneration 117,571.058, income 790,711.009 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 67763,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 2896900,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). Income 196,305.996 million MXN over 67,763 units."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 7.6,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 516,894 persons over 67,763 units."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 18.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 37,113.370 million MXN over 196,305.996 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 48.8,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 95,878.461 million MXN over 196,305.996 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 32.3,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). Gross value added 100,507.226, remuneration 37,113.370, income 196,305.996 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 86649,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 1086300,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. Income 94,123.943 million MXN over 86,649 units."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 3.2,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 277,076 persons over 86,649 units."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 15.0,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 14,132.035 million MXN over 94,123.943 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 52.7,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 49,630.788 million MXN over 94,123.943 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 32.3,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. Gross value added 44,534.890, remuneration 14,132.035, income 94,123.943 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 275618,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 251200,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. Income 69,236.109 million MXN over 275,618 units."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 1.5,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 416,405 persons over 275,618 units."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 10.8,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 7,470.160 million MXN over 69,236.109 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 41.1,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 28,486.042 million MXN over 69,236.109 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 48.2,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. Gross value added 40,816.340, remuneration 7,470.160, income 69,236.109 million MXN."
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 95.4,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "5,214,497 of 5,468,180 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 3.7,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "204,814 of 5,468,180 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.7,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "39,122 of 5,468,180 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.2,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "9,747 of 5,468,180 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 96.1,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "662,741 of 689,683 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 3.7,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "25,771 of 689,683 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.2,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "1,118 of 689,683 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "53 of 689,683 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 83.1,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "56,316 of 67,763 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 15.9,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "10,759 of 67,763 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 1.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "668 of 67,763 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "20 of 67,763 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 99.8,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "275,027 of 275,618 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.2,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "576 of 275,618 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "15 of 275,618 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, national tabulation (conjunto_de_datos_ce_nac_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_nac_2024_csv.zip"
+   }
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 425005,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 17323000,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. Income 7,362,482.296 million MXN over 425,005 units."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 8.4,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 3,556,589 persons over 425,005 units."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 9.2,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 679,972.145 million MXN over 7,362,482.296 million MXN."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 74.3,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. 5,468,199.380 million MXN over 7,362,482.296 million MXN."
+  },
+  {
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 38.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "All sectors within the census's scope: private sector and state-owned enterprises. Gross value added 3,543,584.788, remuneration 679,972.145, income 7,362,482.296 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 53252,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest)."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 1991100,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). Income 106,030.333 million MXN over 53,252 units."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 4.8,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 258,231 persons over 53,252 units."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 15.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 16,885.598 million MXN over 106,030.333 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 50.0,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). 53,008.446 million MXN over 106,030.333 million MXN."
+  },
+  {
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 34.1,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 7225: all restaurants and other places preparing food (full service, takeaway, tacos, cafeterias and the rest). Gross value added 53,045.270, remuneration 16,885.598, income 106,030.333 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 7429,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 5161200,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). Income 38,342.522 million MXN over 7,429 units."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 11.3,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 83,631 persons over 7,429 units."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 17.9,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 6,853.244 million MXN over 38,342.522 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 50.1,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). 19,220.154 million MXN over 38,342.522 million MXN."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 32.0,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 722511: restaurants serving à la carte or set meals (full service). Gross value added 19,129.064, remuneration 6,853.244, income 38,342.522 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 9339,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 1685000,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. Income 15,736.395 million MXN over 9,339 units."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 3.7,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 34,410 persons over 9,339 units."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 13.8,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 2,168.640 million MXN over 15,736.395 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 52.6,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. 8,277.354 million MXN over 15,736.395 million MXN."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 33.7,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 722515: cafeterias, soda fountains, ice-cream and juice shops. Gross value added 7,464.068, remuneration 2,168.640, income 15,736.395 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "business_count",
+   "value": 22294,
+   "unit": "economic units (establishments)",
+   "year": "2024",
+   "measure": "economic units counted by the 2024 census (fixed establishments in its scope)",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "sales_per_business",
+   "value": 389700,
+   "unit": "MXN",
+   "year": "2023",
+   "measure": "mean income from the supply of goods and services per economic unit (income divided by units), derived from two published figures",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. Income 8,687.996 million MXN over 22,294 units."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "persons_per_business",
+   "value": 1.8,
+   "unit": "persons employed per economic unit",
+   "year": "2023",
+   "measure": "mean total persons employed per economic unit (owners and unpaid workers included), derived",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 40,368 persons over 22,294 units."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "staff_cost_share",
+   "value": 12.5,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total remuneration (wages, benefits and employer social contributions) divided by income from the supply of goods and services",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 1,086.098 million MXN over 8,687.996 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "purchases_share",
+   "value": 39.7,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "total consumption of goods and services divided by income from the supply of goods and services",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. 3,451.875 million MXN over 8,687.996 million MXN."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   },
+   "item": "gross_operating_rate",
+   "value": 47.8,
+   "unit": "percent of income from goods and services",
+   "year": "2023",
+   "measure": "gross operating rate, DERIVED: census gross value added minus total remuneration, divided by income from the supply of goods and services; before the owner's own pay, depreciation, interest and tax",
+   "note": "SCIAN 812110: beauty salons and clinics and barber shops (peluquerías) together. Gross value added 5,241.273, remuneration 1,086.098, income 8,687.996 million MXN."
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 93.4,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "397,149 of 425,005 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 5.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "21,410 of 425,005 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 1.2,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "5,098 of 425,005 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "SCIAN 2023, all sectors in scope",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.3,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "1,348 of 425,005 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 92.5,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "49,267 of 53,252 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 6.9,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "3,655 of 53,252 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.6,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "302 of 53,252 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "SCIAN 2023 7225: Servicios de preparación de alimentos y bebidas alcohólicas y no alcohólicas",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.1,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "28 of 53,252 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 74.4,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "5,528 of 7,429 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 22.8,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "1,696 of 7,429 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 2.7,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "199 of 7,429 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SCIAN 2023 722511: Restaurantes con servicio de preparación de alimentos a la carta o de comida corrida",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.1,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 251 or more persons employed",
+   "note": "6 of 7,429 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 93.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "8,685 of 9,339 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 6.9,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "648 of 9,339 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SCIAN 2023 722515: Cafeterías, fuentes de sodas, neverías, refresquerías y similares",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.1,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "6 of 9,339 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 99.5,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 0 to 10 persons employed",
+   "note": "22,172 of 22,294 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.5,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 11 to 50 persons employed",
+   "note": "114 of 22,294 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SCIAN 2023 812110: Salones y clínicas de belleza y peluquerías",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 0.0,
+   "unit": "percent of economic units (establishments)",
+   "year": "2024",
+   "measure": "share of economic units with 51 to 250 persons employed",
+   "note": "8 of 22,294 units.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censos Económicos 2024, open data, Ciudad de México (conjunto_de_datos_ce_cdmx_2024)",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ce/2024/datosabiertos/conjunto_de_datos_ce_cdmx_2024_csv.zip"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "MX-CMX",
+    "name": "Ciudad de México (Mexico City, the federal entity)"
+   },
+   "value": 9209944,
+   "unit": "persons",
+   "year": "2020-03",
+   "measure": "total population, Population and Housing Census 2020 (15 March 2020)",
+   "note": "The whole federal entity of Ciudad de México, the same boundary as the economic census rows.",
+   "source": {
+    "publisher": "Instituto Nacional de Estadística y Geografía (INEGI)",
+    "title": "Censo de Población y Vivienda 2020, Principales resultados por localidad (ITER), Ciudad de México",
+    "url": "https://www.inegi.org.mx/contenidos/programas/ccpv/2020/datosabiertos/iter/iter_09_cpv2020_csv.zip"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1436 @@
+{
+ "id": "oecd-vat-rates",
+ "source": {
+  "publisher": "OECD (Consumption Tax Trends 2024)",
+  "title": "Annex Table 2.A.1. VAT rates (source: national delegates, position as at 1 September 2023)",
+  "url": "https://www.oecd.org/content/dam/oecd/en/topics/policy-sub-issues/consumption-tax-trends/vat-gst-rates-ctt-trends.xlsx",
+  "table": "Column 2023 (standard rate as at 1 September 2023), Reduced rates, Regional rates, Country notes",
+  "licence": "OECD open by default policy (CC BY 4.0 default from 1 July 2024), https://www.oecd.org/en/about/oecd-open-by-default-policy.html"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 19. OECD country note: A standard rate of 19% applies in Jungholtz and Mittleberg."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 10.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 10.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 13.0/15.0. OECD country note: The following provinces have harmonised their provincial sales taxes with the federal Goods and Services Tax and therefore levy a GST/HST at the following rates: New Brunswick, Newfoundland and Labrador, Nova Scotia, Prince Edward Island: 15%; and Ontario: 13%. Québec applies GST at a rate of 5% and Québec Sales Tax at a rate of 9.975% (applied on the same tax base as the GST). With the exception of Canada’s territories (Yukon, Northwest Territories and Nunavut) and the province of Alberta, other Canadian provinces apply a provincial sales tax to certain goods and services in addition to the federal GST."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: The rate of 0% applies to hygiene products destined to final consumers in the department of Amazonas. The leases of commercial property were subject to a VAT rate of 0% from 1 June until 31 July 2020. The VAT rate for airline tickets and related services was reduced from 19% to 5% from 15 April 2020 until 31 December 2021. This measure was extended until 31 December 2022. The provision of hotel and tourism services were excluded from VAT from 4 June until 31 December 2020. Afterwards, these services subject to a VAT rate of 0%, from 1 January 2021 to 31 December 2022. Restaurants operating as franchises were excluded from VAT from 4 June 2020 until 31 December 2021"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/5.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/5.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 1,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 1.0/2.0/4.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 2,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 1.0/2.0/4.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 4,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 1.0/2.0/4.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 10.0/15.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 10.0/15.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/9.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/9.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/10.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/10.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 14,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/10.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 0.9/2.1/10.0/13.0 & 1.05/1.75/2.1/8.5. OECD country note: Rates of 0.9%; 2.1%; 10.0%; 13.0% and 20.0% apply in Corsica; rates of 1.05%; 1.75%; 2.1% and 8.5% apply to overseas departments (DOM) excluding French Guyana and Mayotte. Temporary reduced rates related to the Covid-19 pandemic: a rate of 5.5% apply to imports of certain goods needed to combat the Covid-19 from 1 January 2022 to 31 December 2023. A rate of 5.5 % also applies to supplies of certain goods needed to combat the Covid-19 from 1 March 2020 until 31 December 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 2.1,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 2.1/5.5/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 5.5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 2.1/5.5/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 2.1/5.5/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: The standard VAT rate was reduced from 19% to 16% and the reduced VAT rate from 7% to 5% from 1 July to 31 December 2020. Restaurant and catering services (except beverages) were subject to the reduced rate of 5% from 1 July 2020 until 31 December 2020 and 7% from 1 January 2021 until 31 December 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 7,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 7.0/0.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 7.0/0.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 4.0/ 9.0/17.0. OECD country note: Specific regional rates of 4.0%; 9.0% and 17.0% apply in the islands of Leros, Lesbos, Kos, Samos and Chios and the decision to reduce the rates is automatically revoked 3 months from the closure of Reception and Identification Centres and Temporary Reception / Hosting Structures and Closed Controlled Structures for refugees. A rate of 0% also applies to the supply of COVID-19 vaccines until 31 December 2023. Sanitary products essential for the protection of public health during the COVID-19 pandemic (masks, gloves, antiseptic solutions, antiseptic wipes and other antiseptic preparations, etc.) are subject to the reduced rate of 6% from 20 March 2020 until 31 December 2023. Between 1 January 2023 and 31 December 2023, the reduced rate of 6% applies to admission to cinemas; transport of passengers and their accompanying luggage are subject to a reduced rate of 13% from 1 June 2020 to 31 December 2023. In the same period, the reduced rate of 13% applies to services provided by restaurants, coffee shops and similar businesses, excluding nightclubs, and with the exception of the disposal of alcoholic beverages. In the same period, the reduced rate 13% applies to the supply of non-alcoholic beverages.  A reduced rate of 13% also applies to zoo tickets with effect from 5 February 2021 until 31 December 2023 and to services provided by gyms and dance schools (as long as those are not exempt) from 1 October 2021 until 31 December 2023. Α temporary VAT rate reduction is also applied on defibrillators (6%) and import of works of art (13%) and delivery of objects of artistic value  provided by their creator or successors (13%) until 31 December 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 6.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 6.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 27,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/18.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 18,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/18.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/11.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 11,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/11.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: The standard VAT rate was reduced from 23% to 21%, with effect from 1 September 2020 until 28 February 2021. A temporary VAT rate reduction for tourism and hospitality sectors apply from 13.5% to 9%, from 1 November 2020 to 1 September 2023. Temporary VAT rate reduction on energy products and supplies from 13.5% to 9%, from 1 May 2022 to 31 October 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/4.8/9.0/13.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 4.8,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/4.8/9.0/13.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/4.8/9.0/13.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 13.5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/4.8/9.0/13.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 17,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 0. OECD country note: The rate of 0% applies when an Eilat resident dealer buys goods from Eilat non-residents. Supplies made by an Eilat resident supplier (to be consumed in Eilat) are exempt from VAT"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 22,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 4,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 4.0/5.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 4.0/5.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 4.0/5.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 8,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 8 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: A temporary reduced rate of 9% applies to restaurants services from 1 July 2021 to 31 December 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/9.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/9.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 17,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: Temporary reduced rates related to the Covid-19 pandemic: a rate of 0% applies to imports of certain goods needed to combat the Covid-19 pandemic from 1 January until 30 June 2022. Temporary rate reduction to combat inflation: from 1 January to 31 December 2023 the standard VAT is lowered from 17% to 16 %; the intermediate rate is lowered from 14% to 13 %; and the reduced rate is lowered from 8% to 7 % (the super-reduced rate of 3 % remains unchanged)."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 3,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 3.0/8.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 8,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 3.0/8.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 14,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 3.0/8.0/14.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 16,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 8. OECD country note: A reduced VAT rate of 8% applies in the northern border region (Ensenada, Playas de Rosarito, San Quintin, San Felipe, Tijuana, Tecate and Mexicali in the state of Baja California; San Luis Río Colorado, Puerto Peñasco, General Plutarco Elías Calles, Caborca, Altar, Sáric, Nogales, Santa Cruz, Cananea, Naco and Agua Prieta in the state of Sonora; Janos, Ascensión, Juárez, Praxedis G. Guerrero, Guadalupe, Coyame del Sotol, Ojinaga and Manuel Benavides in the state of Chihuahua; Ocampo, Acuña, Zaragoza, Jiménez, Piedras Negras, Nava, Guerrero and Hidalgo in the state of Coahuila de Zaragoza; Anáhuac in the state of Nuevo León; and Nuevo Laredo, Guerrero, Mier, Miguel Alemán, Camargo, Gustavo Díaz Ordaz, Reynosa, Río Bravo, Valle Hermoso and Matamoros in the state of Tamaulipas) from 1 January 2019 until 31 December 2024. Furthermore, it applies in the southern border region (Calakmul and  Candelaria in the state of Campeche; Balancán and Tenosique in the state of Tabasco; Ocosingo, Palenque, Marqués de Comillas, Benemérito de las Américas, Amatenango de la Frontera, Frontera Comalapa, La Trinitaria, Maravilla Tenejapa, Las Margaritas, Suchiate, Frontera Hidalgo, Metapa, Tuxtla Chico, Unión Juárez, Cacahoatán, Tapachula, Motozintla and Mazapa de Madero in the state of Chiapas; and Othón P. Blanco in the state of Quintana Roo) from 1 January 2021 until 31 December 2024"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 9 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/12.0/15.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/12.0/15.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/12.0/15.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/8.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 8,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/8.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 4.0/9.0/18.0 & 5.0/12.0/22.0. OECD country note: In the Islands of Azores, the standard VAT rate is 16% and the reduced rates are 4% and 9%. In the Islands of Madeira, the standard rate is 22% and reduced rates are 5% and 12%."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 6.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 6.0/13.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: From 1 January 2023 a new reduced VAT rate of 5% was introduced for supplies of state-supported rental housing as part of the state's social policy."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/10 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/10 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 22,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/9.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 9.5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 5.0/9.5 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "Regional rates: 0.0/3.0/7.0/9.5/15.0/20.0 & 0.0 to10.0. OECD country note: Rates of 0.0%, 3.0%; 5.0%, 7.0%, 9.50%; 15.0% and 20.0% apply in the Canary Islands. Rates of 0.5%; 1.0%, 2.0%; 3.0; 4.0%; 5.0%; 6.0%; 8.0%; 9.0% and 10% apply in either Ceuta or Melilla."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 4,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 4.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 4.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: From 1 april 2023 the reduced rate 6 % that applied on repair of bikes, shoes, leather goods and household linen was raised to the reduced rate of 12%."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/6.0/12.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 7.7,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: The standard and reduced VAT rates will increase from respectively 7.7%, 2.5% and 3.7% to 8.1%, 2.6% and 3.8%"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/2.5/3.7 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 2.5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/2.5/3.7 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 3.7,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/2.5/3.7 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023",
+   "note": "OECD country note: Standard VAT and reduced VAT rate have been increased as of 10 July 2023, respectively from 18% to 20% and from 8% to 10%. There is no change made on the reduced VAT rate of 1%. A temporary rate of 0% applies to supplies of substances to be used in the production of goods to be exported under the inward processing and temporary admission regime until 31 December 2025; to the delivery of goods and provision of services to international organisations operating in Türkiye within the framework of host state agreements or other agreements to which it is a party, to construction works for investments with a minimum fixed investment amount of TRY 500 million within the scope of investment incentive certificates, to delivery of goods and services related to construction works within the scope of the certificate to taxpayers holding investment incentive certificates for the manufacturing industry and tourism until 31 December 2025, to deliveries of new machinery and equipment to be used exclusively in the manufacturing industry to value-added taxpayers carrying industry registration certificate until 31 December 2024, to engineering services provided to taxpayers who manufacture electric motor vehicles in Türkiye as a result of their R&D activities in Türkiye to develop technologies that will eliminate greenhouse gas emissions until 31 December 2023."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 1,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 1.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 1.0/10.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "standard VAT/GST rate, as at 1 September 2023"
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/5.0 together; what each applies to is the country's own law."
+  },
+  {
+   "item": "vat_rate_reduced",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2023-09-01",
+   "measure": "a reduced VAT/GST rate (zero rates on domestic supplies included), as at 1 September 2023",
+   "note": "The table lists the reduced rates 0.0/5.0 together; what each applies to is the country's own law."
+  }
+ ]
+}

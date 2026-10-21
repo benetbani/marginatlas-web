@@ -1,0 +1,69 @@
+{
+ "id": "ksh-earnings",
+ "source": {
+  "publisher": "Hungarian Central Statistical Office (KSH)",
+  "title": "STADAT 20.2.1.43 Main earnings data, monthly, monthly cumulative and quarterly cumulative data",
+  "url": "https://www.ksh.hu/stadat_files/mun/en/mun0144.html",
+  "table": "mun0144, columns Full-time employees: average gross earnings and median gross earnings (HUF/person/month); rows 2025 Q1–Q4 and 2026 January–August",
+  "licence": "KSH terms of reuse not read (the terms page was not reached from the server); see the report"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "average_wage",
+   "officialClass": "Full-time employees, national economy",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 727496.0,
+   "unit": "HUF per month",
+   "year": "2025",
+   "measure": "average gross monthly earnings of full-time employees, the year 2025 (mean)",
+   "note": "Enterprises with at least 5 employees, budgetary institutions and the significant non-profit organisations; a monthly figure, not a yearly one. Previous year = 100: 109.0."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "Full-time employees, national economy",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 591600.0,
+   "unit": "HUF per month",
+   "year": "2025",
+   "measure": "median gross monthly earnings of full-time employees, the year 2025 (median)",
+   "note": "Enterprises with at least 5 employees, budgetary institutions and the significant non-profit organisations; a monthly figure, not a yearly one. Previous year = 100: 109.9. The KSH marks this figure corrected on 16 September 2026."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "Full-time employees, national economy",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 790325.0,
+   "unit": "HUF per month",
+   "year": "2026-01 to 2026-08",
+   "measure": "average gross monthly earnings of full-time employees, January to August 2026 (mean)",
+   "note": "Enterprises with at least 5 employees, budgetary institutions and the significant non-profit organisations; a monthly figure, not a yearly one. Previous year = 100: 110.7."
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "Full-time employees, national economy",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 635000.0,
+   "unit": "HUF per month",
+   "year": "2026-01 to 2026-08",
+   "measure": "median gross monthly earnings of full-time employees, January to August 2026 (median)",
+   "note": "Enterprises with at least 5 employees, budgetary institutions and the significant non-profit organisations; a monthly figure, not a yearly one. Previous year = 100: 109.5."
+  }
+ ]
+}

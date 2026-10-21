@@ -1,0 +1,5629 @@
+{
+ "id": "bis-policy-rates",
+ "source": {
+  "publisher": "Bank for International Settlements (BIS), from each central bank",
+  "title": "Central bank policy rates (WS_CBPOL), monthly, end of period",
+  "url": "https://stats.bis.org/api/v1/data/WS_CBPOL/M./all?startPeriod=2016-01&format=csv",
+  "table": "WS_CBPOL, frequency M: the December observation of 2016 to 2025 and the newest month published",
+  "licence": "Terms of permitted use of BIS statistics (https://www.bis.org/terms_statistics.htm, read through a search summary, the site refused scripted requests): free use with the BIS named as the source, on condition that including the statistics in a commercial product adds no charge for its users"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 24.7503,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 28.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 59.252,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 55,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 38,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 38,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 100,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 32,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 29,
+   "unit": "% a year",
+   "year": "2025-06",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Argentina. Series definition: From 10 July 2025 onwards: no policy rate adopted; from 22 July 2024 to 9 July 2025: liquidity absorption rate for treasury bills; from 18 December 2023 to 21 July 2024: Overnight Reverse Repos Interest Rate; from 6 January 2022 to 17 December 2023: 28-day Liquidity Bills (LELIQ) interest rate; from 21 January 2020 to 5 January 2022: weighted average interest rate of minimum term LELIQ issued at the last auction process; from 1 October 2018 to 20 January 2020, average interest rate of the accepted offers for the liquidity bills; from 8 August 2018 to 30 September 2018: 7 days liquidity bills interest rate; from 2 January 2017 to 7 August 2018, median of the repo rate corridor; from 16 December 2015 to 1 January 2017: interest rate in BCRA bills (LEBACs), 35 days LEBAC auction; from 29 Jan 2014 to 15 Dec 2015: CB issues, 3 months; from 11 Sep 2009 to 28 Jan 2014:7-day reverse repo operations; before 10 Sep 2009, refer to https://data.bis.org/topics/CBPOL"
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": null,
+   "unit": "% a year",
+   "year": "2025-07-10",
+   "measure": "central bank policy rate",
+   "note": "No policy rate adopted from 10 July 2025 (the BIS series' definition)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 3.1,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 4.35,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 4.35,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 3.6,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 4.6,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of Australia. Series definition: From 2 Aug 1990 onwards: cash rate target; from 23 Jan 1990 to 1 Aug 1990: middle of the cash rate target range; from 7 Apr 1976 to 22 Jan 1990: interbank overnight cash rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 13.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 9.25,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 13.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 11.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 12.25,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 15,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 13.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Brazil. Series definition: From 5 Mar 1999 onwards Central Bank target, money market (SELIC) overnight rate; from 1 Jul 1996 to 4 Mar 1999: Central Bank official rediscount rate; from 4 Jun 1986 to 30 Jun 1996: official market intervention rate, representative rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Canada. Series definition: From 1 Jun 1994 onwards: Central Bank target, overnight rate; from 27 Jul 1960 to 31 May 1994: official bank rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Swiss National Bank. Series definition: From 13 June 2019 onwards SNB Policy rate; From 1 Jan 2000 to 12 June 2019 mid-point of the SNB target range; from 1 Jan 1946 to 31 Dec 1999: discount rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 11.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 8.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Chile. Series definition: From 1997 onwards: official monetary policy rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 4.35,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 4.35,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 4.35,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 4.15,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3.85,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3.8,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3.65,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3.45,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3.1,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "People's Bank of China. Series definition: From 20 Aug 2019 onwards: Loan Prime Rate (1 year): from 1 Jan 1996 till 19 Aug 2019: Official lending rate (1 year)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 7.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 12,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 13,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 9.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 9.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 12,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Colombia. Series definition: 1 day repo rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.05,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Czech National Bank. Series definition: Offficial 2 week repo rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.65,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.65,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.65,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.6,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": -0.6,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 3.6,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 2.6,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.6,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 2.1,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Danmarks Nationalbank. Series definition: From 1 April 1992 onwards: interest rate of the certificates of deposits; from 2 Jan 1979 to 31 Mar 1992: official discount rate; from 1 Jan 1946 to 1 Jan 1979: discount rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of England. Series definition: From 3 Aug 2006 onwards: official bank rate; from 6 May 1997 to 2 Aug 2006: repo rate; from 20 Aug 1981 to 5 May 1997: minimum Bank of England Band 1 dealing rate; from 16 Oct 1972 to 19 Aug 1981: minimum lending rate; from 1 Jan 1946 to 15 Oct 1972: bank rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 2.49,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hong Kong Monetary Authority. Series definition: Official base rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.08,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Croatian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Croatian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2022-07",
+   "measure": "central bank policy rate, end of month",
+   "note": "Croatian National Bank. Series definition: From 4 Jan 1993 to 1 Sep 2002: interest rate on money market interbank loans. From 2 Sep 2002 to 31 Dec 2022: interest rate on money market interbank deposits. From 1 Jan 2023 onwards: the series is discontinued as Croatia joined the euro area."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.9,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.9,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.9,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.9,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.6,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 2.4,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 13,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 10.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Hungarian National Bank. Series definition: Official base rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 5.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Indonesia. Series definition: From 19 Aug 2016 onwards: 7 day reverse repo rate; from 5 Jul 2005 to 18 Aug 2016: official base rate (BI rate)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Israel. Series definition: Offical central bank rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6.25,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 5.15,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 5.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 5.25,
+   "unit": "% a year",
+   "year": "2026-06",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of India. Series definition: From 3 Apr 2001 onwards: official repo overnight rate; from 1 Jan 1946 to 2 Apr 2001: oank rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 9.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 8.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 7.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 8,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Iceland. Series definition: From 21 May 2014 onwards: Central Bank term deposit rate; from Sep 2009 to 20 May 2014: average of the current account rate and the maximum rate on 28-day certificates of deposits; from 1 Apr 2009 to Sept 2009: current account rate; from 2 Mar 1998 to 31 Mar 2009: 7 day collateralised lending rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": -0.1,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Japan. Series definition: From 24 Sep 2026: the BOJ encourages the uncollateralized overnight call rate to remain at around 1.25 percent; From 17 Jun 2026 to 23 Sep 2026: the BOJ encourages the uncollateralized overnight call rate to remain at around 1.00 percent; From 22 Dec 2025 to 16 Jun 2026: the BOJ encourages the uncollateralized overnight call rate to remain at around 0.75 percent; From 27 Jan 2025 to 21 Dec 2025: the BOJ encourages the uncollateralized overnight call rate to remain at around 0.50 percent; From 1 Aug 2024 to 26 Jan 2025: the BOJ encouraged the UOCR to remain at around 0.25% ; From 21 Mar 2024 to 31 July: the BOJ encouraged the UOCR to remain at around 0 to 0.1 %; from 21 Sep 2016 to 20 Mar 2024: the BOJ set the guideline for market operations which specifies a short-term policy interest rate at minus 0.1% and a target level of 10-year JGB yields at around 0%. Short-term policy interest rate; from 4 Apr 2013 to 20 Sep 2016: no policy rate; from 5 Oct 2010 to 3 Apr 2013: the BOJ encouraged the UOCR to remain at around 0 to 0.1%; from 19 Dec 2008 to 4 Oct 2010: the BOJ encouraged the UOCR to remain at around 0. %; from 31 Oct 2008 to 18 Dec 2008: the BOJ encouraged the UOCR to remain at around 0.3%; before 30 Oct 2008, refer to https://data.bis.org/topics/CBPOL"
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Korea. Series definition: From 7 Mar 2008 onwards: Bank of Korea base rate; from 6 May 1999 to 6 Mar 2008: target overnight call rate(base rate)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of Kuwait. Series definition: From 03 Jun 2002 onwards: discount rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco)."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2026-08",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Al-Maghrib (Central Bank of Morocco). Series definition: From 01 Jan 2001: interest rate, 7-day advances (Taux directeur)"
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 6.3,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 5.55,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of the Republic of Macedonia. Series definition: Official policy rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 7.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 8.25,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 7.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 5.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 10.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 11.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 10,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Mexico. Series definition: From 21 Jan 2008 onwards: Central Bank target, money-market overnight rate; from 3 Nov 1998 to 20 Jan 2008: bank funding rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank Negara Malaysia. Series definition: From 26 Apr 2004 onwards: overnight policy rate; from 1 Jan 1998 to 25 Apr 2004: 3 month intervention rate; from 3 Nov 1995 to 31 Dec 1997: 3 month interbank rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Norges Bank. Series definition: From 11 Jun 1993 onwards: official deposit facility rate; from 3 Mar 1986 to 10 Jun 1993 official credit facility rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 0.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 5.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Reserve Bank of New Zealand. Series definition: From 17 Mar 1999 onwards: Official market intervention representative rate, official cash rate; from Jan 1985 to 16 Mar 1999: overnight cash rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 3.25,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 0.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 7.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Reserve Bank of Peru. Series definition: Official monetary policy rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 4.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 5.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bangko Sentral ng Pilipinas. Series definition: From Jan 1986 onwards: Official market intervention representative rate, liquidity providing."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Poland. Series definition: From 26 Feb 1998 onwards: official 7 day central bank bill yield; from 1 Jan 1993 to 25 Feb 1998: Lombard rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Romania. Series definition: Official policy rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 5.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "National Bank of Serbia. Series definition: From 1 Sept 2006 onwards: Central Bank policy rate; from 1 Jan 1997 to 31 Aug 2006: Central Bank discount rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 10,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 7.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 7.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 6.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 8.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 7.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 16,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 21,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 16,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "RU",
+    "name": "Russia"
+   },
+   "value": 14,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Russia. Series definition: From 13 Sept 2013 onwards: official key rate; from 1 Jan 1992 to 12 Sep 2013: official refinancing rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 6,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 4.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Saudi Arabian Monetary Authority. Series definition: From 1 Jan 2000 onwards: official market repo rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": -0.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": -0.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": -0.5,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": -0.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 4,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 2.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Sveriges Riksbank. Series definition: From 1 Jun 1994 onwards: Central Bank fixed repo/reversed repo rate; from 30 Jan 1987 to 31 May 1994: marginal rate; from 1 Jan 1946 to 29 Jan 1987: discount rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.5,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 0.5,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 2.25,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1.25,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Bank of Thailand. Series definition: Offical market intervention representative rate, liquidity providing repo rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 8,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 8,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 24,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 12,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 17,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 14,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 9,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 42.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 47.5,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 38,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 37,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "Central Bank of the Republic of Turkey. Series definition: From 20 May 2010 onwards: 1 week official repo rate; from 20 Feb 2002 to 19 May 2010: Central Bank overnight borrowing rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 0.625,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1.375,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 2.375,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1.625,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 0.125,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 0.125,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.375,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5.375,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.375,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3.625,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3.875,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "US Federal Reserve System. Series definition: From 19 Dec 1985 onwards: mid-point of the Federal Reserve target rate; from 1 Jul 1954 to 18 Dec 1985: US Fed Funds effective rate."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 0,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 4.5,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 3,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 2,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area"
+   },
+   "value": 2.5,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "European Central Bank. Series definition: From 18 Sep 2024 onwards: official central bank steering rate is the deposit facility rate, fixed rate; from 15 Oct 2008 to 17 Sep 2024: official central bank liquidity providing, main refinancing operations, fixed rate; from 28 Jun 2000 to 14 Oct 2008: official central bank liquidity providing, main refinancing operations, minimum bid rate; from 5 Jan 1999 to 27 Jun 2000: official central bank liquidity providing, main refinancing operations, fixed rate. The euro area's rate, the same for every euro-area member."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2016-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2017-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2018-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 6.5,
+   "unit": "% a year",
+   "year": "2019-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 3.5,
+   "unit": "% a year",
+   "year": "2020-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 3.75,
+   "unit": "% a year",
+   "year": "2021-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 7,
+   "unit": "% a year",
+   "year": "2022-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 8.25,
+   "unit": "% a year",
+   "year": "2023-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 7.75,
+   "unit": "% a year",
+   "year": "2024-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 6.75,
+   "unit": "% a year",
+   "year": "2025-12",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank."
+  },
+  {
+   "item": "central_bank_rate",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 7.25,
+   "unit": "% a year",
+   "year": "2026-09",
+   "measure": "central bank policy rate, end of month",
+   "note": "South African Reserve Bank. Series definition: Official repo rate."
+  }
+ ]
+}

@@ -1,0 +1,974 @@
+{
+ "id": "eucities-ch-bfs-2024",
+ "source": {
+  "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+  "title": "STATENT, structural business statistics 2024; population balance; HESTA hotel accommodation statistics",
+  "url": "https://www.pxweb.bfs.admin.ch/",
+  "table": "px-x-0602010000_102 (commune), px-x-0602010000_103 (canton, NOGA 6-digit), px-x-0102020000_201 (population 31 Dec 2024), px-x-1003020000_101 (hotels, commune, 2025); PxWeb API https://www.pxweb.bfs.admin.ch/api/v1/de/",
+  "licence": "BFS terms of use (each dataset carries its own OPEN-BY or OPEN-BY-ASK term; source must be given), https://www.bfs.admin.ch/bfs/en/home/fso/swiss-federal-statistical-office/terms-of-use.html"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NOGA 2008, all sectors (Wirtschaftssektor - Total)",
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "value": 47829,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The commune table goes no finer than the three sectors: the trade classes are published by canton only.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Gemeinde, Wirtschaftssektor und Beobachtungseinheit (px-x-0602010000_102)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_102/-/px-x-0602010000_102.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NOGA 2008, all sectors (Wirtschaftssektor - Total)",
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "value": 15152,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The commune table goes no finer than the three sectors: the trade classes are published by canton only.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Gemeinde, Wirtschaftssektor und Beobachtungseinheit (px-x-0602010000_102)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_102/-/px-x-0602010000_102.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NOGA 2008, all sectors (Wirtschaftssektor - Total)",
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "value": 17499,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The commune table goes no finer than the three sectors: the trade classes are published by canton only.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Gemeinde, Wirtschaftssektor und Beobachtungseinheit (px-x-0602010000_102)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_102/-/px-x-0602010000_102.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NOGA 2008, all sectors (Wirtschaftssektor - Total)",
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "value": 24520,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The commune table goes no finer than the three sectors: the trade classes are published by canton only.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Gemeinde, Wirtschaftssektor und Beobachtungseinheit (px-x-0602010000_102)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_102/-/px-x-0602010000_102.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 Wirtschaftsart - Total",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 126784,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561001 Restaurants, Imbissstuben, Tea-Rooms und Gelaterias",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 3289,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class. Restaurants, snack bars, tea rooms and ice-cream parlours together: Swiss cafes sit in this class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561002 Restaurants mit Beherbergungsangebot",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 22,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 563001 Bars",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 271,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class. Bars only: Swiss cafes are counted with restaurants (561001).",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960201 Coiffeursalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 2780,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class. Hairdressing salons, barbers included.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960202 Kosmetiksalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 2414,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Zürich, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 Wirtschaftsart - Total",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 80971,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561001 Restaurants, Imbissstuben, Tea-Rooms und Gelaterias",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 2238,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class. Restaurants, snack bars, tea rooms and ice-cream parlours together: Swiss cafes sit in this class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561002 Restaurants mit Beherbergungsangebot",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 77,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 563001 Bars",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 197,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class. Bars only: Swiss cafes are counted with restaurants (561001).",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960201 Coiffeursalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 1987,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class. Hairdressing salons, barbers included.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960202 Kosmetiksalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 1257,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Bern, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 Wirtschaftsart - Total",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 18644,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Basel, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561001 Restaurants, Imbissstuben, Tea-Rooms und Gelaterias",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 615,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Basel, wider than the commune: the finest level at which STATENT publishes the NOGA class. Restaurants, snack bars, tea rooms and ice-cream parlours together: Swiss cafes sit in this class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 563001 Bars",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 59,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Basel, wider than the commune: the finest level at which STATENT publishes the NOGA class. Bars only: Swiss cafes are counted with restaurants (561001).",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960201 Coiffeursalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 456,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Basel, wider than the commune: the finest level at which STATENT publishes the NOGA class. Hairdressing salons, barbers included.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960202 Kosmetiksalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 270,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Basel, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 Wirtschaftsart - Total",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 46510,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561001 Restaurants, Imbissstuben, Tea-Rooms und Gelaterias",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 1781,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class. Restaurants, snack bars, tea rooms and ice-cream parlours together: Swiss cafes sit in this class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 561002 Restaurants mit Beherbergungsangebot",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 0,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 563001 Bars",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 132,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class. Bars only: Swiss cafes are counted with restaurants (561001).",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960201 Coiffeursalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 776,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class. Hairdressing salons, barbers included.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NOGA 2008 960202 Kosmetiksalons",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 747,
+   "unit": "workplaces",
+   "year": "2024",
+   "measure": "number of workplaces (Arbeitsstätten) of market and non-market enterprises with at least one person subject to old-age insurance contributions, STATENT 2024",
+   "note": "The canton holding Genève, wider than the commune: the finest level at which STATENT publishes the NOGA class.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "STATENT: Arbeitsstätten und Beschäftigte nach Jahr, Kanton, Wirtschaftsart und Beobachtungseinheit (px-x-0602010000_103)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0602010000_103/-/px-x-0602010000_103.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "CH-ZH",
+    "name": "Kanton Zürich"
+   },
+   "value": 1620020,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "value": 436551,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "CH-BE",
+    "name": "Kanton Bern"
+   },
+   "value": 1071216,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "value": 137995,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "CH-BS",
+    "name": "Kanton Basel-Stadt"
+   },
+   "value": 201384,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "value": 177571,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "CH-GE",
+    "name": "Canton de Genève"
+   },
+   "value": 531102,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "value": 209061,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "permanent resident population on 31 December 2024",
+   "note": "Same boundary as the workplace rows of this file, the end of the STATENT year.",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Demografische Bilanz nach institutionellen Gliederungen (px-x-0102020000_201)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0102020000_201/-/px-x-0102020000_201.px/"
+   }
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 2281079,
+   "measure": "hotel arrivals of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 1511570,
+   "measure": "hotel arrivals of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (2281079) minus guests resident in Switzerland (769509). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 4179908,
+   "measure": "hotel nights of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "261",
+    "name": "Zürich (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 2924303,
+   "measure": "hotel nights of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (4179908) minus guests resident in Switzerland (1255605). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 626336,
+   "measure": "hotel arrivals of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 309080,
+   "measure": "hotel arrivals of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (626336) minus guests resident in Switzerland (317256). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 1080646,
+   "measure": "hotel nights of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "351",
+    "name": "Bern (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 586065,
+   "measure": "hotel nights of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (1080646) minus guests resident in Switzerland (494581). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 898548,
+   "measure": "hotel arrivals of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 528038,
+   "measure": "hotel arrivals of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (898548) minus guests resident in Switzerland (370510). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 1670768,
+   "measure": "hotel nights of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "2701",
+    "name": "Basel (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 1051530,
+   "measure": "hotel nights of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (1670768) minus guests resident in Switzerland (619238). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 1099521,
+   "measure": "hotel arrivals of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "unit": "arrivals",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 854158,
+   "measure": "hotel arrivals of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (1099521) minus guests resident in Switzerland (245363). Hotels and spa establishments only (HESTA)."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors_total",
+   "value": 2371458,
+   "measure": "hotel nights of guests from every country of residence, Switzerland included, annual total 2025",
+   "note": "Hotels and spa establishments open in the period (HESTA). Holiday flats and other lodging are not counted."
+  },
+  {
+   "geo": {
+    "level": "city",
+    "code": "6621",
+    "name": "Genève (Gemeinde)"
+   },
+   "unit": "nights",
+   "year": "2025",
+   "source": {
+    "publisher": "Bundesamt für Statistik (BFS), Swiss Federal Statistical Office",
+    "title": "Hotellerie: Ankünfte und Logiernächte der geöffneten Betriebe nach Jahr, Monat, Gemeinde, Herkunftsland und Indikator (px-x-1003020000_101)",
+    "url": "https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-1003020000_101/-/px-x-1003020000_101.px/"
+   },
+   "item": "visitors",
+   "value": 1865950,
+   "measure": "hotel nights of guests resident outside Switzerland, annual total 2025",
+   "note": "Two published figures combined: all guests (2371458) minus guests resident in Switzerland (505508). Hotels and spa establishments only (HESTA)."
+  }
+ ]
+}

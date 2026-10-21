@@ -1,0 +1,153 @@
+{
+ "id": "place-uk-flat-rents-pipr-2026",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+  "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+  "table": "Table 1, column 'Rental price one bed'",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 1760,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the London region (Greater London); the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 3.7% on a year earlier",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1003,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the local authority of Manchester; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 3.7% on a year earlier",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 830,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the local authority of Birmingham; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 2.8% on a year earlier",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 782,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the local authority of Leeds; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 4.2% on a year earlier",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1225,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the local authority of Bristol, City of; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 5.9% on a year earlier",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "metro",
+    "code": "S33000011",
+    "name": "Lothian"
+   },
+   "value": 1035,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the Lothian Broad Rental Market Area, which holds the City of Edinburgh with its neighbours; the index publishes Scotland by rental market area, never by council; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 3.5% on a year earlier; Scotland's rents here are mainly advertised new lets (the publisher's note 8)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "flat_rent_month",
+   "geo": {
+    "level": "metro",
+    "code": "S33000009",
+    "name": "Greater Glasgow"
+   },
+   "value": 843,
+   "unit": "GBP per month",
+   "year": "2026-08",
+   "measure": "average monthly private rent, one bedroom, as the Price Index of Private Rents publishes it (rounded to the nearest pound)",
+   "note": "the Greater Glasgow Broad Rental Market Area, which holds Glasgow City with its neighbours; the index publishes Scotland by rental market area, never by council; the month of August 2026, new and existing tenancies, from administrative rent data; official statistics in development; 2.9% on a year earlier; Scotland's rents here are mainly advertised new lets (the publisher's note 8)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Price Index of Private Rents, UK: monthly price statistics (16 September 2026 edition), Table 1",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/datasets/priceindexofprivaterentsukmonthlypricestatistics/16september2026/priceindexofprivaterentsukmonthlypricestatistics.xlsx",
+    "table": "Table 1, column 'Rental price one bed'",
+    "licence": "Open Government Licence v3.0"
+   }
+  }
+ ]
+}

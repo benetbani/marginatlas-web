@@ -1,0 +1,4066 @@
+{
+ "id": "oecd-sdbs",
+ "source": {
+  "publisher": "OECD",
+  "title": "Structural business statistics by size class and economic activity (ISIC Rev. 4), Structural and Demographic Business Statistics (SDBS)",
+  "url": "https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_SDBSBSC_ISIC4%40DF_SDBS_ISIC4&df[ag]=OECD.SDD.TPS",
+  "table": "DSD_SDBSBSC_ISIC4@DF_SDBS_ISIC4 v1.0, annual, total size class; API https://sdmx.oecd.org/public/rest/data/OECD.SDD.TPS,DSD_SDBSBSC_ISIC4@DF_SDBS_ISIC4,1.0/",
+  "licence": "OECD terms and conditions: OECD data are free to reuse with attribution (CC BY 4.0), https://www.oecd.org/en/about/terms-conditions.html"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "business_count",
+   "value": 557676,
+   "unit": "establishments",
+   "year": "2022",
+   "measure": "number of establishments",
+   "note": "OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "sales_per_business",
+   "value": 245078000,
+   "unit": "KRW",
+   "year": "2022",
+   "measure": "mean turnover per establishment (turnover divided by the number of establishments), derived from two published figures",
+   "note": "Turnover 136,673,856,000,000 KRW over 557,676 establishments. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "persons_per_business",
+   "value": 2.7,
+   "unit": "persons employed per establishment",
+   "year": "2022",
+   "measure": "mean persons employed per establishment, owners and unpaid workers included, derived from two published figures",
+   "note": "1,486,574 persons employed over 557,676 establishments. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "gross_operating_rate",
+   "value": 8.3,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 11,301,834,000,000 KRW over turnover 136,673,856,000,000 KRW. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "staff_cost_share",
+   "value": 13.8,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "18,881,860,000,000 KRW over turnover 136,673,856,000,000 KRW. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 250 or more persons employed",
+   "note": "0 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.4,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 to 49 persons employed",
+   "note": "2,265 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 1.9,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 19 persons employed",
+   "note": "10,583 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.4,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 or more persons employed",
+   "note": "13,117 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.3,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 49 persons employed",
+   "note": "12,848 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 99.5,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 19 persons employed",
+   "note": "555,142 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 to 249 persons employed",
+   "note": "269 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 or more persons employed",
+   "note": "269 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.5,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 or more persons employed",
+   "note": "2,534 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 249 persons employed",
+   "note": "557,676 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.4,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 249 persons employed",
+   "note": "13,117 of 557,676 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 97.6,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 9 persons employed",
+   "note": "544,559 of 557,676 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "business_count",
+   "value": 225728,
+   "unit": "establishments",
+   "year": "2022",
+   "measure": "number of establishments",
+   "note": "OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "sales_per_business",
+   "value": 127514000,
+   "unit": "KRW",
+   "year": "2022",
+   "measure": "mean turnover per establishment (turnover divided by the number of establishments), derived from two published figures",
+   "note": "Turnover 28,783,466,000,000 KRW over 225,728 establishments. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "persons_per_business",
+   "value": 2.1,
+   "unit": "persons employed per establishment",
+   "year": "2022",
+   "measure": "mean persons employed per establishment, owners and unpaid workers included, derived from two published figures",
+   "note": "485,196 persons employed over 225,728 establishments. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "gross_operating_rate",
+   "value": 8.4,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 2,431,581,000,000 KRW over turnover 28,783,466,000,000 KRW. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "staff_cost_share",
+   "value": 15.3,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "4,405,692,000,000 KRW over turnover 28,783,466,000,000 KRW. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 250 or more persons employed",
+   "note": "0 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 or more persons employed",
+   "note": "305 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 to 49 persons employed",
+   "note": "294 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 249 persons employed",
+   "note": "4,727 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 or more persons employed",
+   "note": "4,727 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 97.9,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 9 persons employed",
+   "note": "221,001 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 49 persons employed",
+   "note": "4,716 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 to 249 persons employed",
+   "note": "11 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 19 persons employed",
+   "note": "4,422 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 249 persons employed",
+   "note": "225,728 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 or more persons employed",
+   "note": "11 of 225,728 establishments."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 99.9,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 19 persons employed",
+   "note": "225,423 of 225,728 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "business_count",
+   "value": 179830,
+   "unit": "establishments",
+   "year": "2022",
+   "measure": "number of establishments"
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "sales_per_business",
+   "value": 42361000,
+   "unit": "KRW",
+   "year": "2022",
+   "measure": "mean turnover per establishment (turnover divided by the number of establishments), derived from two published figures",
+   "note": "Turnover 7,617,803,000,000 KRW over 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "persons_per_business",
+   "value": 1.3,
+   "unit": "persons employed per establishment",
+   "year": "2022",
+   "measure": "mean persons employed per establishment, owners and unpaid workers included, derived from two published figures",
+   "note": "234,779 persons employed over 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "gross_operating_rate",
+   "value": 19.1,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 1,458,533,000,000 KRW over turnover 7,617,803,000,000 KRW."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "staff_cost_share",
+   "value": 14.6,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "1,115,429,000,000 KRW over turnover 7,617,803,000,000 KRW."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 250 or more persons employed",
+   "note": "0 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 99.4,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 9 persons employed",
+   "note": "178,795 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 to 249 persons employed",
+   "note": "9 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 50 or more persons employed",
+   "note": "9 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 to 49 persons employed",
+   "note": "162 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.5,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 19 persons employed",
+   "note": "864 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 20 or more persons employed",
+   "note": "171 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.6,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 249 persons employed",
+   "note": "1,035 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.6,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 or more persons employed",
+   "note": "1,035 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 99.9,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 19 persons employed",
+   "note": "179,659 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.6,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 10 to 49 persons employed",
+   "note": "1,026 of 179,830 establishments."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of establishments",
+   "year": "2022",
+   "measure": "share of establishments with 1 to 249 persons employed",
+   "note": "179,830 of 179,830 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "business_count",
+   "value": 3943658,
+   "unit": "establishments",
+   "year": "2020",
+   "measure": "number of establishments"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "sales_per_business",
+   "value": 1452609000,
+   "unit": "KRW",
+   "year": "2020",
+   "measure": "mean turnover per establishment (turnover divided by the number of establishments), derived from two published figures",
+   "note": "Turnover 5,728,594,432,000,000 KRW over 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "persons_per_business",
+   "value": 4.3,
+   "unit": "persons employed per establishment",
+   "year": "2020",
+   "measure": "mean persons employed per establishment, owners and unpaid workers included, derived from two published figures",
+   "note": "17,152,940 persons employed over 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "gross_operating_rate",
+   "value": 13.2,
+   "unit": "percent of turnover",
+   "year": "2020",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 755,481,920,000,000 KRW over turnover 5,728,594,432,000,000 KRW."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "staff_cost_share",
+   "value": 11.7,
+   "unit": "percent of turnover",
+   "year": "2020",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "671,134,976,000,000 KRW over turnover 5,728,594,432,000,000 KRW."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 250 or more persons employed",
+   "note": "3,838 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 0.7,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 50 to 249 persons employed",
+   "note": "27,259 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 1.8,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 20 to 49 persons employed",
+   "note": "69,265 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 94.0,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 1 to 9 persons employed",
+   "note": "3,707,321 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 3.4,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 10 to 19 persons employed",
+   "note": "135,975 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 5.2,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 10 to 49 persons employed",
+   "note": "205,240 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 99.9,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 1 to 249 persons employed",
+   "note": "3,939,820 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 2.5,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 20 or more persons employed",
+   "note": "100,362 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 97.5,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 1 to 19 persons employed",
+   "note": "3,843,296 of 3,943,658 establishments."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "item": "size_class_share",
+   "value": 6.0,
+   "unit": "percent of establishments",
+   "year": "2020",
+   "measure": "share of establishments with 10 or more persons employed",
+   "note": "236,337 of 3,943,658 establishments."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "business_count",
+   "value": 10125,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "sales_per_business",
+   "value": 940900,
+   "unit": "NZD",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 9,527,000,000 NZD over 10,125 enterprises. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "persons_per_business",
+   "value": 11.0,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "111,800 persons employed over 10,125 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "gross_operating_rate",
+   "value": 14.8,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 1,812,000,000 NZD over turnover 12,273,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "staff_cost_share",
+   "value": 28.2,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "3,461,000,000 NZD over turnover 12,273,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "purchases_share",
+   "value": 57.6,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "7,065,000,000 NZD over turnover 12,273,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 67.7,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "6,858 of 10,125 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 67.7,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "6,858 of 10,125 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 32.3,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "3,267 of 10,125 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "business_count",
+   "value": 1467,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "sales_per_business",
+   "value": 1287700,
+   "unit": "NZD",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 1,889,000,000 NZD over 1,467 enterprises. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "persons_per_business",
+   "value": 14.9,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "21,900 persons employed over 1,467 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "gross_operating_rate",
+   "value": 8.1,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 202,000,000 NZD over turnover 2,499,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "staff_cost_share",
+   "value": 29.8,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "745,000,000 NZD over turnover 2,499,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "purchases_share",
+   "value": 62.6,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "1,564,000,000 NZD over turnover 2,499,000,000 NZD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 52.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "774 of 1,467 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 52.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "774 of 1,467 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 47.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "693 of 1,467 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "business_count",
+   "value": 2868,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "sales_per_business",
+   "value": 467200,
+   "unit": "NZD",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 1,340,000,000 NZD over 2,868 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "persons_per_business",
+   "value": 4.4,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "12,700 persons employed over 2,868 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "gross_operating_rate",
+   "value": 30.9,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 509,000,000 NZD over turnover 1,646,000,000 NZD."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "staff_cost_share",
+   "value": 31.0,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "510,000,000 NZD over turnover 1,646,000,000 NZD."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "purchases_share",
+   "value": 44.9,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "739,000,000 NZD over turnover 1,646,000,000 NZD."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 91.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "2,634 of 2,868 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 91.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "2,634 of 2,868 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 8.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "234 of 2,868 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "business_count",
+   "value": 121059,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "sales_per_business",
+   "value": 5399300,
+   "unit": "NZD",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 653,633,000,000 NZD over 121,059 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "persons_per_business",
+   "value": 13.4,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "1,617,691 persons employed over 121,059 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTSXO_S94: Industry, construction and market services (except public administration and defence; compulsory social security; activities of membership organisations)",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "gross_operating_rate",
+   "value": 14.8,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 113,832,000,000 NZD over turnover 771,505,000,000 NZD."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTSXO_S94: Industry, construction and market services (except public administration and defence; compulsory social security; activities of membership organisations)",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "staff_cost_share",
+   "value": 17.4,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "134,404,000,000 NZD over turnover 771,505,000,000 NZD."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTSXO_S94: Industry, construction and market services (except public administration and defence; compulsory social security; activities of membership organisations)",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "purchases_share",
+   "value": 66.8,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "515,296,000,000 NZD over turnover 771,505,000,000 NZD."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 77.5,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "93,819 of 121,059 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 77.5,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "93,819 of 121,059 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "item": "size_class_share",
+   "value": 22.5,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "27,240 of 121,059 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "business_count",
+   "value": 180219,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises",
+   "note": "ISIC group 561 has one class, 5610: the same activity."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "sales_per_business",
+   "value": 1462900,
+   "unit": "TRY",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "ISIC group 561 has one class, 5610: the same activity. Turnover 263,634,937,500 TRY over 180,219 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "persons_per_business",
+   "value": 4.0,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 721,887 persons employed over 180,219 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "gross_operating_rate",
+   "value": 4.4,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "gross operating rate, DERIVED: value added at factor cost minus remuneration, as a share of turnover (no operating surplus is published), before the owner's own pay, depreciation, interest and tax",
+   "note": "ISIC group 561 has one class, 5610: the same activity. Value added at factor cost 56,551,890,625 TRY, remuneration of employees 45,049,691,406 TRY, turnover 263,634,937,500 TRY."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "staff_cost_share",
+   "value": 17.1,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 45,049,691,406 TRY over turnover 263,634,937,500 TRY."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "purchases_share",
+   "value": 86.6,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 228,294,843,750 TRY over turnover 263,634,937,500 TRY."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "business_count",
+   "value": 86223,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises",
+   "note": "ISIC group 563 has one class, 5630: the same activity."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "sales_per_business",
+   "value": 362800,
+   "unit": "TRY",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "ISIC group 563 has one class, 5630: the same activity. Turnover 31,281,796,875 TRY over 86,223 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "persons_per_business",
+   "value": 1.9,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 161,779 persons employed over 86,223 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "gross_operating_rate",
+   "value": 4.4,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "gross operating rate, DERIVED: value added at factor cost minus remuneration, as a share of turnover (no operating surplus is published), before the owner's own pay, depreciation, interest and tax",
+   "note": "ISIC group 563 has one class, 5630: the same activity. Value added at factor cost 7,009,256,836 TRY, remuneration of employees 5,641,834,473 TRY, turnover 31,281,796,875 TRY."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "staff_cost_share",
+   "value": 18.0,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 5,641,834,473 TRY over turnover 31,281,796,875 TRY."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "purchases_share",
+   "value": 87.6,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 27,399,865,234 TRY over turnover 31,281,796,875 TRY."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "business_count",
+   "value": 140426,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "sales_per_business",
+   "value": 192100,
+   "unit": "TRY",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. Turnover 26,973,408,203 TRY over 140,426 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "persons_per_business",
+   "value": 1.8,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 252,711 persons employed over 140,426 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "gross_operating_rate",
+   "value": 1.8,
+   "unit": "percent of turnover",
+   "year": "2021",
+   "measure": "gross operating rate, DERIVED: value added at factor cost minus remuneration, as a share of turnover (no operating surplus is published), before the owner's own pay, depreciation, interest and tax",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. Value added at factor cost 4,022,214,600 TRY, remuneration of employees 3,798,181,641 TRY, turnover 12,299,958,984 TRY."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "staff_cost_share",
+   "value": 28.0,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 7,542,657,227 TRY over turnover 26,973,408,203 TRY."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "purchases_share",
+   "value": 78.2,
+   "unit": "percent of turnover",
+   "year": "2022",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 21,103,654,297 TRY over turnover 26,973,408,203 TRY."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "business_count",
+   "value": 3628221,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "sales_per_business",
+   "value": 24624000,
+   "unit": "TRY",
+   "year": "2024",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 89,341,120,000,000 TRY over 3,628,221 enterprises. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "persons_per_business",
+   "value": 5.1,
+   "unit": "persons employed per enterprise",
+   "year": "2024",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "18,373,948 persons employed over 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "gross_operating_rate",
+   "value": 8.1,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "gross operating rate, DERIVED: value added at factor cost minus remuneration, as a share of turnover (no operating surplus is published), before the owner's own pay, depreciation, interest and tax",
+   "note": "Value added at factor cost 14,726,072,000,000 TRY, remuneration of employees 7,451,594,000,000 TRY, turnover 89,341,120,000,000 TRY. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "staff_cost_share",
+   "value": 8.3,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "7,451,594,000,000 TRY over turnover 89,341,120,000,000 TRY. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "purchases_share",
+   "value": 88.5,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "79,086,200,000,000 TRY over turnover 89,341,120,000,000 TRY. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 5.8,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 to 249 persons employed",
+   "note": "210,314 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "3,622,419 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 0.9,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "31,257 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "5,802 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 4.9,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "179,057 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 94.0,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "3,412,105 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTNXK: Business economy except financial and insurance activities",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "item": "size_class_share",
+   "value": 6.0,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "216,116 of 3,628,221 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "business_count",
+   "value": 16362,
+   "unit": "enterprises",
+   "year": "2023",
+   "measure": "number of enterprises",
+   "note": "ISIC group 561 has one class, 5610: the same activity."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "persons_per_business",
+   "value": 7.7,
+   "unit": "persons employed per enterprise",
+   "year": "2021",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "Whole division 56 (food and beverage service): this country publishes no figure for class 5610 alone. 183,565 persons employed over 23,711 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 13 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 9.3,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 1,517 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 19.1,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 3,128 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 2.4,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 385 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 99.9,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 16,349 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 16.7,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 2,730 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 6.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 1,119 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 9.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 1,611 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 90.7,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 14,845 of 16,362 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 80.9,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 13,234 of 16,362 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "business_count",
+   "value": 4770,
+   "unit": "enterprises",
+   "year": "2023",
+   "measure": "number of enterprises",
+   "note": "ISIC group 563 has one class, 5630: the same activity."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 56: Food and beverage service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "persons_per_business",
+   "value": 7.7,
+   "unit": "persons employed per enterprise",
+   "year": "2021",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "Whole division 56 (food and beverage service): this country publishes no figure for class 5630 alone. 183,565 persons employed over 23,711 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 2 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 17.5,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 834 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 33.5,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 1,598 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 2.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 134 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 4,768 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 30.6,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 1,462 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 14.6,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 698 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 16.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 764 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 82.5,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 3,936 of 4,770 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 66.5,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 3,172 of 4,770 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "business_count",
+   "value": 15857,
+   "unit": "enterprises",
+   "year": "2023",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 96: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "persons_per_business",
+   "value": 1.4,
+   "unit": "persons employed per enterprise",
+   "year": "2021",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC division 96, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 26,514 persons employed over 19,027 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.3,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "40 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "124 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "7 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "15,857 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.7,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "117 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "33 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.5,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "84 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 99.7,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "15,817 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 99.2,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "15,733 of 15,857 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "0 of 15,857 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "business_count",
+   "value": 538330,
+   "unit": "enterprises",
+   "year": "2023",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "persons_per_business",
+   "value": 4.7,
+   "unit": "persons employed per enterprise",
+   "year": "2021",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "2,383,780 persons employed over 508,913 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "1,065 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 3.4,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "18,476 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 7.2,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "38,670 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 1.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "5,506 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "537,265 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 6.0,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "32,099 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 2.2,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "11,905 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 3.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "20,194 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 96.6,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "519,854 of 538,330 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "item": "size_class_share",
+   "value": 92.8,
+   "unit": "percent of enterprises",
+   "year": "2023",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "499,660 of 538,330 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "business_count",
+   "value": 7707,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises",
+   "note": "ISIC group 561 has one class, 5610: the same activity."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "sales_per_business",
+   "value": 143743000,
+   "unit": "CRC",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "ISIC group 561 has one class, 5610: the same activity. Turnover 1,107,823,750,000 CRC over 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "persons_per_business",
+   "value": 4.6,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 35,349 persons employed over 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 7,694 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 6.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 523 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 6.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 474 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 2.6,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 203 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 4.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 320 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 2.0,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 154 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.5,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 36 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 13 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 93.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 7,184 of 7,707 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 561: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 97.4,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "ISIC group 561 has one class, 5610: the same activity. 7,504 of 7,707 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "business_count",
+   "value": 555,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises",
+   "note": "ISIC group 563 has one class, 5630: the same activity."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "sales_per_business",
+   "value": 97950000,
+   "unit": "CRC",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "ISIC group 563 has one class, 5630: the same activity. Turnover 54,362,191,406 CRC over 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "persons_per_business",
+   "value": 2.4,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 1,320 persons employed over 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 554 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 3.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 18 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 2.9,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 16 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 2.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 12 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 96.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 537 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 98.9,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 549 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 1.1,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 6 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.7,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 4 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 1 of 555 enterprises."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 563: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "ISIC group 563 has one class, 5630: the same activity. 1 of 555 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "business_count",
+   "value": 5306,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "sales_per_business",
+   "value": 9381300,
+   "unit": "CRC",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 49,777,144,531 CRC over 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "0 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 100.0,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "5,306 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.3,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "15 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "13 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "8 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 99.7,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "5,291 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 99.9,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "5,299 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "7 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.1,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "5 of 5,306 enterprises."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 9602: Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.0,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "2 of 5,306 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "business_count",
+   "value": 259580,
+   "unit": "enterprises",
+   "year": "2022",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "sales_per_business",
+   "value": 269250000,
+   "unit": "CRC",
+   "year": "2022",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 69,891,912,000,000 CRC over 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "persons_per_business",
+   "value": 3.8,
+   "unit": "persons employed per enterprise",
+   "year": "2022",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "981,382 persons employed over 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "259,062 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 3.9,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "10,073 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 3.0,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "7,755 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 2.1,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "5,506 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 1.8,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "4,567 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 1.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "3,188 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.7,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "1,800 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "518 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 96.1,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "249,507 of 259,580 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "item": "size_class_share",
+   "value": 97.9,
+   "unit": "percent of enterprises",
+   "year": "2022",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "254,074 of 259,580 enterprises."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "gross_operating_rate",
+   "value": 12.4,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 438,431,906,250 CLP over turnover 3,539,860,500,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "staff_cost_share",
+   "value": 23.2,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "819,584,437,500 CLP over turnover 3,539,860,500,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "purchases_share",
+   "value": 63.3,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "2,241,376,250,000 CLP over turnover 3,539,860,500,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "gross_operating_rate",
+   "value": 10.4,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 1,609,610,229 CLP over turnover 15,542,727,539 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "staff_cost_share",
+   "value": 21.7,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "3,367,286,865 CLP over turnover 15,542,727,539 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "ISIC Rev. 4 5630: Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "purchases_share",
+   "value": 62.5,
+   "unit": "percent of turnover",
+   "year": "2018",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "9,713,195,312 CLP over turnover 15,542,727,539 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "gross_operating_rate",
+   "value": 19.1,
+   "unit": "percent of turnover",
+   "year": "2017",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. Gross operating surplus 225,208,218,750 CLP over turnover 1,179,531,625,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "staff_cost_share",
+   "value": 28.4,
+   "unit": "percent of turnover",
+   "year": "2017",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 334,863,468,750 CLP over turnover 1,179,531,625,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "barbershops",
+   "officialClass": "ISIC Rev. 4 960: Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "item": "purchases_share",
+   "value": 50.4,
+   "unit": "percent of turnover",
+   "year": "2017",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "ISIC group 960, all other personal service activities (laundry, funeral, hairdressing and beauty, other): hairdressing cannot be split out in this country's figures. 594,906,500,000 CLP over turnover 1,179,531,625,000 CLP. Chile's figures in this dataset cover only the enterprises its survey reports (107 restaurant enterprises with 161,991 persons employed in 2018), not the whole trade, so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "item": "gross_operating_rate",
+   "value": 13.9,
+   "unit": "percent of turnover",
+   "year": "2016",
+   "measure": "gross operating rate: gross operating surplus as a share of turnover, before the owner's own pay, depreciation, interest and tax",
+   "note": "Gross operating surplus 753,450,875,000 COP over turnover 5,429,207,000,000 COP. Colombia's figures in this dataset come from its annual services survey, which covers larger firms only (350 restaurant enterprises with 64,200 persons employed in 2016, 183 persons each), so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "item": "staff_cost_share",
+   "value": 21.1,
+   "unit": "percent of turnover",
+   "year": "2016",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "1,147,633,500,000 COP over turnover 5,429,207,000,000 COP. Colombia's figures in this dataset come from its annual services survey, which covers larger firms only (350 restaurant enterprises with 64,200 persons employed in 2016, 183 persons each), so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "ISIC Rev. 4 5610: Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "item": "purchases_share",
+   "value": 69.0,
+   "unit": "percent of turnover",
+   "year": "2016",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "3,748,527,500,000 COP over turnover 5,429,207,000,000 COP. Colombia's figures in this dataset come from its annual services survey, which covers larger firms only (350 restaurant enterprises with 64,200 persons employed in 2016, 183 persons each), so no count and no mean per enterprise is written."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "business_count",
+   "value": 2667652,
+   "unit": "enterprises",
+   "year": "2021",
+   "measure": "number of enterprises"
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "persons_per_business",
+   "value": 12.6,
+   "unit": "persons employed per enterprise",
+   "year": "2021",
+   "measure": "mean persons employed per enterprise, owners and unpaid workers included, derived from two published figures",
+   "note": "33,608,876 persons employed over 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 4.6,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "123,803 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 99.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "2,655,581 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 11.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "306,510 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 14.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "385,996 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 6.8,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "182,707 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 2.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "67,415 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 92.4,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "2,464,363 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 0.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "12,071 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 85.5,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "2,281,656 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "item": "size_class_share",
+   "value": 7.6,
+   "unit": "percent of enterprises",
+   "year": "2021",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "203,289 of 2,667,652 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "business_count",
+   "value": 1716165,
+   "unit": "enterprises",
+   "year": "2024",
+   "measure": "number of enterprises",
+   "note": "OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "sales_per_business",
+   "value": 2827700,
+   "unit": "CAD",
+   "year": "2024",
+   "measure": "mean turnover per enterprise (turnover divided by the number of enterprises), derived from two published figures",
+   "note": "Turnover 4,852,840,000,000 CAD over 1,716,165 enterprises. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "staff_cost_share",
+   "value": 21.1,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "staff costs (remuneration of employees, the OECD's measure: wages, salaries and employer social contributions) divided by turnover",
+   "note": "1,025,874,000,000 CAD over turnover 4,852,840,000,000 CAD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "purchases_share",
+   "value": 68.5,
+   "unit": "percent of turnover",
+   "year": "2024",
+   "measure": "total purchases of goods and services divided by turnover",
+   "note": "3,325,413,000,000 CAD over turnover 4,852,840,000,000 CAD. OECD observation status: value imputed by the OECD (a receiving agency)."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 5.0,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 20 or more persons employed",
+   "note": "85,400 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 95.0,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 1 to 19 persons employed",
+   "note": "1,630,765 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 9.4,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 or more persons employed",
+   "note": "160,776 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 99.8,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 1 to 249 persons employed",
+   "note": "1,711,876 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 7.5,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 to 49 persons employed",
+   "note": "128,954 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 1.9,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 50 or more persons employed",
+   "note": "31,822 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 3.1,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 20 to 49 persons employed",
+   "note": "53,578 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 90.6,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 1 to 9 persons employed",
+   "note": "1,555,389 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 0.2,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 250 or more persons employed",
+   "note": "4,289 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 1.6,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 50 to 249 persons employed",
+   "note": "27,533 of 1,716,165 enterprises."
+  },
+  {
+   "trade": "all",
+   "officialClass": "ISIC Rev. 4 BTN: Business economy",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "item": "size_class_share",
+   "value": 4.4,
+   "unit": "percent of enterprises",
+   "year": "2024",
+   "measure": "share of enterprises with 10 to 19 persons employed",
+   "note": "75,376 of 1,716,165 enterprises."
+  }
+ ]
+}

@@ -1,0 +1,395 @@
+{
+ "id": "trades-vat-by-activity-uk",
+ "source": {
+  "publisher": "HM Revenue & Customs (GOV.UK)",
+  "title": "VAT rates on different goods and services",
+  "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026",
+   "measure": "catering: food and drink eaten on the premises, all hot takeaways and home deliveries",
+   "trades": [
+    "restaurants",
+    "sit_down_restaurants",
+    "fast_casual",
+    "cafes_coffee",
+    "pizzerias",
+    "food_trucks",
+    "chicken_shops",
+    "tea_houses",
+    "ice_cream_shops",
+    "catering",
+    "bars_nightclubs",
+    "pubs_taverns",
+    "wine_bars"
+   ],
+   "note": "Standard-rated: 'Restaurants must always charge VAT on everything eaten either on their premises or in communal areas ... restaurants and takeaway vendors must charge VAT on all hot takeaways and home deliveries' (VAT Notice 709/1). Ice cream, confectionery, alcoholic and soft drinks are always standard-rated.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "food and drink for human consumption sold cold (not catering), including cold takeaway food",
+   "trades": [
+    "grocery_stores",
+    "specialty_grocery",
+    "bakeries_retail",
+    "cake_shops_patisseries",
+    "pastry_dessert",
+    "artisan_bakery_wholesale",
+    "food_mfg"
+   ],
+   "note": "Zero-rated: 'Food and drink for human consumption is usually zero-rated' and cold takeaway food is not charged 'unless it's to be eaten in a designated area'. Always standard-rated: catering, alcoholic drinks, confectionery, crisps, hot food, ice cream, soft drinks (VAT Notice 701/14).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "books, newspapers, magazines, printed music, maps; brochures, leaflets and pamphlets",
+   "trades": [
+    "book_retailing",
+    "bookstores_indie",
+    "news_periodical_publishing",
+    "print_shops"
+   ],
+   "note": "Zero-rated (VAT Notice 701/10); exercise books, letterheads and posters are standard-rated.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "children's clothes and footwear, babywear",
+   "trades": [
+    "childrens_clothing",
+    "clothing_stores",
+    "shoe_stores"
+   ],
+   "note": "Zero-rated (VAT Notice 714).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "passenger transport in a vehicle, boat or aircraft that carries not less than 10 passengers",
+   "trades": [
+    "transit_ground_passenger",
+    "scenic_sightseeing_transport"
+   ],
+   "note": "Zero-rated (VAT Notice 744A); a vehicle for fewer than 10 passengers (a taxi) is standard-rated.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "dispensing of prescriptions by a registered pharmacist",
+   "trades": [
+    "independent_pharmacy",
+    "health_beauty_stores"
+   ],
+   "note": "Zero-rated (VAT Notice 701/57).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2026",
+   "measure": "health services by registered doctors, dentists, opticians, pharmacists and other health professionals",
+   "trades": [
+    "doctors_clinics",
+    "dental_practices",
+    "optometry",
+    "physical_therapy",
+    "chiropractic",
+    "mental_health_practice"
+   ],
+   "note": "Exempt from VAT (VAT Notice 701/57): no VAT charged.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2024-10-30",
+   "measure": "education and vocational training by an eligible body other than a private school",
+   "trades": [
+    "vocational_training",
+    "primary_secondary_schools",
+    "language_schools",
+    "tutoring_centers"
+   ],
+   "note": "Exempt from VAT when supplied by an eligible body (VAT Notice 701/30); private schools charge VAT since this change. Commercial tutors and schools that are not eligible bodies charge the standard rate.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2026",
+   "measure": "insurance broking and agency in an intermediary capacity",
+   "trades": [
+    "insurance_brokers"
+   ],
+   "note": "Exempt from VAT (VAT Notice 701/36).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2026",
+   "measure": "burial or cremation of dead people",
+   "trades": [
+    "funeral_services"
+   ],
+   "note": "Exempt from VAT (VAT Notice 701/32).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2026",
+   "measure": "physical education and sports activities",
+   "trades": [
+    "sports_fitness"
+   ],
+   "note": "Exempt from VAT when the conditions of VAT Notice 701/45 are met (eligible non-profit bodies); a commercial gym charges the standard rate.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "%",
+   "year": "2026",
+   "measure": "admission to museums, art exhibitions, zoos and performances by public authorities or eligible cultural bodies",
+   "trades": [
+    "museums_cultural",
+    "small_museums",
+    "performing_arts"
+   ],
+   "note": "Exempt from VAT for eligible cultural bodies (VAT Notice 701/47); commercial operators charge the standard rate.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2026",
+   "measure": "renovating a dwelling empty for at least 2 years; converting premises into more dwellings",
+   "trades": [
+    "residential_construction",
+    "specialty_trades",
+    "plumbers",
+    "electricians",
+    "carpenters_finish",
+    "painters_residential",
+    "roofers"
+   ],
+   "note": "Reduced rate 5% (VAT Notice 708); other building work on existing homes is standard-rated.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2026",
+   "measure": "installation, repair and maintenance of a central heating system (boiler, radiators, pipework, controls), grant-funded for people over 60 or on certain benefits",
+   "trades": [
+    "hvac_services",
+    "plumbers",
+    "plumbing_services",
+    "air_conditioning_refrigeration"
+   ],
+   "note": "Reduced rate 5% only where grant-funded by certain funders (VAT Notice 708/6).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2027-03-31",
+   "measure": "energy-saving materials installed in residential accommodation (heat pumps, insulation, solar panels, batteries and others)",
+   "trades": [
+    "hvac_services",
+    "electricians",
+    "roofers",
+    "air_conditioning_refrigeration",
+    "specialty_trades"
+   ],
+   "note": "Zero-rated until 31 March 2027 (VAT Notice 708/6); the year is the date the relief ends.",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  },
+  {
+   "item": "vat_rate_activity",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "construction and first sale of new domestic buildings",
+   "trades": [
+    "residential_construction"
+   ],
+   "note": "Zero-rated (VAT Notice 708).",
+   "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK)",
+    "title": "VAT rates on different goods and services (last updated 10 July 2026)",
+    "url": "https://www.gov.uk/guidance/rates-of-vat-on-different-goods-and-services"
+   }
+  }
+ ]
+}

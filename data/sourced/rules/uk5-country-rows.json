@@ -1,0 +1,554 @@
+{
+ "id": "uk5-country-rows",
+ "source": {
+  "publisher": "GOV.UK (each row's own page)",
+  "title": "The country page's rows from gov.uk: filing deadlines, steps, the Start Up Loan, the pension, rule changes",
+  "url": "https://www.gov.uk/api/content/"
+ },
+ "retrieved": "2026-10-21",
+ "rows": [
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1,
+   "unit": "calendar month and 7 days after each VAT period ends",
+   "year": "2026",
+   "measure": "VAT return and payment",
+   "note": "Also the deadline for paying HMRC.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Sending a VAT Return",
+    "url": "https://www.gov.uk/submit-vat-return",
+    "sha256": "798834ddf83dbe29f93de12ad3776f46586e3bc11a473b4df7521fd7f1c34404"
+   }
+  },
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9,
+   "unit": "months after the financial year ends",
+   "year": "2026",
+   "measure": "Company accounts filed",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Accounts and tax returns for private limited companies",
+    "url": "https://www.gov.uk/prepare-file-annual-accounts-for-limited-company",
+    "sha256": "8318e094895f015b947486e617be9f7c38d08498814062bbcbfe07fff9e69bca"
+   }
+  },
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 21,
+   "unit": "months after registering",
+   "year": "2026",
+   "measure": "First accounts filed",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Accounts and tax returns for private limited companies",
+    "url": "https://www.gov.uk/prepare-file-annual-accounts-for-limited-company",
+    "sha256": "8318e094895f015b947486e617be9f7c38d08498814062bbcbfe07fff9e69bca"
+   }
+  },
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9,
+   "unit": "months and 1 day after the accounting period ends",
+   "year": "2026",
+   "measure": "Corporation tax paid",
+   "note": "For taxable profits of up to 1.5 million pounds.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Pay your Corporation Tax bill",
+    "url": "https://www.gov.uk/pay-corporation-tax",
+    "sha256": "52a4b5d431bc6677837c5ede4448db70569fdf8e85f496392882769296e8cb8a"
+   }
+  },
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12,
+   "unit": "months after the accounting period ends",
+   "year": "2026",
+   "measure": "Company tax return",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Company Tax Returns",
+    "url": "https://www.gov.uk/company-tax-returns",
+    "sha256": "b86495e818669cb51b88434888d1e240ecc1ebce3293669ffd493ad2dc486a06"
+   }
+  },
+  {
+   "item": "filing_deadline",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12,
+   "unit": "months, at least",
+   "year": "2026",
+   "measure": "Confirmation statement",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Filing your company's confirmation statement",
+    "url": "https://www.gov.uk/guidance/filing-your-companys-confirmation-statement",
+    "sha256": "ce92dba04396ec5520d9ab8a0d83f322a4d1b21ecd09236a8e1e8ac3acf014e1"
+   }
+  },
+  {
+   "item": "late_filing_penalty",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 150,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Accounts filed up to 1 month late",
+   "note": "Private limited companies. Public limited companies pay more.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Prepare annual accounts for a private limited company",
+    "url": "https://www.gov.uk/annual-accounts",
+    "sha256": "1380303890394ac55dbe023220331a850e519b427a736a08b1f66da60cd45dbf"
+   }
+  },
+  {
+   "item": "late_filing_penalty",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 375,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Accounts filed 1 to 3 months late",
+   "note": "Private limited companies. Public limited companies pay more.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Prepare annual accounts for a private limited company",
+    "url": "https://www.gov.uk/annual-accounts",
+    "sha256": "1380303890394ac55dbe023220331a850e519b427a736a08b1f66da60cd45dbf"
+   }
+  },
+  {
+   "item": "late_filing_penalty",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 750,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Accounts filed 3 to 6 months late",
+   "note": "Private limited companies. Public limited companies pay more.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Prepare annual accounts for a private limited company",
+    "url": "https://www.gov.uk/annual-accounts",
+    "sha256": "1380303890394ac55dbe023220331a850e519b427a736a08b1f66da60cd45dbf"
+   }
+  },
+  {
+   "item": "late_filing_penalty",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1500,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Accounts filed more than 6 months late",
+   "note": "Private limited companies. Public limited companies pay more.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Prepare annual accounts for a private limited company",
+    "url": "https://www.gov.uk/annual-accounts",
+    "sha256": "1380303890394ac55dbe023220331a850e519b427a736a08b1f66da60cd45dbf"
+   }
+  },
+  {
+   "item": "registration_time",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 24,
+   "unit": "hours, usually",
+   "year": "2026",
+   "measure": "Private limited company registered online",
+   "note": "The fee is 100 pounds online.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up a private limited company",
+    "url": "https://www.gov.uk/limited-company-formation",
+    "sha256": "4fc0b979224265a3e428f50d8c09f95b9ea743579b3a241e9144068887a43e8a"
+   }
+  },
+  {
+   "item": "registration_step",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "step",
+   "year": "2026",
+   "measure": "Set up for Corporation Tax",
+   "note": "At the same time as registering the company with Companies House, or later by adding Corporation Tax to the business tax account. gov.uk's current guide states no deadline for it.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Corporation Tax",
+    "url": "https://www.gov.uk/corporation-tax",
+    "sha256": "cc340e7dfe39ef410950bf1da5470e46f4ee4649166dbcf4481259ec1d5a3949"
+   }
+  },
+  {
+   "item": "registration_step",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "step",
+   "year": "2026",
+   "measure": "Register as an employer",
+   "note": "Before the first payday, and not more than 2 months before paying anyone.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Register as an employer",
+    "url": "https://www.gov.uk/register-employer",
+    "sha256": "5c89491ef6bc78be60ab23e792fc3601a3d4937f6a9e879d6c37966207cd0128"
+   }
+  },
+  {
+   "item": "registration_step",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 28,
+   "unit": "days before trading, at least",
+   "year": "2026",
+   "measure": "Register a food business",
+   "note": "England, Wales and Northern Ireland, with the local council.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Food business registration",
+    "url": "https://www.gov.uk/guidance/food-business-registration",
+    "sha256": "534008eb8f17af76ac8ba11edb49b1b4827b6dd05bdf091103310a103a77ef1d"
+   }
+  },
+  {
+   "item": "registration_step",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "days before trading",
+   "year": "2026",
+   "measure": "Start as a sole trader",
+   "note": "Trading can start straight away without registering. Self Assessment registration is needed once earnings pass 1,000 pounds in a tax year.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Become a sole trader",
+    "url": "https://www.gov.uk/become-sole-trader",
+    "sha256": "811198bcf2461534121066571e399ec66880a047279589a987c3cc45963a07f1"
+   }
+  },
+  {
+   "item": "startup_loan_min",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 500,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Start Up Loan, smallest",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Apply for a Start Up Loan for your business",
+    "url": "https://www.gov.uk/apply-start-up-loan",
+    "sha256": "c9e34e2e568fbc02870ec0c09d67055c7ce1a4e672f261de55cfffd6d1849a99"
+   }
+  },
+  {
+   "item": "startup_loan_max",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 25000,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Start Up Loan, largest",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Apply for a Start Up Loan for your business",
+    "url": "https://www.gov.uk/apply-start-up-loan",
+    "sha256": "c9e34e2e568fbc02870ec0c09d67055c7ce1a4e672f261de55cfffd6d1849a99"
+   }
+  },
+  {
+   "item": "startup_loan_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7.5,
+   "unit": "% a year, fixed",
+   "year": "2026",
+   "measure": "Start Up Loan, interest rate",
+   "note": "Government-backed, an unsecured personal loan, no application or early repayment fee.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Apply for a Start Up Loan for your business",
+    "url": "https://www.gov.uk/apply-start-up-loan",
+    "sha256": "c9e34e2e568fbc02870ec0c09d67055c7ce1a4e672f261de55cfffd6d1849a99"
+   }
+  },
+  {
+   "item": "startup_loan_term",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5,
+   "unit": "years at most",
+   "year": "2026",
+   "measure": "Start Up Loan, repaid over",
+   "note": "1 to 5 years.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Apply for a Start Up Loan for your business",
+    "url": "https://www.gov.uk/apply-start-up-loan",
+    "sha256": "c9e34e2e568fbc02870ec0c09d67055c7ce1a4e672f261de55cfffd6d1849a99"
+   }
+  },
+  {
+   "item": "pension_employer_min",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 3,
+   "unit": "% of qualifying earnings",
+   "year": "2026",
+   "measure": "Workplace pension, the employer's minimum",
+   "note": "The employee pays 5%, 8% in all.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Workplace pensions",
+    "url": "https://www.gov.uk/workplace-pensions",
+    "sha256": "460356a204bd71b1bef96cb617c5e404f8b45b97cf46b2d0937b062476174b17"
+   }
+  },
+  {
+   "item": "pension_band_lower",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 6240,
+   "unit": "GBP a year",
+   "year": "2026",
+   "measure": "Qualifying earnings, from",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Workplace pensions",
+    "url": "https://www.gov.uk/workplace-pensions",
+    "sha256": "460356a204bd71b1bef96cb617c5e404f8b45b97cf46b2d0937b062476174b17"
+   }
+  },
+  {
+   "item": "pension_band_upper",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 50270,
+   "unit": "GBP a year",
+   "year": "2026",
+   "measure": "Qualifying earnings, to",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Workplace pensions",
+    "url": "https://www.gov.uk/workplace-pensions",
+    "sha256": "460356a204bd71b1bef96cb617c5e404f8b45b97cf46b2d0937b062476174b17"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 6,
+   "unit": "months",
+   "year": "2027-01-01",
+   "measure": "Unfair dismissal, the qualifying period",
+   "note": "From normally 2 years (gov.uk, Dismissal: your rights) to 6 months, for dismissals from 1 January 2027.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Plan to Make Work Pay and Employment Rights Act: timeline update",
+    "url": "https://www.gov.uk/government/publications/implementing-the-plan-to-make-work-pay-and-employment-rights-act/plan-to-make-work-pay-and-employment-rights-act-timeline-update",
+    "sha256": "05139c32c5962732425464420a1496af2adad17b9a5e36df62deb77f750eab04"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 6,
+   "unit": "months",
+   "year": "2026-10-01",
+   "measure": "Employment tribunal claims, the time limit",
+   "note": "From 3 to 6 months.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Plan to Make Work Pay and Employment Rights Act: timeline update",
+    "url": "https://www.gov.uk/government/publications/implementing-the-plan-to-make-work-pay-and-employment-rights-act/plan-to-make-work-pay-and-employment-rights-act-timeline-update",
+    "sha256": "05139c32c5962732425464420a1496af2adad17b9a5e36df62deb77f750eab04"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1,
+   "unit": "first day of sickness paid",
+   "year": "2026-04-06",
+   "measure": "Statutory Sick Pay, the waiting period removed",
+   "note": "Sick pay from the first day off sick. The length of the old waiting period is not printed on gov.uk's current pages.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Plan to Make Work Pay and Employment Rights Act: timeline update",
+    "url": "https://www.gov.uk/government/publications/implementing-the-plan-to-make-work-pay-and-employment-rights-act/plan-to-make-work-pay-and-employment-rights-act-timeline-update",
+    "sha256": "05139c32c5962732425464420a1496af2adad17b9a5e36df62deb77f750eab04"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 50000,
+   "unit": "GBP of qualifying income",
+   "year": "2026-04-06",
+   "measure": "Making Tax Digital for Income Tax, the threshold",
+   "note": "Sole traders and landlords over 50,000 pounds keep digital records from 6 April 2026.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Find out if and when you need to use Making Tax Digital for Income Tax",
+    "url": "https://www.gov.uk/guidance/find-out-if-and-when-you-need-to-use-making-tax-digital-for-income-tax",
+    "sha256": "9d55ea6634503f8200f08c693be7283720b9842dd4f9ad9262dab1543eaee210"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 30000,
+   "unit": "GBP of qualifying income",
+   "year": "2027-04-06",
+   "measure": "Making Tax Digital for Income Tax, the threshold",
+   "note": "Sole traders and landlords over 30,000 pounds keep digital records from 6 April 2027.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Find out if and when you need to use Making Tax Digital for Income Tax",
+    "url": "https://www.gov.uk/guidance/find-out-if-and-when-you-need-to-use-making-tax-digital-for-income-tax",
+    "sha256": "9d55ea6634503f8200f08c693be7283720b9842dd4f9ad9262dab1543eaee210"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20000,
+   "unit": "GBP of qualifying income",
+   "year": "2028-04-06",
+   "measure": "Making Tax Digital for Income Tax, the threshold",
+   "note": "Sole traders and landlords over 20,000 pounds keep digital records from 6 April 2028.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Find out if and when you need to use Making Tax Digital for Income Tax",
+    "url": "https://www.gov.uk/guidance/find-out-if-and-when-you-need-to-use-making-tax-digital-for-income-tax",
+    "sha256": "9d55ea6634503f8200f08c693be7283720b9842dd4f9ad9262dab1543eaee210"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 100,
+   "unit": "GBP",
+   "year": "2026-02-01",
+   "measure": "Company registration fee, online",
+   "note": "From 1 February 2026. The fee before it is not printed on gov.uk's current pages.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Companies House fees are changing from 1 February 2026",
+    "url": "https://www.gov.uk/government/news/companies-house-fees-are-changing-from-1-february-2026",
+    "sha256": "35d06f1734f63ad4cf0870783ba501bd372957cf993e1b6815e83e2e71b16f0d"
+   }
+  }
+ ]
+}

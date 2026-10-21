@@ -1,0 +1,1885 @@
+{
+ "id": "eucities-eurostat-urban-audit",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Urban Audit city statistics (urb_cpop1 population, urb_ctour tourism)",
+  "url": "https://ec.europa.eu/eurostat/web/cities/database",
+  "table": "urb_cpop1 indicator DE1001V; urb_ctour indicators CR2011V and CR2001V; latest year per city, 2015 or later; urb_ctour updated 2026-10-16",
+  "licence": "Eurostat copyright notice: reuse authorised, source acknowledged (CC BY 4.0), https://ec.europa.eu/eurostat/about-us/policies/copyright"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE001C",
+    "name": "Berlin"
+   },
+   "value": 3685265,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE001C, the catalog's berlin.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE004C",
+    "name": "Köln"
+   },
+   "value": 1024621,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE004C, the catalog's cologne.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE011C",
+    "name": "Düsseldorf"
+   },
+   "value": 618685,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE011C, the catalog's dusseldorf.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE005C",
+    "name": "Frankfurt am Main"
+   },
+   "value": 756021,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE005C, the catalog's frankfurt.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE002C",
+    "name": "Hamburg"
+   },
+   "value": 1862565,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE002C, the catalog's hamburg.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE008C",
+    "name": "Leipzig"
+   },
+   "value": 611850,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE008C, the catalog's leipzig.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE003C",
+    "name": "München"
+   },
+   "value": 1505005,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE003C, the catalog's munich.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "DE007C",
+    "name": "Stuttgart"
+   },
+   "value": 612663,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city DE007C, the catalog's stuttgart.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR001C",
+    "name": "Paris (greater city)"
+   },
+   "value": 10159710,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR001C, the catalog's paris. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: break in time series.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR002C",
+    "name": "Lyon (greater city)"
+   },
+   "value": 1229077,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR002C, the catalog's lyon. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: break in time series.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR004C",
+    "name": "Marseille (greater city)"
+   },
+   "value": 973249,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR004C, the catalog's marseille. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: break in time series.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR007C",
+    "name": "Nantes (greater city)"
+   },
+   "value": 479393,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR007C, the catalog's nantes. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: break in time series.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR008C",
+    "name": "Nice (greater city)"
+   },
+   "value": 482317,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR008C, the catalog's nice. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FR006C",
+    "name": "Toulouse (greater city)"
+   },
+   "value": 716000,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FR006C, the catalog's toulouse. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: break in time series.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "ES001C",
+    "name": "Madrid (greater city)"
+   },
+   "value": 4501429,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city ES001C, the catalog's madrid. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "ES002C",
+    "name": "Barcelona (greater city)"
+   },
+   "value": 2658830,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city ES002C, the catalog's barcelona. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "ES004C",
+    "name": "Sevilla"
+   },
+   "value": 686741,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city ES004C, the catalog's seville.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "ES003C",
+    "name": "Valencia (greater city)"
+   },
+   "value": 1474632,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city ES003C, the catalog's valencia. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CH002C",
+    "name": "Zurich (greater city)"
+   },
+   "value": 725893,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CH002C, the catalog's zurich. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CH003C",
+    "name": "Geneva (greater city)"
+   },
+   "value": 437406,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CH003C, the catalog's geneva. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CH004C",
+    "name": "Basel (greater city)"
+   },
+   "value": 355946,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CH004C, the catalog's basel. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CH001C",
+    "name": "Bern (greater city)"
+   },
+   "value": 235885,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CH001C, the catalog's bern. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "NL001C",
+    "name": "Amsterdam (greater city)"
+   },
+   "value": 1073736,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city NL001C, the catalog's amsterdam. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "NL037C",
+    "name": "Rotterdam (greater city)"
+   },
+   "value": 1274944,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city NL037C, the catalog's rotterdam. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "PL001C",
+    "name": "Warszawa"
+   },
+   "value": 1863845,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city PL001C, the catalog's warsaw. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "PL003C",
+    "name": "Kraków"
+   },
+   "value": 809168,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city PL003C, the catalog's krakow. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "PT001C",
+    "name": "Lisboa (greater city)"
+   },
+   "value": 1965363,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city PT001C, the catalog's lisbon. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "PT002C",
+    "name": "Porto (greater city)"
+   },
+   "value": 1017569,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city PT002C, the catalog's porto. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "BE001C",
+    "name": "Bruxelles/Brussel (greater city)"
+   },
+   "value": 1271709,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city BE001C, the catalog's brussels. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CZ001C",
+    "name": "Praha"
+   },
+   "value": 1275406,
+   "unit": "persons",
+   "year": "2022",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CZ001C, the catalog's prague. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "SE001C",
+    "name": "Stockholm (greater city)"
+   },
+   "value": 1626241,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city SE001C, the catalog's stockholm. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "IE001C",
+    "name": "Dublin (greater city)"
+   },
+   "value": 1325700,
+   "unit": "persons",
+   "year": "2016",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city IE001C, the catalog's dublin. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "EE001C",
+    "name": "Tallinn"
+   },
+   "value": 456518,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city EE001C, the catalog's tallinn.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "LV001C",
+    "name": "Rīga"
+   },
+   "value": 601882,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city LV001C, the catalog's riga.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "LT001C",
+    "name": "Vilnius"
+   },
+   "value": 602408,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city LT001C, the catalog's vilnius.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "FI001C",
+    "name": "Helsinki/Helsingfors"
+   },
+   "value": 674500,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city FI001C, the catalog's helsinki.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "SI001C",
+    "name": "Ljubljana"
+   },
+   "value": 297575,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city SI001C, the catalog's ljubljana.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "SK001C",
+    "name": "Bratislava (greater city)"
+   },
+   "value": 475577,
+   "unit": "persons",
+   "year": "2022",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city SK001C, the catalog's bratislava. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "RO001C",
+    "name": "București"
+   },
+   "value": 2131034,
+   "unit": "persons",
+   "year": "2018",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city RO001C, the catalog's bucharest. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "BG001C",
+    "name": "Sofia"
+   },
+   "value": 1295931,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city BG001C, the catalog's sofia.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "HR001C",
+    "name": "Zagreb"
+   },
+   "value": 760020,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city HR001C, the catalog's zagreb.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "MT001C",
+    "name": "Greater Valletta"
+   },
+   "value": 466066,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city MT001C, the catalog's valletta. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CY001C",
+    "name": "Lefkosia (greater city)"
+   },
+   "value": 241400,
+   "unit": "persons",
+   "year": "2016",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city CY001C, the catalog's nicosia. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "NO001C",
+    "name": "Oslo (greater city)"
+   },
+   "value": 699827,
+   "unit": "persons",
+   "year": "2023",
+   "measure": "population on 1 January",
+   "note": "Urban Audit city NO001C, the catalog's oslo. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_cpop1): Population on 1 January by age groups and sex - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_cpop1?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE001C",
+    "name": "Berlin"
+   },
+   "value": 3723984,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE001C, the catalog's berlin. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE001C",
+    "name": "Berlin"
+   },
+   "value": 12278460,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE001C, the catalog's berlin.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE004C",
+    "name": "Köln"
+   },
+   "value": 613666,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE004C, the catalog's cologne. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE004C",
+    "name": "Köln"
+   },
+   "value": 2557212,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE004C, the catalog's cologne.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE011C",
+    "name": "Düsseldorf"
+   },
+   "value": 549576,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE011C, the catalog's dusseldorf. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE011C",
+    "name": "Düsseldorf"
+   },
+   "value": 1825753,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE011C, the catalog's dusseldorf.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE005C",
+    "name": "Frankfurt am Main"
+   },
+   "value": 1415914,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE005C, the catalog's frankfurt. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE005C",
+    "name": "Frankfurt am Main"
+   },
+   "value": 4085447,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE005C, the catalog's frankfurt.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE002C",
+    "name": "Hamburg"
+   },
+   "value": 1145534,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE002C, the catalog's hamburg. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE002C",
+    "name": "Hamburg"
+   },
+   "value": 6796976,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE002C, the catalog's hamburg.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE008C",
+    "name": "Leipzig"
+   },
+   "value": 224437,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE008C, the catalog's leipzig. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE008C",
+    "name": "Leipzig"
+   },
+   "value": 1959147,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE008C, the catalog's leipzig.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE003C",
+    "name": "München"
+   },
+   "value": 2219295,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE003C, the catalog's munich. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE003C",
+    "name": "München"
+   },
+   "value": 7034040,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE003C, the catalog's munich.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "DE007C",
+    "name": "Stuttgart"
+   },
+   "value": 389898,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE007C, the catalog's stuttgart. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "DE007C",
+    "name": "Stuttgart"
+   },
+   "value": 1648103,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city DE007C, the catalog's stuttgart.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR001C",
+    "name": "Paris (greater city)"
+   },
+   "value": 71423725,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR001C, the catalog's paris. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR002C",
+    "name": "Lyon (greater city)"
+   },
+   "value": 5963727,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR002C, the catalog's lyon. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR004C",
+    "name": "Marseille (greater city)"
+   },
+   "value": 4168918,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR004C, the catalog's marseille. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR007C",
+    "name": "Nantes (greater city)"
+   },
+   "value": 2287970,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR007C, the catalog's nantes. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR008C",
+    "name": "Nice (greater city)"
+   },
+   "value": 5348363,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR008C, the catalog's nice. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FR006C",
+    "name": "Toulouse (greater city)"
+   },
+   "value": 3776400,
+   "unit": "nights",
+   "year": "2022",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FR006C, the catalog's toulouse. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: estimated.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "ES001C",
+    "name": "Madrid (greater city)"
+   },
+   "value": 14419636,
+   "unit": "nights",
+   "year": "2019",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city ES001C, the catalog's madrid. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "ES001C",
+    "name": "Madrid (greater city)"
+   },
+   "value": 22751955,
+   "unit": "nights",
+   "year": "2019",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city ES001C, the catalog's madrid. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CH002C",
+    "name": "Zurich (greater city)"
+   },
+   "value": 3861493,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH002C, the catalog's zurich. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CH002C",
+    "name": "Zurich (greater city)"
+   },
+   "value": 5739471,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH002C, the catalog's zurich. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CH003C",
+    "name": "Geneva (greater city)"
+   },
+   "value": 2715039,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH003C, the catalog's geneva. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CH003C",
+    "name": "Geneva (greater city)"
+   },
+   "value": 3715068,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH003C, the catalog's geneva. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CH004C",
+    "name": "Basel (greater city)"
+   },
+   "value": 1045893,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH004C, the catalog's basel. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CH004C",
+    "name": "Basel (greater city)"
+   },
+   "value": 1695604,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH004C, the catalog's basel. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CH001C",
+    "name": "Bern (greater city)"
+   },
+   "value": 693621,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH001C, the catalog's bern. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CH001C",
+    "name": "Bern (greater city)"
+   },
+   "value": 1220521,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city CH001C, the catalog's bern. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. Eurostat flags the value: definition differs.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "PL001C",
+    "name": "Warszawa"
+   },
+   "value": 2336943,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city PL001C, the catalog's warsaw.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "PL003C",
+    "name": "Kraków"
+   },
+   "value": 1820788,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city PL003C, the catalog's krakow.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "PT001C",
+    "name": "Lisboa (greater city)"
+   },
+   "value": 3038543,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city PT001C, the catalog's lisbon. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "PT001C",
+    "name": "Lisboa (greater city)"
+   },
+   "value": 4425742,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city PT001C, the catalog's lisbon. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "PT002C",
+    "name": "Porto (greater city)"
+   },
+   "value": 1053311,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city PT002C, the catalog's porto. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "PT002C",
+    "name": "Porto (greater city)"
+   },
+   "value": 1861226,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city PT002C, the catalog's porto. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "BE001C",
+    "name": "Bruxelles/Brussel (greater city)"
+   },
+   "value": 1283865,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city BE001C, the catalog's brussels. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "BE001C",
+    "name": "Bruxelles/Brussel (greater city)"
+   },
+   "value": 1782873,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city BE001C, the catalog's brussels. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "SE001C",
+    "name": "Stockholm (greater city)"
+   },
+   "value": 11442249,
+   "unit": "nights",
+   "year": "2018",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city SE001C, the catalog's stockholm. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "EE001C",
+    "name": "Tallinn"
+   },
+   "value": 889060,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city EE001C, the catalog's tallinn. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "EE001C",
+    "name": "Tallinn"
+   },
+   "value": 1216057,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city EE001C, the catalog's tallinn.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "LV001C",
+    "name": "Rīga"
+   },
+   "value": 1036123,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city LV001C, the catalog's riga. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "LV001C",
+    "name": "Rīga"
+   },
+   "value": 1372167,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city LV001C, the catalog's riga.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "LT001C",
+    "name": "Vilnius"
+   },
+   "value": 459885,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city LT001C, the catalog's vilnius. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "LT001C",
+    "name": "Vilnius"
+   },
+   "value": 840324,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city LT001C, the catalog's vilnius.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "FI001C",
+    "name": "Helsinki/Helsingfors"
+   },
+   "value": 495401,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city FI001C, the catalog's helsinki. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "FI001C",
+    "name": "Helsinki/Helsingfors"
+   },
+   "value": 1616635,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city FI001C, the catalog's helsinki.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "SI001C",
+    "name": "Ljubljana"
+   },
+   "value": 461566,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city SI001C, the catalog's ljubljana. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "SI001C",
+    "name": "Ljubljana"
+   },
+   "value": 540195,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city SI001C, the catalog's ljubljana.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "SK001C",
+    "name": "Bratislava (greater city)"
+   },
+   "value": 420092,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city SK001C, the catalog's bratislava. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "SK001C",
+    "name": "Bratislava (greater city)"
+   },
+   "value": 916148,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city SK001C, the catalog's bratislava. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "RO001C",
+    "name": "București"
+   },
+   "value": 3398817,
+   "unit": "nights",
+   "year": "2018",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city RO001C, the catalog's bucharest.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "BG001C",
+    "name": "Sofia"
+   },
+   "value": 406118,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city BG001C, the catalog's sofia. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "BG001C",
+    "name": "Sofia"
+   },
+   "value": 744965,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city BG001C, the catalog's sofia.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "HR001C",
+    "name": "Zagreb"
+   },
+   "value": 540171,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city HR001C, the catalog's zagreb. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "HR001C",
+    "name": "Zagreb"
+   },
+   "value": 780077,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city HR001C, the catalog's zagreb.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "MT001C",
+    "name": "Greater Valletta"
+   },
+   "value": 1226094,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "nights spent in tourist accommodation establishments by non-residents (nights, not visitors)",
+   "note": "Urban Audit city MT001C, the catalog's valletta. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone. A stay of five nights counts five.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "MT001C",
+    "name": "Greater Valletta"
+   },
+   "value": 1364388,
+   "unit": "nights",
+   "year": "2020",
+   "measure": "total nights spent in tourist accommodation establishments, residents and non-residents (nights, not visitors)",
+   "note": "Urban Audit city MT001C, the catalog's valletta. A greater city: the core municipality with its contiguous urban municipalities, wider than the municipality alone.",
+   "source": {
+    "publisher": "Eurostat",
+    "title": "Urban Audit, cities (urb_ctour): Culture and tourism - cities and greater cities",
+    "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&lang=EN"
+   }
+  }
+ ]
+}

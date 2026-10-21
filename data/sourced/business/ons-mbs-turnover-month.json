@@ -1,0 +1,958 @@
+{
+ "id": "ons-mbs-turnover-month",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Monthly Business Survey (MBS): turnover of services industries",
+  "url": "https://www.ons.gov.uk/economy/economicoutputandproductivity/output/datasets/monthlybusinesssurveymbsturnoverofservicesindustries",
+  "table": "mbsturnoverofservicesindustries202608.xlsx, sheet 'Services Industries', columns 56 (CDID JQ37) and 96 (CDID JR3P); the latest 21 months",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9209.2,
+   "unit": "GBP million",
+   "year": "2024-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2024-12 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9209.2,
+   "unit": "GBP million",
+   "year": "2024-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2024-12 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7426.7,
+   "unit": "GBP million",
+   "year": "2025-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-01 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7426.7,
+   "unit": "GBP million",
+   "year": "2025-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-01 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7641.8,
+   "unit": "GBP million",
+   "year": "2025-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-02 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7641.8,
+   "unit": "GBP million",
+   "year": "2025-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-02 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8829.2,
+   "unit": "GBP million",
+   "year": "2025-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-03 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8829.2,
+   "unit": "GBP million",
+   "year": "2025-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-03 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8913.8,
+   "unit": "GBP million",
+   "year": "2025-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-04 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8913.8,
+   "unit": "GBP million",
+   "year": "2025-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-04 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9287.1,
+   "unit": "GBP million",
+   "year": "2025-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-05 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9287.1,
+   "unit": "GBP million",
+   "year": "2025-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-05 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9090.9,
+   "unit": "GBP million",
+   "year": "2025-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-06 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9090.9,
+   "unit": "GBP million",
+   "year": "2025-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-06 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9631.4,
+   "unit": "GBP million",
+   "year": "2025-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-07 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9631.4,
+   "unit": "GBP million",
+   "year": "2025-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-07 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9559.8,
+   "unit": "GBP million",
+   "year": "2025-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-08 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9559.8,
+   "unit": "GBP million",
+   "year": "2025-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-08 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9150.2,
+   "unit": "GBP million",
+   "year": "2025-09",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-09 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9150.2,
+   "unit": "GBP million",
+   "year": "2025-09",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-09 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9407.7,
+   "unit": "GBP million",
+   "year": "2025-10",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-10 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9407.7,
+   "unit": "GBP million",
+   "year": "2025-10",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-10 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8962.4,
+   "unit": "GBP million",
+   "year": "2025-11",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-11 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8962.4,
+   "unit": "GBP million",
+   "year": "2025-11",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-11 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10331.9,
+   "unit": "GBP million",
+   "year": "2025-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-12 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10331.9,
+   "unit": "GBP million",
+   "year": "2025-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-12 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8196,
+   "unit": "GBP million",
+   "year": "2026-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-01 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8196,
+   "unit": "GBP million",
+   "year": "2026-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-01 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8343.1,
+   "unit": "GBP million",
+   "year": "2026-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-02 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8343.1,
+   "unit": "GBP million",
+   "year": "2026-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-02 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9546.4,
+   "unit": "GBP million",
+   "year": "2026-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-03 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9546.4,
+   "unit": "GBP million",
+   "year": "2026-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-03 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9250.1,
+   "unit": "GBP million",
+   "year": "2026-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-04 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9250.1,
+   "unit": "GBP million",
+   "year": "2026-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-04 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9819.5,
+   "unit": "GBP million",
+   "year": "2026-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-05 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9819.5,
+   "unit": "GBP million",
+   "year": "2026-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-05 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9840.2,
+   "unit": "GBP million",
+   "year": "2026-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-06 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9840.2,
+   "unit": "GBP million",
+   "year": "2026-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-06 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10256.3,
+   "unit": "GBP million",
+   "year": "2026-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-07 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10256.3,
+   "unit": "GBP million",
+   "year": "2026-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-07 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9530.8,
+   "unit": "GBP million",
+   "year": "2026-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-08 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 division 56: Food & beverage serving services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9530.8,
+   "unit": "GBP million",
+   "year": "2026-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-08 (series JQ37)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds restaurants, cafes, takeaways, pubs and bars together; no class below it is published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 771.3,
+   "unit": "GBP million",
+   "year": "2024-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2024-12 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 779.7,
+   "unit": "GBP million",
+   "year": "2025-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-01 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 760.8,
+   "unit": "GBP million",
+   "year": "2025-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-02 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 826.7,
+   "unit": "GBP million",
+   "year": "2025-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-03 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 833.5,
+   "unit": "GBP million",
+   "year": "2025-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-04 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 863.1,
+   "unit": "GBP million",
+   "year": "2025-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-05 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 816.1,
+   "unit": "GBP million",
+   "year": "2025-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-06 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 831.5,
+   "unit": "GBP million",
+   "year": "2025-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-07 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 786.8,
+   "unit": "GBP million",
+   "year": "2025-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-08 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 765.6,
+   "unit": "GBP million",
+   "year": "2025-09",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-09 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 828.9,
+   "unit": "GBP million",
+   "year": "2025-10",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-10 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 786.4,
+   "unit": "GBP million",
+   "year": "2025-11",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-11 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 828.1,
+   "unit": "GBP million",
+   "year": "2025-12",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2025-12 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 781.6,
+   "unit": "GBP million",
+   "year": "2026-01",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-01 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 804.7,
+   "unit": "GBP million",
+   "year": "2026-02",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-02 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 867.6,
+   "unit": "GBP million",
+   "year": "2026-03",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-03 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 849.3,
+   "unit": "GBP million",
+   "year": "2026-04",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-04 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 873.3,
+   "unit": "GBP million",
+   "year": "2026-05",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-05 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 885.4,
+   "unit": "GBP million",
+   "year": "2026-06",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-06 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 911,
+   "unit": "GBP million",
+   "year": "2026-07",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-07 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 division 96: Other personal services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 845.9,
+   "unit": "GBP million",
+   "year": "2026-08",
+   "measure": "total turnover in the month, current prices, not seasonally adjusted, 2026-08 (series JR3P)",
+   "note": "The publisher prints money, not an index: the month's turnover in GBP million is the series. The division holds hairdressing and beauty with laundries, funeral services and other personal services; hairdressing is not published apart."
+  }
+ ]
+}

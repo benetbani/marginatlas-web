@@ -1,0 +1,1272 @@
+{
+  "id": "place-prime-street-rents-2025",
+  "source": {
+    "publisher": "Cushman & Wakefield",
+    "title": "Main Streets Across the World 2025 (35th edition), rents as at mid-2025",
+    "url": "https://digital.cushmanwakefield.com/mainstreets-11-2025-global-central-en-content-retail/",
+    "licence": "Cushman & Wakefield copyright; one figure per city quoted with attribution, the tables not reproduced"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "london",
+        "name": "London"
+      },
+      "value": 20482,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "New Bond Street: the city's most expensive street in the report; also USD 2,231 per sq ft a year; page 11, global ranking by market, rank 1",
+      "country": "GB"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "milan",
+        "name": "Milan"
+      },
+      "value": 20000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Via Montenapoleone: the city's most expensive street in the report; also USD 2,179 per sq ft a year; page 11, global ranking by market, rank 2",
+      "country": "IT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "new-york",
+        "name": "New York"
+      },
+      "value": 18359,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Upper 5th Avenue (49th to 60th Streets): the city's most expensive street in the report; also USD 2,000 per sq ft a year; page 11, global ranking by market, rank 3",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "hong-kong",
+        "name": "Hong Kong"
+      },
+      "value": 13907,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Tsim Sha Tsui (main street shops): the city's most expensive street in the report; also USD 1,515 per sq ft a year; page 11, global ranking by market, rank 4",
+      "country": "HK"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "paris",
+        "name": "Paris"
+      },
+      "value": 12519,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Avenue des Champs Elysées: the city's most expensive street in the report; also USD 1,364 per sq ft a year; page 11, global ranking by market, rank 5",
+      "country": "FR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "tokyo",
+        "name": "Tokyo"
+      },
+      "value": 11538,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Ginza: the city's most expensive street in the report; also USD 1,257 per sq ft a year; page 11, global ranking by market, rank 6",
+      "country": "JP"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "zurich",
+        "name": "Zurich"
+      },
+      "value": 9644,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Bahnhofstrasse: the city's most expensive street in the report; also USD 1,051 per sq ft a year; page 11, global ranking by market, rank 7",
+      "country": "CH"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "sydney",
+        "name": "Sydney"
+      },
+      "value": 7294,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Pitt Street Mall: the city's most expensive street in the report; also USD 795 per sq ft a year; page 11, global ranking by market, rank 8",
+      "country": "AU"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "seoul",
+        "name": "Seoul"
+      },
+      "value": 5997,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Myeongdong: the city's most expensive street in the report; also USD 653 per sq ft a year; page 11, global ranking by market, rank 9",
+      "country": "KR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "vienna",
+        "name": "Vienna"
+      },
+      "value": 5520,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Kohlmarkt: the city's most expensive street in the report; also USD 601 per sq ft a year; page 11, global ranking by market, rank 10",
+      "country": "AT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "dubai",
+        "name": "Dubai"
+      },
+      "value": 4759,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Dubai Mall (Fashion Avenue): the city's most expensive street in the report; also USD 518 per sq ft a year; page 11, global ranking by market, rank 11",
+      "country": "AE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "shanghai",
+        "name": "Shanghai"
+      },
+      "value": 4750,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "West Nanjing Road: the city's most expensive street in the report; also USD 517 per sq ft a year; page 11, global ranking by market, rank 12",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "singapore",
+        "name": "Singapore"
+      },
+      "value": 4389,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Orchard Road: the city's most expensive street in the report; also USD 478 per sq ft a year; page 11, global ranking by market, rank 13",
+      "country": "SG"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "munich",
+        "name": "Munich"
+      },
+      "value": 3840,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Kaufinger/Neuhauser: the city's most expensive street in the report; also USD 418 per sq ft a year; page 11, global ranking by market, rank 14",
+      "country": "DE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "athens",
+        "name": "Athens"
+      },
+      "value": 3720,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Ermou: the city's most expensive street in the report; also USD 405 per sq ft a year; page 11, global ranking by market, rank 15",
+      "country": "GR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "barcelona",
+        "name": "Barcelona"
+      },
+      "value": 3420,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Passeig de Gracia: the city's most expensive street in the report; also USD 373 per sq ft a year; page 11, global ranking by market, rank 16",
+      "country": "ES"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "ho-chi-minh-city",
+        "name": "Ho Chi Minh City"
+      },
+      "value": 3172,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Dong Khoi (main street shops): the city's most expensive street in the report; also USD 346 per sq ft a year; page 11, global ranking by market, rank 17",
+      "country": "VN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "dublin",
+        "name": "Dublin"
+      },
+      "value": 3024,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Grafton Street: the city's most expensive street in the report; also USD 329 per sq ft a year; page 11, global ranking by market, rank 18",
+      "country": "IE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "prague",
+        "name": "Prague"
+      },
+      "value": 2820,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Parizska Street: the city's most expensive street in the report; also USD 307 per sq ft a year; page 11, global ranking by market, rank 19",
+      "country": "CZ"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "amsterdam",
+        "name": "Amsterdam"
+      },
+      "value": 2800,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "P.C. Hooftstraat: the city's most expensive street in the report; also USD 305 per sq ft a year; page 11, global ranking by market, rank 20",
+      "country": "NL"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "kuala-lumpur",
+        "name": "Kuala Lumpur"
+      },
+      "value": 2570,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Suria KLCC: the city's most expensive street in the report; also USD 280 per sq ft a year; page 11, global ranking by market, rank 21",
+      "country": "MY"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "istanbul",
+        "name": "Istanbul"
+      },
+      "value": 2251,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Centre - Istiklal Street: the city's most expensive street in the report; also USD 245 per sq ft a year; page 11, global ranking by market, rank 22",
+      "country": "TR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "oslo",
+        "name": "Oslo"
+      },
+      "value": 2057,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Nedre Slottsgate: the city's most expensive street in the report; also USD 224 per sq ft a year; page 11, global ranking by market, rank 23",
+      "country": "NO"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "delhi",
+        "name": "Delhi"
+      },
+      "value": 2047,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Khan Market: the city's most expensive street in the report; also USD 223 per sq ft a year; page 11, global ranking by market, rank 24; the report names New Delhi",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "toronto",
+        "name": "Toronto"
+      },
+      "value": 1996,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Bloor Street: the city's most expensive street in the report; also USD 217 per sq ft a year; page 11, global ranking by market, rank 25",
+      "country": "CA"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "budapest",
+        "name": "Budapest"
+      },
+      "value": 1920,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Fashion Street: the city's most expensive street in the report; also USD 209 per sq ft a year; page 12, global ranking by market, rank 26",
+      "country": "HU"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "stockholm",
+        "name": "Stockholm"
+      },
+      "value": 1819,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Biblioteksgatan: the city's most expensive street in the report; also USD 198 per sq ft a year; page 12, global ranking by market, rank 27",
+      "country": "SE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "copenhagen",
+        "name": "Copenhagen"
+      },
+      "value": 1749,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Strøget (including Vimmelskaftet): the city's most expensive street in the report; also USD 191 per sq ft a year; page 12, global ranking by market, rank 28",
+      "country": "DK"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "lisbon",
+        "name": "Lisbon"
+      },
+      "value": 1680,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Chiado: the city's most expensive street in the report; also USD 183 per sq ft a year; page 12, global ranking by market, rank 30",
+      "country": "PT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "helsinki",
+        "name": "Helsinki"
+      },
+      "value": 1224,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "City Centre: the city's most expensive street in the report; also USD 133 per sq ft a year; page 12, global ranking by market, rank 32",
+      "country": "FI"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "bangkok",
+        "name": "Bangkok"
+      },
+      "value": 1192,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Central Retail District (CRD): the city's most expensive street in the report; also USD 130 per sq ft a year; page 12, global ranking by market, rank 33",
+      "country": "TH"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "sao-paulo",
+        "name": "São Paulo"
+      },
+      "value": 1128,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Oscar Freire Jardins: the city's most expensive street in the report; also USD 123 per sq ft a year; page 12, global ranking by market, rank 34",
+      "country": "BR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "warsaw",
+        "name": "Warsaw"
+      },
+      "value": 1104,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Nowy Swiat: the city's most expensive street in the report; also USD 120 per sq ft a year; page 12, global ranking by market, rank 35",
+      "country": "PL"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "belgrade",
+        "name": "Belgrade"
+      },
+      "value": 1080,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Kneza Mihaila: the city's most expensive street in the report; also USD 118 per sq ft a year; page 12, global ranking by market, rank 36",
+      "country": "RS"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "mexico-city",
+        "name": "Mexico City"
+      },
+      "value": 921,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Masaryk: the city's most expensive street in the report; also USD 100 per sq ft a year; page 12, global ranking by market, rank 37",
+      "country": "MX"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "zagreb",
+        "name": "Zagreb"
+      },
+      "value": 840,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Ilica Street: the city's most expensive street in the report; also USD 92 per sq ft a year; page 12, global ranking by market, rank 38",
+      "country": "HR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "bucharest",
+        "name": "Bucharest"
+      },
+      "value": 840,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Calea Victoriei: the city's most expensive street in the report; also USD 92 per sq ft a year; page 12, global ranking by market, rank 39",
+      "country": "RO"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "jakarta",
+        "name": "Jakarta"
+      },
+      "value": 761,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Prime: the city's most expensive street in the report; also USD 83 per sq ft a year; page 12, global ranking by market, rank 40",
+      "country": "ID"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "sofia",
+        "name": "Sofia"
+      },
+      "value": 726,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Vitosha Blvd: the city's most expensive street in the report; also USD 79 per sq ft a year; page 12, global ranking by market, rank 41",
+      "country": "BG"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "ljubljana",
+        "name": "Ljubljana"
+      },
+      "value": 720,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Čopova: the city's most expensive street in the report; also USD 78 per sq ft a year; page 12, global ranking by market, rank 42",
+      "country": "SI"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "bratislava",
+        "name": "Bratislava"
+      },
+      "value": 540,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Obchodná ulica: the city's most expensive street in the report; also USD 59 per sq ft a year; page 12, global ranking by market, rank 43",
+      "country": "SK"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "vilnius",
+        "name": "Vilnius"
+      },
+      "value": 468,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Gedimino Ave./Pilies St./Didzioji St.: the city's most expensive street in the report; also USD 51 per sq ft a year; page 12, global ranking by market, rank 45",
+      "country": "LT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "manila",
+        "name": "Manila"
+      },
+      "value": 463,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Makati CBD/BGC (Bonifacio Global City): the city's most expensive street in the report; also USD 50 per sq ft a year; page 12, global ranking by market, rank 46",
+      "country": "PH"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "riga",
+        "name": "Riga"
+      },
+      "value": 420,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Kaļķu St./Vaļņu St./Audēju St./Tērbatas St./Kr.Barona St.: the city's most expensive street in the report; also USD 46 per sq ft a year; page 12, global ranking by market, rank 47",
+      "country": "LV"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "tallinn",
+        "name": "Tallinn"
+      },
+      "value": 420,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Viru Street: the city's most expensive street in the report; also USD 46 per sq ft a year; page 12, global ranking by market, rank 48",
+      "country": "EE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "skopje",
+        "name": "Skopje"
+      },
+      "value": 336,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Makedonija Street: the city's most expensive street in the report; also USD 37 per sq ft a year; page 12, global ranking by market, rank 49",
+      "country": "MK"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "buenos-aires",
+        "name": "Buenos Aires"
+      },
+      "value": 239,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Calle Florida (Av. Cordoba to Av. Corrientes): the city's most expensive street in the report; also USD 26 per sq ft a year; page 12, global ranking by market, rank 50",
+      "country": "AR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "los-angeles",
+        "name": "Los Angeles"
+      },
+      "value": 10281,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Rodeo Drive (Beverly Hills): the city's most expensive street in the report; also USD 1,120 per sq ft a year; page 17, Americas ranking, rank 3; Rodeo Drive is in Beverly Hills, a separate city inside Los Angeles County, filed under Los Angeles by the report",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "miami",
+        "name": "Miami"
+      },
+      "value": 4590,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Design District: the city's most expensive street in the report; also USD 500 per sq ft a year; page 17, Americas ranking, rank 5",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "honolulu",
+        "name": "Honolulu"
+      },
+      "value": 4590,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Kalakaua Avenue: the city's most expensive street in the report; also USD 500 per sq ft a year; page 17, Americas ranking, rank 5",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "san-francisco",
+        "name": "San Francisco"
+      },
+      "value": 4590,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Union Square: the city's most expensive street in the report; also USD 500 per sq ft a year; page 17, Americas ranking, rank 5",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "boston",
+        "name": "Boston"
+      },
+      "value": 4406,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Newbury Street: the city's most expensive street in the report; also USD 480 per sq ft a year; page 17, Americas ranking, rank 8",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "las-vegas",
+        "name": "Las Vegas"
+      },
+      "value": 4085,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Las Vegas Blvd.: the city's most expensive street in the report; also USD 445 per sq ft a year; page 17, Americas ranking, rank 9",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "chicago",
+        "name": "Chicago"
+      },
+      "value": 3672,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Oak Street: the city's most expensive street in the report; also USD 400 per sq ft a year; page 17, Americas ranking, rank 10",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "austin",
+        "name": "Austin"
+      },
+      "value": 2295,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "South Congress (SoCo): the city's most expensive street in the report; also USD 250 per sq ft a year; page 17, Americas ranking, rank 12",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "houston",
+        "name": "Houston"
+      },
+      "value": 1836,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "River Oaks District: the city's most expensive street in the report; also USD 200 per sq ft a year; page 17, Americas ranking, rank 17",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "washington-dc",
+        "name": "Washington, D.C."
+      },
+      "value": 1652,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Georgetown: the city's most expensive street in the report; also USD 180 per sq ft a year; page 17, Americas ranking, rank 18",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "montreal",
+        "name": "Montreal"
+      },
+      "value": 1164,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Saint-Catherine West: the city's most expensive street in the report; also USD 127 per sq ft a year; page 17, Americas ranking, rank 20",
+      "country": "CA"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "vancouver",
+        "name": "Vancouver"
+      },
+      "value": 1051,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Robson Street: the city's most expensive street in the report; also USD 114 per sq ft a year; page 17, Americas ranking, rank 23",
+      "country": "CA"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "san-diego",
+        "name": "San Diego"
+      },
+      "value": 918,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Del Mar Heights Blvd (Suburban Del Mar Heights): the city's most expensive street in the report; also USD 100 per sq ft a year; page 17, Americas ranking, rank 25",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "rio-de-janeiro",
+        "name": "Rio de Janeiro"
+      },
+      "value": 821,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Visconde de Pirajá: the city's most expensive street in the report; also USD 89 per sq ft a year; page 17, Americas ranking, rank 28",
+      "country": "BR"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "seattle",
+        "name": "Seattle"
+      },
+      "value": 450,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "CBD/Core: the city's most expensive street in the report; also USD 49 per sq ft a year; page 17, Americas ranking, rank 30",
+      "country": "US"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "calgary",
+        "name": "Calgary"
+      },
+      "value": 399,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "17th Avenue: the city's most expensive street in the report; also USD 43 per sq ft a year; page 17, Americas ranking, rank 31",
+      "country": "CA"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "osaka",
+        "name": "Osaka"
+      },
+      "value": 8392,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Midosuji: the city's most expensive street in the report; also USD 914 per sq ft a year; page 20, Asia Pacific ranking, rank 5",
+      "country": "JP"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "beijing",
+        "name": "Beijing"
+      },
+      "value": 3742,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "CBD: the city's most expensive street in the report; also USD 408 per sq ft a year; page 20, Asia Pacific ranking, rank 14",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "nanjing",
+        "name": "Nanjing"
+      },
+      "value": 3382,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Xinjiekou: the city's most expensive street in the report; also USD 368 per sq ft a year; page 20, Asia Pacific ranking, rank 15",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "melbourne",
+        "name": "Melbourne"
+      },
+      "value": 3086,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Bourke Street: the city's most expensive street in the report; also USD 336 per sq ft a year; page 20, Asia Pacific ranking, rank 17",
+      "country": "AU"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "hanoi",
+        "name": "Hanoi"
+      },
+      "value": 2865,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Trang Tien & Hang Khay (main street shops): the city's most expensive street in the report; also USD 312 per sq ft a year; page 20, Asia Pacific ranking, rank 18",
+      "country": "VN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "hangzhou",
+        "name": "Hangzhou"
+      },
+      "value": 2787,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Wulin: the city's most expensive street in the report; also USD 304 per sq ft a year; page 20, Asia Pacific ranking, rank 19",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "chengdu",
+        "name": "Chengdu"
+      },
+      "value": 2720,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Central Business District: the city's most expensive street in the report; also USD 296 per sq ft a year; page 20, Asia Pacific ranking, rank 20",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "chongqing",
+        "name": "Chongqing"
+      },
+      "value": 2490,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Guanyinqiao: the city's most expensive street in the report; also USD 271 per sq ft a year; page 20, Asia Pacific ranking, rank 22",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "guangzhou",
+        "name": "Guangzhou"
+      },
+      "value": 2087,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Tianhe Sports Centre: the city's most expensive street in the report; also USD 227 per sq ft a year; page 20, Asia Pacific ranking, rank 23",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "brisbane",
+        "name": "Brisbane"
+      },
+      "value": 1851,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Queen Street Mall: the city's most expensive street in the report; also USD 202 per sq ft a year; page 20, Asia Pacific ranking, rank 25",
+      "country": "AU"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "shenzhen",
+        "name": "Shenzhen"
+      },
+      "value": 1439,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Luohu: the city's most expensive street in the report; also USD 157 per sq ft a year; page 20, Asia Pacific ranking, rank 28",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "wuhan",
+        "name": "Wuhan"
+      },
+      "value": 1367,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Wuguang: the city's most expensive street in the report; also USD 149 per sq ft a year; page 21, Asia Pacific ranking, rank 31",
+      "country": "CN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "mumbai",
+        "name": "Mumbai"
+      },
+      "value": 1135,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Linking Road, Western Suburban: the city's most expensive street in the report; also USD 124 per sq ft a year; page 21, Asia Pacific ranking, rank 34",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "kolkata",
+        "name": "Kolkata"
+      },
+      "value": 806,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Park Street: the city's most expensive street in the report; also USD 88 per sq ft a year; page 21, Asia Pacific ranking, rank 36",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "bangalore",
+        "name": "Bangalore"
+      },
+      "value": 515,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Brigade Road: the city's most expensive street in the report; also USD 56 per sq ft a year; page 21, Asia Pacific ranking, rank 41",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "pune",
+        "name": "Pune"
+      },
+      "value": 447,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "M G Road: the city's most expensive street in the report; also USD 49 per sq ft a year; page 21, Asia Pacific ranking, rank 44",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "hyderabad",
+        "name": "Hyderabad"
+      },
+      "value": 279,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Banjara Hills: the city's most expensive street in the report; also USD 30 per sq ft a year; page 21, Asia Pacific ranking, rank 48",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "chennai",
+        "name": "Chennai"
+      },
+      "value": 236,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Pondy Bazaar: the city's most expensive street in the report; also USD 26 per sq ft a year; page 21, Asia Pacific ranking, rank 50",
+      "country": "IN"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "rome",
+        "name": "Rome"
+      },
+      "value": 16000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Via Condotti: the city's most expensive street in the report; also USD 1,743 per sq ft a year; page 24, Europe ranking, rank 3",
+      "country": "IT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "florence",
+        "name": "Florence"
+      },
+      "value": 7000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Via Strozzi: the city's most expensive street in the report; also USD 763 per sq ft a year; page 24, Europe ranking, rank 13",
+      "country": "IT"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "geneva",
+        "name": "Geneva"
+      },
+      "value": 4608,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Rue de Rhone: the city's most expensive street in the report; also USD 502 per sq ft a year; page 24, Europe ranking, rank 23",
+      "country": "CH"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "madrid",
+        "name": "Madrid"
+      },
+      "value": 3300,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Calle Serrano: the city's most expensive street in the report; also USD 359 per sq ft a year; page 24, Europe ranking, rank 28",
+      "country": "ES"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "berlin",
+        "name": "Berlin"
+      },
+      "value": 3000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Tauentzienstrasse: the city's most expensive street in the report; also USD 327 per sq ft a year; page 25, Europe ranking, rank 30",
+      "country": "DE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "frankfurt",
+        "name": "Frankfurt am Main"
+      },
+      "value": 3000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Zeil: the city's most expensive street in the report; also USD 327 per sq ft a year; page 25, Europe ranking, rank 30",
+      "country": "DE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "hamburg",
+        "name": "Hamburg"
+      },
+      "value": 3000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Spitalerstraße: the city's most expensive street in the report; also USD 327 per sq ft a year; page 25, Europe ranking, rank 30",
+      "country": "DE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "dusseldorf",
+        "name": "Düsseldorf"
+      },
+      "value": 3000,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Konigsallee: the city's most expensive street in the report; also USD 327 per sq ft a year; page 25, Europe ranking, rank 30",
+      "country": "DE"
+    },
+    {
+      "item": "prime_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "brussels",
+        "name": "Brussels"
+      },
+      "value": 1650,
+      "unit": "EUR per m2 per year",
+      "year": "2025",
+      "measure": "prime retail rent on one named street, Zone A standardised where the market reports Zone A",
+      "note": "Rue Neuve: the city's most expensive street in the report; also USD 180 per sq ft a year; page 25, Europe ranking, rank 43",
+      "country": "BE"
+    }
+  ]
+}

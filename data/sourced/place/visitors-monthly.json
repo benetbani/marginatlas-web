@@ -1,0 +1,1693 @@
+{
+  "id": "place-visitors-monthly",
+  "source": {
+    "publisher": "Hungarian Central Statistical Office (KSH)",
+    "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+    "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+    "table": "27.2.1.19 (tur0081)",
+    "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 4008000,
+      "unit": "visits",
+      "year": "2025-Q1",
+      "measure": "visits to the London region by overseas residents, a quarter",
+      "note": "the UK publishes no monthly series; London region (Greater London); quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 21643000,
+      "unit": "nights",
+      "year": "2025-Q1",
+      "measure": "nights spent in the London region by overseas residents, a quarter",
+      "note": "quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 4888000,
+      "unit": "visits",
+      "year": "2025-Q2",
+      "measure": "visits to the London region by overseas residents, a quarter",
+      "note": "the UK publishes no monthly series; London region (Greater London); quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 26299000,
+      "unit": "nights",
+      "year": "2025-Q2",
+      "measure": "nights spent in the London region by overseas residents, a quarter",
+      "note": "quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 5424000,
+      "unit": "visits",
+      "year": "2025-Q3",
+      "measure": "visits to the London region by overseas residents, a quarter",
+      "note": "the UK publishes no monthly series; London region (Greater London); quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 33502000,
+      "unit": "nights",
+      "year": "2025-Q3",
+      "measure": "nights spent in the London region by overseas residents, a quarter",
+      "note": "quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 4973000,
+      "unit": "visits",
+      "year": "2025-Q4",
+      "measure": "visits to the London region by overseas residents, a quarter",
+      "note": "the UK publishes no monthly series; London region (Greater London); quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_quarter",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 25510000,
+      "unit": "nights",
+      "year": "2025-Q4",
+      "measure": "nights spent in the London region by overseas residents, a quarter",
+      "note": "quarters are provisional",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Estimates of overseas residents' visits and spending in the UK, 2025, quarters 1 to 4 (Table 7 visits and Table 9 nights by region of Great Britain visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/estimatesofoverseasresidentsvisitsandspendingintheuk/2025/estimatesofoverseasresidentsvisitsandspending2025.xlsx",
+        "table": "Tables 7 and 9",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 782954,
+      "unit": "arrivals",
+      "year": "2025-01",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 839219,
+      "unit": "arrivals",
+      "year": "2025-02",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1067090,
+      "unit": "arrivals",
+      "year": "2025-03",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1194341,
+      "unit": "arrivals",
+      "year": "2025-04",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1212413,
+      "unit": "arrivals",
+      "year": "2025-05",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1559224,
+      "unit": "arrivals",
+      "year": "2025-06",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1530027,
+      "unit": "arrivals",
+      "year": "2025-07",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1362988,
+      "unit": "arrivals",
+      "year": "2025-08",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1561039,
+      "unit": "arrivals",
+      "year": "2025-09",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1672801,
+      "unit": "arrivals",
+      "year": "2025-10",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1214962,
+      "unit": "arrivals",
+      "year": "2025-11",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1159058,
+      "unit": "arrivals",
+      "year": "2025-12",
+      "measure": "arrivals at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 484822,
+      "unit": "arrivals",
+      "year": "2025-01",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 555589,
+      "unit": "arrivals",
+      "year": "2025-02",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 711907,
+      "unit": "arrivals",
+      "year": "2025-03",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 883390,
+      "unit": "arrivals",
+      "year": "2025-04",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 886466,
+      "unit": "arrivals",
+      "year": "2025-05",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1162749,
+      "unit": "arrivals",
+      "year": "2025-06",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1177484,
+      "unit": "arrivals",
+      "year": "2025-07",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1098687,
+      "unit": "arrivals",
+      "year": "2025-08",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1235292,
+      "unit": "arrivals",
+      "year": "2025-09",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 1312261,
+      "unit": "arrivals",
+      "year": "2025-10",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 810278,
+      "unit": "arrivals",
+      "year": "2025-11",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 704730,
+      "unit": "arrivals",
+      "year": "2025-12",
+      "measure": "arrivals at tourist accommodation establishments, guests resident outside Italy",
+      "note": "the province (metropolitan city), not the comune: the comune is not published monthly",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 3511699,
+      "unit": "nights",
+      "year": "2025-01",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 3578704,
+      "unit": "nights",
+      "year": "2025-02",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 4506758,
+      "unit": "nights",
+      "year": "2025-03",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 5106781,
+      "unit": "nights",
+      "year": "2025-04",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 5285091,
+      "unit": "nights",
+      "year": "2025-05",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 5284995,
+      "unit": "nights",
+      "year": "2025-06",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 5615745,
+      "unit": "nights",
+      "year": "2025-07",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 4510359,
+      "unit": "nights",
+      "year": "2025-08",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 4759856,
+      "unit": "nights",
+      "year": "2025-09",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 5282272,
+      "unit": "nights",
+      "year": "2025-10",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 4216986,
+      "unit": "nights",
+      "year": "2025-11",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "region",
+        "code": "ITE43",
+        "name": "Provincia di Roma (Città metropolitana di Roma Capitale)"
+      },
+      "value": 4343662,
+      "unit": "nights",
+      "year": "2025-12",
+      "measure": "nights spent at tourist accommodation establishments, all guests",
+      "note": "the province (metropolitan city), not the comune",
+      "source": {
+        "publisher": "Istat (Istituto Nazionale di Statistica)",
+        "title": "Occupancy in collective tourist accommodation by type of accommodation - monthly data (arrivals and nights spent), province of Roma",
+        "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,122_54_DF_DCSC_TUR_3,1.0/M.ITE43.AR+NI.N.ALL.551_553.WORLD+WRL_X_ITA.ALL.ALL.ALL.TOT?startPeriod=2024-01",
+        "table": "122_54_DF_DCSC_TUR_3",
+        "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1071000,
+      "unit": "nights",
+      "year": "2025-01",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 071)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 917000,
+      "unit": "nights",
+      "year": "2025-01",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (917)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1078000,
+      "unit": "nights",
+      "year": "2025-02",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 078)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 917000,
+      "unit": "nights",
+      "year": "2025-02",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (917)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1293000,
+      "unit": "nights",
+      "year": "2025-03",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 293)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1104000,
+      "unit": "nights",
+      "year": "2025-03",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 104)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1561000,
+      "unit": "nights",
+      "year": "2025-04",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 561)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1364000,
+      "unit": "nights",
+      "year": "2025-04",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 364)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1600000,
+      "unit": "nights",
+      "year": "2025-05",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 600)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1395000,
+      "unit": "nights",
+      "year": "2025-05",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 395)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1490000,
+      "unit": "nights",
+      "year": "2025-06",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 490)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1294000,
+      "unit": "nights",
+      "year": "2025-06",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 294)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1621000,
+      "unit": "nights",
+      "year": "2025-07",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 621)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1409000,
+      "unit": "nights",
+      "year": "2025-07",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 409)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1897000,
+      "unit": "nights",
+      "year": "2025-08",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 897)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1664000,
+      "unit": "nights",
+      "year": "2025-08",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 664)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1601000,
+      "unit": "nights",
+      "year": "2025-09",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 601)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1390000,
+      "unit": "nights",
+      "year": "2025-09",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 390)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1691000,
+      "unit": "nights",
+      "year": "2025-10",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 691)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1467000,
+      "unit": "nights",
+      "year": "2025-10",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 467)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1527000,
+      "unit": "nights",
+      "year": "2025-11",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 527)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1326000,
+      "unit": "nights",
+      "year": "2025-11",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 326)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1822000,
+      "unit": "nights",
+      "year": "2025-12",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 822)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1621000,
+      "unit": "nights",
+      "year": "2025-12",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 621)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1133000,
+      "unit": "nights",
+      "year": "2026-01",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 133)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 972000,
+      "unit": "nights",
+      "year": "2026-01",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (972)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1134000,
+      "unit": "nights",
+      "year": "2026-02",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 134)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 964000,
+      "unit": "nights",
+      "year": "2026-02",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (964)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1283000,
+      "unit": "nights",
+      "year": "2026-03",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 283)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1084000,
+      "unit": "nights",
+      "year": "2026-03",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 084)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1414000,
+      "unit": "nights",
+      "year": "2026-04",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 414)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1223000,
+      "unit": "nights",
+      "year": "2026-04",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 223)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1529000,
+      "unit": "nights",
+      "year": "2026-05",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 529)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1333000,
+      "unit": "nights",
+      "year": "2026-05",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 333)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1488000,
+      "unit": "nights",
+      "year": "2026-06",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 488)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1291000,
+      "unit": "nights",
+      "year": "2026-06",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 291)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1694000,
+      "unit": "nights",
+      "year": "2026-07",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 694)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1483000,
+      "unit": "nights",
+      "year": "2026-07",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 483)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1773000,
+      "unit": "nights",
+      "year": "2026-08",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (1 773)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 1534000,
+      "unit": "nights",
+      "year": "2026-08",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (1 534)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.2.1.19. Tourism nights at tourist accommodation establishments in Budapest and by tourism areas (monthly data)",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0081.html",
+        "table": "27.2.1.19 (tur0081)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    }
+  ]
+}

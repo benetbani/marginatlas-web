@@ -1,0 +1,498 @@
+{
+  "id": "place-uk5-uk-visits-month",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+    "table": "Table 1, column World Total",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "notes": [
+    "The latest 24 months the ONS has published as monthly figures: July 2022 to June 2024. The ONS publishes no later month: from July 2024 the International Passenger Survey runs on a new design published by quarter only (its 2025 quarters were released 16 October 2026), and the ONS says the old and new designs are not to be compared.",
+    "Two releases: July 2022 to December 2023 are final UK estimates (released 17 May 2024); January to June 2024 are provisional Great Britain estimates (released 18 October 2024). The October 2024 workbook removed the 2019 to 2023 months while the ONS reviews their quality; the May 2024 workbook is still on the ONS site as a previous version of the same dataset.",
+    "Every value: Table 1, World Total, rounded by the ONS to the nearest 1,000. Raw files and their URLs: data/raw/uk5-visitors/SOURCES.md."
+  ],
+  "rows": [
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3445000,
+      "unit": "visits",
+      "year": "2022-07",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 July' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3545000,
+      "unit": "visits",
+      "year": "2022-08",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 August' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2956000,
+      "unit": "visits",
+      "year": "2022-09",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 September' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3322000,
+      "unit": "visits",
+      "year": "2022-10",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 October' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3238000,
+      "unit": "visits",
+      "year": "2022-11",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 November' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3038000,
+      "unit": "visits",
+      "year": "2022-12",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2022 December' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2898000,
+      "unit": "visits",
+      "year": "2023-01",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 January' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2192000,
+      "unit": "visits",
+      "year": "2023-02",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 February' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2596000,
+      "unit": "visits",
+      "year": "2023-03",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 March' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3126000,
+      "unit": "visits",
+      "year": "2023-04",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 April' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3300000,
+      "unit": "visits",
+      "year": "2023-05",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 May' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3479000,
+      "unit": "visits",
+      "year": "2023-06",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 June' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 4012000,
+      "unit": "visits",
+      "year": "2023-07",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 July' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3810000,
+      "unit": "visits",
+      "year": "2023-08",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 August' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3106000,
+      "unit": "visits",
+      "year": "2023-09",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 September' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3715000,
+      "unit": "visits",
+      "year": "2023-10",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 October' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2795000,
+      "unit": "visits",
+      "year": "2023-11",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 November' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2931000,
+      "unit": "visits",
+      "year": "2023-12",
+      "measure": "visits to the UK by overseas residents, a month",
+      "note": "'2023 December' in Table 1: a final estimate; the United Kingdom; rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-2019-2023-v64-released-2024-05-17.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, 2019 to 2023, final monthly estimates (released 17 May 2024), Table 1: overseas residents visits to the UK by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/previous/v64/referencetables.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 3358000,
+      "unit": "visits",
+      "year": "2024-01",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 January P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 2461000,
+      "unit": "visits",
+      "year": "2024-02",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 February P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 2912000,
+      "unit": "visits",
+      "year": "2024-03",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 March P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 3359000,
+      "unit": "visits",
+      "year": "2024-04",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 April P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 3906000,
+      "unit": "visits",
+      "year": "2024-05",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 May P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "uk_visits_month",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "Great Britain"
+      },
+      "value": 3513000,
+      "unit": "visits",
+      "year": "2024-06",
+      "measure": "visits to Great Britain by overseas residents, a month",
+      "note": "'2024 June P' in Table 1: a provisional estimate (suffix P); from January 2024 the ONS counts Great Britain only (Northern Ireland's figures moved to NISRA on 1 April 2024); April to June 2024 rest on fewer interviews than usual (the workbook's cover sheet); rounded by the ONS to the nearest 1,000; read from data/raw/uk5-visitors/ons/ott-monthly-jan-jun-2024-released-2024-10-18.xlsx, downloaded 2026-10-20",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Monthly overseas travel and tourism reference tables, January to June 2024, provisional monthly estimates (released 18 October 2024), Table 1: overseas residents' visits by month and area of residence",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/monthlyoverseastravelandtourismreferencetables/current/overseastravelandtourismmonthlyq22024.xlsx",
+        "table": "Table 1, column World Total",
+        "licence": "Open Government Licence v3.0"
+      }
+    }
+  ]
+}

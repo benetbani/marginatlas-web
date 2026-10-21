@@ -1,0 +1,113 @@
+{
+ "id": "place-uk-eating-out-regions-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+  "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+  "table": "A35",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "eating_out_share",
+   "geo": {
+    "level": "region",
+    "code": "E12000002",
+    "name": "North West"
+   },
+   "value": 5.2,
+   "unit": "percent of household expenditure",
+   "year": "2022/23-2024/25",
+   "measure": "catering services (COICOP 11.1) as a share of average weekly household expenditure, household survey",
+   "note": "computed from the published weekly averages: GBP 28.60 of GBP 554.70 total expenditure; three financial years April 2022 to March 2025 pooled; residents' households only, visitors not counted; the region's figure, said as the region's on Manchester's page (no city figure is published)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+    "table": "A35",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "eating_out_share",
+   "geo": {
+    "level": "region",
+    "code": "E12000005",
+    "name": "West Midlands"
+   },
+   "value": 4.5,
+   "unit": "percent of household expenditure",
+   "year": "2022/23-2024/25",
+   "measure": "catering services (COICOP 11.1) as a share of average weekly household expenditure, household survey",
+   "note": "computed from the published weekly averages: GBP 26.00 of GBP 581.50 total expenditure; three financial years April 2022 to March 2025 pooled; residents' households only, visitors not counted; the region's figure, said as the region's on Birmingham's page (no city figure is published)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+    "table": "A35",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "eating_out_share",
+   "geo": {
+    "level": "region",
+    "code": "E12000003",
+    "name": "Yorkshire and The Humber"
+   },
+   "value": 5.5,
+   "unit": "percent of household expenditure",
+   "year": "2022/23-2024/25",
+   "measure": "catering services (COICOP 11.1) as a share of average weekly household expenditure, household survey",
+   "note": "computed from the published weekly averages: GBP 31.80 of GBP 580.10 total expenditure; three financial years April 2022 to March 2025 pooled; residents' households only, visitors not counted; the region's figure, said as the region's on Leeds's page (no city figure is published)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+    "table": "A35",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "eating_out_share",
+   "geo": {
+    "level": "region",
+    "code": "E12000009",
+    "name": "South West"
+   },
+   "value": 5.5,
+   "unit": "percent of household expenditure",
+   "year": "2022/23-2024/25",
+   "measure": "catering services (COICOP 11.1) as a share of average weekly household expenditure, household survey",
+   "note": "computed from the published weekly averages: GBP 37.40 of GBP 677.90 total expenditure; three financial years April 2022 to March 2025 pooled; residents' households only, visitors not counted; the region's figure, said as the region's on Bristol's page (no city figure is published)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+    "table": "A35",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "eating_out_share",
+   "geo": {
+    "level": "region",
+    "code": "S92000003",
+    "name": "Scotland"
+   },
+   "value": 4.4,
+   "unit": "percent of household expenditure",
+   "year": "2022/23-2024/25",
+   "measure": "catering services (COICOP 11.1) as a share of average weekly household expenditure, household survey",
+   "note": "computed from the published weekly averages: GBP 23.20 of GBP 528.00 total expenditure; three financial years April 2022 to March 2025 pooled; residents' households only, visitors not counted; the region's figure, said as the region's on Edinburgh and Glasgow's page (no city figure is published)",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Family spending workbook 3: expenditure by region, financial year ending 2025 (Table A35, detailed expenditure by region, 3-year average)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook3expenditurebyregion/fye2025/workbook3expenditurebyregion.xlsx",
+    "table": "A35",
+    "licence": "Open Government Licence v3.0"
+   }
+  }
+ ]
+}

@@ -1,0 +1,299 @@
+{
+ "id": "rule-changes",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Rule changes of the last two years, dated, with before and after",
+  "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2025-04-06",
+   "measure": "Employer Class 1 National Insurance rate",
+   "note": "Employer National Insurance 13.8% to 15%. Secondary threshold GBP 9,100 to 5,000 a year.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Rates and thresholds for employers 2025 to 2026",
+    "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10500,
+   "unit": "GBP",
+   "year": "2025-04-06",
+   "measure": "Employment Allowance",
+   "note": "Employment Allowance GBP 5,000 (2024-25) to 10,500 (2025-26).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Rates and thresholds for employers 2025 to 2026",
+    "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2025-to-2026"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.21,
+   "unit": "GBP an hour",
+   "year": "2025-04-01",
+   "measure": "National Living Wage",
+   "note": "National Living Wage to 12.21 (April 2025 to March 2026).",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "National Minimum Wage and National Living Wage rates",
+    "url": "https://www.gov.uk/national-minimum-wage-rates"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.71,
+   "unit": "GBP an hour",
+   "year": "2026-04-01",
+   "measure": "National Living Wage",
+   "note": "National Living Wage 12.21 to 12.71.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "National Minimum Wage and National Living Wage rates",
+    "url": "https://www.gov.uk/national-minimum-wage-rates"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 38.2,
+   "unit": "pence",
+   "year": "2026-04-01",
+   "measure": "Business rates, retail, hospitality and leisure",
+   "note": "Lower retail, hospitality and leisure multipliers (38.2p and 43p) replace the retail, hospitality and leisure relief of 2025-26.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 16.9,
+   "unit": "USD an hour",
+   "year": "2026-01-01",
+   "measure": "California minimum wage",
+   "note": "California minimum wage 16.50 to 16.90.",
+   "source": {
+    "publisher": "California Department of Industrial Relations",
+    "title": "Minimum wage frequently asked questions",
+    "url": "https://www.dir.ca.gov/dlse/faq_minimumwage.htm"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 18.42,
+   "unit": "USD an hour",
+   "year": "2026-07-01",
+   "measure": "City of Los Angeles minimum wage",
+   "note": "City of Los Angeles minimum wage up 0.55 to 18.42.",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Wage Standards",
+    "title": "July 1, 2026 Minimum Wage Ordinance wage rate increase (notice of 30 January 2026)",
+    "url": "https://wagesla.lacity.gov/sites/g/files/wph1941/files/2026-04/2026%20MWR%20Increase%20Memo%2001-30-26%20ADA%20Final.pdf"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 9.75,
+   "unit": "%",
+   "year": "2025-04-01",
+   "measure": "Sales and use tax rate, City of Los Angeles",
+   "note": "Sales tax in the City of Los Angeles 9.75% from 1 April 2025 (the earlier rate not read here).",
+   "source": {
+    "publisher": "California Department of Tax and Fee Administration",
+    "title": "California City and County Sales and Use Tax Rates, 1 April 2025 to 30 June 2025 (archive)",
+    "url": "https://cdtfa.ca.gov/taxes-and-fees/ArchivesRates-04-01-2025-06-30-2025.pdf"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 10.25,
+   "unit": "%",
+   "year": "2026-10-01",
+   "measure": "Sales and use tax rate, City of Los Angeles",
+   "note": "Los Angeles County rate 9.750% to 10.250%: Measure ER, approved 2 June 2026, a new 0.5% countywide tax. The October 2026 rate table gives the City of Los Angeles 10.25%.",
+   "source": {
+    "publisher": "California Department of Tax and Fee Administration",
+    "title": "L-1037, New Sales and Use Tax Rates Effective October 1, 2026",
+    "url": "https://cdtfa.ca.gov/formspubs/L1037.pdf"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1.2,
+   "unit": "%",
+   "year": "2025",
+   "measure": "FUTA credit reduction, California",
+   "note": "California FUTA credit reduction 0.9% (2024) to 1.2% (2025).",
+   "source": {
+    "publisher": "U.S. Department of Labor, Employment and Training Administration",
+    "title": "FUTA credit reductions (Actual FUTA Credit Reductions 2010-2025, and Potential 2026 Credit Reductions)",
+    "url": "https://oui.doleta.gov/unemploy/futa_credit.asp"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 33,
+   "unit": "%",
+   "year": "2026-01-01",
+   "measure": "IRPEF second bracket",
+   "note": "IRPEF on income EUR 28,000 to 50,000 cut from 35% to 33% (L. 199/2025).",
+   "source": {
+    "publisher": "Agenzia delle Entrate",
+    "title": "Irpef: aliquote e calcolo dell'Irpef",
+    "url": "https://www.agenziaentrate.gov.it/portale/imposta-sul-reddito-delle-persone-fisiche-irpef-/aliquote-e-calcolo-dell-irpef"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 4.82,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRAP, Lazio",
+   "note": "Lazio keeps its 0.92-point IRAP increase from tax year 2026 (L.R. 20/2025, art. 2, c. 4).",
+   "source": {
+    "publisher": "Consiglio Regionale del Lazio",
+    "title": "Legge regionale 31 dicembre 2025, n. 20, art. 2 (testo coordinato)",
+    "url": "https://www.consiglio.regione.lazio.it/consiglio-regionale/?vw=leggiregionalidettaglio&id=9524&sv=vigente"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 322800,
+   "unit": "HUF a month",
+   "year": "2026-01-01",
+   "measure": "Minimum wage",
+   "note": "Minimum wage to HUF 322,800 a month, up 11% on 2025.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "426/2025. (XII. 23.) Korm. rendelet a kötelező legkisebb munkabér (minimálbér) és a garantált bérminimum megállapításáról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2025-426-20-22"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 373200,
+   "unit": "HUF a month",
+   "year": "2026-01-01",
+   "measure": "Guaranteed wage minimum",
+   "note": "Guaranteed wage minimum to HUF 373,200 a month, up 7% on 2025.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "426/2025. (XII. 23.) Korm. rendelet a kötelező legkisebb munkabér (minimálbér) és a garantált bérminimum megállapításáról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2025-426-20-22"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 20000000,
+   "unit": "HUF",
+   "year": "2026-01-01",
+   "measure": "VAT subject exemption limit",
+   "note": "VAT subject-exemption limit HUF 18 million to 20 million. 22 million from 2027, 24 million from 2028.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Emelkedik az alanyi adómentesség értékhatára",
+    "url": "https://nav.gov.hu/ado/afa/Emelkedik_az_alanyi_adomentesseg_ertekhatara"
+   }
+  },
+  {
+   "item": "rule_change",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 100,
+   "unit": "% of the minimum wage",
+   "year": "2026-01-01",
+   "measure": "Sole trader social contribution tax, minimum base",
+   "note": "Sole traders' minimum monthly szocho base: 112.5% of the minimum wage to 100% (the multiplier no longer applies).",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  }
+ ]
+}

@@ -1,0 +1,361 @@
+{
+ "id": "eucities-be-statbel-2024",
+ "source": {
+  "publisher": "Statbel (Belgian statistical office)",
+  "title": "Statbel open data: enterprises subject to VAT; population structure",
+  "url": "https://statbel.fgov.be/en/open-data",
+  "table": "TF_VAT_NACE_2024.txt (CD_MUNTY_REFNIS 21004, CD_RGN_REFNIS 04000, CD_NACE 5-digit, MS_NUM_VAT); TF_SOC_POP_STRUCT_2025.txt",
+  "licence": "Statbel open data licence (free reuse with the source given), see https://statbel.fgov.be/en/open-data"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.101 Activities of full-service restaurants (Restauration à service complet)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 569,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.102 Activities of limited-service restaurants (Restauration à service restreint)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 702,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.290 Other food service activities (Autres services de restauration)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 19,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.301 Cafés and bars (Cafés et bars)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 381,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.302 Nightclubs, dance halls and the like (Discothèques, dancings et similaires)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 13,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 96.021 Hairdressing (Coiffure)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 211,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing. Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 96.022 Beauty services (Soins de beauté)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 136,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008, all activities",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 22638,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.101 Activities of full-service restaurants (Restauration à service complet)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 1903,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.102 Activities of limited-service restaurants (Restauration à service restreint)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 2824,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.290 Other food service activities (Autres services de restauration)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 88,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.301 Cafés and bars (Cafés et bars)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 1427,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 56.302 Nightclubs, dance halls and the like (Discothèques, dancings et similaires)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 44,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 96.021 Hairdressing (Coiffure)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 1206,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing. Hairdressing, barbers included.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008 96.022 Beauty services (Soins de beauté)",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 990,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE-BEL 2008, all activities",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 122725,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT, by the commune of the registered office, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The Brussels-Capital Region, the 19 communes. Counted at the registered office, not each premises. VAT-liable enterprises only: activities exempt from VAT are missing.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "BE-BRU",
+    "name": "Région de Bruxelles-Capitale / Brussels Hoofdstedelijk Gewest (19 communes)"
+   },
+   "value": 1255795,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January 2025 (the sum of the file's cells for the area)",
+   "note": "Same boundary as the VAT rows of this file; 1 January 2025 is the day after their stock date.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Population by place of residence, nationality, marital status, age and sex, 1 January 2025 (TF_SOC_POP_STRUCT_2025)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/bevolking%20naar%20woonplaats%2C%20nationaliteit%20burgelijke%20staat%20%2C%20leeftijd%20en%20geslacht/TF_SOC_POP_STRUCT_2025.zip"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 198314,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January 2025 (the sum of the file's cells for the area)",
+   "note": "Same boundary as the VAT rows of this file; 1 January 2025 is the day after their stock date.",
+   "source": {
+    "publisher": "Statbel (Belgian statistical office)",
+    "title": "Population by place of residence, nationality, marital status, age and sex, 1 January 2025 (TF_SOC_POP_STRUCT_2025)",
+    "url": "https://statbel.fgov.be/sites/default/files/files/opendata/bevolking%20naar%20woonplaats%2C%20nationaliteit%20burgelijke%20staat%20%2C%20leeftijd%20en%20geslacht/TF_SOC_POP_STRUCT_2025.zip"
+   }
+  }
+ ]
+}

@@ -1,0 +1,718 @@
+{
+ "id": "us-economic-census-size-2022",
+ "source": {
+  "publisher": "U.S. Census Bureau",
+  "title": "2022 Economic Census: Employment Size of Firms for the U.S. (EC2200SIZEEMPFIRM)",
+  "url": "https://data.census.gov/table/ECNSIZE2022.EC2200SIZEEMPFIRM",
+  "table": "https://www2.census.gov/programs-surveys/economic-census/data/2022/sector00/EC2200SIZEEMPFIRM.zip, rows NAICS 722511, 722515, 812111, all establishments, EMPSZFF 001 (all firms), 510 to 550 and 600; cells with a flag are not written",
+  "licence": "US federal work, public domain"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 14,249,134 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 405831,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 14,249,134 thousand over 35,111 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 7.2,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 26,805,307 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 693055,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 26,805,307 thousand over 38,677 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 13.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 51,425,103 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1098358,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 51,425,103 thousand over 46,820 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 25.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 96,086,710 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 2068828,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 96,086,710 thousand over 46,445 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 13.4,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 50 to 99 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 49,908,813 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4427288,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 50 to 99 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 49,908,813 thousand over 11,273 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 6.6,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 100 to 249 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 24,732,195 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 9940593,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 100 to 249 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 24,732,195 thousand over 2,488 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 2.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 250 to 499 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 10,340,230 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 23935718,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 250 to 499 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 10,340,230 thousand over 432 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 21.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 500 employees or more",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 81,373,173 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 215272944,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 500 employees or more",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 81,373,173 thousand over 378 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 17,882,936 thousand of USD 372,803,601 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722511: Full-service restaurants",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 418031,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 17,882,936 thousand over 42,779 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.5,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,853,608 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 234826,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,853,608 thousand over 12,152 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8.4,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 5,295,936 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 440850,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 5,295,936 thousand over 12,013 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 15.1,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 9,476,507 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 778806,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 9,476,507 thousand over 12,168 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 14.3,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 8,978,354 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1537126,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 8,978,354 thousand over 5,841 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5.7,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 50 to 99 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 3,576,686 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3729600,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 50 to 99 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 3,576,686 thousand over 959 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.7,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 100 to 249 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,949,299 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8623681,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 100 to 249 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,949,299 thousand over 342 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3.3,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 250 to 499 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,044,168 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 22219217,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 250 to 499 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,044,168 thousand over 92 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 39.5,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 500 employees or more",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 24,811,960 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 393840635,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 500 employees or more",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 24,811,960 thousand over 63 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.4,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,782,890 thousand of USD 62,769,408 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "cafes",
+   "officialClass": "NAICS 722515: Snack and nonalcoholic beverage bars",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 187627,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 2,782,890 thousand over 14,832 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 26.5,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 440,972 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 126753,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with less than 5 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 440,972 thousand over 3,479 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 15.5,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 258,150 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 385299,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 5 to 9 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 258,150 thousand over 670 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 14.6,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 242,529 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 707082,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 10 to 19 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 242,529 thousand over 343 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 12.6,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 208,937 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1481823,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms operated the entire year with 20 to 49 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 208,937 thousand over 141 firms."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 6.8,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms operated the entire year with 50 to 99 employees",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 112,807 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "turnover_share_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 7.6,
+   "unit": "percent of the class's sales",
+   "year": "2022",
+   "measure": "share of sales, value of shipments or revenue made by firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 125,882 thousand of USD 1,663,159 thousand (all firms)."
+  },
+  {
+   "item": "sales_per_business_by_size",
+   "trade": "barbershops",
+   "officialClass": "NAICS 812111: Barber shops",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 74486,
+   "unit": "USD per firm",
+   "year": "2022",
+   "measure": "mean sales, value of shipments or revenue per firm, firms not operated for the entire year",
+   "note": "Firms (all establishments of one company together), size by the firm's employees; the bands cover firms operated the entire year, and firms not operated the entire year are their own row. Derived: USD 125,882 thousand over 1,690 firms."
+  }
+ ]
+}

@@ -1,0 +1,107 @@
+{
+ "id": "eucities-se-scb-2024",
+ "source": {
+  "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+  "title": "Statistical database: structural business statistics by county; population",
+  "url": "https://www.statistikdatabasen.scb.se/",
+  "table": "PxWeb API https://api.scb.se/OV0104/v1/doris/en/ssd/, NSEBasfaktaLVEngs07 (2024, updated 2026-05-13), BefolkningNy (31 December 2024)",
+  "licence": "CC BY 4.0 (Statistics Sweden open data), https://www.scb.se/en/services/open-data-api/"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev. 2 A-S excluding K, O, T, U (all NACE in the structural business statistics)",
+   "geo": {
+    "level": "region",
+    "code": "SE-AB",
+    "name": "Stockholms län (Stockholm county)"
+   },
+   "value": 281275,
+   "unit": "working sites",
+   "year": "2024",
+   "measure": "number of working sites (local kind-of-activity units) in the structural business statistics, by county",
+   "note": "The county holding Stockholm, 26 municipalities, wider than the city. The open regional table stops at county and NACE section: no municipal or class count is published.",
+   "source": {
+    "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+    "title": "Number of working sites (local kind-of-activity unit) according to Structural Business Statistics by region, industrial classification (NACE Rev. 2), year and observations (NSEBasfaktaLVEngs07)",
+    "url": "https://api.scb.se/OV0104/v1/doris/en/ssd/NV/NV0109/NV0109P/NSEBasfaktaLVEngs07"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev. 2 section I-55-56 accommodation and food service activities",
+   "geo": {
+    "level": "region",
+    "code": "SE-AB",
+    "name": "Stockholms län (Stockholm county)"
+   },
+   "value": 9378,
+   "unit": "working sites",
+   "year": "2024",
+   "measure": "number of working sites (local kind-of-activity units) in the structural business statistics, by county",
+   "note": "The county holding Stockholm, 26 municipalities, wider than the city. The open regional table stops at county and NACE section: no municipal or class count is published.",
+   "source": {
+    "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+    "title": "Number of working sites (local kind-of-activity unit) according to Structural Business Statistics by region, industrial classification (NACE Rev. 2), year and observations (NSEBasfaktaLVEngs07)",
+    "url": "https://api.scb.se/OV0104/v1/doris/en/ssd/NV/NV0109/NV0109P/NSEBasfaktaLVEngs07"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev. 2 section S-94-96 other service activities",
+   "geo": {
+    "level": "region",
+    "code": "SE-AB",
+    "name": "Stockholms län (Stockholm county)"
+   },
+   "value": 12876,
+   "unit": "working sites",
+   "year": "2024",
+   "measure": "number of working sites (local kind-of-activity units) in the structural business statistics, by county",
+   "note": "The county holding Stockholm, 26 municipalities, wider than the city. The open regional table stops at county and NACE section: no municipal or class count is published.",
+   "source": {
+    "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+    "title": "Number of working sites (local kind-of-activity unit) according to Structural Business Statistics by region, industrial classification (NACE Rev. 2), year and observations (NSEBasfaktaLVEngs07)",
+    "url": "https://api.scb.se/OV0104/v1/doris/en/ssd/NV/NV0109/NV0109P/NSEBasfaktaLVEngs07"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "SE-AB",
+    "name": "Stockholms län (Stockholm county)"
+   },
+   "value": 2473307,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 31 December 2024",
+   "note": "The county row shares the boundary and year of the working-site rows; the municipality row is the city alone.",
+   "source": {
+    "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+    "title": "Population by region, year and observations (BefolkningNy)",
+    "url": "https://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0101/BE0101A/BefolkningNy"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "0180",
+    "name": "Stockholm (kommun)"
+   },
+   "value": 995574,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 31 December 2024",
+   "note": "The county row shares the boundary and year of the working-site rows; the municipality row is the city alone.",
+   "source": {
+    "publisher": "Statistiska centralbyrån (SCB), Statistics Sweden",
+    "title": "Population by region, year and observations (BefolkningNy)",
+    "url": "https://api.scb.se/OV0104/v1/doris/en/ssd/BE/BE0101/BE0101A/BefolkningNy"
+   }
+  }
+ ]
+}

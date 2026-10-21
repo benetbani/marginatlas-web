@@ -1,0 +1,283 @@
+{
+  "id": "place-uk5-ashe-residence-deciles-2025",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Annual Survey of Hours and Earnings 2025 (provisional), resident analysis (ASHE table 8), via Nomis dataset NM_30_1",
+    "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_30_1.data.csv?geography=E12000007,K02000001&date=latest&sex=8&item=6,7,9,10,2,11,12,14,15&pay=7&measures=20100,20701&select=date_name,geography_name,geography_code,sex_name,item_name,pay_name,measures_name,obs_value,obs_status_name",
+    "table": "NM_30_1: sex 8 full-time workers, pay 7 annual pay gross, items 6, 7, 9, 10, 2, 11, 12, 14, 15 (the 10th to the 90th percentile)",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 10,
+      "value": 26505,
+      "value_month": 2209,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.8%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 20,
+      "value": 31334,
+      "value_month": 2611,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "20th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.6%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 30,
+      "value": 35979,
+      "value_month": 2998,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "30th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.7%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 40,
+      "value": 40915,
+      "value_month": 3410,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "40th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.9%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 50,
+      "value": 46414,
+      "value_month": 3868,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "median of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 1.2%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 60,
+      "value": 52831,
+      "value_month": 4403,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "60th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 1.2%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 70,
+      "value": 61642,
+      "value_month": 5137,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "70th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 1.6%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 80,
+      "value": 75396,
+      "value_month": 6283,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "80th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 2.3%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "percentile": 90,
+      "value": 106203,
+      "value_month": 8850,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 4.5%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 10,
+      "value": 23990,
+      "value_month": 1999,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.2%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 20,
+      "value": 27495,
+      "value_month": 2291,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "20th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.2%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 30,
+      "value": 30935,
+      "value_month": 2578,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "30th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.2%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 40,
+      "value": 34779,
+      "value_month": 2898,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "40th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.3%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 50,
+      "value": 39039,
+      "value_month": 3253,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "median of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.3%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 60,
+      "value": 44203,
+      "value_month": 3684,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "60th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.3%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 70,
+      "value": 50115,
+      "value_month": 4176,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "70th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.3%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 80,
+      "value": 59083,
+      "value_month": 4924,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "80th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.5%"
+    },
+    {
+      "item": "pay_tenth",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "percentile": 90,
+      "value": 76903,
+      "value_month": 6409,
+      "unit": "GBP per year",
+      "year": "2025",
+      "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+      "note": "employees who live in the UK, wherever they work (ASHE table 8, the place of residence analysis); value_month is the year over 12, rounded to the pound; 2025 figures are provisional; coefficient of variation 0.8%"
+    }
+  ]
+}

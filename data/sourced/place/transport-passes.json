@@ -1,0 +1,126 @@
+{
+  "id": "place-transport-passes",
+  "source": {
+    "publisher": "Transport for London",
+    "title": "Adult rate prices 2026 (caps and Travelcards)",
+    "url": "https://tfl.gov.uk/cdn/static/cms/documents/adult-fares.pdf",
+    "licence": "Transport for London; fare tariff quoted as published"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "transport_pass_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 171.7,
+      "unit": "GBP per month",
+      "year": "2026",
+      "measure": "monthly public transport pass, adult, full price",
+      "note": "monthly Travelcard, Zones 1-2 (central London); Tube, DLR, Elizabeth line, London Overground, most National Rail in the zones, and buses",
+      "source": {
+        "publisher": "Transport for London",
+        "title": "Adult rate prices 2026 (caps and Travelcards)",
+        "url": "https://tfl.gov.uk/cdn/static/cms/documents/adult-fares.pdf",
+        "licence": "Transport for London; fare tariff quoted as published"
+      }
+    },
+    {
+      "item": "transport_pass_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 313.4,
+      "unit": "GBP per month",
+      "year": "2026",
+      "measure": "monthly public transport pass, adult, full price",
+      "note": "monthly Travelcard, Zones 1-6 (all of Greater London's Tube network)",
+      "source": {
+        "publisher": "Transport for London",
+        "title": "Adult rate prices 2026 (caps and Travelcards)",
+        "url": "https://tfl.gov.uk/cdn/static/cms/documents/adult-fares.pdf",
+        "licence": "Transport for London; fare tariff quoted as published"
+      }
+    },
+    {
+      "item": "transport_pass_month",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": null,
+      "unit": "USD per month",
+      "year": "2026",
+      "measure": "monthly public transport pass, adult, full price",
+      "note": "Metro's fares page sells no monthly pass: fares cap at USD 5 a day and USD 18 in seven days when paid by tap (TAP card or phone); a USD 1.75 ride",
+      "source": {
+        "publisher": "Los Angeles County Metropolitan Transportation Authority (Metro)",
+        "title": "Fares",
+        "url": "https://www.metro.net/riding/fares/",
+        "licence": "Operator's tariff quoted as published"
+      }
+    },
+    {
+      "item": "transport_fare_cap_week",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": 18,
+      "unit": "USD per seven days",
+      "year": "2026",
+      "measure": "most a rider pays in seven days, adult, paying by tap",
+      "note": "Metro bus and rail, all of its network; after the cap rides are free for the rest of the seven days",
+      "source": {
+        "publisher": "Los Angeles County Metropolitan Transportation Authority (Metro)",
+        "title": "Fares",
+        "url": "https://www.metro.net/riding/fares/",
+        "licence": "Operator's tariff quoted as published"
+      }
+    },
+    {
+      "item": "transport_pass_month",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 35,
+      "unit": "EUR per month",
+      "year": "2026",
+      "measure": "monthly public transport pass, adult, full price",
+      "note": "Abbonamento personale mensile, the personal (named) pass, one calendar month, unlimited travel within Roma Capitale (in ATAC's words: valido un mese di calendario per viaggiare senza limiti nel territorio di Roma Capitale); the transferable mensile impersonale costs EUR 53",
+      "source": {
+        "publisher": "ATAC S.p.A. (Roma)",
+        "title": "Abbonamenti",
+        "url": "https://www.atac.roma.it/biglietti-e-abbonamenti/abbonamenti",
+        "licence": "Operator's tariff quoted as published"
+      }
+    },
+    {
+      "item": "transport_pass_month",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 8950,
+      "unit": "HUF per month",
+      "year": "2026",
+      "measure": "monthly public transport pass, adult, full price",
+      "note": "Havi Budapest-bérlet, the monthly Budapest pass, the BKK public transport network within Budapest",
+      "source": {
+        "publisher": "BKK Budapesti Közlekedési Központ",
+        "title": "Jegyek és bérletek: árak (Tickets and passes: prices)",
+        "url": "https://bkk.hu/jegyek-es-berletek/arak/",
+        "licence": "Operator's tariff quoted as published"
+      }
+    }
+  ]
+}

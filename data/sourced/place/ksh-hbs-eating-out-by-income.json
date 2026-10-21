@@ -1,0 +1,669 @@
+{
+ "id": "ksh-hbs-eating-out-by-income",
+ "source": {
+  "publisher": "Hungarian Central Statistical Office (KSH)",
+  "title": "STADAT 14.8.1.14 Annual per capita expenditure by COICOP, income deciles",
+  "url": "https://www.ksh.hu/stadat_files/jov/en/jov0025.html",
+  "table": "jov0025, rows 11 'Catering and accommodation services' and Total, columns Total and income deciles 1 to 10; the newest two years (2019, 2020)",
+  "licence": "KSH terms of reuse not read (the terms page was not reached from the server); see the report"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 63598.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, all households, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.8,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, all households, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 63,598 of HUF 1,331,858 a year."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 22090.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 1, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.9,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 1, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 22,090 of HUF 559,476 a year.",
+   "decile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 32606.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 2, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.7,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 2, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 32,606 of HUF 694,033 a year.",
+   "decile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 35271.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 3, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.2,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 3, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 35,271 of HUF 833,002 a year.",
+   "decile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 38827.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 4, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.8,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 4, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 38,827 of HUF 1,018,527 a year.",
+   "decile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 46016.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 5, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 5
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.9,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 5, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 46,016 of HUF 1,181,997 a year.",
+   "decile": 5
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 57302.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 6, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 6
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.3,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 6, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 57,302 of HUF 1,339,310 a year.",
+   "decile": 6
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 65063.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 7, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 7
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.5,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 7, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 65,063 of HUF 1,456,848 a year.",
+   "decile": 7
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 75941.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 8, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 8
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.6,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 8, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 75,941 of HUF 1,666,975 a year.",
+   "decile": 8
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 99523.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 9, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 9
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5.0,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 9, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 99,523 of HUF 1,992,480 a year.",
+   "decile": 9
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 163298.0,
+   "unit": "HUF per person per year",
+   "year": "2019",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 10, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation.",
+   "decile": 10
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 6.3,
+   "unit": "percent of consumption expenditure",
+   "year": "2019",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 10, 2019",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. Derived from the same table: HUF 163,298 of HUF 2,575,447 a year.",
+   "decile": 10
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 52405.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, all households, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.8,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, all households, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 52,405 of HUF 1,368,405 a year."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 16331.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 1, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 2.9,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 1, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 16,331 of HUF 568,028 a year.",
+   "decile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 24665.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 2, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.5,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 2, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 24,665 of HUF 697,650 a year.",
+   "decile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 27196.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 3, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.2,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 3, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 27,196 of HUF 838,475 a year.",
+   "decile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 31677.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 4, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.1,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 4, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 31,677 of HUF 1,037,343 a year.",
+   "decile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 36450.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 5, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 5
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.0,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 5, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 36,450 of HUF 1,197,811 a year.",
+   "decile": 5
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 48774.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 6, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 6
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.6,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 6, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 48,774 of HUF 1,357,093 a year.",
+   "decile": 6
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 55479.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 7, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 7
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.7,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 7, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 55,479 of HUF 1,500,744 a year.",
+   "decile": 7
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 61983.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 8, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 8
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3.6,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 8, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 61,983 of HUF 1,701,205 a year.",
+   "decile": 8
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 83348.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 9, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 9
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 4.1,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 9, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 83,348 of HUF 2,057,341 a year.",
+   "decile": 9
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 132484.0,
+   "unit": "HUF per person per year",
+   "year": "2020",
+   "measure": "annual per capita spending on catering and accommodation services, people in households of income decile 10, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes.",
+   "decile": 10
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11: Catering and accommodation services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5.0,
+   "unit": "percent of consumption expenditure",
+   "year": "2020",
+   "measure": "catering and accommodation services as a share of consumption expenditure, people in households of income decile 10, 2020",
+   "note": "Household budget survey, per person, not per household; COICOP 11 holds restaurants and cafes with accommodation. 2020 holds the pandemic closures of restaurants and cafes. Derived from the same table: HUF 132,484 of HUF 2,636,797 a year.",
+   "decile": 10
+  }
+ ]
+}

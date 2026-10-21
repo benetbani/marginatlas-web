@@ -1,0 +1,1903 @@
+{
+ "id": "ons-business-counts-sectors-2026",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "UK Business Counts, local units by broad industry group (NM_141_1), via Nomis",
+  "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_141_1.data.csv?geography=E12000007,E08000003,E08000025,E08000035,E06000023,S12000036,S12000049&date=latest&industry=163577857...163577874&employment_sizeband=0&legal_status=0&measures=20100&select=date_name,date_code,geography_name,geography_code,industry_code,industry_name,obs_value,obs_status_name",
+  "table": "NM_141_1, industry 163577857 to 163577874 (the 18 broad industry groups), employment size band Total, legal status Total, date latest (March 2026)",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 895,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 3445,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 14505,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 64700,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 8285,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 22710,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 54910,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 19840,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 38825,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 64315,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 18815,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 36330,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 113370,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 57340,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 1635,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 14115,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 29290,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 48020,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the London region (all 33 boroughs); counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 25,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 105,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 790,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 2030,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 565,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1540,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 3665,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1225,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 2605,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 2025,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 790,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1750,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 5085,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 2735,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 155,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 755,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 1875,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 2020,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 65,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 210,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2020,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 3975,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 1530,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2235,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 5840,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2500,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 3700,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2090,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 865,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2410,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 5720,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 4125,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 215,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 1340,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 3825,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 2920,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 295,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 220,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1525,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 4050,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 995,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1365,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 3560,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1545,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 2640,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 2280,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1055,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 1905,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 5330,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 3420,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 170,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 845,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 2365,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 2425,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 45,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 170,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 815,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 2280,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 575,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 665,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1915,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 915,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1815,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 2010,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 630,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1065,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 3710,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1975,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 115,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 560,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1420,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 1625,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 170,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 225,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 600,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 1805,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 365,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 585,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 2440,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 545,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 2605,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 1800,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 890,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 1200,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 3950,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 2160,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 155,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 550,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 1565,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 2010,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "1",
+   "officialClass": "UK Business Counts broad industry group 1 : Agriculture, forestry & fishing (A)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 35,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "2",
+   "officialClass": "UK Business Counts broad industry group 2 : Mining, quarrying & utilities (B,D and E)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 180,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "3",
+   "officialClass": "UK Business Counts broad industry group 3 : Manufacturing (C)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 895,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "4",
+   "officialClass": "UK Business Counts broad industry group 4 : Construction (F)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 2225,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "5",
+   "officialClass": "UK Business Counts broad industry group 5 : Motor trades (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 585,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "6",
+   "officialClass": "UK Business Counts broad industry group 6 : Wholesale (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 1015,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "7",
+   "officialClass": "UK Business Counts broad industry group 7 : Retail (Part G)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 3485,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "8",
+   "officialClass": "UK Business Counts broad industry group 8 : Transport & storage (inc postal) (H)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 905,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "9",
+   "officialClass": "UK Business Counts broad industry group 9 : Accommodation & food services (I)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 2685,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "10",
+   "officialClass": "UK Business Counts broad industry group 10 : Information & communication (J)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 1610,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "11",
+   "officialClass": "UK Business Counts broad industry group 11 : Financial & insurance (K)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 630,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "12",
+   "officialClass": "UK Business Counts broad industry group 12 : Property (L)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 1440,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "13",
+   "officialClass": "UK Business Counts broad industry group 13 : Professional, scientific & technical (M)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 3455,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "14",
+   "officialClass": "UK Business Counts broad industry group 14 : Business administration & support services (N)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 2105,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "15",
+   "officialClass": "UK Business Counts broad industry group 15 : Public administration & defence (O)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 345,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "16",
+   "officialClass": "UK Business Counts broad industry group 16 : Education (P)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 725,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "17",
+   "officialClass": "UK Business Counts broad industry group 17 : Health (Q)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 1820,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "18",
+   "officialClass": "UK Business Counts broad industry group 18 : Arts, entertainment, recreation & other services (R,S,T and U)",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 2450,
+   "unit": "local units",
+   "year": "2026",
+   "measure": "count of local units (business sites) registered for VAT or PAYE by broad industry group, snapshot of March 2026",
+   "note": "Measured for the local authority; counts rounded by the publisher to the nearest 5; every industry of the register, the 18 broad groups summing to its total."
+  }
+ ]
+}

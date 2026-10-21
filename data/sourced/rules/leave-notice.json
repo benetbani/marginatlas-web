@@ -1,0 +1,152 @@
+{
+ "id": "leave-notice",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Paid leave and the employer's notice, by law",
+  "url": "https://www.gov.uk/holiday-entitlement-rights"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "paid_leave",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.6,
+   "unit": "weeks a year",
+   "year": "2026",
+   "measure": "Statutory paid holiday",
+   "note": "28 days for a five-day week. Bank holidays may count. Capped at 28 days.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Holiday entitlement",
+    "url": "https://www.gov.uk/holiday-entitlement-rights"
+   }
+  },
+  {
+   "item": "notice_employer",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1,
+   "unit": "weeks",
+   "year": "2026",
+   "measure": "Notice from the employer, one month to two years' service",
+   "note": "Then one week per full year from 2 to 12 years. 12 weeks after 12 years.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Redundancy: your rights, notice periods",
+    "url": "https://www.gov.uk/redundant-your-rights/notice-periods"
+   }
+  },
+  {
+   "item": "notice_employer",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12,
+   "unit": "weeks",
+   "year": "2026",
+   "measure": "Notice from the employer, 12 years' service or more",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Redundancy: your rights, notice periods",
+    "url": "https://www.gov.uk/redundant-your-rights/notice-periods"
+   }
+  },
+  {
+   "item": "paid_sick_leave",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 40,
+   "unit": "hours a year",
+   "year": "2024-01-01",
+   "measure": "California paid sick leave, at least 40 hours or five days, whichever is more",
+   "source": {
+    "publisher": "California Department of Industrial Relations",
+    "title": "California paid sick leave: frequently asked questions",
+    "url": "https://www.dir.ca.gov/dlse/Paid_Sick_Leave.htm"
+   }
+  },
+  {
+   "item": "paid_sick_leave",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 48,
+   "unit": "hours a year",
+   "year": "2026",
+   "measure": "City of Los Angeles paid sick leave, at least",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Wage Standards",
+    "title": "Wages LA: minimum wage and paid sick leave",
+    "url": "https://wagesla.lacity.gov/"
+   }
+  },
+  {
+   "item": "paid_leave",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 4,
+   "unit": "weeks a year",
+   "year": "2026",
+   "measure": "Paid annual leave (ferie), at least",
+   "note": "D.Lgs. 66/2003, art. 10. Notice periods are set by the collective agreements (not read).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.Lgs. 8 aprile 2003, n. 66, art. 10 (ferie annuali), testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2003-04-08;66~art10!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "paid_leave",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 20,
+   "unit": "working days a year",
+   "year": "2026",
+   "measure": "Base leave (alapszabadság)",
+   "note": "Labour Code s. 116. Extra days by age follow (s. 117).",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2012. évi I. törvény a munka törvénykönyvéről, 69. § és 116. §",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2012-1-00-00"
+   }
+  },
+  {
+   "item": "notice_employer",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 30,
+   "unit": "days",
+   "year": "2026",
+   "measure": "Notice period (felmondási idő)",
+   "note": "Labour Code s. 69: on the employer's notice, plus 5 days after 3 years, 15 after 5, 20 after 8, 25 after 10, 30 after 15.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2012. évi I. törvény a munka törvénykönyvéről, 69. § és 116. §",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2012-1-00-00"
+   }
+  }
+ ]
+}

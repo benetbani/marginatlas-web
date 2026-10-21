@@ -1,0 +1,1288 @@
+{
+ "id": "istat-asia-sections-2024",
+ "source": {
+  "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+  "title": "Local units of active enterprises (ASIA local units), by comune and Ateco section (183_1163_DF_DICA_ASIAULP_TERRIFDATA_3)",
+  "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,183_1163_DF_DICA_ASIAULP_TERRIFDATA_3,1.0/A.058091+015146+063049+001272+048017.LU..TOTAL?startPeriod=2024&endPeriod=2024",
+  "table": "DATA_TYPE LU, size class TOTAL, 2024, the section codes B to S; labels from the dataflow's ATECO codelist",
+  "licence": "Creative Commons Attribution 4.0 (CC BY 4.0)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "ATECO 2007 section B: estrazione di minerali da cave e miniere (mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 11,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "ATECO 2007 section C: attività manifatturiere (manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 4898,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "ATECO 2007 section D: fornitura di energia elettrica, gas, vapore e aria condizionata (electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 270,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "ATECO 2007 section E: fornitura di acqua reti fognarie, attività di gestione dei rifiuti e risanamento (water supply sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 151,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "ATECO 2007 section F: costruzioni (construction)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 8527,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "ATECO 2007 section G: commercio all'ingrosso e al dettaglio, riparazione di autoveicoli e motocicli (wholesale and retail trade repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 18273,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "ATECO 2007 section H: trasporto e magazzinaggio (transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 2438,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "ATECO 2007 section I: attività dei servizi di alloggio e di ristorazione (accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 5661,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "ATECO 2007 section J: servizi di informazione e comunicazione (information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3989,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "ATECO 2007 section K: attività finanziarie e assicurative (financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 3220,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "ATECO 2007 section L: attività immobiliari (real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 6271,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "ATECO 2007 section M: attività professionali, scientifiche e tecniche (professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 20971,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "ATECO 2007 section N: noleggio, agenzie di viaggio, servizi di supporto alle imprese (administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 4808,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "ATECO 2007 section P: istruzione (education)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 1441,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "ATECO 2007 section Q: sanità e assistenza sociale (human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 9209,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "ATECO 2007 section R: attività artistiche, sportive, di intrattenimento e divertimento (arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 2119,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "ATECO 2007 section S: altre attività di servizi (other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 4357,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "ATECO 2007 section B: estrazione di minerali da cave e miniere (mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 34,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "ATECO 2007 section C: attività manifatturiere (manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 8861,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "ATECO 2007 section D: fornitura di energia elettrica, gas, vapore e aria condizionata (electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 1548,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "ATECO 2007 section E: fornitura di acqua reti fognarie, attività di gestione dei rifiuti e risanamento (water supply sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 266,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "ATECO 2007 section F: costruzioni (construction)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 14094,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "ATECO 2007 section G: commercio all'ingrosso e al dettaglio, riparazione di autoveicoli e motocicli (wholesale and retail trade repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 31408,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "ATECO 2007 section H: trasporto e magazzinaggio (transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 6035,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "ATECO 2007 section I: attività dei servizi di alloggio e di ristorazione (accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 11620,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "ATECO 2007 section J: servizi di informazione e comunicazione (information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 12584,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "ATECO 2007 section K: attività finanziarie e assicurative (financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 10891,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "ATECO 2007 section L: attività immobiliari (real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 18368,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "ATECO 2007 section M: attività professionali, scientifiche e tecniche (professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 71111,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "ATECO 2007 section N: noleggio, agenzie di viaggio, servizi di supporto alle imprese (administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 13004,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "ATECO 2007 section P: istruzione (education)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 3321,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "ATECO 2007 section Q: sanità e assistenza sociale (human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 16931,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "ATECO 2007 section R: attività artistiche, sportive, di intrattenimento e divertimento (arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 7299,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "ATECO 2007 section S: altre attività di servizi (other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 7531,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "ATECO 2007 section B: estrazione di minerali da cave e miniere (mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 3,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "ATECO 2007 section C: attività manifatturiere (manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 2475,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "ATECO 2007 section D: fornitura di energia elettrica, gas, vapore e aria condizionata (electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 76,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "ATECO 2007 section E: fornitura di acqua reti fognarie, attività di gestione dei rifiuti e risanamento (water supply sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 52,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "ATECO 2007 section F: costruzioni (construction)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 3480,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "ATECO 2007 section G: commercio all'ingrosso e al dettaglio, riparazione di autoveicoli e motocicli (wholesale and retail trade repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 8240,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "ATECO 2007 section H: trasporto e magazzinaggio (transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1218,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "ATECO 2007 section I: attività dei servizi di alloggio e di ristorazione (accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 3951,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "ATECO 2007 section J: servizi di informazione e comunicazione (information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1549,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "ATECO 2007 section K: attività finanziarie e assicurative (financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1407,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "ATECO 2007 section L: attività immobiliari (real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 3214,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "ATECO 2007 section M: attività professionali, scientifiche e tecniche (professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 12668,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "ATECO 2007 section N: noleggio, agenzie di viaggio, servizi di supporto alle imprese (administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 2905,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "ATECO 2007 section P: istruzione (education)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 832,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "ATECO 2007 section Q: sanità e assistenza sociale (human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 4464,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "ATECO 2007 section R: attività artistiche, sportive, di intrattenimento e divertimento (arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1170,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "ATECO 2007 section S: altre attività di servizi (other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 1837,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "ATECO 2007 section B: estrazione di minerali da cave e miniere (mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 75,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "ATECO 2007 section C: attività manifatturiere (manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 8726,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "ATECO 2007 section D: fornitura di energia elettrica, gas, vapore e aria condizionata (electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 822,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "ATECO 2007 section E: fornitura di acqua reti fognarie, attività di gestione dei rifiuti e risanamento (water supply sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 466,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "ATECO 2007 section F: costruzioni (construction)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 22545,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "ATECO 2007 section G: commercio all'ingrosso e al dettaglio, riparazione di autoveicoli e motocicli (wholesale and retail trade repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 53020,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "ATECO 2007 section H: trasporto e magazzinaggio (transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 10149,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "ATECO 2007 section I: attività dei servizi di alloggio e di ristorazione (accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 20520,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "ATECO 2007 section J: servizi di informazione e comunicazione (information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 14006,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "ATECO 2007 section K: attività finanziarie e assicurative (financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 9287,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "ATECO 2007 section L: attività immobiliari (real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 18165,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "ATECO 2007 section M: attività professionali, scientifiche e tecniche (professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 72791,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "ATECO 2007 section N: noleggio, agenzie di viaggio, servizi di supporto alle imprese (administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 20296,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "ATECO 2007 section P: istruzione (education)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 3938,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "ATECO 2007 section Q: sanità e assistenza sociale (human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 32922,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "ATECO 2007 section R: attività artistiche, sportive, di intrattenimento e divertimento (arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 10217,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "ATECO 2007 section S: altre attività di servizi (other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 12559,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "ATECO 2007 section B: estrazione di minerali da cave e miniere (mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 4,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "ATECO 2007 section C: attività manifatturiere (manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 3929,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "ATECO 2007 section D: fornitura di energia elettrica, gas, vapore e aria condizionata (electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 188,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "ATECO 2007 section E: fornitura di acqua reti fognarie, attività di gestione dei rifiuti e risanamento (water supply sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 159,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "ATECO 2007 section F: costruzioni (construction)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 4935,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "ATECO 2007 section G: commercio all'ingrosso e al dettaglio, riparazione di autoveicoli e motocicli (wholesale and retail trade repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 23393,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "ATECO 2007 section H: trasporto e magazzinaggio (transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2792,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "ATECO 2007 section I: attività dei servizi di alloggio e di ristorazione (accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 6565,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "ATECO 2007 section J: servizi di informazione e comunicazione (information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2845,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "ATECO 2007 section K: attività finanziarie e assicurative (financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 2660,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "ATECO 2007 section L: attività immobiliari (real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 3587,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "ATECO 2007 section M: attività professionali, scientifiche e tecniche (professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 18730,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "ATECO 2007 section N: noleggio, agenzie di viaggio, servizi di supporto alle imprese (administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 4010,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "ATECO 2007 section P: istruzione (education)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 794,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "ATECO 2007 section Q: sanità e assistenza sociale (human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 5998,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "ATECO 2007 section R: attività artistiche, sportive, di intrattenimento e divertimento (arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 1746,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "ATECO 2007 section S: altre attività di servizi (other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 3290,
+   "unit": "local units",
+   "year": "2024",
+   "measure": "number of local units of active enterprises (premises) by Ateco section, annual",
+   "note": "The register of active enterprises covers sections B to S without O (no farms, no public administration); the sections sum to its total."
+  }
+ ]
+}

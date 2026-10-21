@@ -1,0 +1,220 @@
+{
+ "id": "eucities-fi-statfin-2024",
+ "source": {
+  "publisher": "Statistics Finland (Tilastokeskus)",
+  "title": "StatFin database: establishments of enterprises; population; accommodation",
+  "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/",
+  "table": "PxWeb API https://pxdata.stat.fi/PXWeb/api/v1/en/StatFin/, tables 13wz and 13ww (2024, updated 2025-12-19), 11ra (2024), 11sl (2024-2025)",
+  "licence": "Creative Commons Attribution 4.0 (Statistics Finland)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "TOL 2008, all industries",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 81516,
+   "unit": "establishments",
+   "year": "2024",
+   "measure": "number of establishments of enterprises (statistics on establishments of enterprises), 2024",
+   "note": "Enterprise establishments; general government establishments are counted in a separate statistic and are not here. The municipal table gives no industry split.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "13wz -- Establishments of enterprises by municipality, 2018-2024",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__alyr/statfin_alyr_pxt_13wz.px/"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "TOL 2008 all industries",
+   "geo": {
+    "level": "region",
+    "code": "FI-MK01",
+    "name": "Uusimaa (region)"
+   },
+   "value": 184635,
+   "unit": "establishments",
+   "year": "2024",
+   "measure": "number of establishments of enterprises (statistics on establishments of enterprises), 2024",
+   "note": "Enterprise establishments; general government establishments are counted in a separate statistic and are not here. The region holding Helsinki, wider than the city.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "13ww -- Establishments of enterprises by industry and region, 2018-2024",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__alyr/statfin_alyr_pxt_13ww.px/"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "TOL 2008 56 Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "FI-MK01",
+    "name": "Uusimaa (region)"
+   },
+   "value": 6062,
+   "unit": "establishments",
+   "year": "2024",
+   "measure": "number of establishments of enterprises (statistics on establishments of enterprises), 2024",
+   "note": "Enterprise establishments; general government establishments are counted in a separate statistic and are not here. The region holding Helsinki, wider than the city. The whole division 56: restaurants, cafés and bars together; the classes are not published for the region.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "13ww -- Establishments of enterprises by industry and region, 2018-2024",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__alyr/statfin_alyr_pxt_13ww.px/"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "TOL 2008 56 Food and beverage service activities",
+   "geo": {
+    "level": "region",
+    "code": "FI-MK01",
+    "name": "Uusimaa (region)"
+   },
+   "value": 6062,
+   "unit": "establishments",
+   "year": "2024",
+   "measure": "number of establishments of enterprises (statistics on establishments of enterprises), 2024",
+   "note": "Enterprise establishments; general government establishments are counted in a separate statistic and are not here. The region holding Helsinki, wider than the city. The whole division 56: restaurants, cafés and bars together; the classes are not published for the region.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "13ww -- Establishments of enterprises by industry and region, 2018-2024",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__alyr/statfin_alyr_pxt_13ww.px/"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "TOL 2008 96 Other personal service activities",
+   "geo": {
+    "level": "region",
+    "code": "FI-MK01",
+    "name": "Uusimaa (region)"
+   },
+   "value": 9820,
+   "unit": "establishments",
+   "year": "2024",
+   "measure": "number of establishments of enterprises (statistics on establishments of enterprises), 2024",
+   "note": "Enterprise establishments; general government establishments are counted in a separate statistic and are not here. The region holding Helsinki, wider than the city. Hairdressing (96.02) is not published for the region.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "13ww -- Establishments of enterprises by industry and region, 2018-2024",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__alyr/statfin_alyr_pxt_13ww.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 684018,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 31 December 2024",
+   "note": "Same boundary and year as the establishment rows.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11ra -- Key figures on population by region, 1990-2025",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__vaerak/statfin_vaerak_pxt_11ra.px/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "FI-MK01",
+    "name": "Uusimaa (region)"
+   },
+   "value": 1782300,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 31 December 2024",
+   "note": "Same boundary and year as the establishment rows.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11ra -- Key figures on population by region, 1990-2025",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__vaerak/statfin_vaerak_pxt_11ra.px/"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 4331247,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent by all guests in hotels, calendar year 2024",
+   "note": "Hotel nights only (the municipal yearly hotel table); other accommodation types are not in it.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11sl -- Yearly hotel capacity and nights spent by municipality, 1995-2026",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__matk/statfin_matk_pxt_11sl.px/"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 4705277,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by all guests in hotels, calendar year 2025",
+   "note": "Hotel nights only (the municipal yearly hotel table); other accommodation types are not in it.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11sl -- Yearly hotel capacity and nights spent by municipality, 1995-2026",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__matk/statfin_matk_pxt_11sl.px/"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 2093792,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent by guests resident abroad in hotels, calendar year 2024",
+   "note": "Hotel nights only (the municipal yearly hotel table); other accommodation types are not in it.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11sl -- Yearly hotel capacity and nights spent by municipality, 1995-2026",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__matk/statfin_matk_pxt_11sl.px/"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "091",
+    "name": "Helsinki (municipality)"
+   },
+   "value": 2478095,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by guests resident abroad in hotels, calendar year 2025",
+   "note": "Hotel nights only (the municipal yearly hotel table); other accommodation types are not in it.",
+   "source": {
+    "publisher": "Statistics Finland (Tilastokeskus)",
+    "title": "11sl -- Yearly hotel capacity and nights spent by municipality, 1995-2026",
+    "url": "https://pxdata.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__matk/statfin_matk_pxt_11sl.px/"
+   }
+  }
+ ]
+}
