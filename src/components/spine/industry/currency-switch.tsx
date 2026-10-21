@@ -1,0 +1,28 @@
+"use client";
+/**
+ * THE € / $ SWITCH of the industry page v4 (the kit's switch, kit.py SWITCH; his "always in those tables, there should be the option
+ * to make the thing in dollars, some sort of switch", FOUNDER-VERDICTS 2026-10-20 04:30): two buttons, the local currency first.
+ * Pressing the dollar puts every money pair on the page dollars first; it sets `data-cur` on the page's root (`.kit4`), which the
+ * rules in globals.css, THE KIT PAGE, read. The page draws in euros first without it (the server markup), so nothing moves on load.
+ */
+import * as React from "react";
+
+export function CurrencySwitch({ label }: { label: string }) {
+  const [usd, setUsd] = React.useState(false);
+  const ref = React.useRef<HTMLDivElement>(null);
+  const pick = (next: boolean) => {
+    setUsd(next);
+    const root = ref.current?.closest(".kit4");
+    if (root) root.setAttribute("data-cur", next ? "usd" : "local");
+  };
+  return (
+    <div ref={ref} className="k-switch" role="group" aria-label={label}>
+      <button type="button" aria-pressed={!usd} onClick={() => pick(false)}>
+        €
+      </button>
+      <button type="button" aria-pressed={usd} onClick={() => pick(true)}>
+        $
+      </button>
+    </div>
+  );
+}

@@ -16,7 +16,7 @@
  * only). So `buildIndustryV4` returns null for every slug but restaurants, and those trades keep today's page. The rule is the
  * builder's: a missing row anywhere returns null, never a part page.
  */
-import { sourcedRows, yearOrder, type ResolvedRow } from "@/lib/sourced/load";
+import { SOURCED, sourcedRows, yearOrder, type ResolvedRow } from "@/lib/sourced/load";
 import { convertFromUsd } from "@/lib/currency";
 
 /* ------------------------------------------------------------------ the numbers' own rounding */
@@ -126,6 +126,8 @@ export type IndustryV4 = {
   months: V4Months;
   density: V4Density;
   donut: V4Donut;
+  /** The newest retrieval date among the files the page reads (ISO), for the exit's "Checked" line. */
+  checked: string;
 };
 
 /** The slugs v4 draws, and the trade each reads in the files. Only restaurants fills every section (the header says why). */
@@ -347,7 +349,12 @@ function build(trade: "restaurants"): IndustryV4 | null {
     small: d1(t0),
   };
 
-  return { trade, hero, lasts, nextDoor, split, year, hour, people, putsBack, smallBig, table, months, density, donut };
+  /* ---- the exit's "Checked" date: the newest `retrieved` among the twelve files above (each file's own field). */
+  const ids = new Set<string>(Object.values(F));
+  const checked = SOURCED.filter((f) => ids.has(f.id)).map((f) => f.retrieved).sort().pop();
+  if (!checked) return null;
+
+  return { trade, hero, lasts, nextDoor, split, year, hour, people, putsBack, smallBig, table, months, density, donut, checked };
 }
 
 /** For the table's sales cell: a pair or a dollar figure alone. */
