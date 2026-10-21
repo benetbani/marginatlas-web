@@ -1,0 +1,265 @@
+{
+ "id": "local-business-taxes",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Local business taxes by name and base",
+  "url": "https://www.gov.uk/calculate-your-business-rates"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 38.2,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Business rates multiplier, retail, hospitality and leisure, rateable value below GBP 51,000",
+   "note": "Business rates: rateable value times the multiplier, billed by the council (in London, the borough). The City of London uses different multipliers.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 43,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Business rates multiplier, retail, hospitality and leisure, rateable value GBP 51,000 to 499,999",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 43.2,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Business rates multiplier, other businesses, rateable value below GBP 51,000",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 48,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Business rates multiplier, other businesses, GBP 51,000 to 499,999",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 50.8,
+   "unit": "pence per GBP of rateable value",
+   "year": "2026-27",
+   "measure": "Business rates multiplier, rateable value GBP 500,000 or more",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Estimate your business rates",
+    "url": "https://www.gov.uk/calculate-your-business-rates"
+   }
+  },
+  {
+   "item": "local_tax_relief_threshold",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 12000,
+   "unit": "GBP of rateable value",
+   "year": "2026",
+   "measure": "Small business rate relief: no rates at or below this rateable value",
+   "note": "Relief tapers from 100% to 0 between GBP 12,001 and 15,000, if it is the only property the business uses.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Business rates relief: Small business rate relief",
+    "url": "https://www.gov.uk/apply-for-business-rate-relief/small-business-rate-relief"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 1.27,
+   "unit": "USD per USD 1,000 of gross receipts",
+   "year": "2026",
+   "measure": "City of Los Angeles business tax, retail sales (restaurants named as an example)",
+   "note": "Issuer: City of Los Angeles Office of Finance (LAMC 21.44).",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Finance",
+    "title": "Tax Information Booklet",
+    "url": "https://finance.lacity.gov/tax-information-booklet"
+   }
+  },
+  {
+   "item": "local_tax_exemption",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 100000,
+   "unit": "USD of worldwide gross receipts",
+   "year": "2026",
+   "measure": "Small business exemption, City of Los Angeles business tax",
+   "note": "Registered businesses with worldwide gross receipts of USD 100,000 or less pay no business tax if the renewal is filed on time (LAMC 21.29).",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Finance",
+    "title": "Small Business Exemption FAQ",
+    "url": "https://finance.lacity.gov/small-business-exemption-faq"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 4.82,
+   "unit": "% of net value of production",
+   "year": "2026",
+   "measure": "IRAP, Lazio, ordinary rate (regional tax on productive activities)",
+   "note": "Base: net value of production, not profit.",
+   "source": {
+    "publisher": "Ministero dell'Economia e delle Finanze, Dipartimento delle Finanze",
+    "title": "IRAP: elenco generale delle aliquote applicabili, anno 2026 (aggiornamento del 09/10/2026)",
+    "url": "https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/aliquoteirap/download/download.php?tipo=ira&anno=2026"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "geo": {
+    "level": "city",
+    "code": "HU-budapest",
+    "name": "Budapest"
+   },
+   "value": 2,
+   "unit": "% of the local business tax base",
+   "year": "2026",
+   "measure": "Local business tax (helyi iparűzési adó, HIPA), Budapest",
+   "note": "Levied by the capital at the legal maximum (Act C of 1990, s. 40: 2% from 2000). Businesses with a business-level tax base of HUF 1.5 million or less are exempt. The base is defined in the act. Its parts were not read.",
+   "source": {
+    "publisher": "Budapest Főváros Önkormányzata",
+    "title": "4. függelék az előterjesztéshez: Kimutatás a 2026. évi közvetett támogatásokról (helyi iparűzési adó)",
+    "url": "https://einfoszab.budapest.hu/File/DownloadDvD/129000?filename=f09_4+f%C3%BCggel%C3%A9k+az+el%C3%B6terj+k%C3%B6zvetett+t%C3%A1m.pdf&prevcont=Session&prevaction=DvdItem&path=Tev%C3%A9kenys%C3%A9gre%2C+m%C5%B1k%C3%B6d%C3%A9sre+vonatkoz%C3%B3+adatok+%2F+D%C3%B6nt%C3%A9shozatal%2C+%C3%BCl%C3%A9sek+%2F+A+F%C5%91v%C3%A1rosi+K%C3%B6zgy%C5%B1l%C3%A9s+%C3%BCl%C3%A9sei&type=5&key=fovarosi-kozgyules-nyilvanos-ulesei&fileId=210452&sessionType=1&organizationtype=2&parentId=18521&parenttype=2"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "trade": "restaurants",
+   "officialClass": "Ristoranti, trattorie, osterie, pizzerie, pub/mense, birrerie, hamburgherie (categoria 20)",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 38.65,
+   "unit": "EUR per m2 a year",
+   "year": "2026",
+   "measure": "TARI (waste tax), Roma Capitale, total yearly tariff per square metre",
+   "note": "Fixed part 12.69 plus variable part 25.96 (Kc 3.500, Kd 32.000).",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Deliberazione dell'Assemblea Capitolina n. 121 del 21 luglio 2026: misure della TARI per l'anno 2026 (Allegato 2, utenze non domestiche)",
+    "url": "https://www.comune.roma.it/web-resources/cms/documents/Deliberazione_Assemblea_Capitolina_121_2026.pdf"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "trade": "cafes",
+   "officialClass": "Bar, caffè, pasticcerie (categoria 21)",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 34.29,
+   "unit": "EUR per m2 a year",
+   "year": "2026",
+   "measure": "TARI (waste tax), Roma Capitale, total yearly tariff per square metre",
+   "note": "Fixed part 11.16 plus variable part 23.12 (Kc 3.080, Kd 28.500).",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Deliberazione dell'Assemblea Capitolina n. 121 del 21 luglio 2026: misure della TARI per l'anno 2026 (Allegato 2, utenze non domestiche)",
+    "url": "https://www.comune.roma.it/web-resources/cms/documents/Deliberazione_Assemblea_Capitolina_121_2026.pdf"
+   }
+  },
+  {
+   "item": "local_tax_rate",
+   "trade": "barbershops",
+   "officialClass": "Attività artigianali tipo parrucchiere, barbiere, estetista, nail center, centri tatuaggi, toletta animali domestici (categoria 16)",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 10.85,
+   "unit": "EUR per m2 a year",
+   "year": "2026",
+   "measure": "TARI (waste tax), Roma Capitale, total yearly tariff per square metre",
+   "note": "Fixed part 3.55 plus variable part 7.30 (Kc 0.980, Kd 9.000).",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Deliberazione dell'Assemblea Capitolina n. 121 del 21 luglio 2026: misure della TARI per l'anno 2026 (Allegato 2, utenze non domestiche)",
+    "url": "https://www.comune.roma.it/web-resources/cms/documents/Deliberazione_Assemblea_Capitolina_121_2026.pdf"
+   }
+  },
+  {
+   "item": "local_tax_exemption",
+   "geo": {
+    "level": "city",
+    "code": "HU-budapest",
+    "name": "Budapest"
+   },
+   "value": 1500000,
+   "unit": "HUF of tax base",
+   "year": "2026",
+   "measure": "HIPA exemption, Budapest, tax base at or below",
+   "source": {
+    "publisher": "Budapest Főváros Önkormányzata",
+    "title": "4. függelék az előterjesztéshez: Kimutatás a 2026. évi közvetett támogatásokról (helyi iparűzési adó)",
+    "url": "https://einfoszab.budapest.hu/File/DownloadDvD/129000?filename=f09_4+f%C3%BCggel%C3%A9k+az+el%C3%B6terj+k%C3%B6zvetett+t%C3%A1m.pdf&prevcont=Session&prevaction=DvdItem&path=Tev%C3%A9kenys%C3%A9gre%2C+m%C5%B1k%C3%B6d%C3%A9sre+vonatkoz%C3%B3+adatok+%2F+D%C3%B6nt%C3%A9shozatal%2C+%C3%BCl%C3%A9sek+%2F+A+F%C5%91v%C3%A1rosi+K%C3%B6zgy%C5%B1l%C3%A9s+%C3%BCl%C3%A9sei&type=5&key=fovarosi-kozgyules-nyilvanos-ulesei&fileId=210452&sessionType=1&organizationtype=2&parentId=18521&parenttype=2"
+   }
+  }
+ ]
+}

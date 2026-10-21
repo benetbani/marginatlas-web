@@ -1,0 +1,189 @@
+{
+ "id": "vat-sales-tax",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "VAT or sales tax: standard rate, the rate on a restaurant meal, and the registration threshold",
+  "url": "https://www.gov.uk/vat-rates"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2011-01-04",
+   "measure": "VAT, standard rate",
+   "note": "Raised to 20% on 4 January 2011 (from 17.5%).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "VAT rates",
+    "url": "https://www.gov.uk/vat-rates"
+   }
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026",
+   "measure": "VAT on catering (food and drink supplied in the course of catering)",
+   "note": "Supplies in the course of catering are standard-rated (VAT Notice 709/1).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Catering, takeaway food and VAT (VAT Notice 709/1)",
+    "url": "https://www.gov.uk/guidance/catering-takeaway-food-and-vat-notice-7091"
+   }
+  },
+  {
+   "item": "vat_threshold",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 90000,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Registration compulsory when taxable turnover over 12 months goes over",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Register for VAT: when to register",
+    "url": "https://www.gov.uk/vat-registration/when-to-register"
+   }
+  },
+  {
+   "item": "sales_tax_rate",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 10.25,
+   "unit": "%",
+   "year": "2026-10-01",
+   "measure": "Sales and use tax, City of Los Angeles",
+   "note": "No VAT in the United States. Applies to sales of taxable goods, prepared food among them.",
+   "source": {
+    "publisher": "California Department of Tax and Fee Administration",
+    "title": "Effective Sales and Use Tax Rates, October 2026 (SalesTaxRates10-1-26.xlsx)",
+    "url": "https://www.cdtfa.ca.gov/taxes-and-fees/SalesTaxRates10-1-26.xlsx"
+   }
+  },
+  {
+   "item": "sales_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 7.25,
+   "unit": "%",
+   "year": "2017-01-01",
+   "measure": "Statewide base sales and use tax rate (state 6.00 plus local 1.25), excluding district taxes",
+   "source": {
+    "publisher": "California Department of Tax and Fee Administration",
+    "title": "History of Statewide Sales and Use Tax Rates",
+    "url": "https://www.cdtfa.ca.gov/taxes-and-fees/sales-use-tax-rates-history.htm"
+   }
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 22,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IVA, ordinary rate",
+   "note": "DPR 633/1972, art. 16. Reduced rates 4, 5 and 10% for the goods and services in Tabella A.",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 26 ottobre 1972, n. 633, art. 16 (aliquote dell'imposta), testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1972-10-26;633~art16!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IVA on serving food and drink (somministrazioni di alimenti e bevande)",
+   "note": "Tabella A, parte III, n. 121 of DPR 633/1972, as quoted by the Agenzia delle Entrate.",
+   "source": {
+    "publisher": "Agenzia delle Entrate",
+    "title": "Risposta n. 19 del 2024 (aliquota IVA applicabile, Tabella A, parte III, n. 121)",
+    "url": "https://www.agenziaentrate.gov.it/portale/documents/20143/5781149/Risposta+n.+19_2024.pdf/33d65944-8f05-4ce2-f170-c2c8bf5111b5"
+   }
+  },
+  {
+   "item": "vat_rate_standard",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 27,
+   "unit": "%",
+   "year": "2026",
+   "measure": "ÁFA, general rate",
+   "note": "Áfa tv. 82. §.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Áfa kulcsok és a tevékenység közérdekű vagy egyéb sajátos jellegére tekintettel adómentes tevékenységek köre",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fadokulcsok_jarulekmertekek%2Fafakulcs_adomen%2FAfa_kulcsok_es_a_tevekenyseg_kozerdeku_vagy_egyeb_sajatos_jellegere_tekintettel_adomentes_tevekenysegek_kore"
+   }
+  },
+  {
+   "item": "vat_rate_restaurant",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5,
+   "unit": "%",
+   "year": "2026",
+   "measure": "ÁFA on restaurant service: food and drinks made on the spot without alcohol, eaten on the premises (TESZOR 56.10)",
+   "note": "Takeaway and delivered food 27%.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Mikor alkalmazható a kedvezményes áfakulcs az étkezőhelyi vendéglátásban?",
+    "url": "https://nav.gov.hu/print/ugyfeliranytu/nezzen-utana/tudjon_rola/Mikor_alkalmazhato_a_kedvezmenyes_afakulcs_az_etkezohelyi_vendeglatasban_"
+   }
+  },
+  {
+   "item": "vat_threshold",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 20000000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Subject exemption (alanyi adómentesség): turnover limit",
+   "note": "Rises from HUF 18 million (2025) to 20 million (2026), 22 million (2027) and 24 million (2028).",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Emelkedik az alanyi adómentesség értékhatára",
+    "url": "https://nav.gov.hu/ado/afa/Emelkedik_az_alanyi_adomentesseg_ertekhatara"
+   }
+  }
+ ]
+}

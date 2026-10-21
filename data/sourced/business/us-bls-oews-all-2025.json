@@ -1,0 +1,89 @@
+{
+ "id": "us-bls-oews-all-2025",
+ "source": {
+  "publisher": "U.S. Bureau of Labor Statistics",
+  "title": "Occupational Employment and Wage Statistics (OEWS), May 2025, all occupations, national and California",
+  "url": "https://www.bls.gov/oes/tables.htm",
+  "table": "BLS Public Data API v1, series OEUN0000000000000000000{04 annual mean, 13 annual median, 01 employment} and OEUS0600000000000000000{04, 13, 01}, 2025",
+  "licence": "U.S. federal government work, public domain (17 U.S.C. 105)"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "average_wage",
+   "officialClass": "SOC 00-0000: All Occupations, all industries",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 69770.0,
+   "unit": "USD per year",
+   "year": "2025",
+   "measure": "mean annual wage, all occupations, May 2025",
+   "note": "Wage and salary employees, full-time and part-time together (the survey does not split them); the annual wage is the hourly wage times 2,080 hours for most occupations. Self-employed and owners not covered. 155,495,730 employees. Series OEUN000000000000000000004.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUN000000000000000000004",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "SOC 00-0000: All Occupations, all industries",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 50980.0,
+   "unit": "USD per year",
+   "year": "2025",
+   "measure": "median annual wage, all occupations, May 2025",
+   "note": "Wage and salary employees, full-time and part-time together (the survey does not split them); the annual wage is the hourly wage times 2,080 hours for most occupations. Self-employed and owners not covered. 155,495,730 employees. Series OEUN000000000000000000013.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUN000000000000000000013",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "SOC 00-0000: All Occupations, all industries",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 80690.0,
+   "unit": "USD per year",
+   "year": "2025",
+   "measure": "mean annual wage, all occupations, May 2025",
+   "note": "Wage and salary employees, full-time and part-time together (the survey does not split them); the annual wage is the hourly wage times 2,080 hours for most occupations. Self-employed and owners not covered. 18,213,700 employees. Series OEUS060000000000000000004.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUS060000000000000000004",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  },
+  {
+   "item": "average_wage",
+   "officialClass": "SOC 00-0000: All Occupations, all industries",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 58240.0,
+   "unit": "USD per year",
+   "year": "2025",
+   "measure": "median annual wage, all occupations, May 2025",
+   "note": "Wage and salary employees, full-time and part-time together (the survey does not split them); the annual wage is the hourly wage times 2,080 hours for most occupations. Self-employed and owners not covered. 18,213,700 employees. Series OEUS060000000000000000013.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUS060000000000000000013",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  }
+ ]
+}

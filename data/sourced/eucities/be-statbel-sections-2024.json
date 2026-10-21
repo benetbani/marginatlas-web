@@ -1,0 +1,343 @@
+{
+ "id": "eucities-be-statbel-sections-2024",
+ "source": {
+  "publisher": "Statbel (Belgian statistical office)",
+  "title": "Enterprises subject to VAT according to legal form, 2024 (TF_VAT_NACE_2024), summed by NACE-BEL section",
+  "url": "https://statbel.fgov.be/sites/default/files/files/opendata/btw-plichtige/rechtsvorm/TF_VAT_NACE_2024.zip",
+  "table": "TF_VAT_NACE_2024.txt, CD_MUNTY_REFNIS 21004, MS_NUM_VAT summed by TX_NACE_EN_LVL1",
+  "licence": "Open data licence of Statbel (CC BY 4.0)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NACE-BEL 2008 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 34,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NACE-BEL 2008 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NACE-BEL 2008 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 572,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NACE-BEL 2008 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 51,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NACE-BEL 2008 section E (Water supply/ sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 22,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NACE-BEL 2008 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 2660,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NACE-BEL 2008 section G (Wholesale and retail trade/ repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 3459,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NACE-BEL 2008 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1042,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NACE-BEL 2008 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1968,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NACE-BEL 2008 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1788,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NACE-BEL 2008 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 346,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NACE-BEL 2008 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 864,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NACE-BEL 2008 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 5055,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NACE-BEL 2008 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1365,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NACE-BEL 2008 section O (Public administration and defence/ compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 67,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NACE-BEL 2008 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 448,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NACE-BEL 2008 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 556,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NACE-BEL 2008 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 887,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NACE-BEL 2008 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 1439,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "T",
+   "officialClass": "NACE-BEL 2008 section T (Activities of households as employers/ undifferentiated goods- and services-producing activities of households for own use)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 4,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NACE-BEL 2008 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 6,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  },
+  {
+   "item": "business_count",
+   "sector": "unclassified",
+   "officialClass": "NACE-BEL 2008, activity not known (published as 'Unkown')",
+   "geo": {
+    "level": "city",
+    "code": "21004",
+    "name": "Bruxelles / Brussel (City of Brussels, commune)"
+   },
+   "value": 4,
+   "unit": "VAT-registered enterprises",
+   "year": "2024",
+   "measure": "number of enterprises subject to VAT by the commune of the registered office and NACE-BEL section, active on 31 December 2024 (MS_NUM_VAT)",
+   "note": "The City of Brussels (commune 21004) only, not the 19 communes of the region; an enterprise counts where its registered office is."
+  }
+ ]
+}

@@ -1,0 +1,515 @@
+{
+  "id": "place-uk5-voa-borough-rents-2026",
+  "source": {
+    "publisher": "Valuation Office Agency",
+    "title": "Non-domestic rating: business floorspace, March 2026 (Table FS2.2 retail sector rateable value per metre squared, Table FS2.1 retail floorspace, by administrative area), published 15 October 2026",
+    "url": "https://assets.publishing.service.gov.uk/media/6ac8f1caf1ba855cc196aa13/NDR_Business_Floorspace_Tables_2026.xlsx",
+    "table": "Table_FS2.2 and Table_FS2.1, column '31 March 2026'",
+    "licence": "Open Government Licence v3.0",
+    "sha256": "ccec956c76c464e2dd249041bdad8c6f7076536e7592d46a937fe2832cc90d6b"
+  },
+  "retrieved": "2026-10-21",
+  "rows": [
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "region",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 22.42,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 269 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 14,243 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the London region (all 33 boroughs)"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "region",
+        "code": "E13000001",
+        "name": "Inner London"
+      },
+      "value": 30.17,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 362 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 6,830 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000007",
+        "name": "Camden",
+        "group": "inner"
+      },
+      "value": 30.67,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 368 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 507 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000001",
+        "name": "City of London",
+        "group": "inner"
+      },
+      "value": 46.08,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 553 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 174 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000012",
+        "name": "Hackney",
+        "group": "inner"
+      },
+      "value": 18.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 225 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 304 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000013",
+        "name": "Hammersmith and Fulham",
+        "group": "inner"
+      },
+      "value": 27.67,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 332 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 474 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000014",
+        "name": "Haringey",
+        "group": "inner"
+      },
+      "value": 18.25,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 219 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 370 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000019",
+        "name": "Islington",
+        "group": "inner"
+      },
+      "value": 21.33,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 256 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 375 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000020",
+        "name": "Kensington and Chelsea",
+        "group": "inner"
+      },
+      "value": 33.0,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 396 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 633 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000022",
+        "name": "Lambeth",
+        "group": "inner"
+      },
+      "value": 19.42,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 233 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 374 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000023",
+        "name": "Lewisham",
+        "group": "inner"
+      },
+      "value": 12.92,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 155 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 382 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000025",
+        "name": "Newham",
+        "group": "inner"
+      },
+      "value": 21.0,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 252 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 610 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000028",
+        "name": "Southwark",
+        "group": "inner"
+      },
+      "value": 20.08,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 241 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 377 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000030",
+        "name": "Tower Hamlets",
+        "group": "inner"
+      },
+      "value": 24.67,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 296 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 386 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000032",
+        "name": "Wandsworth",
+        "group": "inner"
+      },
+      "value": 19.0,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 228 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 455 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000033",
+        "name": "Westminster",
+        "group": "inner"
+      },
+      "value": 54.83,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 658 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 1,408 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Inner London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "region",
+        "code": "E13000002",
+        "name": "Outer London"
+      },
+      "value": 15.33,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 184 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 7,414 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000002",
+        "name": "Barking and Dagenham",
+        "group": "outer"
+      },
+      "value": 13.33,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 160 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 219 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000003",
+        "name": "Barnet",
+        "group": "outer"
+      },
+      "value": 18.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 225 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 539 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000004",
+        "name": "Bexley",
+        "group": "outer"
+      },
+      "value": 11.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 141 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 340 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000005",
+        "name": "Brent",
+        "group": "outer"
+      },
+      "value": 16.92,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 203 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 445 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000006",
+        "name": "Bromley",
+        "group": "outer"
+      },
+      "value": 14.58,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 175 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 492 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000008",
+        "name": "Croydon",
+        "group": "outer"
+      },
+      "value": 12.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 153 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 619 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000009",
+        "name": "Ealing",
+        "group": "outer"
+      },
+      "value": 18.25,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 219 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 449 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000010",
+        "name": "Enfield",
+        "group": "outer"
+      },
+      "value": 14.83,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 178 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 429 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000011",
+        "name": "Greenwich",
+        "group": "outer"
+      },
+      "value": 13.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 165 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 430 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000015",
+        "name": "Harrow",
+        "group": "outer"
+      },
+      "value": 15.92,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 191 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 299 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000016",
+        "name": "Havering",
+        "group": "outer"
+      },
+      "value": 12.58,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 151 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 459 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000017",
+        "name": "Hillingdon",
+        "group": "outer"
+      },
+      "value": 15.58,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 187 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 406 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000018",
+        "name": "Hounslow",
+        "group": "outer"
+      },
+      "value": 17.17,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 206 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 348 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000021",
+        "name": "Kingston upon Thames",
+        "group": "outer"
+      },
+      "value": 14.5,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 174 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 354 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000024",
+        "name": "Merton",
+        "group": "outer"
+      },
+      "value": 17.08,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 205 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 298 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000026",
+        "name": "Redbridge",
+        "group": "outer"
+      },
+      "value": 15.75,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 189 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 376 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000027",
+        "name": "Richmond upon Thames",
+        "group": "outer"
+      },
+      "value": 20.08,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 241 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 259 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000029",
+        "name": "Sutton",
+        "group": "outer"
+      },
+      "value": 12.83,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 154 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 292 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000031",
+        "name": "Waltham Forest",
+        "group": "outer"
+      },
+      "value": 15.67,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the borough, as the publisher divides it in Table FS2.2 (GBP 188 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 360 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; a London borough, in the publisher's group Outer London"
+    }
+  ]
+}

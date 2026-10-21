@@ -1,0 +1,389 @@
+{
+  "id": "place-uk3-connectivity-index-2025",
+  "source": {
+    "publisher": "Each row's own issuer (see the row's source); worked by the method of data/sourced/place/README-uk3-indices.md",
+    "title": "Connectivity index of the UK catalog cities, 0 to 100, with its air and rail parts",
+    "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 81.3,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 179,216,272 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 80.4,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 1,646,852,874 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 81,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (High: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 81.3 (airport passengers 2025) and the rail part 80.4 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 62.6,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 32,061,307 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 42.7,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 50,984,420 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 53,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 62.6 (airport passengers 2025) and the rail part 42.7 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 53.4,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 13,660,382 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 45.7,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 67,073,140 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 50,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 53.4 (airport passengers 2025) and the rail part 45.7 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 41.2,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 4,447,024 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 38.3,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 33,897,308 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 40,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 41.2 (airport passengers 2025) and the rail part 38.3 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 50.9,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 10,832,713 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 28.4,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 13,677,136 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 40,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 50.9 (airport passengers 2025) and the rail part 28.4 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 55.7,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 16,969,731 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 36.3,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 28,296,042 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 46,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 55.7 (airport passengers 2025) and the rail part 36.3 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_air_score",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 47.9,
+      "unit": "points out of 100",
+      "year": "2025",
+      "measure": "air part of the connectivity index",
+      "note": "Computed: 8,205,280 terminal passengers (connectivity_air_passengers, uk3-caa-airports-2025.json) on the log scale from 100,000 (0) to 1,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority",
+        "title": "UK airport data, annual 2025, Table 09 (terminal passengers)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    },
+    {
+      "item": "connectivity_rail_score",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 45.6,
+      "unit": "points out of 100",
+      "year": "2024-25",
+      "measure": "rail part of the connectivity index",
+      "note": "Computed: 66,400,814 entries and exits (connectivity_rail_passengers, uk3-orr-stations-2024-25.json) on the log scale from 1,000,000 (0) to 10,000,000,000 (100), README-uk3-indices.md",
+      "source": {
+        "publisher": "Office of Rail and Road",
+        "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a",
+        "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods"
+      }
+    },
+    {
+      "item": "connectivity_index",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 47,
+      "unit": "index out of 100",
+      "year": "2025",
+      "measure": "connectivity index, the mean of its air and rail parts (Medium: High from 67, Medium 34 to 66, Low to 33)",
+      "note": "Computed: the mean of the air part 47.9 (airport passengers 2025) and the rail part 45.6 (station entries and exits, April 2024 to March 2025), rounded; its parts are the rows connectivity_air_score and connectivity_rail_score of this file; the year is the newer part's; method in README-uk3-indices.md",
+      "source": {
+        "publisher": "Civil Aviation Authority and Office of Rail and Road (worked by the method of README-uk3-indices.md)",
+        "title": "Connectivity index: airport passengers (CAA annual 2025, Table 09) and station entries and exits (ORR 2024-25, Table 1415a)",
+        "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551"
+      }
+    }
+  ]
+}

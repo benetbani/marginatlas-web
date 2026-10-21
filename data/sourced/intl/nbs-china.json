@@ -1,0 +1,1772 @@
+{
+ "id": "nbs-china",
+ "source": {
+  "publisher": "National Bureau of Statistics of China",
+  "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+  "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg",
+  "licence": "National Bureau of Statistics of China: published statistics, reuse with citation of the source"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 74664,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15857000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 11,839.2 hundred million CNY over 74,664 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 48.3,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "3,605,373 persons over 74,664 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.4,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 288.8 over revenue 11,839.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 74664,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15857000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 11,839.2 hundred million CNY over 74,664 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 48.3,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "3,605,373 persons over 74,664 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.4,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 288.8 over revenue 11,839.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 3493,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 33155000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,158.1 hundred million CNY over 3,493 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 81.1,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "283,415 persons over 3,493 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 0.2,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 2.2 over revenue 1,158.1 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 3493,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 33155000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,158.1 hundred million CNY over 3,493 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 81.1,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "283,415 persons over 3,493 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-BJ",
+    "name": "Beijing (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 0.2,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 2.2 over revenue 1,158.1 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 888,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 22230000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 197.4 hundred million CNY over 888 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 73.3,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "65,076 persons over 888 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 3.5,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 6.9 over revenue 197.4 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 888,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 22230000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 197.4 hundred million CNY over 888 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 73.3,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "65,076 persons over 888 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-TJ",
+    "name": "Tianjin (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 3.5,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 6.9 over revenue 197.4 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 2914,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 46582000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,357.4 hundred million CNY over 2,914 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 112.2,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "326,976 persons over 2,914 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 1.8,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 25.0 over revenue 1,357.4 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 2914,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 46582000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,357.4 hundred million CNY over 2,914 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 112.2,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "326,976 persons over 2,914 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 1.8,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 25.0 over revenue 1,357.4 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 1590,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 14119000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 224.5 hundred million CNY over 1,590 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 39.0,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "62,026 persons over 1,590 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 6.0,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 13.4 over revenue 224.5 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 1590,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 14119000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 224.5 hundred million CNY over 1,590 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 39.0,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "62,026 persons over 1,590 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "city",
+    "code": "CN-CQ",
+    "name": "Chongqing (municipality, rural counties included)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 6.0,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 13.4 over revenue 224.5 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 7643,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15617000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,193.6 hundred million CNY over 7,643 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 45.9,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "350,568 persons over 7,643 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 32.2 over revenue 1,193.6 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 7643,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15617000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,193.6 hundred million CNY over 7,643 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 45.9,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "350,568 persons over 7,643 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-JS",
+    "name": "Jiangsu (Nanjing's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 32.2 over revenue 1,193.6 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 4173,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 19219000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 802.0 hundred million CNY over 4,173 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 52.8,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "220,279 persons over 4,173 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 0.6,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 5.2 over revenue 802.0 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 4173,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 19219000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 802.0 hundred million CNY over 4,173 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 52.8,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "220,279 persons over 4,173 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-ZJ",
+    "name": "Zhejiang (Hangzhou's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 0.6,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 5.2 over revenue 802.0 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 6134,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 9654400,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 592.2 hundred million CNY over 6,134 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 29.8,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "182,963 persons over 6,134 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 5.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 33.8 over revenue 592.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 6134,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 9654400,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 592.2 hundred million CNY over 6,134 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 29.8,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "182,963 persons over 6,134 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-HB",
+    "name": "Hubei (Wuhan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 5.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 33.8 over revenue 592.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 10190,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 17732000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,806.9 hundred million CNY over 10,190 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 59.5,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "606,300 persons over 10,190 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": -0.5,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits -9.7 over revenue 1,806.9 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 10190,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 17732000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 1,806.9 hundred million CNY over 10,190 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 59.5,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "606,300 persons over 10,190 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-GD",
+    "name": "Guangdong (Guangzhou, Shenzhen, Dongguan's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": -0.5,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits -9.7 over revenue 1,806.9 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 4388,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15433000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 677.2 hundred million CNY over 4,388 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 52.9,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "232,019 persons over 4,388 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 14.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 99.8 over revenue 677.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 4388,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 15433000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 677.2 hundred million CNY over 4,388 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 52.9,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "232,019 persons over 4,388 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SC",
+    "name": "Sichuan (Chengdu's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 14.7,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 99.8 over revenue 677.2 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 2288,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 12408000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 283.9 hundred million CNY over 2,288 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 44.1,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "100,874 persons over 2,288 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "restaurants",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.2,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 6.3 over revenue 283.9 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "business_count",
+   "value": 2288,
+   "unit": "corporate enterprises above designated size",
+   "measure": "number of corporate enterprises above designated size, catering",
+   "note": "Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "sales_per_business",
+   "value": 12408000,
+   "unit": "CNY",
+   "measure": "mean business revenue per enterprise above designated size, derived from two published figures",
+   "note": "Business revenue 283.9 hundred million CNY over 2,288 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "persons_per_business",
+   "value": 44.1,
+   "unit": "persons employed per enterprise",
+   "measure": "persons employed at year-end per enterprise, derived",
+   "note": "100,874 persons over 2,288 enterprises. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  },
+  {
+   "trade": "cafes",
+   "officialClass": "China industrial classification, catering services (餐饮业: formal meals, fast food, beverage and other catering services), corporate enterprises above designated size",
+   "geo": {
+    "level": "region",
+    "code": "CN-SN",
+    "name": "Shaanxi (Xi'an's province)"
+   },
+   "year": "2024",
+   "source": {
+    "publisher": "National Bureau of Statistics of China",
+    "title": "China Statistical Yearbook 2025, table 17-5: Main Indicators of Enterprises above Designated Size of Catering Services by Region (2024)",
+    "url": "https://www.stats.gov.cn/sj/ndsj/2025/html/E17-05.jpg"
+   },
+   "item": "pretax_profit_margin",
+   "value": 2.2,
+   "unit": "percent of business revenue",
+   "measure": "total profits (before income tax) divided by business revenue, derived. Not a gross operating rate",
+   "note": "Total profits 6.3 over revenue 283.9 hundred million CNY. Only corporate enterprises above the NBS's designated size for catering: most small restaurants and all individual businesses are outside this count. Catering covers meals, fast food and beverage services (tea and coffee houses) together: written under restaurants and under cafes. Values typed from the yearbook's table image. Confirmed by a second route (data note 34): re-read against the table image E17-05.jpg on 2026-10-18, every figure of the row recomputed from the image."
+  }
+ ]
+}

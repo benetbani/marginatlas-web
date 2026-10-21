@@ -1,0 +1,753 @@
+{
+  "id": "place-flat-rents",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+    "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+    "table": "Worksheets 1 and 2",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 1600,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; 17,310 rents counted; mean GBP 1,714",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000002",
+        "name": "Barking and Dagenham"
+      },
+      "value": 1350,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 240 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000003",
+        "name": "Barnet"
+      },
+      "value": 1486,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 730 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000004",
+        "name": "Bexley"
+      },
+      "value": 1250,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 240 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000005",
+        "name": "Brent"
+      },
+      "value": 1695,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 520 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000006",
+        "name": "Bromley"
+      },
+      "value": 1325,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 720 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000007",
+        "name": "Camden"
+      },
+      "value": 1925,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 520 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000001",
+        "name": "City of London"
+      },
+      "value": 2500,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 60 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000008",
+        "name": "Croydon"
+      },
+      "value": 1250,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 530 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000009",
+        "name": "Ealing"
+      },
+      "value": 1600,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 520 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000010",
+        "name": "Enfield"
+      },
+      "value": 1396,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 260 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000011",
+        "name": "Greenwich"
+      },
+      "value": 1600,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 760 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000012",
+        "name": "Hackney"
+      },
+      "value": 2000,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 390 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000013",
+        "name": "Hammersmith and Fulham"
+      },
+      "value": 1850,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 540 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000014",
+        "name": "Haringey"
+      },
+      "value": 1600,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 290 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000015",
+        "name": "Harrow"
+      },
+      "value": 1400,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 240 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000016",
+        "name": "Havering"
+      },
+      "value": 1250,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 310 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000017",
+        "name": "Hillingdon"
+      },
+      "value": 1300,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 360 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000018",
+        "name": "Hounslow"
+      },
+      "value": 1550,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 280 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000019",
+        "name": "Islington"
+      },
+      "value": 2000,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 690 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000020",
+        "name": "Kensington and Chelsea"
+      },
+      "value": 2578,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 510 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000021",
+        "name": "Kingston upon Thames"
+      },
+      "value": 1400,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 360 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000022",
+        "name": "Lambeth"
+      },
+      "value": 1825,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 630 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000023",
+        "name": "Lewisham"
+      },
+      "value": 1450,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 1,130 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000024",
+        "name": "Merton"
+      },
+      "value": 1600,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 270 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000025",
+        "name": "Newham"
+      },
+      "value": 1675,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 1,050 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000026",
+        "name": "Redbridge"
+      },
+      "value": 1400,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 360 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000027",
+        "name": "Richmond upon Thames"
+      },
+      "value": 1625,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 300 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000028",
+        "name": "Southwark"
+      },
+      "value": 1800,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 880 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000029",
+        "name": "Sutton"
+      },
+      "value": 1260,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 450 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000030",
+        "name": "Tower Hamlets"
+      },
+      "value": 1850,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 730 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000031",
+        "name": "Waltham Forest"
+      },
+      "value": 1400,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 550 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000032",
+        "name": "Wandsworth"
+      },
+      "value": 1900,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 1,170 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "county",
+        "code": "E09000033",
+        "name": "Westminster"
+      },
+      "value": 2552,
+      "unit": "GBP per month",
+      "year": "2025-2026",
+      "measure": "median monthly private rent, one bedroom, rents recorded by Rent Officers from landlords and letting agents",
+      "note": "rents recorded between April 2025 and March 2026, new and existing tenancies, Housing Benefit claimants excluded; a purposive sample, so the publisher warns against comparing areas or years; a London borough; 730 rents counted",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Private rental market in London: April 2025 to March 2026 (ad hoc 3389), worksheets 1 and 2",
+        "url": "https://www.ons.gov.uk/file?uri=/economy/inflationandpriceindices/adhocs/3389privaterentalmarketinlondonapril2025tomarch2026/londonrentalstatsaccessibleq12026.xlsx",
+        "table": "Worksheets 1 and 2",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles city"
+      },
+      "value": 1744,
+      "unit": "USD per month",
+      "year": "2020-2024",
+      "measure": "median gross rent, one bedroom, renter-occupied homes paying cash rent",
+      "note": "rent plus utilities and fuels paid by the renter, every tenancy however old (sitting tenants), five-year survey estimate over 2020 to 2024, in 2024 dollars; margin of error plus or minus 11",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B25031 Median Gross Rent by Bedrooms",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,group(B25031)&for=place:44000&in=state:06",
+        "table": "B25031",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "metro",
+        "code": "31080",
+        "name": "Los Angeles-Long Beach-Anaheim, CA Metro Area"
+      },
+      "value": 1784,
+      "unit": "USD per month",
+      "year": "2020-2024",
+      "measure": "median gross rent, one bedroom, renter-occupied homes paying cash rent",
+      "note": "rent plus utilities and fuels paid by the renter, every tenancy however old (sitting tenants), five-year survey estimate over 2020 to 2024, in 2024 dollars; margin of error plus or minus 8",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B25031 Median Gross Rent by Bedrooms",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,B25031_003E,B25031_003M&for=metropolitan%20statistical%20area/micropolitan%20statistical%20area:31080",
+        "table": "B25031",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    },
+    {
+      "item": "flat_rent_month",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 1235,
+      "unit": "USD per month",
+      "year": "2020-2024",
+      "measure": "median gross rent, one bedroom, renter-occupied homes paying cash rent",
+      "note": "rent plus utilities and fuels paid by the renter, every tenancy however old (sitting tenants), five-year survey estimate over 2020 to 2024, in 2024 dollars; margin of error plus or minus 2",
+      "source": {
+        "publisher": "U.S. Census Bureau",
+        "title": "American Community Survey 2020-2024 5-year estimates, table B25031 Median Gross Rent by Bedrooms",
+        "url": "https://api.census.gov/data/2024/acs/acs5?get=NAME,B25031_003E,B25031_003M&for=us:1",
+        "table": "B25031",
+        "licence": "Public domain (U.S. Government work)"
+      }
+    }
+  ]
+}

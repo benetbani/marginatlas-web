@@ -1,0 +1,2262 @@
+{
+ "id": "populations",
+ "source": {
+  "publisher": "National statistical offices (each row names its own: ONS, U.S. Census Bureau, ISTAT, KSH)",
+  "title": "Resident population for the boundaries of the business counts, each from the same country's office",
+  "url": "https://www.nomisweb.co.uk/datasets/pestsyoala",
+  "table": "Each row carries its own source; a per-10,000 figure may only combine a count and a population of the same country, geo code and boundary"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 9122909,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Greater London, the London region (all 33 boroughs). Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 1176960,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Birmingham local authority district. Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 495260,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Bristol, City of (unitary authority). Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "Edinburgh"
+   },
+   "value": 531370,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "City of Edinburgh council area. Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow"
+   },
+   "value": 654330,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Glasgow City council area. Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 840550,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Leeds local authority district. Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 588256,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "usually resident population, mid-year estimate (30 June 2025)",
+   "note": "Manchester local authority district. Same boundary as the business counts in ons-business-counts-2026.json.",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates, local authority based by single year of age (NM_2002_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/pestsyoala"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1300004000",
+    "name": "Atlanta city, Georgia"
+   },
+   "value": 529110,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1304000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "13121",
+    "name": "Fulton County, Georgia"
+   },
+   "value": 1098791,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4800005000",
+    "name": "Austin city, Texas"
+   },
+   "value": 1002632,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4805000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "48453",
+    "name": "Travis County, Texas"
+   },
+   "value": 1389670,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2451004000",
+    "name": "Baltimore city, Maryland"
+   },
+   "value": 569997,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2404000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "24510",
+    "name": "Baltimore city, Maryland"
+   },
+   "value": 569997,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2502507000",
+    "name": "Boston city, Massachusetts"
+   },
+   "value": 672973,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2507000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "25025",
+    "name": "Suffolk County, Massachusetts"
+   },
+   "value": 791891,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3602911000",
+    "name": "Buffalo city, New York"
+   },
+   "value": 274613,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3611000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36029",
+    "name": "Erie County, New York"
+   },
+   "value": 946741,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3711912000",
+    "name": "Charlotte city, North Carolina"
+   },
+   "value": 964784,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3712000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "37119",
+    "name": "Mecklenburg County, North Carolina"
+   },
+   "value": 1233383,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1700014000",
+    "name": "Chicago city, Illinois"
+   },
+   "value": 2731585,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1714000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "17031",
+    "name": "Cook County, Illinois"
+   },
+   "value": 5194625,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3906115000",
+    "name": "Cincinnati city, Ohio"
+   },
+   "value": 314367,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3915000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "39061",
+    "name": "Hamilton County, Ohio"
+   },
+   "value": 838418,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3903516000",
+    "name": "Cleveland city, Ohio"
+   },
+   "value": 363608,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3916000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "39035",
+    "name": "Cuyahoga County, Ohio"
+   },
+   "value": 1232925,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3900018000",
+    "name": "Columbus city, Ohio"
+   },
+   "value": 938396,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3918000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "39049",
+    "name": "Franklin County, Ohio"
+   },
+   "value": 1361536,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4800019000",
+    "name": "Dallas city, Texas"
+   },
+   "value": 1329491,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4819000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "48113",
+    "name": "Dallas County, Texas"
+   },
+   "value": 2661397,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0803120000",
+    "name": "Denver city, Colorado"
+   },
+   "value": 740613,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0820000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "08031",
+    "name": "Denver County, Colorado"
+   },
+   "value": 740613,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2616322000",
+    "name": "Detroit city, Michigan"
+   },
+   "value": 649095,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2622000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "26163",
+    "name": "Wayne County, Michigan"
+   },
+   "value": 1769038,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1500371550",
+    "name": "Urban Honolulu CDP, Hawaii"
+   },
+   "value": 341868,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1571550).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "15003",
+    "name": "Honolulu County, Hawaii"
+   },
+   "value": 988703,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4800035000",
+    "name": "Houston city, Texas"
+   },
+   "value": 2397315,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4835000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "48201",
+    "name": "Harris County, Texas"
+   },
+   "value": 5045026,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "1700000US1836000",
+    "name": "Indianapolis city, Indiana"
+   },
+   "value": 910638,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1836000). Consolidated city (whole).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "18097",
+    "name": "Marion County, Indiana"
+   },
+   "value": 992196,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2900038000",
+    "name": "Kansas City city, Missouri"
+   },
+   "value": 521220,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2938000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "29095",
+    "name": "Jackson County, Missouri"
+   },
+   "value": 732994,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3200340000",
+    "name": "Las Vegas city, Nevada"
+   },
+   "value": 679817,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3240000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "32003",
+    "name": "Clark County, Nevada"
+   },
+   "value": 2407226,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0603744000",
+    "name": "Los Angeles city, California"
+   },
+   "value": 3869089,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0644000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 9694934,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "1700000US2148003",
+    "name": "Louisville/Jefferson County metro government, Kentucky"
+   },
+   "value": 795222,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2148003). Consolidated city (whole).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "21111",
+    "name": "Jefferson County, Kentucky"
+   },
+   "value": 795222,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4715748000",
+    "name": "Memphis city, Tennessee"
+   },
+   "value": 609647,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4748000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "47157",
+    "name": "Shelby County, Tennessee"
+   },
+   "value": 910226,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1208645000",
+    "name": "Miami city, Florida"
+   },
+   "value": 489812,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1245000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "12086",
+    "name": "Miami-Dade County, Florida"
+   },
+   "value": 2802029,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US5500053000",
+    "name": "Milwaukee city, Wisconsin"
+   },
+   "value": 562407,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 5553000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "55079",
+    "name": "Milwaukee County, Wisconsin"
+   },
+   "value": 924216,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2705343000",
+    "name": "Minneapolis city, Minnesota"
+   },
+   "value": 430324,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2743000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "27053",
+    "name": "Hennepin County, Minnesota"
+   },
+   "value": 1284784,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "1700000US4752004",
+    "name": "Nashville-Davidson metropolitan government, Tennessee"
+   },
+   "value": 745904,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4752004). Consolidated city (whole).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "47037",
+    "name": "Davidson County, Tennessee"
+   },
+   "value": 745904,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2207155000",
+    "name": "New Orleans city, Louisiana"
+   },
+   "value": 362154,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2255000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "22071",
+    "name": "Orleans Parish, Louisiana"
+   },
+   "value": 362154,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3600051000",
+    "name": "New York city, New York"
+   },
+   "value": 8584629,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3651000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36005",
+    "name": "Bronx County, New York"
+   },
+   "value": 1406332,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36047",
+    "name": "Kings County, New York"
+   },
+   "value": 2653963,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36061",
+    "name": "New York County, New York"
+   },
+   "value": 1664862,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36081",
+    "name": "Queens County, New York"
+   },
+   "value": 2358182,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "36085",
+    "name": "Richmond County, New York"
+   },
+   "value": 501290,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4000055000",
+    "name": "Oklahoma City city, Oklahoma"
+   },
+   "value": 719849,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4055000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "40109",
+    "name": "Oklahoma County, Oklahoma"
+   },
+   "value": 822125,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1209553000",
+    "name": "Orlando city, Florida"
+   },
+   "value": 333888,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1253000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "12095",
+    "name": "Orange County, Florida"
+   },
+   "value": 1528002,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4210160000",
+    "name": "Philadelphia city, Pennsylvania"
+   },
+   "value": 1574281,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4260000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "42101",
+    "name": "Philadelphia County, Pennsylvania"
+   },
+   "value": 1574281,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0401355000",
+    "name": "Phoenix city, Arizona"
+   },
+   "value": 1665481,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0455000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "04013",
+    "name": "Maricopa County, Arizona"
+   },
+   "value": 4689558,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4200361000",
+    "name": "Pittsburgh city, Pennsylvania"
+   },
+   "value": 307632,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4261000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "42003",
+    "name": "Allegheny County, Pennsylvania"
+   },
+   "value": 1225035,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4100059000",
+    "name": "Portland city, Oregon"
+   },
+   "value": 635109,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4159000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "41051",
+    "name": "Multnomah County, Oregon"
+   },
+   "value": 795391,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US3700055000",
+    "name": "Raleigh city, North Carolina"
+   },
+   "value": 506306,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 3755000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "37183",
+    "name": "Wake County, North Carolina"
+   },
+   "value": 1257235,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US5176067000",
+    "name": "Richmond city, Virginia"
+   },
+   "value": 237257,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 5167000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "51760",
+    "name": "Richmond city, Virginia"
+   },
+   "value": 237257,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0606764000",
+    "name": "Sacramento city, California"
+   },
+   "value": 536449,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0664000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "06067",
+    "name": "Sacramento County, California"
+   },
+   "value": 1618460,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4903567000",
+    "name": "Salt Lake City city, Utah"
+   },
+   "value": 218428,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4967000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "49035",
+    "name": "Salt Lake County, Utah"
+   },
+   "value": 1220916,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US4800065000",
+    "name": "San Antonio city, Texas"
+   },
+   "value": 1548422,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 4865000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "48029",
+    "name": "Bexar County, Texas"
+   },
+   "value": 2160088,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0607366000",
+    "name": "San Diego city, California"
+   },
+   "value": 1406106,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0666000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "06073",
+    "name": "San Diego County, California"
+   },
+   "value": 3282248,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0607567000",
+    "name": "San Francisco city, California"
+   },
+   "value": 826079,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0667000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "06075",
+    "name": "San Francisco County, California"
+   },
+   "value": 826079,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US0608568000",
+    "name": "San Jose city, California"
+   },
+   "value": 989814,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 0668000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "06085",
+    "name": "Santa Clara County, California"
+   },
+   "value": 1914391,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US5303363000",
+    "name": "Seattle city, Washington"
+   },
+   "value": 784777,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 5363000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "53033",
+    "name": "King County, Washington"
+   },
+   "value": 2344939,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US2951065000",
+    "name": "St. Louis city, Missouri"
+   },
+   "value": 278144,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 2965000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "29510",
+    "name": "St. Louis city, Missouri"
+   },
+   "value": 278144,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1205771000",
+    "name": "Tampa city, Florida"
+   },
+   "value": 413554,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1271000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "12057",
+    "name": "Hillsborough County, Florida"
+   },
+   "value": 1574115,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "E600000US1100150000",
+    "name": "Washington city, District of Columbia"
+   },
+   "value": 693645,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same place as the city rows of us-economic-census-2022.json (population estimates place code 1150000).",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "City and Town Population Totals: 2020-2025 (Vintage 2025, sub-est2025)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "11001",
+    "name": "District of Columbia, District of Columbia"
+   },
+   "value": 693645,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population estimate, 1 July 2025 (Vintage 2025)",
+   "note": "Same county as the rows of us-cbp-nes-2023.json.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Population Totals: 2020-2025 (Vintage 2025, co-est2025-alldata)",
+    "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/co-est2025-alldata.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 853196,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "001272",
+    "name": "Torino (comune)"
+   },
+   "value": 855654,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 1365698,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "015146",
+    "name": "Milano (comune)"
+   },
+   "value": 1362863,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 361705,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "048017",
+    "name": "Firenze (comune)"
+   },
+   "value": 361625,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 2747290,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "058091",
+    "name": "Roma (comune)"
+   },
+   "value": 2745062,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 909013,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "063049",
+    "name": "Napoli (comune)"
+   },
+   "value": 905050,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 2204276,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITC11",
+    "name": "Torino (province, città metropolitana)"
+   },
+   "value": 2204779,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 3246455,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITC45",
+    "name": "Milano (province, città metropolitana)"
+   },
+   "value": 3253111,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 988068,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITE14",
+    "name": "Firenze (province, città metropolitana)"
+   },
+   "value": 988494,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 4222648,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITE43",
+    "name": "Roma (province, città metropolitana)"
+   },
+   "value": 4224901,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 2963633,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "resident population on 1 January 2025",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "metro",
+    "code": "ITF33",
+    "name": "Napoli (province, città metropolitana)"
+   },
+   "value": 2954847,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "resident population on 1 January 2026",
+   "note": "Same boundary as the rows of istat-asia-2024.json.",
+   "source": {
+    "publisher": "ISTAT (Istituto Nazionale di Statistica)",
+    "title": "Resident population on 1st January (22_289_DF_DCIS_POPRES1_25 all municipalities; 22_289_DF_DCIS_POPRES1_1 provinces)",
+    "url": "https://esploradati.istat.it/SDMXWS/rest/data/IT1,22_289_DF_DCIS_POPRES1_25,1.0/"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 1686222,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January 2024",
+   "note": "Same boundary as the rows of ksh-yearbook-2024.json (Budapest, the capital).",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), table 2.1 Population, 1 January",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_2.pdf"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9584627,
+   "unit": "persons",
+   "year": "2024",
+   "measure": "population on 1 January 2024",
+   "note": "Table 2.1 total.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), table 2.1 Population, 1 January",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_2.pdf"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 1685209,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January 2025",
+   "note": "Same boundary as the rows of ksh-yearbook-2024.json (Budapest, the capital).",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), table 2.1 Population, 1 January",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_2.pdf"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9539502,
+   "unit": "persons",
+   "year": "2025",
+   "measure": "population on 1 January 2025",
+   "note": "Table 2.1 total.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), table 2.1 Population, 1 January",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_2.pdf"
+   }
+  }
+ ]
+}

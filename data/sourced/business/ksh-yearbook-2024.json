@@ -1,0 +1,242 @@
+{
+ "id": "ksh-yearbook-2024",
+ "source": {
+  "publisher": "KSH (Hungarian Central Statistical Office)",
+  "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+  "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf",
+  "table": "Table 5.5.11 (page 321); PDF sha256 3697c1f0971465e55d8d098d5344d59d08f73c19566422b6ad7ea67235467746"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "Éttermek, büfék (Restaurants, buffets)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 5339,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Éttermek, büfék (Restaurants, buffets)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 21792,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Cukrászdák (Confectioneries)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 619,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Cukrászdák (Confectioneries)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3770,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Italüzletek és zenés szórakozóhelyek (Taverns and music clubs)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 2015,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Italüzletek és zenés szórakozóhelyek (Taverns and music clubs)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 10992,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Kereskedelmi vendéglátóhelyek összesen (Public catering units, total)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 7973,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Kereskedelmi vendéglátóhelyek összesen (Public catering units, total)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 36554,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Munkahelyi, rendezvényi és közétkeztetést végző vendéglátóhelyek (Workplace, event and mass catering units)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 1014,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Munkahelyi, rendezvényi és közétkeztetést végző vendéglátóhelyek (Workplace, event and mass catering units)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 7021,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Vendéglátóhelyek összesen (Catering units, total)",
+   "geo": {
+    "level": "city",
+    "code": "HU110",
+    "name": "Budapest"
+   },
+   "value": 8987,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count. The yearbook's table 5.5.10 gives 53.3 catering units per ten thousand inhabitants for Budapest in 2024.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "Vendéglátóhelyek összesen (Catering units, total)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 43575,
+   "unit": "catering units",
+   "year": "2024",
+   "measure": "number of catering units on 31 December 2024, from the municipal trade registers",
+   "note": "Counted from the registers kept by municipal notaries under Government Decree 210/2009 (IX. 29.), not from the business register. The register has no cafe type and no barber count.",
+   "source": {
+    "publisher": "KSH (Hungarian Central Statistical Office)",
+    "title": "Területi statisztikai évkönyv, 2024 (Regional Statistical Yearbook of Hungary, 2024), chapter 5.5, table 5.5.11 Number of catering units by type, 31 December 2024",
+    "url": "https://www.ksh.hu/evkonyvek/2024/teruleti-statisztikai-evkonyv-2024/pdf/terstat_2024_5_5.pdf"
+   }
+  }
+ ]
+}

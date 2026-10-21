@@ -1,0 +1,433 @@
+{
+ "id": "desnz-nondomestic-energy-prices",
+ "source": {
+  "publisher": "Department for Energy Security and Net Zero",
+  "title": "Gas and electricity prices in the non-domestic sector (Energy Prices, table 3.4.2)",
+  "url": "https://www.gov.uk/government/statistical-data-sets/gas-and-electricity-prices-in-the-non-domestic-sector",
+  "table": "table_341.xlsx (published 29/09/2026; Q2 2026 provisional), sheets '3.4.2 (incl CCL)' (the latest four quarters) and '3.4.2 (Annual inc CCL)' (the latest year); size bands from its Notes sheet",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, very small, 0 to 20 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 37.36,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, very small, 0 to 20 MWh a year, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, small, 20 to 499 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 28.563,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, small, 20 to 499 MWh a year, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 23.351,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, all sizes, average, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, very small, below 278 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10.213,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average gas price a kWh paid by non-domestic consumers, very small, below 278 MWh a year, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, small, 278 to 2,777 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.108,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average gas price a kWh paid by non-domestic consumers, small, 278 to 2,777 MWh a year, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.127,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q3",
+   "measure": "average gas price a kWh paid by non-domestic consumers, all sizes, average, Q3 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, very small, 0 to 20 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 36.106,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, very small, 0 to 20 MWh a year, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, small, 20 to 499 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 29.57,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, small, 20 to 499 MWh a year, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 23.988,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, all sizes, average, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, very small, below 278 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8.121,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average gas price a kWh paid by non-domestic consumers, very small, below 278 MWh a year, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, small, 278 to 2,777 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 4.887,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average gas price a kWh paid by non-domestic consumers, small, 278 to 2,777 MWh a year, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.067,
+   "unit": "GBP pence per kWh",
+   "year": "2025-Q4",
+   "measure": "average gas price a kWh paid by non-domestic consumers, all sizes, average, Q4 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, very small, 0 to 20 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 35.022,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, very small, 0 to 20 MWh a year, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, small, 20 to 499 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 28.755,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, small, 20 to 499 MWh a year, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 24.142,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, all sizes, average, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, very small, below 278 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7.26,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average gas price a kWh paid by non-domestic consumers, very small, below 278 MWh a year, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, small, 278 to 2,777 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 4.756,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average gas price a kWh paid by non-domestic consumers, small, 278 to 2,777 MWh a year, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.161,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q1",
+   "measure": "average gas price a kWh paid by non-domestic consumers, all sizes, average, Q1 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, very small, 0 to 20 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 38.36,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, very small, 0 to 20 MWh a year, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, small, 20 to 499 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 28.589,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, small, 20 to 499 MWh a year, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 24.509,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, all sizes, average, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, very small, below 278 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 9.308,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average gas price a kWh paid by non-domestic consumers, very small, below 278 MWh a year, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, small, 278 to 2,777 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 4.856,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average gas price a kWh paid by non-domestic consumers, small, 278 to 2,777 MWh a year, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.277,
+   "unit": "GBP pence per kWh",
+   "year": "2026-Q2",
+   "measure": "average gas price a kWh paid by non-domestic consumers, all sizes, average, Q2 2026",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2). Provisional."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, very small, 0 to 20 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 34.929,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, very small, 0 to 20 MWh a year, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, small, 20 to 499 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 29.092,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, small, 20 to 499 MWh a year, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 24.339,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average electricity price a kWh paid by non-domestic consumers, all sizes, average, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, very small, below 278 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 8.285,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average gas price a kWh paid by non-domestic consumers, very small, below 278 MWh a year, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, small, 278 to 2,777 MWh a year",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.126,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average gas price a kWh paid by non-domestic consumers, small, 278 to 2,777 MWh a year, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  },
+  {
+   "item": "gas_price_business",
+   "officialClass": "gas, non-domestic consumers, all sizes, average",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5.294,
+   "unit": "GBP pence per kWh",
+   "year": "2025",
+   "measure": "average gas price a kWh paid by non-domestic consumers, all sizes, average, calendar year 2025",
+   "note": "Fully delivered price including the Climate Change Levy, excluding VAT (table 3.4.2)."
+  }
+ ]
+}

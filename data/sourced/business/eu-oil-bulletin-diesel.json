@@ -1,0 +1,825 @@
+{
+ "id": "eu-oil-bulletin-diesel",
+ "source": {
+  "publisher": "European Commission, Directorate-General for Energy",
+  "title": "Weekly Oil Bulletin: price history",
+  "url": "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en",
+  "table": "Weekly_Oil_Bulletin_Prices_History_maticni_4web.xlsx, sheets 'Prices with taxes' and 'Prices wo taxes', columns <country>_price_with_tax_diesel and <country>_price_wo_tax_diesel, the latest week",
+  "licence": "European Commission reuse policy (Commission Decision 2011/833/EU): reuse allowed with acknowledgement of the source"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union (weighted average)"
+   },
+   "value": 2.1359,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,135.88 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area (weighted average)"
+   },
+   "value": 2.187,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,186.99 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 2.162,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,162.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 2.3351,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,335.08 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 1.8738,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,873.80 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 2.0208,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,020.75 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.9212,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,921.20 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 2.27,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,270.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 2.5017,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,501.74 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 2.013,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,013.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 1.8894,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,889.37 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 2.536,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,536.05 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 2.3283,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,328.25 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 2.118,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,118.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 1.9538,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,953.75 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1.9419,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,941.88 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 2.1637,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,163.70 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 2.2407,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,240.73 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 2.2051,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,205.09 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 2.045,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,045.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 2.0722,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,072.17 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 1.21,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,210.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 2.4819,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,481.86 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.7947,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,794.69 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 2.148,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,148.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 2.0413,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,041.30 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 2.0497,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 2,049.66 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 1.9183,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,918.27 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 1.919,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, with all duties and taxes, VAT included (the pump price), week of 2026-10-12",
+   "note": "Published as EUR 1,919.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin. A business registered for VAT recovers the VAT inside the pump price."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union (weighted average)"
+   },
+   "value": 1.3319,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,331.86 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "eu",
+    "code": "EA",
+    "name": "Euro area (weighted average)"
+   },
+   "value": 1.3315,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,331.54 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 1.3258,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,325.81 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 1.3297,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,329.66 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 1.2312,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,231.21 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 1.3574,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,357.41 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 1.2593,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,259.33 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 1.4158,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,415.76 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.4313,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,431.34 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 1.1954,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,195.39 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 1.3825,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,382.46 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 1.5102,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,510.24 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 1.3327,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,332.71 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 1.2837,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,283.73 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 1.313,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,313.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1.1695,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,169.50 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 1.3863,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,386.26 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1.1638,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,163.76 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 1.2688,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,268.79 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 1.326,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,326.00 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 1.3147,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,314.69 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 0.553,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 553.02 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 1.4931,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,493.12 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.3394,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,339.39 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 1.3079,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,307.87 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.2929,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,292.94 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.5003,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,500.31 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 1.219,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,219.03 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  },
+  {
+   "item": "diesel_price",
+   "officialClass": "Automotive gas oil (diesel)",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 1.1525,
+   "unit": "EUR per litre",
+   "year": "2026-10-12",
+   "measure": "average consumer price of diesel, without duties and taxes, week of 2026-10-12",
+   "note": "Published as EUR 1,152.51 per 1,000 litres; divided by 1,000. Prices outside the euro area are converted to EUR by the bulletin."
+  }
+ ]
+}

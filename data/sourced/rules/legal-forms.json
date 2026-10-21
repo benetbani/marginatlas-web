@@ -1,0 +1,890 @@
+{
+ "id": "legal-forms",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Legal forms: registration fee, wait, minimum capital and the owner's liability, GB, California, Italy, Hungary",
+  "url": "https://www.gov.uk/business-legal-structures",
+  "table": "Rows not already in registration.json; every row's `quote` is the publisher's own words, checked against the page downloaded on the retrieval date"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "legal_form",
+   "legalForm": "Private limited company",
+   "attribute": "registration_wait",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 24,
+   "unit": "hours",
+   "year": "2026",
+   "measure": "Private limited company: usual time for Companies House to register a company online",
+   "quote": "Your company is usually registered within 24 hours",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up a private limited company: register your company",
+    "url": "https://www.gov.uk/limited-company-formation/register-your-company"
+   },
+   "note": "Usually: the page sets no deadline."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Private limited company",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 156,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Private limited company: same day incorporation (software filing)",
+   "quote": "Same day incorporation | | £156",
+   "source": {
+    "publisher": "Companies House",
+    "title": "Companies House fees",
+    "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+   },
+   "note": "The standard online fee (GBP 100) is in registration.json."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Private limited company",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 124,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Private limited company: incorporation on paper",
+   "quote": "Incorporation | £100 | £100 | £124",
+   "source": {
+    "publisher": "Companies House",
+    "title": "Companies House fees",
+    "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+   }
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Private limited company",
+   "attribute": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Private limited company: minimum share capital",
+   "quote": "The price of an individual share can be any value",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up a private limited company",
+    "url": "https://www.gov.uk/limited-company-formation"
+   },
+   "note": "No minimum: the price of an individual share can be any value, and shareholders pay for their shares in full if the company shuts down."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Private limited company",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Private limited company: the owners' liability for the business's debts",
+   "quote": "owners are responsible for business debts only up to the value of their financial investment",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up a private limited company",
+    "url": "https://www.gov.uk/limited-company-formation"
+   },
+   "note": "Limited: owners are responsible for business debts only up to the value of their financial investment."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Sole trader",
+   "attribute": "registration_wait",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0,
+   "unit": "days",
+   "year": "2026",
+   "measure": "Sole trader: wait before trading",
+   "quote": "You can start trading straight away without registering",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up as a sole trader",
+    "url": "https://www.gov.uk/set-up-sole-trader"
+   },
+   "note": "None: a sole trader can start trading straight away and registers for Self Assessment if earning more than GBP 1,000 in a tax year."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Sole trader",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Sole trader: the owner's liability for the business's debts",
+   "quote": "owners are personally responsible for all of the debts of the business",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up as a sole trader",
+    "url": "https://www.gov.uk/set-up-sole-trader"
+   },
+   "note": "Unlimited: the owner is personally responsible for all of the debts of the business."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Partnership",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Partnership: the partners' liability for the business's debts",
+   "quote": "personally share responsibility for your business",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Set up a business partnership",
+    "url": "https://www.gov.uk/set-up-business-partnership"
+   },
+   "note": "Shared and personal: the partners personally share responsibility for the business, its losses and its bills."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Limited liability partnership (LLP)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 100,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Limited liability partnership (LLP): incorporation of an LLP (software filing)",
+   "quote": "Incorporation of an | LLP | | £100 | £124",
+   "source": {
+    "publisher": "Companies House",
+    "title": "Companies House fees",
+    "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+   },
+   "note": "No online service for an LLP; GBP 124 on paper, GBP 156 the same day."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Limited partnership (LP)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 124,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Limited partnership (LP): registration of a limited partnership (paper)",
+   "quote": "Registration of a limited partnership | £124",
+   "source": {
+    "publisher": "Companies House",
+    "title": "Companies House fees",
+    "url": "https://www.gov.uk/government/publications/companies-house-fees/companies-house-fees"
+   }
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Corporation (general stock)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 100,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Corporation (general stock): Articles of Incorporation, general stock (form ARTS-GS)",
+   "quote": "Articles of Incorporation - General Stock | Form ARTS-GS (PDF) | $100.00",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Forms, samples and fees: corporations (California domestic)",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/forms/corporations-california-domestic"
+   }
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Corporation (general stock)",
+   "attribute": "liability",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Corporation (general stock): the owners' liability for the business's debts",
+   "quote": "normally limiting the owners from personal liability",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "Generally limited: a corporation exists separately from its owners and normally limits them from personal liability."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Limited liability company (LLC)",
+   "attribute": "liability",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Limited liability company (LLC): the members' liability for the business's debts",
+   "quote": "generally offers liability protection similar to that of a corporation",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "Generally limited: liability protection similar to that of a corporation. The fees are in registration.json."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "General partnership (GP)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 70,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "General partnership (GP): Statement of Partnership Authority (form GP-1)",
+   "quote": "Statement of Partnership Authority | Form GP-1 (PDF) | $70.00",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Forms, samples and fees: general partnership",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/forms/general-partnership"
+   },
+   "note": "Optional: registering a general partnership with the state is not required."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "General partnership (GP)",
+   "attribute": "liability",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "General partnership (GP): the partners' liability for the business's debts",
+   "quote": "all partners are liable jointly and severally for all obligations of the partnership",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "Unlimited, joint and several: all partners are liable for all obligations of the partnership unless the claimant agrees otherwise."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Limited partnership (LP)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 70,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Limited partnership (LP): Certificate of Limited Partnership (form LP-1)",
+   "quote": "Certificate of Limited Partnership | Form LP-1 (PDF) | $70.00",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Forms, samples and fees: limited partnership (California domestic)",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/forms/limited-partnership-california-domestic"
+   }
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Limited partnership (LP)",
+   "attribute": "liability",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Limited partnership (LP): the partners' liability for the business's debts",
+   "quote": "General partners of an LP have unlimited personal liability",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "Split: general partners have unlimited personal liability; a limited partner's liability is normally limited."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Sole proprietorship",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 0,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Sole proprietorship: state formation filing",
+   "quote": "No formation documents are filed with the California Secretary of State",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "None at the state: no formation documents are filed with the Secretary of State. A trading name other than the owner's needs a county Fictitious Business Name Statement."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Sole proprietorship",
+   "attribute": "liability",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Sole proprietorship: the owner's liability for the business's debts",
+   "quote": "is responsible for taxes and liabilities of the business",
+   "source": {
+    "publisher": "California Secretary of State",
+    "title": "Business Entities: types of business entities",
+    "url": "https://www.sos.ca.gov/business-programs/business-entities/starting-business/types"
+   },
+   "note": "Unlimited: the sole proprietor is responsible for the taxes and liabilities of the business."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Sole proprietorship (trading under another name)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County"
+   },
+   "value": 26,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Sole proprietorship (trading under another name): Fictitious Business Name Statement, original filing, one name and one registrant",
+   "quote": "Both are $26.00 for one business name and one registrant",
+   "source": {
+    "publisher": "Los Angeles County Registrar-Recorder/County Clerk",
+    "title": "Fictitious business names: frequently asked questions",
+    "url": "https://lavote.gov/home/county-clerk/fictitious-business-names/frequently-asked-questions"
+   },
+   "note": "USD 5 for each additional name or registrant; filing online adds a USD 10.75 service fee; the statement expires after 5 years."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Impresa individuale (sole trader)",
+   "attribute": "registration_wait",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 24,
+   "unit": "hours",
+   "year": "2026",
+   "measure": "Impresa individuale (sole trader): time to open",
+   "quote": "anche in meno di 24 ore",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Can be opened in less than 24 hours, the chamber's guide says."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Impresa individuale (sole trader)",
+   "attribute": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Impresa individuale (sole trader): capital to be paid in",
+   "quote": "Non richiede versamento di capitali",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "No capital is required."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Impresa individuale (sole trader)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Impresa individuale (sole trader): the owner's liability for the business's debts",
+   "quote": "Il titolare risponde illimitatamente con il proprio patrimonio personale",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Unlimited: the owner answers for the business's debts with all personal assets."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società in nome collettivo (S.n.c.)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Società in nome collettivo (S.n.c.): the partners' liability for the business's debts",
+   "quote": "Tutti i soci sono amministratori e hanno responsabilità illimitata e solidale",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Unlimited and joint: every partner answers with personal assets for the company's debts."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società in nome collettivo (S.n.c.)",
+   "attribute": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Società in nome collettivo (S.n.c.): minimum capital",
+   "quote": "non è necessario un capitale minimo di partenza",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "No minimum capital for partnerships (S.n.c. and S.a.s.)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società in accomandita semplice (S.a.s.)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Società in accomandita semplice (S.a.s.): the partners' liability for the business's debts",
+   "quote": "Soci Accomandanti: Hanno una responsabilità limitata al capitale sociale versato",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Split: limited partners (accomandanti) answer up to the capital paid in; general partners (accomandatari) answer without limit."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società in accomandita semplice (S.a.s.)",
+   "attribute": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Società in accomandita semplice (S.a.s.): minimum capital",
+   "quote": "non è necessario un capitale minimo di partenza",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "No minimum capital for partnerships (S.n.c. and S.a.s.)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società a responsabilità limitata (S.r.l.)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Società a responsabilità limitata (S.r.l.): the members' liability for the business's debts",
+   "quote": "I soci rispondono solo entro il capitale sociale versato",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Limited: members answer only up to the share capital paid in. The fees and the capital are in registration.json."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società a responsabilità limitata (S.r.l.)",
+   "attribute": "minimum_capital_paid",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 2500,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Società a responsabilità limitata (S.r.l.): capital to be paid in at formation, standard S.r.l.",
+   "quote": "almeno il 25% deve essere versato al momento della costituzione (minimo 2.500 euro)",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "At least 25 percent of the EUR 10,000 standard minimum."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società a responsabilità limitata semplificata (S.r.l.s.)",
+   "attribute": "notary_fee",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Società a responsabilità limitata semplificata (S.r.l.s.): notary's fee for the deed of formation",
+   "quote": "Non prevede costi notarili",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "No notary's fee: the deed follows the standard model."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Società a responsabilità limitata semplificata (S.r.l.s.)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Società a responsabilità limitata semplificata (S.r.l.s.): the members' liability for the business's debts",
+   "quote": "Questa caratteristica è tipica delle Società a Responsabilità Limitata (SRL), delle Società a Responsabilità Limitata Semplificata (SRLS)",
+   "source": {
+    "publisher": "Camera di Commercio della Toscana Nord-Ovest (published by Unioncamere)",
+    "title": "La scelta della forma giuridica: responsabilità, costi e tassazione",
+    "url": "https://sni.unioncamere.it/sites/default/files/approfondimento/documenti/GUIDA%20TNO%20-%20La%20scelta%20della%20forma%20giuridica.pdf"
+   },
+   "note": "Limited, as an S.r.l.: personal assets stay separate from the company's."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Egyéni vállalkozó (sole trader)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Egyéni vállalkozó (sole trader): the owner's liability for the business's debts",
+   "quote": "egyéni vállalkozói tevékenységéből eredő kötelezettségeiért teljes vagyonával felel",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2009. évi CXV. törvény az egyéni vállalkozóról és az egyéni cégről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2009-115-00-00"
+   },
+   "note": "Unlimited: the sole trader answers with all assets for the obligations of the business (Act CXV of 2009, s. 15)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Korlátolt felelősségű társaság (Kft)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Korlátolt felelősségű társaság (Kft): the members' liability for the business's debts",
+   "quote": "A társaság kötelezettségeiért – ha e törvény eltérően nem rendelkezik – a tag nem köteles helytállni",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   },
+   "note": "Limited: a member is not bound to answer for the company's obligations unless the law says otherwise (Civil Code 3:159)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Korlátolt felelősségű társaság (Kft)",
+   "attribute": "minimum_contribution",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 100000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Korlátolt felelősségű társaság (Kft): smallest contribution of one member",
+   "quote": "az egyes törzsbetétek mértéke nem lehet kevesebb százezer forintnál",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   },
+   "note": "Each member's contribution is at least HUF 100,000 (Civil Code 3:161); the HUF 3,000,000 minimum capital is in registration.json."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Közkereseti társaság (Kkt)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Közkereseti társaság (Kkt): court registration duty and publication fee",
+   "quote": "kft., bt., kkt, egyéni cég - ingyenes",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   },
+   "note": "Free in the simplified and the general procedure."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Közkereseti társaság (Kkt)",
+   "attribute": "registration_wait",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1,
+   "unit": "working days",
+   "year": "2026",
+   "measure": "Közkereseti társaság (Kkt): court's deadline to decide, simplified procedure",
+   "quote": "egyszerűsített eljárás 1 munkanap",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   },
+   "note": "General procedure: 15 working days."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Közkereseti társaság (Kkt)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Közkereseti társaság (Kkt): the members' liability for the business's debts",
+   "quote": "korlátlanul és egyetemlegesen helytállnak",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   },
+   "note": "Unlimited and joint: members answer for obligations the company's assets do not cover (Civil Code 3:138)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Betéti társaság (Bt)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Betéti társaság (Bt): court registration duty and publication fee",
+   "quote": "kft., bt., kkt, egyéni cég - ingyenes",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   },
+   "note": "Free in the simplified and the general procedure."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Betéti társaság (Bt)",
+   "attribute": "registration_wait",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1,
+   "unit": "working days",
+   "year": "2026",
+   "measure": "Betéti társaság (Bt): court's deadline to decide, simplified procedure",
+   "quote": "egyszerűsített eljárás 1 munkanap",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   },
+   "note": "General procedure: 15 working days."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Betéti társaság (Bt)",
+   "attribute": "liability",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Betéti társaság (Bt): the members' liability for the business's debts",
+   "quote": "nem tartozik helytállási kötelezettséggel",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   },
+   "note": "Split: at least one member (beltag) answers jointly without limit; a limited member (kültag) does not, unless the law says otherwise (Civil Code 3:154)."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Zártkörűen működő részvénytársaság (Zrt)",
+   "attribute": "registration_fee",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 50000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Zártkörűen működő részvénytársaság (Zrt): court registration duty, simplified procedure",
+   "quote": "zrt-50.000 Ft",
+   "source": {
+    "publisher": "Országos Bírósági Hivatal (birosag.hu)",
+    "title": "A cégbejegyzési kérelem benyújtása",
+    "url": "https://birosag.hu/ugyfeleknek/birosagi-eljarasok/cegeljaras/cegbejegyzesi-kerelem-benyujtasa"
+   },
+   "note": "General procedure: HUF 100,000 duty and a HUF 5,000 publication fee."
+  },
+  {
+   "item": "legal_form",
+   "legalForm": "Zártkörűen működő részvénytársaság (Zrt)",
+   "attribute": "minimum_capital",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 5000000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Zártkörűen működő részvénytársaság (Zrt): minimum share capital",
+   "quote": "zártkörűen működő részvénytársaság alaptőkéje nem lehet kevesebb ötmillió forintnál",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2013. évi V. törvény a Polgári Törvénykönyvről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2013-5-00-00"
+   },
+   "note": "Civil Code 3:212 (2)."
+  }
+ ]
+}

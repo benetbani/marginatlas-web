@@ -1,0 +1,110 @@
+{
+ "id": "eucities-no-ssb-2026",
+ "source": {
+  "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+  "title": "StatBank Norway: establishments by region and industry; population",
+  "url": "https://www.ssb.no/en/statbank",
+  "table": "PxWeb API https://data.ssb.no/api/v0/en/table/, tables 07091 (2026, updated 2026-01-12) and 07459 (2026)",
+  "licence": "SSB open data, CC BY 4.0 (source to be given)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "officialClass": "SIC2007 all industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "0301",
+    "name": "Oslo (kommune and fylke)"
+   },
+   "value": 105130,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of establishments (bedrifter) in the Central Register of Establishments and Enterprises, 1 January 2026",
+   "note": "All size groups; 75613 of them employ no one.",
+   "source": {
+    "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+    "title": "07091: Establishments, by region, industry (SIC2007), number of employees, contents and year",
+    "url": "https://www.ssb.no/en/statbank/table/07091"
+   },
+   "trade": "all"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC2007 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "0301",
+    "name": "Oslo (kommune and fylke)"
+   },
+   "value": 3418,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of establishments (bedrifter) in the Central Register of Establishments and Enterprises, 1 January 2026",
+   "note": "All size groups; 1271 of them employ no one. The whole division 56: restaurants, takeaways, catering and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+    "title": "07091: Establishments, by region, industry (SIC2007), number of employees, contents and year",
+    "url": "https://www.ssb.no/en/statbank/table/07091"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC2007 division 56: Food and beverage service activities",
+   "geo": {
+    "level": "city",
+    "code": "0301",
+    "name": "Oslo (kommune and fylke)"
+   },
+   "value": 3418,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of establishments (bedrifter) in the Central Register of Establishments and Enterprises, 1 January 2026",
+   "note": "All size groups; 1271 of them employ no one. The whole division 56: restaurants, takeaways, catering and bars together; the municipal table stops at divisions.",
+   "source": {
+    "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+    "title": "07091: Establishments, by region, industry (SIC2007), number of employees, contents and year",
+    "url": "https://www.ssb.no/en/statbank/table/07091"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "SIC2007 division 96: Other personal service activities",
+   "geo": {
+    "level": "city",
+    "code": "0301",
+    "name": "Oslo (kommune and fylke)"
+   },
+   "value": 2869,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "number of establishments (bedrifter) in the Central Register of Establishments and Enterprises, 1 January 2026",
+   "note": "All size groups; 2197 of them employ no one. Hairdressing (96.02) cannot be separated at municipal level.",
+   "source": {
+    "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+    "title": "07091: Establishments, by region, industry (SIC2007), number of employees, contents and year",
+    "url": "https://www.ssb.no/en/statbank/table/07091"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "0301",
+    "name": "Oslo (kommune and fylke)"
+   },
+   "value": 728714,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Oslo is one municipality and one county: the boundary of the establishment rows, the same date.",
+   "source": {
+    "publisher": "Statistisk sentralbyrå (SSB), Statistics Norway",
+    "title": "07459: Population, by region, sex, age, contents and year",
+    "url": "https://www.ssb.no/en/statbank/table/07459"
+   }
+  }
+ ]
+}

@@ -1,0 +1,127 @@
+{
+  "id": "place-uk3-voa-shop-rent-month-2026",
+  "source": {
+    "publisher": "Valuation Office Agency",
+    "title": "Non-domestic rating: business floorspace, March 2026 (Table FS2.2 retail sector rateable value per metre squared, Table FS2.1 retail floorspace, by administrative area), published 15 October 2026",
+    "url": "https://assets.publishing.service.gov.uk/media/6ac8f1caf1ba855cc196aa13/NDR_Business_Floorspace_Tables_2026.xlsx",
+    "table": "Table_FS2.2 and Table_FS2.1, column '31 March 2026'",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 22.42,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 269 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 14,243 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the London region (all 33 boroughs)"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 12.17,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 146 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 1,228 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the local authority"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 10.83,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 130 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 2,026 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the local authority"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 12.17,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 146 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 1,339 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the local authority"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 11.17,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 134 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 815 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for the local authority"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "region",
+        "code": "K04000001",
+        "name": "England and Wales"
+      },
+      "value": 12.0,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "the retail sector's rateable value over its floorspace in the local authority, as the publisher divides it in Table FS2.2 (GBP 144 per m2 a year, rounded by the publisher to the whole pound), over 12 for a month; 100,156 thousand m2 of rated retail floorspace (Table FS2.1); rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2026; all rated retail property, not only shops on high streets; measured for England and Wales together (the VOA's lists; Scotland and Northern Ireland are outside them)"
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": null,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "Scotland publishes no floorspace with its valuation roll: the VOA's lists cover England and Wales only, and the Scottish Government's revaluation 2026 statistics (publication and additional tables) give rateable values by council and property class without any floor area, so no rent per m2 can be made",
+      "source": {
+        "publisher": "Scottish Government",
+        "title": "Non-domestic rates revaluation 2026 statistics (publication tables and additional tables)",
+        "url": "https://www.gov.scot/publications/non-domestic-rates-revaluation-2026-statistics/documents/"
+      }
+    },
+    {
+      "item": "shop_rent_m2_month",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": null,
+      "unit": "GBP per m2 per month",
+      "year": "2026",
+      "measure": "retail rateable value per m2 of floorspace, a year, over 12",
+      "note": "Scotland publishes no floorspace with its valuation roll: the VOA's lists cover England and Wales only, and the Scottish Government's revaluation 2026 statistics (publication and additional tables) give rateable values by council and property class without any floor area, so no rent per m2 can be made",
+      "source": {
+        "publisher": "Scottish Government",
+        "title": "Non-domestic rates revaluation 2026 statistics (publication tables and additional tables)",
+        "url": "https://www.gov.scot/publications/non-domestic-rates-revaluation-2026-statistics/documents/"
+      }
+    }
+  ]
+}

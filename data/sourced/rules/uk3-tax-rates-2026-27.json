@@ -1,0 +1,282 @@
+{
+  "id": "rules-uk3-tax-rates-2026-27",
+  "source": {
+    "publisher": "HM Revenue & Customs (GOV.UK); Scotland confirmed by the Scottish Government",
+    "title": "Capital Gains Tax rates and allowances, Business Asset Disposal Relief, Income Tax rates and Personal Allowances, Income Tax in Scotland, tax year 2026 to 2027",
+    "url": "https://www.gov.uk/income-tax-rates",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "capital_gains_tax_rate",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 18,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Capital Gains Tax, gains within the basic rate band (basic rate taxpayers)",
+      "note": "gains made from 6 April 2026; a basic rate taxpayer pays 18% on the part of the taxable gain that, added to taxable income, falls within the basic rate band (GBP 37,700 for 2026-27) and 24% above it; the whole UK, Scotland included",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Capital Gains Tax: what you pay it on, rates and allowances (Capital Gains Tax rates)",
+        "url": "https://www.gov.uk/capital-gains-tax/rates"
+      }
+    },
+    {
+      "item": "capital_gains_tax_rate",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 24,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Capital Gains Tax, higher and additional rate taxpayers (and gains above the basic rate band)",
+      "note": "gains made from 6 April 2026; the whole UK, Scotland included (Scotland's own income tax bands do not apply to gains)",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Capital Gains Tax: what you pay it on, rates and allowances (Capital Gains Tax rates)",
+        "url": "https://www.gov.uk/capital-gains-tax/rates"
+      }
+    },
+    {
+      "item": "capital_gains_tax_rate",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 18,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Capital Gains Tax with Business Asset Disposal Relief (selling all or part of a business)",
+      "note": "qualifying assets disposed of from 6 April 2026 (14% from 6 April 2025 to 5 April 2026, 10% on or before 5 April 2025); for a sole trader or partner who has owned the business for at least 2 years, or qualifying shares",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Business Asset Disposal Relief",
+        "url": "https://www.gov.uk/business-asset-disposal-relief"
+      }
+    },
+    {
+      "item": "capital_gains_tax_allowance",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 3000,
+      "unit": "GBP a year",
+      "year": "2026-27",
+      "measure": "Capital Gains Tax tax-free allowance (Annual Exempt Amount), individuals",
+      "note": "gains above it are taxed; GBP 1,500 for trusts",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Capital Gains Tax: what you pay it on, rates and allowances (Capital Gains Tax allowances)",
+        "url": "https://www.gov.uk/capital-gains-tax/allowances"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "GB-EWN",
+        "name": "England, Wales and Northern Ireland"
+      },
+      "value": 0,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Personal Allowance, taxable income up to GBP 12,570",
+      "note": "the standard Personal Allowance; it goes down by GBP 1 for every GBP 2 of adjusted net income above GBP 100,000, and is zero from GBP 125,140",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "GB-EWN",
+        "name": "England, Wales and Northern Ireland"
+      },
+      "value": 20,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Basic rate, taxable income GBP 12,571 to 50,270",
+      "note": "with the standard Personal Allowance of GBP 12,570",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "GB-EWN",
+        "name": "England, Wales and Northern Ireland"
+      },
+      "value": 40,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Higher rate, GBP 50,271 to 125,140",
+      "note": "with the standard Personal Allowance of GBP 12,570",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "GB-EWN",
+        "name": "England, Wales and Northern Ireland"
+      },
+      "value": 45,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Additional rate, over GBP 125,140",
+      "note": "no Personal Allowance on taxable income over GBP 125,140",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 0,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Personal Allowance, taxable income up to GBP 12,570",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 19,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Starter rate, GBP 12,571 to 16,537",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 20,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Basic rate, GBP 16,538 to 29,526",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 21,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Intermediate rate, GBP 29,527 to 43,662",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 42,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Higher rate, GBP 43,663 to 75,000",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 45,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Advanced rate, GBP 75,001 to 125,140",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    },
+    {
+      "item": "income_tax_rate",
+      "geo": {
+        "level": "region",
+        "code": "S92000003",
+        "name": "Scotland"
+      },
+      "value": 48,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Top rate, over GBP 125,140",
+      "note": "Scottish Income Tax, paid by those who live in Scotland on wages, pensions and most other taxable income (dividends and savings interest are taxed as in the rest of the UK); with the standard Personal Allowance of GBP 12,570; the same bands and rates on the Scottish Government's factsheet (https://www.gov.scot/publications/scottish-income-tax-rates-and-bands/pages/2026-to-2027/), which still calls them the proposed bands of the Scottish Budget of 13 January 2026",
+      "source": {
+        "publisher": "HM Revenue & Customs (GOV.UK)",
+        "title": "Income Tax in Scotland",
+        "url": "https://www.gov.uk/scottish-income-tax"
+      }
+    }
+  ]
+}

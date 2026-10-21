@@ -1,0 +1,505 @@
+{
+ "id": "ons-family-spending-eating-out-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Family spending workbook 1: detailed expenditure and trends, financial year ending 2025",
+  "url": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/expenditure/datasets/familyspendingworkbook1detailedexpenditureandtrends",
+  "table": "workbook1detailedexpenditureandtrends.xlsx (edition fye2025), table A6 'Detailed household expenditure by gross income decile group', rows 11.1, 11.1.1 and Total expenditure",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 1,
+   "value": 11.3,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the lowest tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 210 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 1,
+   "value": 6.2,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the lowest tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 210 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 1,
+   "value": 3.9,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the lowest tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 11.30 of GBP 291.30 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 210 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 2,
+   "value": 15.9,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the second tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 391 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 2,
+   "value": 9.2,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the second tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 391 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 2,
+   "value": 4.2,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the second tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 15.90 of GBP 376.50 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 391 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 3,
+   "value": 18.9,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the third tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 544 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 3,
+   "value": 10.5,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the third tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 544 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 3,
+   "value": 4.2,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the third tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 18.90 of GBP 453.90 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 544 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 4,
+   "value": 25.3,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the fourth tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 697 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 4,
+   "value": 13.2,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the fourth tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 697 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 4,
+   "value": 4.6,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the fourth tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 25.30 of GBP 555.20 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 697 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 5,
+   "value": 29.4,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the fifth tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 858 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 5,
+   "value": 15.3,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the fifth tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 858 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 5,
+   "value": 5.1,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the fifth tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 29.40 of GBP 574.20 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 858 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 6,
+   "value": 35.6,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the sixth tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 1,026 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 6,
+   "value": 17.6,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the sixth tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 1,026 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 6,
+   "value": 5.5,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the sixth tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 35.60 of GBP 653.10 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 1,026 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 7,
+   "value": 38.3,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the seventh tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 1,235 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 7,
+   "value": 18.4,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the seventh tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 1,235 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 7,
+   "value": 5.2,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the seventh tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 38.30 of GBP 740.70 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 1,235 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 8,
+   "value": 46.5,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the eighth tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 1,500 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 8,
+   "value": 24.4,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the eighth tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 1,500 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 8,
+   "value": 5.5,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the eighth tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 46.50 of GBP 841.00 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 1,500 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 9,
+   "value": 52.2,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the ninth tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 1,930 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 9,
+   "value": 25.6,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the ninth tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 1,930 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 9,
+   "value": 5.6,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the ninth tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 52.20 of GBP 935.80 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 1,930 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 10,
+   "value": 72.5,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), households in the highest tenth by gross income, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups. Mean gross income of the group: GBP 3,535 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 10,
+   "value": 37.8,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, households in the highest tenth by gross income, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines. Mean gross income of the group: GBP 3,535 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "decile": 10,
+   "value": 5.4,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, households in the highest tenth by gross income, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 72.50 of GBP 1,345.60 total expenditure a week (total expenditure counts net rent). Mean gross income of the group: GBP 3,535 a week."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "value": 34.6,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on catering services (restaurants, cafes, takeaways, canteens), all households, financial year ending March 2025",
+   "note": "Living Costs and Food Survey, gross income decile groups."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1.1: Restaurant and café meals",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "value": 17.8,
+   "unit": "GBP per week per household",
+   "measure": "average weekly household spending on restaurant and cafe meals, all households, financial year ending March 2025",
+   "note": "A part of catering services (11.1): sit-down meals only, takeaways and alcoholic drinks out are other lines."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP 11.1: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "year": "2025",
+   "value": 5.1,
+   "unit": "percent of household expenditure",
+   "measure": "catering services as a share of total household expenditure, all households, financial year ending March 2025",
+   "note": "Derived from the same table: GBP 34.60 of GBP 676.60 total expenditure a week (total expenditure counts net rent)."
+  }
+ ]
+}

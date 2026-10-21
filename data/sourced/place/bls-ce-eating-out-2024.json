@@ -1,0 +1,221 @@
+{
+ "id": "bls-ce-eating-out-2024",
+ "source": {
+  "publisher": "U.S. Bureau of Labor Statistics",
+  "title": "Consumer Expenditure Surveys: quintiles of income before taxes, annual means, 2024",
+  "url": "https://www.bls.gov/cex/tables.htm",
+  "table": "public API v1 series CXUFOODAWAYLB0101M to LB0106M, CXUTOTALEXPLB0101M to LB0106M, CXUINCBEFTXLB0101M to LB0106M, year 2024 (the 2025 annual was not yet published)",
+  "licence": "US federal work, public domain"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3945.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, all consumer units, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0101M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   }
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5.0,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, all consumer units, 2024",
+   "note": "Derived: USD 3,945 of USD 78,535 average annual expenditures (series CXUTOTALEXPLB0101M)."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1655.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, the lowest fifth of consumer units by income before taxes, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household. Mean income before taxes of the group: USD 16,658.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0102M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   },
+   "quintile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.7,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, the lowest fifth of consumer units by income before taxes, 2024",
+   "note": "Derived: USD 1,655 of USD 35,046 average annual expenditures (series CXUTOTALEXPLB0102M). Mean income before taxes of the group: USD 16,658.",
+   "quintile": 1
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 2448.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, the second fifth, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household. Mean income before taxes of the group: USD 42,925.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0103M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   },
+   "quintile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.9,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, the second fifth, 2024",
+   "note": "Derived: USD 2,448 of USD 50,054 average annual expenditures (series CXUTOTALEXPLB0103M). Mean income before taxes of the group: USD 42,925.",
+   "quintile": 2
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 3277.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, the third fifth, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household. Mean income before taxes of the group: USD 74,474.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0104M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   },
+   "quintile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4.9,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, the third fifth, 2024",
+   "note": "Derived: USD 3,277 of USD 66,900 average annual expenditures (series CXUTOTALEXPLB0104M). Mean income before taxes of the group: USD 74,474.",
+   "quintile": 3
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 4682.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, the fourth fifth, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household. Mean income before taxes of the group: USD 121,548.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0105M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   },
+   "quintile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5.2,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, the fourth fifth, 2024",
+   "note": "Derived: USD 4,682 of USD 89,972 average annual expenditures (series CXUTOTALEXPLB0105M). Mean income before taxes of the group: USD 121,548.",
+   "quintile": 4
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 7652.0,
+   "unit": "USD per year per consumer unit",
+   "year": "2024",
+   "measure": "average annual spending on food away from home, the highest fifth of consumer units by income before taxes, 2024",
+   "note": "Food away from home: meals and snacks at restaurants, cafes, fast food, vending and on trips; a consumer unit is roughly a household. Mean income before taxes of the group: USD 264,510.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Consumer Expenditure Surveys, series CXUFOODAWAYLB0106M",
+    "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/"
+   },
+   "quintile": 5
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "CE item: Food away from home",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5.1,
+   "unit": "percent of average annual expenditures",
+   "year": "2024",
+   "measure": "food away from home as a share of average annual expenditures, the highest fifth of consumer units by income before taxes, 2024",
+   "note": "Derived: USD 7,652 of USD 150,342 average annual expenditures (series CXUTOTALEXPLB0106M). Mean income before taxes of the group: USD 264,510.",
+   "quintile": 5
+  }
+ ]
+}

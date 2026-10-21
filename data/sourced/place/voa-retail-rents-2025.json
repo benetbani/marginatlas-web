@@ -1,0 +1,520 @@
+{
+  "id": "place-voa-retail-rents-2025",
+  "source": {
+    "publisher": "Valuation Office Agency",
+    "title": "Non-domestic rating: business floorspace, March 2025 (Table FS2.2: retail sector rateable value per metre squared by administrative area)",
+    "url": "https://assets.publishing.service.gov.uk/media/6941641758a21370f58f2fe6/NDR_Business_Floorspace_Tables_2025.xlsx",
+    "table": "Table_FS2.2",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "region",
+        "code": "K04000001",
+        "name": "England and Wales"
+      },
+      "value": 145,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 147,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; the local authority of Manchester"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 147,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; the local authority of Leeds"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 128,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; the local authority of Birmingham"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 270,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; Greater London, the ONS London region"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000007",
+        "name": "Camden"
+      },
+      "value": 370,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000001",
+        "name": "City of London"
+      },
+      "value": 596,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000012",
+        "name": "Hackney"
+      },
+      "value": 227,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000013",
+        "name": "Hammersmith and Fulham"
+      },
+      "value": 331,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000014",
+        "name": "Haringey"
+      },
+      "value": 218,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000019",
+        "name": "Islington"
+      },
+      "value": 252,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000020",
+        "name": "Kensington and Chelsea"
+      },
+      "value": 401,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000022",
+        "name": "Lambeth"
+      },
+      "value": 238,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000023",
+        "name": "Lewisham"
+      },
+      "value": 155,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000025",
+        "name": "Newham"
+      },
+      "value": 252,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000028",
+        "name": "Southwark"
+      },
+      "value": 240,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000030",
+        "name": "Tower Hamlets"
+      },
+      "value": 297,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000032",
+        "name": "Wandsworth"
+      },
+      "value": 227,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000033",
+        "name": "Westminster"
+      },
+      "value": 651,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000002",
+        "name": "Barking and Dagenham"
+      },
+      "value": 161,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000003",
+        "name": "Barnet"
+      },
+      "value": 226,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000004",
+        "name": "Bexley"
+      },
+      "value": 140,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000005",
+        "name": "Brent"
+      },
+      "value": 204,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000006",
+        "name": "Bromley"
+      },
+      "value": 175,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000008",
+        "name": "Croydon"
+      },
+      "value": 154,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000009",
+        "name": "Ealing"
+      },
+      "value": 218,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000010",
+        "name": "Enfield"
+      },
+      "value": 178,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000011",
+        "name": "Greenwich"
+      },
+      "value": 166,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000015",
+        "name": "Harrow"
+      },
+      "value": 191,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000016",
+        "name": "Havering"
+      },
+      "value": 157,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000017",
+        "name": "Hillingdon"
+      },
+      "value": 187,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000018",
+        "name": "Hounslow"
+      },
+      "value": 203,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000021",
+        "name": "Kingston upon Thames"
+      },
+      "value": 174,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000024",
+        "name": "Merton"
+      },
+      "value": 206,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000026",
+        "name": "Redbridge"
+      },
+      "value": 191,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000027",
+        "name": "Richmond upon Thames"
+      },
+      "value": 242,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000029",
+        "name": "Sutton"
+      },
+      "value": 153,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "county",
+        "code": "E09000031",
+        "name": "Waltham Forest"
+      },
+      "value": 188,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; a London borough, a district of Greater London"
+    },
+    {
+      "item": "shop_rent_m2_year",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 134,
+      "unit": "GBP per m2 per year",
+      "year": "2025",
+      "measure": "retail rateable value per m2 of floorspace, all rated retail properties",
+      "note": "rateable value is the law's estimate of the open-market yearly rent at the valuation date of 1 April 2021 (the 2023 rating list), counted at 31 March 2025; not a rent paid today; the local authority of Bristol"
+    }
+  ]
+}

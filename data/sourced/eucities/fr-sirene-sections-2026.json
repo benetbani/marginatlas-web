@@ -1,0 +1,1843 @@
+{
+ "id": "eucities-fr-sirene-sections-2026",
+ "source": {
+  "publisher": "Insee",
+  "title": "Base Sirene des entreprises et de leurs établissements, StockEtablissement (file of 1 October 2026), active establishments grouped by NAF rév. 2 section",
+  "url": "https://www.data.gouv.fr/fr/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/",
+  "table": "StockEtablissement parquet: etatAdministratifEtablissement A, codeCommuneEtablissement, activitePrincipaleEtablissement where nomenclatureActivitePrincipaleEtablissement is NAFRev2",
+  "licence": "Licence Ouverte / Open Licence 2.0 (Etalab)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 384,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 3,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 2122,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 169,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 132,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 11207,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 11969,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 6870,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 5369,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 3632,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 3140,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 39589,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 13196,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 10881,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 168,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 4075,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 7807,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 4934,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 9590,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "T",
+   "officialClass": "NAF rév. 2 section T (Activities of households as employers)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 1,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "06088",
+    "name": "Nice (commune)"
+   },
+   "value": 13,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 487,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 6,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 4869,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 1306,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 246,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 14635,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 25315,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 10732,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 9514,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 7909,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 6412,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 58363,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 27079,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 14000,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 377,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 8892,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 19433,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 13240,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 20389,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "13055",
+    "name": "Marseille (commune)"
+   },
+   "value": 44,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 323,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 8,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 2692,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 594,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 163,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 7599,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 12261,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 7332,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 5408,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 6659,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 3762,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 44123,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 17927,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 9534,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 298,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 6345,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 10235,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 8587,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 11716,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "31555",
+    "name": "Toulouse (commune)"
+   },
+   "value": 14,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 170,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 5,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 1587,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 262,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 108,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 2974,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 6273,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 3300,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 2960,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 4155,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 2865,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 25708,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 12001,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 3955,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 261,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 3348,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 6174,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 6605,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 7936,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "44109",
+    "name": "Nantes (commune)"
+   },
+   "value": 7,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 246,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 2,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 3316,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 771,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 133,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 6371,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 15904,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 6763,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 7192,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 9349,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 6370,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 50396,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 29668,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 11902,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 302,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 7211,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 11569,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 10064,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 13139,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "69123",
+    "name": "Lyon (commune)"
+   },
+   "value": 36,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 0 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "A",
+   "officialClass": "NAF rév. 2 section A (Agriculture, forestry and fishing)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 1542,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "B",
+   "officialClass": "NAF rév. 2 section B (Mining and quarrying)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 80,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "C",
+   "officialClass": "NAF rév. 2 section C (Manufacturing)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 22298,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "D",
+   "officialClass": "NAF rév. 2 section D (Electricity, gas, steam and air conditioning supply)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 3788,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "E",
+   "officialClass": "NAF rév. 2 section E (Water supply; sewerage, waste management and remediation activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 782,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "F",
+   "officialClass": "NAF rév. 2 section F (Construction)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 46434,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "G",
+   "officialClass": "NAF rév. 2 section G (Wholesale and retail trade; repair of motor vehicles and motorcycles)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 129942,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "H",
+   "officialClass": "NAF rév. 2 section H (Transportation and storage)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 40676,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "I",
+   "officialClass": "NAF rév. 2 section I (Accommodation and food service activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 47008,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "J",
+   "officialClass": "NAF rév. 2 section J (Information and communication)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 93979,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "K",
+   "officialClass": "NAF rév. 2 section K (Financial and insurance activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 56576,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "L",
+   "officialClass": "NAF rév. 2 section L (Real estate activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 284007,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "M",
+   "officialClass": "NAF rév. 2 section M (Professional, scientific and technical activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 261424,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "N",
+   "officialClass": "NAF rév. 2 section N (Administrative and support service activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 105691,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "O",
+   "officialClass": "NAF rév. 2 section O (Public administration and defence; compulsory social security)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 1942,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "P",
+   "officialClass": "NAF rév. 2 section P (Education)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 39964,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "Q",
+   "officialClass": "NAF rév. 2 section Q (Human health and social work activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 51096,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "R",
+   "officialClass": "NAF rév. 2 section R (Arts, entertainment and recreation)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 76917,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "S",
+   "officialClass": "NAF rév. 2 section S (Other service activities)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 81811,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "T",
+   "officialClass": "NAF rév. 2 section T (Activities of households as employers)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 6,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  },
+  {
+   "item": "business_count",
+   "sector": "U",
+   "officialClass": "NAF rév. 2 section U (Activities of extraterritorial organisations and bodies)",
+   "geo": {
+    "level": "city",
+    "code": "75056",
+    "name": "Paris (commune)"
+   },
+   "value": 536,
+   "unit": "establishments",
+   "year": "2026",
+   "measure": "active establishments in the Sirene register by NAF rév. 2 section of their main activity (APE), file of 1 October 2026",
+   "note": "Every active establishment, employers or not; Paris, Lyon and Marseille with their arrondissements summed. The section is the APE code's division grouped as NAF rév. 2 defines it; 1 establishments coded in an older nomenclature or uncoded are in no section. Holding companies and domiciled offices are counted where registered."
+  }
+ ]
+}

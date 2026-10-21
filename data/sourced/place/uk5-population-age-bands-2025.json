@@ -1,0 +1,224 @@
+{
+  "id": "place-uk5-population-age-bands-2025",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+    "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+    "table": "NM_2002_1",
+    "licence": "Open Government Licence v3.0",
+    "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+  },
+  "retrieved": "2026-10-21",
+  "rows": [
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 16.7,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published counts: 1,524,218 of 9,122,909 (ONS five-year bands 1, 3, 4); usual residents at mid-year; Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 12.7,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 15 to 24",
+      "note": "computed from the published counts: 1,158,694 of 9,122,909 (ONS five-year bands 5, 6); usual residents at mid-year; Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 34.1,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 25 to 44",
+      "note": "computed from the published counts: 3,107,815 of 9,122,909 (ONS five-year bands 7, 8, 9, 10); usual residents at mid-year; Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 23.9,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 45 to 64",
+      "note": "computed from the published counts: 2,179,664 of 9,122,909 (ONS five-year bands 11, 12, 13, 14); usual residents at mid-year; Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 12.6,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 1,152,518 of 9,122,909 (all ages less the groups to 64 (the bands 65 to 69 and over, 85 and over included)); usual residents at mid-year; Greater London, the ONS London region",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "country",
+        "code": "K02000001",
+        "name": "United Kingdom"
+      },
+      "value": 16.5,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 0 to 14",
+      "note": "computed from the published counts: 11,494,806 of 69,483,939 (ONS five-year bands 1, 3, 4); usual residents at mid-year",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "country",
+        "code": "K02000001",
+        "name": "United Kingdom"
+      },
+      "value": 11.9,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 15 to 24",
+      "note": "computed from the published counts: 8,272,933 of 69,483,939 (ONS five-year bands 5, 6); usual residents at mid-year",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "country",
+        "code": "K02000001",
+        "name": "United Kingdom"
+      },
+      "value": 26.9,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 25 to 44",
+      "note": "computed from the published counts: 18,705,803 of 69,483,939 (ONS five-year bands 7, 8, 9, 10); usual residents at mid-year",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "country",
+        "code": "K02000001",
+        "name": "United Kingdom"
+      },
+      "value": 25.3,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 45 to 64",
+      "note": "computed from the published counts: 17,549,693 of 69,483,939 (ONS five-year bands 11, 12, 13, 14); usual residents at mid-year",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    },
+    {
+      "item": "age_group_share",
+      "geo": {
+        "level": "country",
+        "code": "K02000001",
+        "name": "United Kingdom"
+      },
+      "value": 19.4,
+      "unit": "percent",
+      "year": "2025",
+      "measure": "share of residents aged 65 and over",
+      "note": "computed from the published counts: 13,460,704 of 69,483,939 (all ages less the groups to 64 (the bands 65 to 69 and over, 85 and over included)); usual residents at mid-year",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Population estimates: local authority based by five year age band (mid-year estimates), via Nomis dataset NM_2002_1",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_2002_1.data.csv?geography=E12000007,K02000001&date=latest&gender=0&c_age=200,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19&measures=20100&select=date_name,geography_name,geography_code,c_age,c_age_name,obs_value",
+        "table": "NM_2002_1",
+        "licence": "Open Government Licence v3.0",
+        "sha256": "981124c3d1de108d1626de38d3b3dac5c71987a327095af6b7ece98c7c8282e7"
+      }
+    }
+  ]
+}

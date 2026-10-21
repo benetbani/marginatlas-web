@@ -1,0 +1,1072 @@
+{
+ "id": "tax-case-40000",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "A sole trader's tax and contributions on a profit of 40,000 in the local currency, 2026 rules, every parameter shown",
+  "url": "https://www.gov.uk/income-tax-rates"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "tax_case_profit",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 40000,
+   "unit": "GBP",
+   "year": "2026-27",
+   "measure": "Profit of the case, sole trader, England, tax year 2026-27",
+   "note": "No other income, no employees, standard Personal Allowance.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12570,
+   "unit": "GBP",
+   "year": "2026-27",
+   "measure": "Personal Allowance",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Income tax basic rate, GBP 12,571 to 50,270",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12570,
+   "unit": "GBP",
+   "year": "2026-27",
+   "measure": "Class 4 National Insurance lower profits limit",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Self-employed National Insurance rates",
+    "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Class 4 National Insurance, profits 12,570 to 50,270",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Self-employed National Insurance rates",
+    "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5486.0,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Income tax",
+   "note": "Computed: (40,000 - 12,570) x 20%.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 1645.8,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Class 4 National Insurance",
+   "note": "Computed: (40,000 - 12,570) x 6%. Class 2 is treated as paid at this profit.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Self-employed National Insurance rates",
+    "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+   }
+  },
+  {
+   "item": "tax_case_total",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 7131.8,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Tax and the owner's compulsory contributions on a profit of 40,000 GBP, sole trader, 2026 rules",
+   "note": "Regime: Self Assessment, income tax and Class 4 National Insurance (England). Alternatives: a limited company instead pays Corporation Tax at 19% on profits to GBP 50,000, the owner then taxed on salary and dividends (not computed).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_share_of_profit",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 17.8,
+   "unit": "% of profit",
+   "year": "2026",
+   "measure": "The total as a share of the profit",
+   "note": "Computed: 7,131.80 / 40,000.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_kept",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 32868.2,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "What is left of the profit after them",
+   "note": "Computed: 40,000 - 7,131.80.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "tax_case_profit",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 40000,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Profit of the case, sole proprietor living and trading in the City of Los Angeles, 2026",
+   "note": "Net profit on Schedule C. Single, no other income, no employees, standard deductions.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 92.35,
+   "unit": "%",
+   "year": "2025",
+   "measure": "Net earnings from self-employment: share of net profit",
+   "note": "Schedule SE line 4a (the 2025 form, the latest published).",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Schedule SE (Form 1040), Self-Employment Tax (lines 4a and 13)",
+    "url": "https://www.irs.gov/pub/irs-pdf/f1040sse.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 15.3,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Self-employment tax rate (12.4% social security, 2.9% Medicare)",
+   "note": "The social security part stops at the year's wage base, far above this case.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 50,
+   "unit": "%",
+   "year": "2025",
+   "measure": "Deduction for one-half of self-employment tax",
+   "note": "Schedule SE line 13.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Schedule SE (Form 1040), Self-Employment Tax (lines 4a and 13)",
+    "url": "https://www.irs.gov/pub/irs-pdf/f1040sse.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 16100,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Federal standard deduction, single",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Qualified business income deduction, limited to 20% of taxable income before it",
+   "note": "The limit binds in this case: 20% of taxable income is below 20% of the business income.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Qualified business income deduction",
+    "url": "https://www.irs.gov/newsroom/qualified-business-income-deduction"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 12400,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Federal income tax 10%, single, taxable income to USD 12,400",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Federal income tax 12%, single, taxable income over USD 12,400 to 50,400",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 5900,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "California standard deduction, single",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+    "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 4,
+   "unit": "%",
+   "year": "2026",
+   "measure": "California income tax, Schedule X, over USD 27,157 to 42,861: 428.58 plus 4.00% of the amount over 27,157",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+    "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 158,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "California personal exemption credit, single",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+    "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1,
+   "unit": "1 = yes",
+   "year": "2025",
+   "measure": "California follows the federal deduction for half of self-employment tax",
+   "note": "Schedule CA (540) line 15: an adjustment is needed only where the taxpayer is an employee for California purposes.",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "2025 Instructions for Schedule CA (540), line 15, deductible part of self-employment tax",
+    "url": "https://www.ftb.ca.gov/forms/2025/2025-540-ca-instructions.html"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 5651.82,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Self-employment tax",
+   "note": "Computed: 40,000 x 92.35% = 36,940, x 15.3%.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1775.11,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Federal income tax",
+   "note": "Computed: AGI 40,000 - 2,825.91 (half the SE tax) = 37,174.09. Less 16,100 = 21,074.09. Less the QBI deduction 4,214.82 (20% of that) = 16,859.27. 10% to 12,400 and 12% above. By the rate schedule.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 435.26,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "California income tax",
+   "note": "Computed: California AGI 37,174.09 (no QBI deduction in California) less 5,900 = 31,274.09. 428.58 + 4% of the amount over 27,157, less the 158 credit.",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+    "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+   }
+  },
+  {
+   "item": "tax_case_total",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 7862.19,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Tax and the owner's compulsory contributions on a profit of 40,000 USD, sole trader, 2026 rules",
+   "note": "Regime: sole proprietor: federal income tax, self-employment tax and California personal income tax. Alternatives: the City of Los Angeles business tax is on gross receipts, not profit, and is nil for a registered business with worldwide receipts of USD 100,000 or less (not in this total). An S corporation or LLC election changes the case (not computed).",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "tax_case_share_of_profit",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 19.7,
+   "unit": "% of profit",
+   "year": "2026",
+   "measure": "The total as a share of the profit",
+   "note": "Computed: 7,862.19 / 40,000.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "tax_case_kept",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 32137.81,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "What is left of the profit after them",
+   "note": "Computed: 40,000 - 7,862.19.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "tax_case_profit",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 40000,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Profit of the case (reddito d'impresa), sole trader in commerce (commerciante), resident in Rome, 2026",
+   "note": "Ordinary regime (regime ordinario or semplificato). No other income, no employees, no dependants.",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 18808,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "INPS commercianti: minimum income (minimale)",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 4611.64,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "INPS commercianti: contribution on the minimum income, with maternity",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 24.48,
+   "unit": "%",
+   "year": "2026",
+   "measure": "INPS commercianti: rate on income above the minimum, to EUR 56,224",
+   "note": "Artisans (barbers among them): 24%.",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1,
+   "unit": "1 = yes",
+   "year": "2026",
+   "measure": "INPS contributions are deductible from total income",
+   "note": "TUIR art. 10, c. 1, lett. e).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 917/1986 (TUIR), art. 10, c. 1, lett. e), testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art10!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRPEF to EUR 28,000",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 33,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRPEF EUR 28,000 to 50,000",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 500,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Deduction for business income (art. 13, c. 5, b-bis): EUR 500 x (50,000 - total income) / 22,000, for total income 28,000 to 50,000",
+   "note": "The ratio is taken to its first four decimals (c. 6).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 917/1986 (TUIR), art. 13, c. 5 and 6, testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art13!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0,
+   "unit": "%",
+   "year": "2022",
+   "measure": "IRAP is not due from individuals carrying on commercial activities",
+   "note": "L. 234/2021, art. 1, c. 8, from tax year 2022.",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "Legge 30 dicembre 2021, n. 234, art. 1, c. 8 (IRAP non dovuta dalle persone fisiche esercenti attività commerciali)",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2021-12-30;234~art1!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 1.73,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Lazio regional surcharge (addizionale regionale), taxable income over EUR 28,000: 1.73% to 15,000",
+   "source": {
+    "publisher": "Regione Lazio",
+    "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+    "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 3.33,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Lazio regional surcharge, taxable income over EUR 28,000: 3.33% above 15,000",
+   "note": "The EUR 60 deduction applies only to taxable income from 28,001 to 30,000.",
+   "source": {
+    "publisher": "Regione Lazio",
+    "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+    "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 0.9,
+   "unit": "%",
+   "year": "2025",
+   "measure": "Rome municipal surcharge (addizionale comunale), single rate",
+   "note": "Exempt to taxable income of EUR 14,000. The finance ministry's list shows no 2026 resolution for Rome. The 2025 one (n. 186 of 19-12-2024) is the latest.",
+   "source": {
+    "publisher": "Ministero dell'Economia e delle Finanze, Dipartimento delle Finanze",
+    "title": "Addizionale comunale all'IRPEF, Roma (H501): delibera n. 186 del 19-12-2024",
+    "url": "https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/risultato.htm?anno=9999&lista=1&pagina=lazio.htm&cm=&pr=RM&cc=H501&r=1"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 9799.44,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "INPS contributions (owner's own)",
+   "note": "Computed: 4,611.64 + 24.48% x (40,000 - 18,808).",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 6716.23,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "IRPEF",
+   "note": "Computed: Total income 40,000 - 9,799.44 = 30,200.56. 23% x 28,000 + 33% x 2,200.56 = 7,166.18. Less the art. 13 deduction 500 x 0.8999 = 449.95.",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 765.68,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Lazio regional surcharge",
+   "note": "Computed: 1.73% x 15,000 + 3.33% x 15,200.56.",
+   "source": {
+    "publisher": "Regione Lazio",
+    "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+    "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 271.81,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Rome municipal surcharge",
+   "note": "Computed: 0.9% x 30,200.56.",
+   "source": {
+    "publisher": "Ministero dell'Economia e delle Finanze, Dipartimento delle Finanze",
+    "title": "Addizionale comunale all'IRPEF, Roma (H501): delibera n. 186 del 19-12-2024",
+    "url": "https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/risultato.htm?anno=9999&lista=1&pagina=lazio.htm&cm=&pr=RM&cc=H501&r=1"
+   }
+  },
+  {
+   "item": "tax_case_total",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 17553.16,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "Tax and the owner's compulsory contributions on a profit of 40,000 EUR, sole trader, 2026 rules",
+   "note": "Regime: ordinary regime: IRPEF with the Lazio and Rome surcharges, and INPS as a shopkeeper (commerciante). Alternatives: the flat-rate regime (regime forfetario, revenue to EUR 85,000) taxes revenue times the activity's coefficient at 15% (5% for the first five years), replaces IRPEF and the surcharges, and cuts INPS on it by 35%. Its result depends on revenue, not profit (not computed).",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_share_of_profit",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 43.9,
+   "unit": "% of profit",
+   "year": "2026",
+   "measure": "The total as a share of the profit",
+   "note": "Computed: 17,553.16 / 40,000.",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_kept",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 22446.84,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "What is left of the profit after them",
+   "note": "Computed: 40,000 - 17,553.16.",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "tax_case_profit",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 40000,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Profit of the case, full-time sole trader (főfoglalkozású egyéni vállalkozó), before the owner's drawings and contributions, 2026",
+   "note": "No drawings (vállalkozói kivét) taken, no other income, no employees, an activity needing no secondary qualification, insured all year. HUF 40,000 is about an eighth of one month's minimum wage: the minimum contribution bases decide the result.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 322800,
+   "unit": "HUF a month",
+   "year": "2026",
+   "measure": "Minimum wage, the monthly minimum contribution base",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "426/2025. (XII. 23.) Korm. rendelet a kötelező legkisebb munkabér (minimálbér) és a garantált bérminimum megállapításáról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2025-426-20-22"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 18.5,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Social security contribution (TB járulék), sole trader",
+   "note": "On drawings, at least on the minimum wage each month.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Social contribution tax (szocho), sole trader",
+   "note": "On drawings, at least on the minimum wage each month. The 112.5% multiplier no longer applies from 2026.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1,
+   "unit": "1 = yes",
+   "year": "2026",
+   "measure": "The sole trader's own szocho paid is a deductible cost",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Entrepreneur's personal income tax on the business tax base",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_parameter",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Tax on the entrepreneur's dividend base",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 716616.0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Social security contribution on the minimum base",
+   "note": "Computed: 18.5% x 322,800 x 12.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 503568.0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Social contribution tax on the minimum base",
+   "note": "Computed: 13% x 322,800 x 12.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_component",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Entrepreneur's income tax and dividend-base tax",
+   "note": "Computed: The business income 40,000 less the deductible szocho 503,568.00 is below zero, so the 9% and 15% taxes are nil.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_total",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 1220184.0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "Tax and the owner's compulsory contributions on a profit of 40,000 HUF, sole trader, 2026 rules",
+   "note": "Regime: entrepreneurial income taxation (vállalkozói jövedelem szerinti adózás). Alternatives: flat-rate taxation (átalányadózás): income is revenue less a cost ratio of 80% for catering and hairdressing (45% for most activities), tax-free to half the annual minimum wage, contributions on that income with the minimum-wage floor. KATA, the fixed small-taxpayer levy, was not read. Neither is computed here.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_share_of_profit",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 3050.5,
+   "unit": "% of profit",
+   "year": "2026",
+   "measure": "The total as a share of the profit",
+   "note": "Computed: 1,220,184.00 / 40,000.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "tax_case_kept",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": -1180184.0,
+   "unit": "HUF",
+   "year": "2026",
+   "measure": "What is left of the profit after them",
+   "note": "Computed: 40,000 - 1,220,184.00.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  }
+ ]
+}

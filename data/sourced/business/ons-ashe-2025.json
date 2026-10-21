@@ -1,0 +1,175 @@
+{
+ "id": "ons-ashe-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Annual Survey of Hours and Earnings (ASHE) 2025 provisional, Table 15: region by occupation (4-digit SOC 2020), table 15 (4).6a hourly pay excluding overtime",
+  "url": "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/regionbyoccupation4digitsoc2010ashetable15",
+  "table": "ashetable152025provisional.zip, file 'Table 15 (4).6a Hourly pay - Excluding overtime 2025', sheet All; quality from table 15 (4).6b (CV); estimates with CV above 20 percent are suppressed by the publisher",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 1222: Restaurant and catering establishment managers and proprietors",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 15.93,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Restaurant and catering establishment managers and proprietors",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 6.6 percent (reasonably precise). Mean 19.67 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 5434: Chefs",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 14.98,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Chefs",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 3 percent (precise). Mean 15.92 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 5435: Cooks",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 14.13,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Cooks",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 8.7 percent (reasonably precise). Mean 14.93 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 5436: Catering and bar managers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 16.04,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Catering and bar managers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 6.3 percent (reasonably precise). Mean 17.25 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 6221: Hairdressers and barbers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 12.24,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Hairdressers and barbers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 2.5 percent (precise). Mean 13.18 GBP.",
+   "trade": "barbershops"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 6222: Beauticians and related occupations",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 12.33,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Beauticians and related occupations",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 2.8 percent (precise). Mean 13.71 GBP."
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 9261: Bar and catering supervisors",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 14.28,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Bar and catering supervisors",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 5.6 percent (reasonably precise). Mean 15.08 GBP."
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 9263: Kitchen and catering assistants",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 13.03,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Kitchen and catering assistants",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 1.7 percent (precise). Mean 14.24 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 9264: Waiters and waitresses",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 13.19,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Waiters and waitresses",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 2 percent (precise). Mean 14.03 GBP.",
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 9265: Bar staff",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 13.16,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Bar staff",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 3 percent (precise). Mean 14.01 GBP."
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 2020 9266: Coffee shop workers",
+   "geo": {
+    "level": "region",
+    "code": "TLI",
+    "name": "London"
+   },
+   "value": 12.79,
+   "unit": "GBP per hour",
+   "year": "2025",
+   "measure": "median gross hourly pay excluding overtime, all employee jobs, April 2025 (provisional): Coffee shop workers",
+   "note": "Employees only, by place of work; self-employed workers are not covered. Coefficient of variation 3.2 percent (precise). Mean 13.13 GBP.",
+   "trade": "cafes"
+  }
+ ]
+}

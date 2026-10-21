@@ -1,0 +1,104 @@
+{
+  "id": "place-uk3-orr-stations-2024-25",
+  "source": {
+    "publisher": "Office of Rail and Road",
+    "title": "Estimates of station usage, April 2024 to March 2025, Table 1415a: time series of passenger entries and exits by station, Great Britain (published 4 December 2025)",
+    "url": "https://dataportal.orr.gov.uk/media/1908/table-1415-time-series-of-passenger-entries-and-exits-and-interchanges-by-station.ods",
+    "table": "Table 1415a, column 'Apr 2024 to Mar 2025', grouped by 'Region' (London) or 'Local authority: district or unitary'",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 1646852874,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 340 stations of the publisher's own station estimates, the stations the ORR places in the London region (Greater London, all 33 boroughs); the three largest: London Liverpool Street 98,015,658, London Waterloo 70,389,546, London Paddington 69,897,084; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 50984420,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 15 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'Manchester'; the three largest: Manchester Piccadilly 27,401,610, Manchester Victoria 8,378,502, Manchester Oxford Road 6,392,614; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 67073140,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 34 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'Birmingham'; the three largest: Birmingham New Street 36,623,678, Birmingham Moor Street 7,148,012, University (Birmingham) 3,755,612; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 33897308,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 15 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'Leeds'; the three largest: Leeds 27,309,508, Guiseley 1,019,178, Horsforth 889,978; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 13677136,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 14 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'Bristol, City of'; the three largest: Bristol Temple Meads 10,877,308, Clifton Down 817,690, Lawrence Hill 339,856; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 28296042,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 12 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'City of Edinburgh'; the three largest: Edinburgh 22,755,164, Haymarket 3,334,408, Edinburgh Park 558,812; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    },
+    {
+      "item": "connectivity_rail_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 66400814,
+      "unit": "entries and exits a year",
+      "year": "2024-25",
+      "measure": "entries and exits a year at the national rail stations inside the city",
+      "note": "Computed: the sum over 60 stations of the publisher's own station estimates, the stations the ORR places in the local authority 'Glasgow City'; the three largest: Glasgow Central 25,293,930, Glasgow Queen Street 14,950,752, Partick 3,091,680; April 2024 to March 2025; a journey counts once where it enters and once where it leaves; national rail only (London Underground-only stations, trams and metros are not in the table; Elizabeth line and Overground stations are); the ORR's estimates come from ticket sales and local ticketing data"
+    }
+  ]
+}

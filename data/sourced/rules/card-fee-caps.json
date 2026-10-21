@@ -1,0 +1,49 @@
+{
+ "id": "card-fee-caps",
+ "source": {
+  "publisher": "legislation.gov.uk (The National Archives)",
+  "title": "The UK's caps on card interchange fees, retained Regulation (EU) 2015/751",
+  "url": "https://www.legislation.gov.uk/eur/2015/751/contents"
+ },
+ "retrieved": "2026-10-21",
+ "rows": [
+  {
+   "item": "card_interchange_cap_debit",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.2,
+   "unit": "% of each payment",
+   "year": "2026",
+   "measure": "The most the card's own bank may take from the shop's bank on a UK consumer debit card payment (the interchange fee)",
+   "note": "Applies when the card, the shop's bank and the shop are all in the UK. It is one part of what a shop pays: the shop's own bank and the card scheme add their fees on top, and those are not capped. Cards issued in the EEA and used online are not capped (the regulator's review of cross-border fees was open in 2026).",
+   "source": {
+    "publisher": "legislation.gov.uk (The National Archives)",
+    "title": "Regulation (EU) 2015/751, as retained and amended, article 3",
+    "url": "https://www.legislation.gov.uk/eur/2015/751/article/3",
+    "sha256": "0962baaa6e2b19bf6bb0ef3ebe49e8c67f15a56218f53363a9cbefb2c299dadb"
+   }
+  },
+  {
+   "item": "card_interchange_cap_credit",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 0.3,
+   "unit": "% of each payment",
+   "year": "2026",
+   "measure": "The most the card's own bank may take from the shop's bank on a UK consumer credit card payment (the interchange fee)",
+   "note": "Applies when the card, the shop's bank and the shop are all in the UK. It is one part of what a shop pays: the shop's own bank and the card scheme add their fees on top, and those are not capped. Cards issued in the EEA and used online are not capped (the regulator's review of cross-border fees was open in 2026).",
+   "source": {
+    "publisher": "legislation.gov.uk (The National Archives)",
+    "title": "Regulation (EU) 2015/751, as retained and amended, article 4",
+    "url": "https://www.legislation.gov.uk/eur/2015/751/article/4",
+    "sha256": "6d82544a2397643bf780b41d255d617157b7623dc88629422c46343affb43dfb"
+   }
+  }
+ ]
+}

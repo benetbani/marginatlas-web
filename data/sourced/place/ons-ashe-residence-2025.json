@@ -1,0 +1,533 @@
+{
+ "id": "ons-ashe-residence-2025",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Annual Survey of Hours and Earnings 2025 (provisional), resident analysis (ASHE table 8, place of residence by local authority), via Nomis dataset NM_30_1",
+  "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_30_1.data.csv?geography=E12000007,E08000003,E08000025,E08000035,E06000023,S12000036,S12000049,K02000001&date=latest&sex=8&item=2,6,8,13,15&pay=7&measures=20100,20701&select=date_name,geography_name,geography_code,geography_type,sex_name,item_name,pay_name,measures_name,obs_value,obs_status_name",
+  "table": "NM_30_1: sex 8 full-time workers, pay 7 annual pay gross, items median and the 10th, 25th, 75th and 90th percentiles",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 46414,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); measured for the region; 2025 figures are provisional; coefficient of variation 1.2%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 26505,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); measured for the region; 2025 figures are provisional; coefficient of variation 0.8%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 33740,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); measured for the region; 2025 figures are provisional; coefficient of variation 0.8%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 67811,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); measured for the region; 2025 figures are provisional; coefficient of variation 1.7%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "Greater London"
+   },
+   "value": 106203,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in the London region, wherever they work (ASHE table 8, the place of residence analysis); measured for the region; 2025 figures are provisional; coefficient of variation 4.5%"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 36278,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.1%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 22839,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.4%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 28133,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.4%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 49220,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 5.8%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": null,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Manchester, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; suppressed by the publisher as statistically unreliable (coefficient of variation over 20 percent)"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 35989,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.7%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 22997,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.1%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 27851,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 1.9%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 48696,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 4.5%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 63910,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Birmingham, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 13.0%"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 36716,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.6%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 24001,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 1.6%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 28094,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 1.5%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 50250,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 4.5%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 70422,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Leeds, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 14.0%"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 39509,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.4%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 24783,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.6%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 29961,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.0%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 53818,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 6.2%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": null,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Bristol, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; suppressed by the publisher as statistically unreliable (coefficient of variation over 20 percent)"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 43169,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in City of Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.9%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 25684,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in City of Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 1.9%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 31521,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in City of Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.0%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 63386,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in City of Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 6.9%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": null,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in City of Edinburgh, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; suppressed by the publisher as statistically unreliable (coefficient of variation over 20 percent)"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 38125,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Glasgow City, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 3.3%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 24294,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Glasgow City, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 1.5%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 28991,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Glasgow City, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 2.0%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 50480,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Glasgow City, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 4.3%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 64926,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in Glasgow City, wherever they work (ASHE table 8, the place of residence analysis); measured for the local authority; 2025 figures are provisional; coefficient of variation 20.0%"
+  },
+  {
+   "item": "income",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 39039,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "median gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in United Kingdom, wherever they work (ASHE table 8, the place of residence analysis); measured for the country; 2025 figures are provisional; coefficient of variation 0.3%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 23990,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "10th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in United Kingdom, wherever they work (ASHE table 8, the place of residence analysis); measured for the country; 2025 figures are provisional; coefficient of variation 0.2%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 29262,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "25th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in United Kingdom, wherever they work (ASHE table 8, the place of residence analysis); measured for the country; 2025 figures are provisional; coefficient of variation 0.2%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 54009,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "75th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in United Kingdom, wherever they work (ASHE table 8, the place of residence analysis); measured for the country; 2025 figures are provisional; coefficient of variation 0.4%"
+  },
+  {
+   "item": "income_distribution",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 76903,
+   "unit": "GBP per year",
+   "year": "2025",
+   "measure": "90th percentile of gross annual pay, full-time employees, by place of residence",
+   "note": "employees who live in United Kingdom, wherever they work (ASHE table 8, the place of residence analysis); measured for the country; 2025 figures are provisional; coefficient of variation 0.8%"
+  }
+ ]
+}

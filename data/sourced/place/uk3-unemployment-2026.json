@@ -1,0 +1,122 @@
+{
+  "id": "place-uk3-unemployment-2026",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Model-based estimates of unemployment for local authorities, April 2025 to March 2026, via Nomis dataset NM_127_1",
+    "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_127_1.data.csv?geography=E08000003,E08000025,E08000035,E06000023,S12000036,S12000049,E12000007,K02000001&date=latest&item=1,2&measures=20100,20701&select=date_name,date_code,geography_name,geography_code,geography_type,item_name,measures_name,obs_value,obs_status_name",
+    "table": "NM_127_1: item 2 unemployment rate (model based), item 1 count, measures value and confidence",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 6.2,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 324,100 people unemployed; 95% confidence interval plus or minus 0.5 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the London region (Greater London); for a region the model-based figure is the survey's own direct estimate"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 5.0,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 15,800 people unemployed; 95% confidence interval plus or minus 1.4 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 8.1,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 46,400 people unemployed; 95% confidence interval plus or minus 1.7 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 4.6,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 19,600 people unemployed; 95% confidence interval plus or minus 1.1 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 4.2,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 11,600 people unemployed; 95% confidence interval plus or minus 1.2 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 3.3,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 10,300 people unemployed; 95% confidence interval plus or minus 1.0 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 6.9,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, model-based estimate for the local authority",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the newest period published; 22,400 people unemployed; 95% confidence interval plus or minus 1.7 points; the model joins the Annual Population Survey with the claimant count to steady small samples; measured for the local authority"
+    },
+    {
+      "item": "unemployment_rate",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 4.4,
+      "unit": "% of the economically active",
+      "year": "2025-04/2026-03",
+      "measure": "unemployment rate, aged 16 and over, Annual Population Survey",
+      "note": "the twelve months April 2025 to March 2026 (Apr 2025-Mar 2026), the same period as the cities; 1,548,200 unemployed of 34,924,200 economically active; 95% confidence interval plus or minus 0.1 points; no model-based figure is made for the country, whose survey sample needs none; the monthly headline rate from the Labour Force Survey is a different, three-month measure; measured for the country",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Annual Population Survey, unemployment rate aged 16+ (variable 83), via Nomis dataset NM_17_5",
+        "url": "https://www.nomisweb.co.uk/api/v01/dataset/NM_17_5.data.csv?geography=K02000001,E12000007,E08000003&date=latest&variable=83&measures=20599,21001,21002,21003&select=date_name,geography_name,geography_code,variable_name,measures_name,obs_value,obs_status_name"
+      }
+    }
+  ]
+}

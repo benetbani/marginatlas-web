@@ -1,0 +1,3751 @@
+{
+ "id": "oecd-corporate-tax-rates",
+ "source": {
+  "publisher": "OECD (Corporate Tax Statistics)",
+  "title": "Corporate income tax (CIT): statutory and targeted small business rates",
+  "url": "https://sdmx.oecd.org/public/rest/data/OECD.CTP.TPS,DSD_TAX_CIT@DF_CIT,2.0/all?startPeriod=2024&format=csvfilewithlabels",
+  "table": "DSD_TAX_CIT@DF_CIT 2.0: CIT_C (combined), CIT (central government), targeting ST (statutory) and TA (small business)",
+  "licence": "OECD open by default policy (CC BY 4.0 default from 1 July 2024; earlier content under the OECD terms, free reuse on terms similar to CC BY 4.0), https://www.oecd.org/en/about/oecd-open-by-default-policy.html (the data terms page refuses scripted requests)"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AW",
+    "name": "Aruba"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AW",
+    "name": "Aruba"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AO",
+    "name": "Angola"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AO",
+    "name": "Angola"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AI",
+    "name": "Anguilla"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AI",
+    "name": "Anguilla"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AD",
+    "name": "Andorra"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AD",
+    "name": "Andorra"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AE",
+    "name": "United Arab Emirates"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AE",
+    "name": "United Arab Emirates"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AR",
+    "name": "Argentina"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AM",
+    "name": "Armenia"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AM",
+    "name": "Armenia"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AG",
+    "name": "Antigua and Barbuda"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AG",
+    "name": "Antigua and Barbuda"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 23.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 23.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BJ",
+    "name": "Benin"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BJ",
+    "name": "Benin"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BF",
+    "name": "Burkina Faso"
+   },
+   "value": 27.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BF",
+    "name": "Burkina Faso"
+   },
+   "value": 27.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BH",
+    "name": "Bahrain"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BH",
+    "name": "Bahrain"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BS",
+    "name": "Bahamas"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BS",
+    "name": "Bahamas"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BZ",
+    "name": "Belize"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BZ",
+    "name": "Belize"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BM",
+    "name": "Bermuda"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BM",
+    "name": "Bermuda"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 34.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 34.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BB",
+    "name": "Barbados"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BB",
+    "name": "Barbados"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BN",
+    "name": "Brunei Darussalam"
+   },
+   "value": 18.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BN",
+    "name": "Brunei Darussalam"
+   },
+   "value": 18.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "BW",
+    "name": "Botswana"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "BW",
+    "name": "Botswana"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 26.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "CA",
+    "name": "Canada"
+   },
+   "value": 11.53,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 19.47,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CH",
+    "name": "Switzerland"
+   },
+   "value": 8.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 12.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CN",
+    "name": "China"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CI",
+    "name": "Côte d'Ivoire"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CI",
+    "name": "Côte d'Ivoire"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CM",
+    "name": "Cameroon"
+   },
+   "value": 33.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CM",
+    "name": "Cameroon"
+   },
+   "value": 33.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CD",
+    "name": "Democratic Republic of the Congo"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CD",
+    "name": "Democratic Republic of the Congo"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CG",
+    "name": "Congo"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CG",
+    "name": "Congo"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CK",
+    "name": "Cook Islands"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CK",
+    "name": "Cook Islands"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CV",
+    "name": "Cabo Verde"
+   },
+   "value": 20.4,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CV",
+    "name": "Cabo Verde"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 5.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CW",
+    "name": "Curaçao"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CW",
+    "name": "Curaçao"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KY",
+    "name": "Cayman Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KY",
+    "name": "Cayman Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 21.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 21.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 30.13,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 15.82,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "DJ",
+    "name": "Djibouti"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "DJ",
+    "name": "Djibouti"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "DM",
+    "name": "Dominica"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "DM",
+    "name": "Dominica"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "DO",
+    "name": "Dominican Republic"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "DO",
+    "name": "Dominican Republic"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "EG",
+    "name": "Egypt"
+   },
+   "value": 22.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "EG",
+    "name": "Egypt"
+   },
+   "value": 22.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 19.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "FJ",
+    "name": "Fiji"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "FJ",
+    "name": "Fiji"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 36.13,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 36.13,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "FO",
+    "name": "Faroe Islands"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "FO",
+    "name": "Faroe Islands"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GA",
+    "name": "Gabon"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GA",
+    "name": "Gabon"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 19.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GG",
+    "name": "Bailiwick of Guernsey"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GG",
+    "name": "Bailiwick of Guernsey"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GI",
+    "name": "Gibraltar"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GI",
+    "name": "Gibraltar"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GD",
+    "name": "Grenada"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GD",
+    "name": "Grenada"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GL",
+    "name": "Greenland"
+   },
+   "value": 26.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GL",
+    "name": "Greenland"
+   },
+   "value": 26.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "GT",
+    "name": "Guatemala"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "GT",
+    "name": "Guatemala"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 16.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "HK",
+    "name": "Hong Kong"
+   },
+   "value": 16.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "HN",
+    "name": "Honduras"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "HN",
+    "name": "Honduras"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "HT",
+    "name": "Haiti"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "HT",
+    "name": "Haiti"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "ID",
+    "name": "Indonesia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IM",
+    "name": "Isle of Man"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IM",
+    "name": "Isle of Man"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 25.17,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 25.17,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 12.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 12.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 23.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 23.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 27.81,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 24.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "JM",
+    "name": "Jamaica"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "JM",
+    "name": "Jamaica"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "JE",
+    "name": "Jersey"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "JE",
+    "name": "Jersey"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "JO",
+    "name": "Jordan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "JO",
+    "name": "Jordan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 29.74,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 23.2,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 21.37,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KZ",
+    "name": "Kazakhstan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KZ",
+    "name": "Kazakhstan"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KN",
+    "name": "Saint Kitts and Nevis"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KN",
+    "name": "Saint Kitts and Nevis"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 27.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "South Korea"
+   },
+   "value": 11.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "KW",
+    "name": "Kuwait"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LR",
+    "name": "Liberia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LR",
+    "name": "Liberia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LC",
+    "name": "Saint Lucia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LC",
+    "name": "Saint Lucia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LI",
+    "name": "Liechtenstein"
+   },
+   "value": 12.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LI",
+    "name": "Liechtenstein"
+   },
+   "value": 12.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 17.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 17.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 7.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 23.87,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 17.12,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 21.73,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MO",
+    "name": "Macau (China)"
+   },
+   "value": 12.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MO",
+    "name": "Macau (China)"
+   },
+   "value": 12.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MA",
+    "name": "Morocco"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MC",
+    "name": "Monaco"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MC",
+    "name": "Monaco"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 12.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 12.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MV",
+    "name": "Maldives"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MV",
+    "name": "Maldives"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 35.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MR",
+    "name": "Mauritania"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MR",
+    "name": "Mauritania"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MS",
+    "name": "Montserrat"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MS",
+    "name": "Montserrat"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MU",
+    "name": "Mauritius"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MU",
+    "name": "Mauritius"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 24.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 24.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "NA",
+    "name": "Namibia"
+   },
+   "value": 32.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "NA",
+    "name": "Namibia"
+   },
+   "value": 32.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "NG",
+    "name": "Nigeria"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "NG",
+    "name": "Nigeria"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 25.8,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 25.8,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 19.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "OM",
+    "name": "Oman"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "OM",
+    "name": "Oman"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PK",
+    "name": "Pakistan"
+   },
+   "value": 29.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PK",
+    "name": "Pakistan"
+   },
+   "value": 29.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PA",
+    "name": "Panama"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PA",
+    "name": "Panama"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 29.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PE",
+    "name": "Peru"
+   },
+   "value": 29.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PG",
+    "name": "Papua New Guinea"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PG",
+    "name": "Papua New Guinea"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 19.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 19.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 29.5,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "PY",
+    "name": "Paraguay"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "PY",
+    "name": "Paraguay"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "QA",
+    "name": "Qatar"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "QA",
+    "name": "Qatar"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 16.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 16.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SA",
+    "name": "Saudi Arabia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 17.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 17.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SL",
+    "name": "Sierra Leone"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SL",
+    "name": "Sierra Leone"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SM",
+    "name": "San Marino"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SM",
+    "name": "San Marino"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 24.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 24.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 10.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 22.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 20.6,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 20.6,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SZ",
+    "name": "Eswatini"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SZ",
+    "name": "Eswatini"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "SC",
+    "name": "Seychelles"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "SC",
+    "name": "Seychelles"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TC",
+    "name": "Turks and Caicos Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TC",
+    "name": "Turks and Caicos Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TG",
+    "name": "Togo"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TG",
+    "name": "Togo"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TT",
+    "name": "Trinidad and Tobago"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TT",
+    "name": "Trinidad and Tobago"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TN",
+    "name": "Tunisia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TN",
+    "name": "Tunisia"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2025",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 18.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "UY",
+    "name": "Uruguay"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "UY",
+    "name": "Uruguay"
+   },
+   "value": 25.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 25.53,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 21.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_small_business",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 25.3,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate targeted at small business",
+   "note": "The rate a small business pays where the jurisdiction targets one; the eligibility rule is the jurisdiction's own."
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "UZ",
+    "name": "Uzbekistan"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "UZ",
+    "name": "Uzbekistan"
+   },
+   "value": 15.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "VC",
+    "name": "Saint Vincent and the Grenadines"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "VC",
+    "name": "Saint Vincent and the Grenadines"
+   },
+   "value": 28.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "VG",
+    "name": "British Virgin Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "VG",
+    "name": "British Virgin Islands"
+   },
+   "value": 0.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "VN",
+    "name": "Viet Nam"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "VN",
+    "name": "Viet Nam"
+   },
+   "value": 20.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "WS",
+    "name": "Samoa"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "WS",
+    "name": "Samoa"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 27.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  },
+  {
+   "item": "cit_rate_combined",
+   "geo": {
+    "level": "country",
+    "code": "ZM",
+    "name": "Zambia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "combined corporate income tax rate (central and sub-central government), statutory"
+  },
+  {
+   "item": "cit_rate_central",
+   "geo": {
+    "level": "country",
+    "code": "ZM",
+    "name": "Zambia"
+   },
+   "value": 30.0,
+   "unit": "% of taxable income",
+   "year": "2026",
+   "measure": "corporate income tax rate, central government, statutory"
+  }
+ ]
+}

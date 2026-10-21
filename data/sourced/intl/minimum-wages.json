@@ -1,0 +1,673 @@
+{
+ "id": "intl-minimum-wages",
+ "source": {
+  "publisher": "National governments (each row names its own page)",
+  "title": "Legal minimum wages, read on each government's page or legal text",
+  "url": "https://www.ilo.org/ilostat",
+  "table": "ILOSTAT used only to locate the rates; every value is from the row's own government source",
+  "licence": "Official public notices and legal texts"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-01",
+    "name": "Hokkaido (Sapporo)"
+   },
+   "value": 1131,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,075 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-04",
+    "name": "Miyagi (Sendai)"
+   },
+   "value": 1098,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,038 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-13",
+    "name": "Tokyo"
+   },
+   "value": 1280,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,226 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-14",
+    "name": "Kanagawa (Yokohama)"
+   },
+   "value": 1279,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,225 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-23",
+    "name": "Aichi (Nagoya)"
+   },
+   "value": 1195,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,140 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-26",
+    "name": "Kyoto"
+   },
+   "value": 1180,
+   "unit": "JPY per hour",
+   "year": "2026-11-16",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-11-16; it replaces 1,122 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-27",
+    "name": "Osaka"
+   },
+   "value": 1231,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,177 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-28",
+    "name": "Hyogo (Kobe)"
+   },
+   "value": 1172,
+   "unit": "JPY per hour",
+   "year": "2026-10-01",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-01; it replaces 1,116 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-34",
+    "name": "Hiroshima"
+   },
+   "value": 1141,
+   "unit": "JPY per hour",
+   "year": "2026-10-11",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-11; it replaces 1,085 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-40",
+    "name": "Fukuoka"
+   },
+   "value": 1114,
+   "unit": "JPY per hour",
+   "year": "2026-10-04",
+   "measure": "regional (prefectural) minimum wage per hour, FY2026 revision",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "Japan sets minimum wages by prefecture. In force from 2026-10-04; it replaces 1,057 JPY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "JP-26",
+    "name": "Kyoto"
+   },
+   "value": 1122,
+   "unit": "JPY per hour",
+   "year": "2025",
+   "measure": "regional (prefectural) minimum wage per hour, FY2025 rate",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "In force until 15 November 2026, replaced by 1,180 JPY from 16 November 2026 (the list prints it as the rate before revision)."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "JP",
+    "name": "Japan"
+   },
+   "value": 1177,
+   "unit": "JPY per hour",
+   "year": "2026",
+   "measure": "national weighted average of the 47 prefectural minimum wages, FY2026 revision (not a legal rate itself)",
+   "source": {
+    "publisher": "Ministry of Health, Labour and Welfare (Japan)",
+    "title": "FY2026 (Reiwa 8) regional minimum wages, national list (令和8年度地域別最低賃金全国一覧)",
+    "url": "https://www.mhlw.go.jp/content/11200000/001753404.pdf"
+   },
+   "note": "A weighted average published with the list (1,121 JPY before the revision); the legal rate is the prefecture's."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 10320,
+   "unit": "KRW per hour",
+   "year": "2026-01-01",
+   "measure": "statutory minimum wage per hour, all workplaces, 1 January to 31 December 2026",
+   "source": {
+    "publisher": "Minimum Wage Commission (Republic of Korea)",
+    "title": "Minimum wage decisions by year (연도별 최저임금 결정현황)",
+    "url": "https://www.minimumwage.go.kr/minWage/policy/decisionMain.do"
+   },
+   "note": "Monthly equivalent published: 2,156,880 KRW (209 hours)."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "KR",
+    "name": "Korea"
+   },
+   "value": 10700,
+   "unit": "KRW per hour",
+   "year": "2027-01-01",
+   "measure": "statutory minimum wage per hour, from 1 January 2027 (decided 14 July 2026, notified 5 August 2026)",
+   "source": {
+    "publisher": "Minimum Wage Commission (Republic of Korea)",
+    "title": "Minimum wage decisions by year (연도별 최저임금 결정현황)",
+    "url": "https://www.minimumwage.go.kr/minWage/policy/decisionMain.do"
+   },
+   "note": "Monthly equivalent published: 2,236,300 KRW (209 hours)."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 23.95,
+   "unit": "NZD per hour",
+   "year": "2026-04-01",
+   "measure": "adult minimum wage per hour",
+   "source": {
+    "publisher": "Employment New Zealand (Ministry of Business, Innovation and Employment)",
+    "title": "Minimum wage is increasing on 1 April 2026",
+    "url": "https://www.employment.govt.nz/news-and-updates/minimum-wage-is-increasing-on-1-april-2026"
+   },
+   "note": "Up from 23.50 NZD."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "NZ",
+    "name": "New Zealand"
+   },
+   "value": 19.16,
+   "unit": "NZD per hour",
+   "year": "2026-04-01",
+   "measure": "starting-out and training minimum wage per hour",
+   "source": {
+    "publisher": "Employment New Zealand (Ministry of Business, Innovation and Employment)",
+    "title": "Minimum wage is increasing on 1 April 2026",
+    "url": "https://www.employment.govt.nz/news-and-updates/minimum-wage-is-increasing-on-1-april-2026"
+   },
+   "note": "Up from 18.80 NZD."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 26.44,
+   "unit": "AUD per hour",
+   "year": "2026-07-01",
+   "measure": "National Minimum Wage per hour (employees not covered by an award or agreement)",
+   "source": {
+    "publisher": "Fair Work Ombudsman (Australian Government)",
+    "title": "Minimum wages",
+    "url": "https://www.fairwork.gov.au/pay-and-wages/minimum-wages"
+   },
+   "note": "1,004.90 AUD per week. Applies from the first full pay period on or after 1 July 2026; most employees are covered by an award, whose rates may be higher. Confirmed by a second route (data note 34): the Internet Archive copy of the Fair Work Ombudsman page of 12 October 2026 reads \"As of 1 July 2026, the National Minimum Wage is $26.44 per hour or $1004.90 per week.\""
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "CA-ON",
+    "name": "Ontario (Toronto)"
+   },
+   "value": 17.95,
+   "unit": "CAD per hour",
+   "year": "2026-10-01",
+   "measure": "general minimum wage per hour",
+   "source": {
+    "publisher": "Government of Ontario",
+    "title": "Your guide to the Employment Standards Act: Minimum wage",
+    "url": "https://www.ontario.ca/document/your-guide-employment-standards-act-0/minimum-wage"
+   },
+   "note": "Rates from 1 October 2026 to 30 September 2027; 17.60 CAD before. Student minimum wage 16.90 CAD."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec (Montréal)"
+   },
+   "value": 16.6,
+   "unit": "CAD per hour",
+   "year": "2026-05-01",
+   "measure": "general minimum wage rate per hour",
+   "source": {
+    "publisher": "Commission des normes, de l'équité, de la santé et de la sécurité du travail (CNESST), Québec",
+    "title": "Minimum wage in Québec",
+    "url": "https://www.cnesst.gouv.qc.ca/en/working-conditions/wage-and-pay/wages/minimum-wage"
+   },
+   "note": "Up 0.50 CAD on 1 May 2026 (government release of that day). Confirmed by a second route (data note 34): the Internet Archive copy of the CNESST page of 13 July 2026 reads \"The general minimum wage rate is currently $16.60 an hour.\""
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "CA-QC",
+    "name": "Quebec (Montréal)"
+   },
+   "value": 13.3,
+   "unit": "CAD per hour",
+   "year": "2026-05-01",
+   "measure": "minimum wage per hour for employees receiving tips",
+   "source": {
+    "publisher": "Gouvernement du Québec, ministère du Travail",
+    "title": "Hausse du salaire minimum, 1er mai 2026",
+    "url": "https://www.quebec.ca/nouvelles/actualites/details/hausse-du-salaire-minimum-des-aujourdhui-le-taux-general-du-salaire-minimum-setablit-a-1660-lheure-70097"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "CA-BC",
+    "name": "British Columbia (Vancouver)"
+   },
+   "value": 18.25,
+   "unit": "CAD per hour",
+   "year": "2026-06-01",
+   "measure": "general minimum wage per hour",
+   "source": {
+    "publisher": "Government of British Columbia",
+    "title": "Minimum wage",
+    "url": "https://www2.gov.bc.ca/gov/content/employment-business/employment-standards-advice/employment-standards/wages/minimum-wage"
+   },
+   "note": "17.85 CAD from 1 June 2025."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "CA-AB",
+    "name": "Alberta (Calgary)"
+   },
+   "value": 15.0,
+   "unit": "CAD per hour",
+   "year": "2026",
+   "measure": "general minimum wage per hour (Employment Standards Regulation)",
+   "source": {
+    "publisher": "Government of Alberta",
+    "title": "Employment standards rules: Minimum wage",
+    "url": "https://www.alberta.ca/minimum-wage"
+   },
+   "note": "The page gives no effective date for the current rate. Students under 18: 13 CAD for the first 28 hours a week in school term."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 33030.0,
+   "unit": "TRY per month (gross)",
+   "year": "2026-01-01",
+   "measure": "gross monthly minimum wage, 1 January to 31 December 2026",
+   "source": {
+    "publisher": "Ministry of Labour and Social Security (Türkiye)",
+    "title": "Asgari ücretin net hesabı ve işverene maliyeti, 01/01/2026 - 31/12/2026",
+    "url": "https://www.csgb.gov.tr/poco-pages/asgari-ucret/"
+   },
+   "note": "Net after employee social security (14%) and unemployment insurance (1%): 28,075.50 TRY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 315.04,
+   "unit": "MXN per day",
+   "year": "2026-01-01",
+   "measure": "general minimum wage per day, general minimum wage zone (all of the country outside the northern border free zone, Mexico City included)",
+   "source": {
+    "publisher": "Comisión Nacional de los Salarios Mínimos, Diario Oficial de la Federación (Mexico)",
+    "title": "Resolución que fija los salarios mínimos generales y profesionales a partir del 1 de enero de 2026 (DOF 09/12/2025)",
+    "url": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09/12/2025"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "MX",
+    "name": "Mexico"
+   },
+   "value": 440.87,
+   "unit": "MXN per day",
+   "year": "2026-01-01",
+   "measure": "minimum wage per day, Northern Border Free Zone",
+   "source": {
+    "publisher": "Comisión Nacional de los Salarios Mínimos, Diario Oficial de la Federación (Mexico)",
+    "title": "Resolución que fija los salarios mínimos generales y profesionales a partir del 1 de enero de 2026 (DOF 09/12/2025)",
+    "url": "https://dof.gob.mx/nota_detalle.php?codigo=5775534&fecha=09/12/2025"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 6443.85,
+   "unit": "ILS per month",
+   "year": "2026-04-01",
+   "measure": "monthly minimum wage, workers aged 18 and over",
+   "source": {
+    "publisher": "National Insurance Institute of Israel (Bituach Leumi)",
+    "title": "Minimum wage: general data (שכר מינימום - נתונים כלליים)",
+    "url": "https://www.btl.gov.il/Mediniyut/GeneralData/Pages/%D7%A9%D7%9B%D7%A8%20%D7%9E%D7%99%D7%A0%D7%99%D7%9E%D7%95%D7%9D.aspx"
+   },
+   "note": "Hourly: 35.40 ILS on 182 hours a month, 34.64 ILS on 186 hours."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "IL",
+    "name": "Israel"
+   },
+   "value": 35.4,
+   "unit": "ILS per hour",
+   "year": "2026-04-01",
+   "measure": "hourly minimum wage, workers aged 18 and over, 182-hour month",
+   "source": {
+    "publisher": "National Insurance Institute of Israel (Bituach Leumi)",
+    "title": "Minimum wage: general data (שכר מינימום - נתונים כלליים)",
+    "url": "https://www.btl.gov.il/Mediniyut/GeneralData/Pages/%D7%A9%D7%9B%D7%A8%20%D7%9E%D7%99%D7%A0%D7%99%D7%9E%D7%95%D7%9D.aspx"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "CL",
+    "name": "Chile"
+   },
+   "value": 553553,
+   "unit": "CLP per month",
+   "year": "2026-05-01",
+   "measure": "ingreso mínimo mensual, workers aged 18 to 65",
+   "source": {
+    "publisher": "Dirección del Trabajo (Chile)",
+    "title": "¿Cuál es el valor del ingreso mínimo mensual? (Ley N° 21.830, Diario Oficial 22.06.2026)",
+    "url": "https://www.dt.gob.cl/portal/1628/w3-article-60141.html"
+   },
+   "note": "Ley 21.830 (Diario Oficial 22 June 2026), retroactive to 1 May 2026. Under 18 and over 65: 412,938 CLP."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "CO",
+    "name": "Colombia"
+   },
+   "value": 1750905,
+   "unit": "COP per month",
+   "year": "2026-02-19",
+   "measure": "salario mínimo legal mensual 2026, fixed transitorily by Decree 0159 of 19 February 2026",
+   "source": {
+    "publisher": "Presidencia de la República, Ministerio del Trabajo (Colombia)",
+    "title": "Decreto 0159 del 19 de febrero de 2026, por el cual se fija transitoriamente el salario mínimo mensual legal del año 2026",
+    "url": "https://dapre.presidencia.gov.co/normativa/normativa/DECRETO%20No.%200159%20DEL%2019%20DE%20FEBRERO%20DE%202026.pdf"
+   },
+   "note": "Transitory, until the Council of State rules on the annulment case against Decree 1469 of 2025, which set the same amount from 1 January 2026. Confirmed by a second route (data note 34): the decree's text in the Foreign Ministry's legal compilation (cancilleria.gov.co/normograma/compilacion/docs/decreto_0159_2026.htm, read 2026-10-18), article 1, $1.750.905; its note of validity says the decree served its purpose when the suspension of Decree 1469 was lifted, which set the same amount from 1 January 2026."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 373092.3,
+   "unit": "CRC per month",
+   "year": "2026-01-01",
+   "measure": "minimum monthly wage, generic unskilled worker (TONCG)",
+   "source": {
+    "publisher": "Ministerio de Trabajo y Seguridad Social (Costa Rica)",
+    "title": "Lista de salarios mínimos 2026 (rige 1 de enero de 2026)",
+    "url": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf"
+   },
+   "note": "Costa Rica sets minimum wages by occupation category."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 12436.41,
+   "unit": "CRC per day",
+   "year": "2026-01-01",
+   "measure": "minimum daily wage, unskilled worker (TONC): the category of waiters (salonero)",
+   "source": {
+    "publisher": "Ministerio de Trabajo y Seguridad Social (Costa Rica)",
+    "title": "Lista de salarios mínimos 2026 (rige 1 de enero de 2026)",
+    "url": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "CR",
+    "name": "Costa Rica"
+   },
+   "value": 13991.86,
+   "unit": "CRC per day",
+   "year": "2026-01-01",
+   "measure": "minimum daily wage, skilled worker (TOC): the category of cooks (cocinero) and barbers (barbero)",
+   "source": {
+    "publisher": "Ministerio de Trabajo y Seguridad Social (Costa Rica)",
+    "title": "Lista de salarios mínimos 2026 (rige 1 de enero de 2026)",
+    "url": "https://www.mtss.go.cr/temas-laborales/salarios/lista_salarios_minimos_2026.pdf"
+   }
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 1621.0,
+   "unit": "BRL per month",
+   "year": "2026-01-01",
+   "measure": "national minimum wage per month",
+   "source": {
+    "publisher": "Presidência da República (Brazil)",
+    "title": "Decreto nº 12.797, de 23 de dezembro de 2025 (salário mínimo a partir de 1º de janeiro de 2026)",
+    "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/decreto/d12797.htm"
+   },
+   "note": "Daily 54.04 BRL, hourly 7.37 BRL (the decree's sole paragraph)."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 30.23,
+   "unit": "ZAR per hour",
+   "year": "2026-03-01",
+   "measure": "national minimum wage for each ordinary hour worked (farm and domestic workers included)",
+   "source": {
+    "publisher": "Department of Employment and Labour (South Africa), Government Gazette 54075",
+    "title": "National Minimum Wage Act No. 9 of 2018: Amendment of National Minimum Wage 2026 (Notice R. 7083, 3 February 2026)",
+    "url": "https://www.gov.za/sites/default/files/gcis_document/202602/54075rg11941gon7083.pdf"
+   },
+   "note": "Binding from 1 March 2026. Expanded public works programme workers: 16.62 ZAR an hour."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "value": 2740,
+   "unit": "CNY per month",
+   "year": "2025-07-01",
+   "measure": "monthly minimum wage, full-time workers (excluding the worker's own social insurance and housing fund contributions)",
+   "source": {
+    "publisher": "Shanghai Municipal Human Resources and Social Security Bureau",
+    "title": "Notice on adjusting the city's minimum wage standard (沪人社规〔2025〕10号)",
+    "url": "https://rsj.sh.gov.cn/tgzfl_17732/20250714/t0035_1434097.html"
+   },
+   "note": "Set by the municipality; the latest adjustment in the bureau's list of notices (read 2026-10-18). Up from 2,690 CNY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "city",
+    "code": "CN-SH",
+    "name": "Shanghai (municipality)"
+   },
+   "value": 25,
+   "unit": "CNY per hour",
+   "year": "2025-07-01",
+   "measure": "hourly minimum wage, part-time workers",
+   "source": {
+    "publisher": "Shanghai Municipal Human Resources and Social Security Bureau",
+    "title": "Notice on adjusting the city's minimum wage standard (沪人社规〔2025〕10号)",
+    "url": "https://rsj.sh.gov.cn/tgzfl_17732/20250714/t0035_1434097.html"
+   },
+   "note": "Up from 24 CNY."
+  },
+  {
+   "item": "minimum_wage",
+   "geo": {
+    "level": "region",
+    "code": "ID-JK",
+    "name": "DKI Jakarta"
+   },
+   "value": 5729876,
+   "unit": "IDR per month",
+   "year": "2026-01-01",
+   "measure": "provincial minimum wage (UMP), workers with less than one year of service",
+   "source": {
+    "publisher": "Ministry of Manpower (Kementerian Ketenagakerjaan), Indonesia",
+    "title": "News: UMP DKI Jakarta 2026 (Governor's Decree 1142 of 2025 on the 2026 provincial minimum wage)",
+    "url": "https://kemnaker.go.id/news/detail/wamenaker-apresiasi-paket-kebijakan-kesejahteraan-pekerja-dki-pascapenetapan-ump-2026-bisa-dicontoh-oleh-daerah-lain"
+   },
+   "note": "Governor's Decree 1142 of 2025 (listed in force on jdih.jakarta.go.id). Up from 5,396,761 IDR in 2025."
+  }
+ ]
+}

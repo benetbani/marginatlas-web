@@ -1,0 +1,110 @@
+{
+ "id": "eucities-ie-cso-2024",
+ "source": {
+  "publisher": "Central Statistics Office (CSO), Ireland",
+  "title": "CSO PxStat: Business Demography by county and activity; population per county",
+  "url": "https://data.cso.ie/",
+  "table": "PxStat API https://ws.cso.ie/public/api.restful/PxStat.Data.Cube_API.ReadDataset/{BRA30,BRA34,G0420}/JSON-stat/2.0/en (BRA tables updated 2026-10-06)",
+  "licence": "Creative Commons Attribution 4.0 (CSO open data)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "NACE Rev 2, all activities in the business demography (all persons engaged size classes)",
+   "geo": {
+    "level": "county",
+    "code": "IE-D",
+    "name": "County Dublin (Dublin City, Dún Laoghaire-Rathdown, Fingal, South Dublin)"
+   },
+   "value": 138989,
+   "unit": "active enterprises",
+   "year": "2024",
+   "measure": "number of active enterprises in the business demography, reference year 2024",
+   "note": "County Dublin, wider than Dublin City Council's area: the finest level published. Business demography scope: market enterprises of NACE B to S, non-market producers excluded from 2022 (the table's note).",
+   "source": {
+    "publisher": "Central Statistics Office (CSO), Ireland",
+    "title": "Business Demography NACE Rev 2, by employment size, county and year (BRA30)",
+    "url": "https://data.cso.ie/table/BRA30"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev 2 Food and Beverage Service Activities (I56)",
+   "geo": {
+    "level": "county",
+    "code": "IE-D",
+    "name": "County Dublin (Dublin City, Dún Laoghaire-Rathdown, Fingal, South Dublin)"
+   },
+   "value": 4240,
+   "unit": "active enterprises",
+   "year": "2024",
+   "measure": "number of active enterprises in the business demography, reference year 2024",
+   "note": "County Dublin, wider than Dublin City Council's area: the finest level published. Business demography scope: market enterprises of NACE B to S, non-market producers excluded from 2022 (the table's note). The whole division 56: restaurants, cafes, pubs and takeaways together; the county table stops at divisions.",
+   "source": {
+    "publisher": "Central Statistics Office (CSO), Ireland",
+    "title": "Business Demography, by activity, county and year (BRA34)",
+    "url": "https://data.cso.ie/table/BRA34"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev 2 Food and Beverage Service Activities (I56)",
+   "geo": {
+    "level": "county",
+    "code": "IE-D",
+    "name": "County Dublin (Dublin City, Dún Laoghaire-Rathdown, Fingal, South Dublin)"
+   },
+   "value": 4240,
+   "unit": "active enterprises",
+   "year": "2024",
+   "measure": "number of active enterprises in the business demography, reference year 2024",
+   "note": "County Dublin, wider than Dublin City Council's area: the finest level published. Business demography scope: market enterprises of NACE B to S, non-market producers excluded from 2022 (the table's note). The whole division 56: restaurants, cafes, pubs and takeaways together; the county table stops at divisions.",
+   "source": {
+    "publisher": "Central Statistics Office (CSO), Ireland",
+    "title": "Business Demography, by activity, county and year (BRA34)",
+    "url": "https://data.cso.ie/table/BRA34"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "business_count",
+   "officialClass": "NACE Rev 2 Other Personal Service Activities (S96)",
+   "geo": {
+    "level": "county",
+    "code": "IE-D",
+    "name": "County Dublin (Dublin City, Dún Laoghaire-Rathdown, Fingal, South Dublin)"
+   },
+   "value": 4795,
+   "unit": "active enterprises",
+   "year": "2024",
+   "measure": "number of active enterprises in the business demography, reference year 2024",
+   "note": "County Dublin, wider than Dublin City Council's area: the finest level published. Business demography scope: market enterprises of NACE B to S, non-market producers excluded from 2022 (the table's note). Hairdressing (96.02) cannot be separated at county level.",
+   "source": {
+    "publisher": "Central Statistics Office (CSO), Ireland",
+    "title": "Business Demography, by activity, county and year (BRA34)",
+    "url": "https://data.cso.ie/table/BRA34"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "county",
+    "code": "IE-D",
+    "name": "County Dublin (Dublin City, Dún Laoghaire-Rathdown, Fingal, South Dublin)"
+   },
+   "value": 1458154,
+   "unit": "persons",
+   "year": "2022",
+   "measure": "population of the county, Census of Population 2022 (census night, 3 April 2022)",
+   "note": "Same county as the enterprise rows, two years earlier than their reference year: the newest county figure in this table.",
+   "source": {
+    "publisher": "Central Statistics Office (CSO), Ireland",
+    "title": "Population per County (G0420)",
+    "url": "https://data.cso.ie/table/G0420"
+   }
+  }
+ ]
+}

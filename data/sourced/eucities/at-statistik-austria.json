@@ -1,0 +1,175 @@
+{
+ "id": "eucities-at-statistik-austria",
+ "source": {
+  "publisher": "Statistik Austria",
+  "title": "Open Government Data: tourism by origin and Land; population at the start of the year",
+  "url": "https://data.statistik.gv.at/",
+  "table": "OGD_touextsai_Tour_HKL_1 (monthly, Land W96-9 Wien), OGD_bevstandjbab2002_BevStand_2026",
+  "licence": "Creative Commons Attribution 4.0 (CC BY 4.0), Statistik Austria open data"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 8169087,
+   "unit": "arrivals",
+   "year": "2024",
+   "measure": "arrivals of all guests, residents of Austria included in accommodation reported to the tourism statistics (all types), calendar year 2024",
+   "note": "The sum of the twelve published months of 2024 over every origin. Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 18864964,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of all guests, residents of Austria included in accommodation reported to the tourism statistics (all types), calendar year 2024",
+   "note": "The sum of the twelve published months of 2024 over every origin. Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 6402675,
+   "unit": "arrivals",
+   "year": "2024",
+   "measure": "arrivals of guests whose country of origin is outside Austria in accommodation reported to the tourism statistics (all types), calendar year 2024",
+   "note": "The sum of the twelve published months of 2024 over every origin outside Austria (the Austrian Länder rows left out). Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 15511489,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights of guests whose country of origin is outside Austria in accommodation reported to the tourism statistics (all types), calendar year 2024",
+   "note": "The sum of the twelve published months of 2024 over every origin outside Austria (the Austrian Länder rows left out). Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 8591281,
+   "unit": "arrivals",
+   "year": "2025",
+   "measure": "arrivals of all guests, residents of Austria included in accommodation reported to the tourism statistics (all types), calendar year 2025",
+   "note": "The sum of the twelve published months of 2025 over every origin. Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 20092646,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of all guests, residents of Austria included in accommodation reported to the tourism statistics (all types), calendar year 2025",
+   "note": "The sum of the twelve published months of 2025 over every origin. Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 6824039,
+   "unit": "arrivals",
+   "year": "2025",
+   "measure": "arrivals of guests whose country of origin is outside Austria in accommodation reported to the tourism statistics (all types), calendar year 2025",
+   "note": "The sum of the twelve published months of 2025 over every origin outside Austria (the Austrian Länder rows left out). Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 16700972,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights of guests whose country of origin is outside Austria in accommodation reported to the tourism statistics (all types), calendar year 2025",
+   "note": "The sum of the twelve published months of 2025 over every origin outside Austria (the Austrian Länder rows left out). Vienna is both commune and Land.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Ankünfte und Übernachtungen nach Herkunftsländern und Bundesländern ab 1973 (OGD_touextsai_Tour_HKL_1)",
+    "url": "https://data.statistik.gv.at/data/OGD_touextsai_Tour_HKL_1.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AT-9",
+    "name": "Wien (Gemeinde and Bundesland)"
+   },
+   "value": 2040914,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "The sum of the published cells of Vienna's 23 districts (Gemeinde codes 901 to 923), every sex and age.",
+   "source": {
+    "publisher": "Statistik Austria",
+    "title": "Bevölkerung zu Jahresbeginn ab 2002 nach Gemeinden, Geschlecht und Alter, 2026 (OGD_bevstandjbab2002_BevStand_2026)",
+    "url": "https://data.statistik.gv.at/data/OGD_bevstandjbab2002_BevStand_2026.csv"
+   }
+  }
+ ]
+}

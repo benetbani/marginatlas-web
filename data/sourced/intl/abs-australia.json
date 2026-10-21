@@ -1,0 +1,3382 @@
+{
+ "id": "abs-australia",
+ "source": {
+  "publisher": "Australian Bureau of Statistics",
+  "title": "Counts of Australian Businesses (June 2025), Australian Industry (2024-25), Regional population (30 June 2025)",
+  "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025",
+  "table": "Each row names its own data cube or dataflow: 8165DC02, 8165DC05, 8165DC10, AUSTRALIAN_INDUSTRY, ERP_LGA2025",
+  "licence": "Creative Commons Attribution 4.0 International (ABS copyright: www.abs.gov.au/website-privacy-copyright-and-disclaimer)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 19446,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 19446,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 17865,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 17865,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 9174,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 9174,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 2957,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 2957,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 4467,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 4467,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 1123,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 1123,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 56305,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 23.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with no employees (non-employing) (annualised employment)",
+   "note": "13,197 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 35.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 1 to 4 employees (annualised employment)",
+   "note": "19,801 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 32.7,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 5 to 19 employees (annualised employment)",
+   "note": "18,420 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 8.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 20 to 199 employees (annualised employment)",
+   "note": "4,702 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.3,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 200 or more employees (annualised employment)",
+   "note": "185 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 56305,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 4511 Cafes and Restaurants is one class: cafes and restaurants are counted together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 23.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with no employees (non-employing) (annualised employment)",
+   "note": "13,197 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 35.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 1 to 4 employees (annualised employment)",
+   "note": "19,801 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 32.7,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 5 to 19 employees (annualised employment)",
+   "note": "18,420 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 8.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 20 to 199 employees (annualised employment)",
+   "note": "4,702 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 4511 Cafes and Restaurants",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.3,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 200 or more employees (annualised employment)",
+   "note": "185 of 56,305 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 2290,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 1851,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 1101,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 643,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 673,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 84,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 6874,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "Pubs, taverns and bars. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 29.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with no employees (non-employing) (annualised employment)",
+   "note": "2,004 of 6,874 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 18.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 1 to 4 employees (annualised employment)",
+   "note": "1,253 of 6,874 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 27.9,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 5 to 19 employees (annualised employment)",
+   "note": "1,920 of 6,874 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 24.3,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 20 to 199 employees (annualised employment)",
+   "note": "1,669 of 6,874 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "officialClass": "ANZSIC 2006 4520 Pubs, Taverns and Bars",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 200 or more employees (annualised employment)",
+   "note": "28 of 6,874 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 12637,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 10333,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 7284,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 2308,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 3581,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 582,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 37517,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "note": "ANZSIC 9511 Hairdressing and Beauty Services: barbers, hairdressers and beauty salons together. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 44.8,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with no employees (non-employing) (annualised employment)",
+   "note": "16,815 of 37,517 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 42.4,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 1 to 4 employees (annualised employment)",
+   "note": "15,897 of 37,517 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 12.0,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 5 to 19 employees (annualised employment)",
+   "note": "4,515 of 37,517 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.8,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 20 to 199 employees (annualised employment)",
+   "note": "285 of 37,517 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 9511 Hairdressing and Beauty Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.0,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 200 or more employees (annualised employment)",
+   "note": "5 of 37,517 businesses. The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 2729648,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses (ABN-registered, GST-registered market sector) operating at the end of the 2024-25 financial year, by main state",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 63.6,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with no employees (non-employing) (annualised employment)",
+   "note": "1,735,470 of 2,729,648 businesses.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 25.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 1 to 4 employees (annualised employment)",
+   "note": "688,870 of 2,729,648 businesses.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 8.5,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 5 to 19 employees (annualised employment)",
+   "note": "232,129 of 2,729,648 businesses.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 2.5,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 20 to 199 employees (annualised employment)",
+   "note": "67,857 of 2,729,648 businesses.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 0.2,
+   "unit": "percent of businesses",
+   "year": "2025-06",
+   "measure": "share of businesses with 200 or more employees (annualised employment)",
+   "note": "5,322 of 2,729,648 businesses.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 2: businesses by main state by industry class by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC02.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 73.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 4,182 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 73.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 4,182 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 55.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 3,148 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 55.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 3,148 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 45.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,563 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 45.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,563 of 5,680 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 73.1,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 3,219 of 4,405 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 53.6,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 2,359 of 4,405 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 44.7,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 1,969 of 4,405 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 74.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "107,034 of 143,455 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 56.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "80,920 of 143,455 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 47.6,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "68,320 of 143,455 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 72.7,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 4,154 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 72.7,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 4,154 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 55.7,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 3,183 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 55.7,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 3,183 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 46.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,633 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 46.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,633 of 5,714 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 69.5,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 3,798 of 5,463 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 48.8,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 2,667 of 5,463 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 39.2,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 2,144 of 5,463 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 72.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "103,065 of 142,015 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 53.5,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "76,010 of 142,015 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 44.9,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "63,818 of 142,015 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 77.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,487 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 77.6,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 2,487 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 59.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,902 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 59.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,902 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 50.3,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,611 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 50.3,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,611 of 3,203 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 76,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 2,142 of 2,820 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 57.7,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 1,628 of 2,820 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 47.3,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 1,334 of 2,820 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 77,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "61,218 of 79,509 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 59.3,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "47,139 of 79,509 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 50.5,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "40,161 of 79,509 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 78.2,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 849 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 78.2,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 849 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 62.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 678 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 62.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 678 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 49.9,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 542 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 49.9,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 542 of 1,086 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 77,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 564 of 732 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 59.3,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 434 of 732 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 49.3,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 361 of 732 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 77.9,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "18,234 of 23,404 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 61,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "14,281 of 23,404 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 52.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "12,192 of 23,404 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 79.5,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,164 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 79.5,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 1,164 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 62.9,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 921 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 62.9,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 921 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 53.7,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 787 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 53.7,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 787 of 1,465 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 79.2,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 986 of 1,245 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 60,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 747 of 1,245 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 50,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 622 of 1,245 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 78,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "29,879 of 38,293 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 60.4,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "23,131 of 38,293 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 51.8,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "19,828 of 38,293 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 79.3,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 260 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 79.3,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 260 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 61.9,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 203 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 61.9,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 203 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 49.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 161 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 49.1,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 161 of 328 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 75.9,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 173 of 228 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 59.6,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 136 of 228 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 46.9,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 107 of 228 entries survived (published rate). The ABS perturbs small cells in this table (totals of industry division, state and Australia excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 76.8,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "5,059 of 6,591 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 59.5,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "3,920 of 6,591 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 50.2,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "3,307 of 6,591 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 75,
+   "unit": "percent of businesses that entered",
+   "year": "2023-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2023 (about 1 year after entry; all businesses, employing or not)",
+   "note": "331,757 of 442,555 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 56.7,
+   "unit": "percent of businesses that entered",
+   "year": "2024-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2024 (about 2 years after entry; all businesses, employing or not)",
+   "note": "251,126 of 442,555 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector)",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 48,
+   "unit": "percent of businesses that entered",
+   "year": "2025-06",
+   "measure": "share of the businesses that entered in 2021-22 still trading in June 2025 (about 3 years after entry; all businesses, employing or not)",
+   "note": "212,492 of 442,555 entries survived (published rate).",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 5: survival of entries by main state by subdivision by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC05.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-17200",
+    "name": "City of Sydney (local government area)"
+   },
+   "value": 4280,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-17200",
+    "name": "City of Sydney (local government area)"
+   },
+   "value": 2147,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-24600",
+    "name": "City of Melbourne (local government area)"
+   },
+   "value": 2962,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-24600",
+    "name": "City of Melbourne (local government area)"
+   },
+   "value": 1221,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-31000",
+    "name": "City of Brisbane (local government area)"
+   },
+   "value": 6271,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-31000",
+    "name": "City of Brisbane (local government area)"
+   },
+   "value": 6028,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-40070",
+    "name": "City of Adelaide (local government area)"
+   },
+   "value": 951,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-40070",
+    "name": "City of Adelaide (local government area)"
+   },
+   "value": 369,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-57080",
+    "name": "City of Perth (local government area)"
+   },
+   "value": 658,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-57080",
+    "name": "City of Perth (local government area)"
+   },
+   "value": 302,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division H Accommodation and Food Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-89399",
+    "name": "Australian Capital Territory (Canberra; unincorporated, one LGA)"
+   },
+   "value": 1935,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division H, accommodation and food services: hotels as well as cafes, restaurants, takeaway and pubs. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "officialClass": "ANZSIC 2006 division S Other Services",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-89399",
+    "name": "Australian Capital Territory (Canberra; unincorporated, one LGA)"
+   },
+   "value": 1655,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area",
+   "note": "Whole division S, other services: repair and maintenance as well as personal services. No class is published by LGA. Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address. The ABS perturbs small cells in this table (division totals excepted): treat small counts as approximate.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-17200",
+    "name": "City of Sydney (local government area)"
+   },
+   "value": 85193,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-24600",
+    "name": "City of Melbourne (local government area)"
+   },
+   "value": 46783,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-31000",
+    "name": "City of Brisbane (local government area)"
+   },
+   "value": 145916,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-40070",
+    "name": "City of Adelaide (local government area)"
+   },
+   "value": 12975,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-57080",
+    "name": "City of Perth (local government area)"
+   },
+   "value": 13552,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "ANZSIC 2006, all industries (market sector), sum of the published divisions",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-89399",
+    "name": "Australian Capital Territory (Canberra; unincorporated, one LGA)"
+   },
+   "value": 36927,
+   "unit": "businesses",
+   "year": "2025-06",
+   "measure": "actively trading businesses at June 2025, by the main address's local government area: the sum of the published industry-division totals (the table prints no all-industry row)",
+   "note": "Businesses that operate in several states are placed at state level only and are not in any LGA count; counts are by the business's main address.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Counts of Australian Businesses, including Entries and Exits, June 2021 to June 2025, data cube 10: businesses by industry division by Local Government Area by employment size ranges",
+    "url": "https://www.abs.gov.au/statistics/economy/business-indicators/counts-australian-businesses-including-entries-and-exits/jul2021-jun2025/8165DC10.xlsx"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-NSW",
+    "name": "New South Wales"
+   },
+   "value": 8592524,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-17200",
+    "name": "City of Sydney (local government area)"
+   },
+   "value": 241797,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-40070",
+    "name": "City of Adelaide (local government area)"
+   },
+   "value": 30173,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-VIC",
+    "name": "Victoria"
+   },
+   "value": 7073859,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-57080",
+    "name": "City of Perth (local government area)"
+   },
+   "value": 35673,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-SA",
+    "name": "South Australia"
+   },
+   "value": 1902665,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-89399",
+    "name": "Australian Capital Territory (Canberra; unincorporated, one LGA)"
+   },
+   "value": 484630,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-QLD",
+    "name": "Queensland"
+   },
+   "value": 5669764,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 27613654,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-ACT",
+    "name": "Australian Capital Territory"
+   },
+   "value": 484630,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-24600",
+    "name": "City of Melbourne (local government area)"
+   },
+   "value": 194481,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "AU-LGA-31000",
+    "name": "City of Brisbane (local government area)"
+   },
+   "value": 1375301,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "LGA boundaries of 2025; the business counts' LGA codes are the same.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "region",
+    "code": "AU-WA",
+    "name": "Western Australia"
+   },
+   "value": 3044382,
+   "unit": "persons",
+   "year": "2025-06",
+   "measure": "estimated resident population, 30 June 2025",
+   "note": "Same boundary as the business counts.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Estimated resident population by LGA (2025), 30 June 2025 (ABS Data API, ERP_LGA2025)",
+    "url": "https://www.abs.gov.au/statistics/people/population/regional-population/latest-release"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 30.4,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "total labour costs (wages and salaries, superannuation, workers' compensation, payroll tax, fringe benefits tax) divided by sales and service income",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 40,816 million AUD over sales and service income of 134,077 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 30.4,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "total labour costs (wages and salaries, superannuation, workers' compensation, payroll tax, fringe benefits tax) divided by sales and service income",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 40,816 million AUD over sales and service income of 134,077 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "purchases_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 35.4,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "purchases of goods and materials (not services, not rent) divided by sales and service income",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 47,516 million AUD over sales and service income of 134,077 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "purchases_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 35.4,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "purchases of goods and materials (not services, not rent) divided by sales and service income",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 47,516 million AUD over sales and service income of 134,077 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "ebitda_share",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 10.3,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "earnings before interest, tax, depreciation and amortisation divided by sales and service income (EBITDA, the ABS's measure; close to but not the same as a gross operating surplus)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 13,847 million AUD over sales and service income of 134,077 million AUD. ABS quality flag: estimate has a relative standard error of 10% to less than 25% and should be used with caution.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "ebitda_share",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 10.3,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "earnings before interest, tax, depreciation and amortisation divided by sales and service income (EBITDA, the ABS's measure; close to but not the same as a gross operating surplus)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 13,847 million AUD over sales and service income of 134,077 million AUD. ABS quality flag: estimate has a relative standard error of 10% to less than 25% and should be used with caution.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "restaurants",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 6.7,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "operating profit before tax divided by sales and service income (after depreciation and all pay)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 8,917 million AUD over sales and service income of 134,077 million AUD. ABS quality flag: estimate has a relative standard error of 10% to less than 25% and should be used with caution.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "cafes",
+   "officialClass": "ANZSIC 2006 subdivision 45 Food and Beverage Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 6.7,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "operating profit before tax divided by sales and service income (after depreciation and all pay)",
+   "note": "ANZSIC subdivision 45, all food and beverage services (cafes and restaurants, takeaway, catering, pubs and bars, clubs). 8,917 million AUD over sales and service income of 134,077 million AUD. ABS quality flag: estimate has a relative standard error of 10% to less than 25% and should be used with caution.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "staff_cost_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 50.5,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "total labour costs (wages and salaries, superannuation, workers' compensation, payroll tax, fringe benefits tax) divided by sales and service income",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 22,452 million AUD over sales and service income of 44,460 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "purchases_share",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 18.8,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "purchases of goods and materials (not services, not rent) divided by sales and service income",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 8,345 million AUD over sales and service income of 44,460 million AUD.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  },
+  {
+   "item": "operating_profit_margin",
+   "trade": "barbershops",
+   "officialClass": "ANZSIC 2006 subdivision 95 Personal and Other Services",
+   "geo": {
+    "level": "country",
+    "code": "AU",
+    "name": "Australia"
+   },
+   "value": 16.0,
+   "unit": "percent of sales and service income",
+   "year": "2024-25",
+   "measure": "operating profit before tax divided by sales and service income (after depreciation and all pay)",
+   "note": "ANZSIC subdivision 95, all personal and other services (hairdressing and beauty, diet and weight, laundry, funeral, religious and other services). 7,092 million AUD over sales and service income of 44,460 million AUD. ABS quality flag: estimate has a relative standard error of 10% to less than 25% and should be used with caution.",
+   "source": {
+    "publisher": "Australian Bureau of Statistics",
+    "title": "Australian Industry, 2024-25 (ABS Data API, AUSTRALIAN_INDUSTRY)",
+    "url": "https://www.abs.gov.au/statistics/industry/industry-overview/australian-industry/latest-release"
+   }
+  }
+ ]
+}

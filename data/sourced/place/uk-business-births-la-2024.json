@@ -1,0 +1,145 @@
+{
+ "id": "place-uk-business-births-la-2024",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Business demography, UK: 2024 (reference tables)",
+  "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+  "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+  "licence": "Open Government Licence v3.0"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 14.62,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (Manchester); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 3,835 enterprise births of 26,230 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 15.06,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (Birmingham); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 6,500 enterprise births of 43,175 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 11.7,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (Leeds); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 3,755 enterprise births of 32,105 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 10.99,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (Bristol City of); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 2,190 enterprise births of 19,935 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 12.06,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (City of Edinburgh); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 2,410 enterprise births of 19,980 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "SIC 2007 all industries",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 12.88,
+   "unit": "per 100 active enterprises",
+   "year": "2024",
+   "measure": "enterprise births in 2024 divided by active enterprises in 2024, percent",
+   "note": "the local authority (Glasgow City); no industry detail is published for a local authority. Worked as one count over the other from the release's own counts: 2,855 enterprise births of 22,170 active enterprises (both control rounded to base 5; Tables 1.1d and 3.1d).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Business demography, UK: 2024 (reference tables)",
+    "url": "https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx",
+    "table": "Tables 1.1d (births of new enterprises, 2024) and 3.1d (active enterprises, 2024), by district, county and unitary authority",
+    "licence": "Open Government Licence v3.0"
+   }
+  }
+ ]
+}

@@ -1,0 +1,255 @@
+{
+ "id": "eucities-cz-csu-2026",
+ "source": {
+  "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+  "title": "Registr ekonomických subjektů (RES), open data file res_data.csv, state of 15 October 2026",
+  "url": "https://opendata.czso.cz/data/od_org03/res_data.csv",
+  "table": "res_data.csv (state 2026-10-15), grouped on OKRESLAU CZ0100, DDATZAN empty, NACE (script cz_counts.py); OBY02A population; CRU02R collective accommodation",
+  "licence": "ČSÚ open data, free reuse with the source given (https://csu.gov.cz/otevrena-data)"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "business_count",
+   "trade": "all",
+   "officialClass": "All activities (whole register)",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 712413,
+   "unit": "registered economic subjects",
+   "year": "2026-10",
+   "measure": "number of economic subjects in the business register (RES) with their registered seat in Prague and no date of dissolution, by prevailing statistical activity (CZ-NACE), state of 15 October 2026",
+   "note": "Seats of legal units and sole traders, not premises. The register keeps subjects with no activity until they are dissolved, so it counts more than the businesses trading.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Registr ekonomických subjektů (RES), open data file res_data.csv, state of 15 October 2026",
+    "url": "https://opendata.czso.cz/data/od_org03/res_data.csv"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "restaurants",
+   "officialClass": "CZ-NACE 56.10: Stravování v restauracích, u stánků a v mobilních zařízeních (restaurants, stalls and mobile food service)",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 20829,
+   "unit": "registered economic subjects",
+   "year": "2026-10",
+   "measure": "number of economic subjects in the business register (RES) with their registered seat in Prague and no date of dissolution, by prevailing statistical activity (CZ-NACE), state of 15 October 2026",
+   "note": "Seats of legal units and sole traders, not premises. The register keeps subjects with no activity until they are dissolved, so it counts more than the businesses trading. A further 311 subjects carry only the coarser code (561, 5610) and are not in this count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Registr ekonomických subjektů (RES), open data file res_data.csv, state of 15 October 2026",
+    "url": "https://opendata.czso.cz/data/od_org03/res_data.csv"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "cafes",
+   "officialClass": "CZ-NACE 56.30: Pohostinství (beverage serving activities)",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 148,
+   "unit": "registered economic subjects",
+   "year": "2026-10",
+   "measure": "number of economic subjects in the business register (RES) with their registered seat in Prague and no date of dissolution, by prevailing statistical activity (CZ-NACE), state of 15 October 2026",
+   "note": "Seats of legal units and sole traders, not premises. The register keeps subjects with no activity until they are dissolved, so it counts more than the businesses trading. A further 50 subjects carry only the coarser code (563, 5630) and are not in this count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Registr ekonomických subjektů (RES), open data file res_data.csv, state of 15 October 2026",
+    "url": "https://opendata.czso.cz/data/od_org03/res_data.csv"
+   }
+  },
+  {
+   "item": "business_count",
+   "trade": "barbershops",
+   "officialClass": "CZ-NACE 96.02: Kadeřnictví, holičství, kosmetické a podobné služby (hairdressing, barbering, beauty treatment)",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 10876,
+   "unit": "registered economic subjects",
+   "year": "2026-10",
+   "measure": "number of economic subjects in the business register (RES) with their registered seat in Prague and no date of dissolution, by prevailing statistical activity (CZ-NACE), state of 15 October 2026",
+   "note": "Seats of legal units and sole traders, not premises. The register keeps subjects with no activity until they are dissolved, so it counts more than the businesses trading. A further 221 subjects carry only the coarser code (9602) and are not in this count. Hairdressing and beauty together: barbers are not counted apart.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Registr ekonomických subjektů (RES), open data file res_data.csv, state of 15 October 2026",
+    "url": "https://opendata.czso.cz/data/od_org03/res_data.csv"
+   }
+  },
+  {
+   "item": "population",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 1407084,
+   "unit": "persons",
+   "year": "2026",
+   "measure": "population on 1 January 2026",
+   "note": "Prague is one municipality and one region: the boundary of the register rows.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Obyvatelstvo - stav a věková struktura, sada OBY02A (počet obyvatel k 1. 1.)",
+    "url": "https://data.csu.gov.cz/opendata/sady/OBY02A/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 8063367,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of all guests, residents of Czechia included in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count. A guest counts once per stay.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 8276026,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of all guests, residents of Czechia included in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count. A guest counts once per stay.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 18279256,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent by all guests, residents of Czechia included in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors_total",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 18993211,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by all guests, residents of Czechia included in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 6502298,
+   "unit": "guests",
+   "year": "2024",
+   "measure": "arrivals of non-resident guests in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count. A guest counts once per stay.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 6700946,
+   "unit": "guests",
+   "year": "2025",
+   "measure": "arrivals of non-resident guests in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count. A guest counts once per stay.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 15664790,
+   "unit": "nights",
+   "year": "2024",
+   "measure": "nights spent by non-resident guests in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  },
+  {
+   "item": "visitors",
+   "geo": {
+    "level": "city",
+    "code": "CZ010",
+    "name": "Hlavní město Praha (Prague, city and region)"
+   },
+   "value": 16360753,
+   "unit": "nights",
+   "year": "2025",
+   "measure": "nights spent by non-resident guests in collective accommodation establishments (at least 5 rooms and 10 beds), calendar year",
+   "note": "Collective accommodation (HUZ) only: private flats let to tourists are not in the count.",
+   "source": {
+    "publisher": "Český statistický úřad (ČSÚ), Czech Statistical Office",
+    "title": "Návštěvnost hromadných ubytovacích zařízení, sada CRU02R (hosté a přenocování podle rezidence)",
+    "url": "https://data.csu.gov.cz/opendata/sady/CRU02R/distribuce/csv"
+   }
+  }
+ ]
+}

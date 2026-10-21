@@ -1,0 +1,483 @@
+{
+ "id": "profit-taxes",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Profit taxes by legal form, United Kingdom, United States and California, Italy and Lazio, Hungary",
+  "url": "https://www.gov.uk/corporation-tax-rates"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 25,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Corporation Tax, main rate (profits over GBP 250,000)",
+   "note": "Marginal Relief between GBP 50,000 and 250,000.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Corporation Tax rates, expenses and reliefs: Rates",
+    "url": "https://www.gov.uk/corporation-tax-rates"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 19,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Corporation Tax, small profits rate (profits of GBP 50,000 or less)",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Corporation Tax rates, expenses and reliefs: Rates",
+    "url": "https://www.gov.uk/corporation-tax-rates"
+   }
+  },
+  {
+   "item": "income_tax_allowance",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12570,
+   "unit": "GBP",
+   "year": "2026-27",
+   "measure": "Personal Allowance",
+   "note": "Tax year 6 April 2026 to 5 April 2027. England, Wales and Northern Ireland bands (Scotland differs).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 20,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Basic rate, taxable income GBP 12,571 to 50,270",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 40,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Higher rate, GBP 50,271 to 125,140",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 45,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Additional rate, over GBP 125,140",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Income Tax rates and Personal Allowances",
+    "url": "https://www.gov.uk/income-tax-rates"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 6,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Class 4 National Insurance, sole trader, profits GBP 12,570 to 50,270",
+   "note": "Class 2 is treated as paid for profits of GBP 7,105 or more.",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Self-employed National Insurance rates",
+    "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 2,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Class 4 National Insurance, profits over GBP 50,270",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Self-employed National Insurance rates",
+    "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 21,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Federal corporate income tax (C corporation)",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Corporations",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/corporations"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 8.84,
+   "unit": "%",
+   "year": "2026",
+   "measure": "California corporation franchise tax, corporations other than banks and financials",
+   "note": "S corporations 1.5%.",
+   "source": {
+    "publisher": "California Franchise Tax Board",
+    "title": "Business tax rates",
+    "url": "https://www.ftb.ca.gov/file/business/tax-rates.html"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Federal income tax, single, taxable income up to USD 12,400",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 12,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Federal income tax, single, over USD 12,400",
+   "note": "22% over 50,400. 24% over 105,700. 32% over 201,775. 35% over 256,225. 37% over 640,600.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "income_tax_allowance",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 16100,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Federal standard deduction, single",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "IRS releases tax inflation adjustments for tax year 2026",
+    "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 15.3,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Self-employment tax (12.4% social security, 2.9% Medicare)",
+   "note": "On net earnings from self-employment.",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Self-employment tax (Social Security and Medicare taxes)",
+    "url": "https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 24,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRES, company income tax",
+   "note": "TUIR art. 77.",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 77, testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art77!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "region",
+    "code": "IT-62",
+    "name": "Lazio"
+   },
+   "value": 4.82,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRAP, Lazio, ordinary rate (on net value of production, not on profit)",
+   "note": "Lazio's 0.92-point increase on the national rate (L.R. 20/2025, art. 2, c. 4) is included. Firms in the ATECO codes of D.L. 21/2026, art. 3: 6.82.",
+   "source": {
+    "publisher": "Ministero dell'Economia e delle Finanze, Dipartimento delle Finanze",
+    "title": "IRAP: elenco generale delle aliquote applicabili, anno 2026 (aggiornamento del 09/10/2026)",
+    "url": "https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/aliquoteirap/download/download.php?tipo=ira&anno=2026"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 23,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRPEF, income up to EUR 28,000",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 33,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRPEF, EUR 28,000 to 50,000",
+   "note": "Cut from 35% by the 2026 budget law (L. 199/2025).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "income_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 43,
+   "unit": "%",
+   "year": "2026",
+   "measure": "IRPEF, over EUR 50,000",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 24.48,
+   "unit": "%",
+   "year": "2026",
+   "measure": "INPS, shopkeepers (commercianti), owner's own contribution, income to EUR 56,224",
+   "note": "Artisans (artigiani, barbers among them) 24%. On income above 56,224: 25.48 and 25%. Minimum income 18,808. Minimum contribution 4,611.64 (commercianti) or 4,521.36 (artigiani).",
+   "source": {
+    "publisher": "INPS",
+    "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+    "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Flat-rate regime (regime forfetario), substitute tax on revenue times the ATECO coefficient",
+   "note": "For individuals with revenue up to EUR 85,000 the year before (L. 190/2014, art. 1, c. 54 and 64). 5% for the first five years of a new activity (c. 65). INPS on that income reduced by 35% (c. 77).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "Legge 23 dicembre 2014, n. 190, art. 1, commi 54 a 89 (regime forfetario), testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:legge:2014-12-23;190~art1!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Corporate income tax (társasági adó)",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: TAO-felajánlás (2026. 02. 02.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2F2026%2F55.-Tao-felajanlas-2026.-02.-02"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 10,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Small business tax (kisvállalati adó, KIVA), an alternative to corporate tax",
+   "note": "Its base starts from personal payments (pay) and capital items, not from profit alone.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: A kisvállalati adó szabályozása 2026-tól (2026. 05. 18.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F92.-informacios-fuzet---a-kisvallalati-ado-szabalyozasa"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 9,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Sole trader under entrepreneurial income taxation: entrepreneur's personal income tax (vállalkozói szja) on the business tax base",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "profit_tax_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Sole trader: tax on the entrepreneur's dividend base (vállalkozói osztalékalap)",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 18.5,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Sole trader, social security contribution (TB járulék) on the owner's drawings, at least on the minimum wage a month",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  },
+  {
+   "item": "owner_contribution_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Sole trader, social contribution tax (szocho) on the owner's drawings, at least on the minimum wage a month",
+   "note": "From 1 January 2026 the 112.5% multiplier on the minimum base no longer applies. The guaranteed wage minimum is the floor where the main activity needs a secondary qualification.",
+   "source": {
+    "publisher": "Nemzeti Adó- és Vámhivatal",
+    "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+    "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+   }
+  }
+ ]
+}

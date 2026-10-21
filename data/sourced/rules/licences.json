@@ -1,0 +1,1588 @@
+{
+ "id": "licences",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "Trade licences for restaurants, cafes and barbershops in London, Los Angeles, Rome and Budapest, each from its issuer",
+  "url": "https://www.gov.uk/guidance/starting-a-food-business"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 0,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Food business registration",
+   "note": "Issuer: the local authority (in London, the borough). Free and cannot be refused (Food Standards Agency).",
+   "source": {
+    "publisher": "Food Standards Agency",
+    "title": "Starting a food business",
+    "url": "https://www.gov.uk/guidance/starting-a-food-business"
+   }
+  },
+  {
+   "item": "licence_wait_days",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 28,
+   "unit": "days",
+   "year": "2026",
+   "measure": "Food business registration, at least this long before trading",
+   "note": "Issuer: the local authority (in London, the borough). The FSA: register at least 28 days before trading.",
+   "source": {
+    "publisher": "Food Standards Agency",
+    "title": "Starting a food business",
+    "url": "https://www.gov.uk/guidance/starting-a-food-business"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 100,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band A (non-domestic rateable value none to GBP 4,300)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 70,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band A",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 190,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band B (non-domestic rateable value GBP 4,301 to 33,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 180,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band B",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 315,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band C (non-domestic rateable value GBP 33,001 to 87,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 295,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band C",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 450,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band D (non-domestic rateable value GBP 87,001 to 125,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005. Premises used mainly for drinking on the premises pay twice (D) or three times (E).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 320,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band D",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 635,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band E (non-domestic rateable value GBP 125,001 plus)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005. Premises used mainly for drinking on the premises pay twice (D) or three times (E).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 350,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band E",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 500,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Pavement licence for tables and chairs, first application, at most",
+   "note": "Issuer: the local authority. It may charge up to 500 new and 350 on renewal. Licences last up to two years.",
+   "source": {
+    "publisher": "Ministry of Housing, Communities and Local Government",
+    "title": "Pavement licences: guidance",
+    "url": "https://www.gov.uk/government/publications/pavement-licences-guidance"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 350,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Pavement licence, renewal, at most",
+   "note": "Issuer: the local authority.",
+   "source": {
+    "publisher": "Ministry of Housing, Communities and Local Government",
+    "title": "Pavement licences: guidance",
+    "url": "https://www.gov.uk/government/publications/pavement-licences-guidance"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Personal licence to sell alcohol",
+   "note": "Issuer: the local authority. Someone selling alcohol from licensed premises holds a personal licence (age 18+ and a licensing qualification). The page names no fee.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Personal licence to sell alcohol (England and Wales)",
+    "url": "https://www.gov.uk/personal-licence-to-sell-alcohol"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1044,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Plan check, restaurant 0 to 500 sq ft",
+   "note": "Issuer: County of Los Angeles Department of Public Health. 501-1,999 sq ft 1,530. 2,000-3,999 1,865. 4,000-9,999 2,276. 10,000+ 2,723.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 2723,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Plan check, restaurant 10,000 sq ft or more",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 319,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 719,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1206,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 344,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 762,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1309,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 370,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 838,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1375,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 400,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 932,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1438,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1135,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 41 (on-sale beer and wine, eating place), original application",
+   "note": "Issuer: California Department of Alcoholic Beverage Control. Annual fee 565, collected with the application.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Application fee schedules (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 565,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 41, annual fee",
+   "note": "Issuer: California Department of Alcoholic Beverage Control.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Annual fee schedule (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/annual-fee-schedule/"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 19840,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 47 (on-sale general, eating place), new licence by priority drawing",
+   "note": "Issuer: California Department of Alcoholic Beverage Control. A new Type 47 is available only to priority drawing winners. Existing licences can be transferred person to person. Annual fee 1,545 in a city over 40,000.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Application fee schedules (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1545,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 47, annual fee, city with population over 40,000",
+   "note": "Issuer: California Department of Alcoholic Beverage Control.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Annual fee schedule (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/annual-fee-schedule/"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 1500,
+   "unit": "USD",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, LADOT application review fee, new participants (one-time)",
+   "note": "Issuer: LADOT with the Bureau of Engineering (LAMC 62.118.2). Also a BOE R-permit fee of 556 for new participants and a sewer facility charge per seat. The summary is dated June 2023.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 556,
+   "unit": "USD",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, Bureau of Engineering R-permit fee, new participants (one-time)",
+   "note": "Issuer: City of Los Angeles Bureau of Engineering.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 165,
+   "unit": "USD per seat",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, sewer facility charge, full service",
+   "note": "Issuer: City of Los Angeles Bureau of Engineering. 165 a seat for full service, 138 for limited service.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": null,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "SCIA for serving food and drink (somministrazione), opening outside the protected areas",
+   "note": "Issuer: the SUAP of Roma Capitale, filed online only. A spese istruttoria fee applies, set yearly in the Giunta Capitolina's tariff resolution. The amount was not readable.",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Somministrazione al pubblico di alimenti e bevande: SCIA apertura fuori dagli ambiti di tutela",
+    "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF44858"
+   }
+  },
+  {
+   "item": "licence_wait_days",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 0,
+   "unit": "days",
+   "year": "2026",
+   "measure": "SCIA for serving food and drink, wait before trading",
+   "note": "Issuer: the SUAP of Roma Capitale. The activity may start on the date the SCIA is filed (its protocol receipt). This SCIA covers openings outside the protected areas (ambiti di tutela).",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Somministrazione al pubblico di alimenti e bevande: SCIA apertura fuori dagli ambiti di tutela",
+    "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF44858"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "restaurants",
+   "geo": {
+    "level": "city",
+    "code": "HU-budapest",
+    "name": "Budapest"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Notice of catering (vendéglátás) to the district notary",
+   "note": "Issuer: in Budapest, the district's notary (kerületi jegyző), or the chief notary of the capital where it governs the area (Gov. Decree 210/2009, s. 2). The notary registers the notice. The decree refers to a duty, whose amount was not read.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "210/2009. (IX. 29.) Korm. rendelet a kereskedelmi tevékenységek végzésének feltételeiről, 2. § és 6. §",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2009-210-20-22"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 0,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Food business registration",
+   "note": "Issuer: the local authority (in London, the borough). Free and cannot be refused (Food Standards Agency).",
+   "source": {
+    "publisher": "Food Standards Agency",
+    "title": "Starting a food business",
+    "url": "https://www.gov.uk/guidance/starting-a-food-business"
+   }
+  },
+  {
+   "item": "licence_wait_days",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 28,
+   "unit": "days",
+   "year": "2026",
+   "measure": "Food business registration, at least this long before trading",
+   "note": "Issuer: the local authority (in London, the borough). The FSA: register at least 28 days before trading.",
+   "source": {
+    "publisher": "Food Standards Agency",
+    "title": "Starting a food business",
+    "url": "https://www.gov.uk/guidance/starting-a-food-business"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 100,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band A (non-domestic rateable value none to GBP 4,300)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 70,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band A",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 190,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band B (non-domestic rateable value GBP 4,301 to 33,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 180,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band B",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 315,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band C (non-domestic rateable value GBP 33,001 to 87,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005.",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 295,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band C",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 450,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band D (non-domestic rateable value GBP 87,001 to 125,000)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005. Premises used mainly for drinking on the premises pay twice (D) or three times (E).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 320,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band D",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 635,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, new application, band E (non-domestic rateable value GBP 125,001 plus)",
+   "note": "Issuer: the licensing authority (in London, the borough). Home Office page published 25 April 2012. Fees of the Licensing Act 2003 (Fees) Regulations 2005. Premises used mainly for drinking on the premises pay twice (D) or three times (E).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 350,
+   "unit": "GBP",
+   "year": "2005",
+   "measure": "Premises licence to sell alcohol, annual charge, band E",
+   "note": "Issuer: the licensing authority (in London, the borough).",
+   "source": {
+    "publisher": "Home Office",
+    "title": "Alcohol licensing fee levels: main fee levels",
+    "url": "https://www.gov.uk/government/publications/alcohol-licensing-fee-levels/main-fee-levels"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 500,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Pavement licence for tables and chairs, first application, at most",
+   "note": "Issuer: the local authority. It may charge up to 500 new and 350 on renewal. Licences last up to two years.",
+   "source": {
+    "publisher": "Ministry of Housing, Communities and Local Government",
+    "title": "Pavement licences: guidance",
+    "url": "https://www.gov.uk/government/publications/pavement-licences-guidance"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 350,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Pavement licence, renewal, at most",
+   "note": "Issuer: the local authority.",
+   "source": {
+    "publisher": "Ministry of Housing, Communities and Local Government",
+    "title": "Pavement licences: guidance",
+    "url": "https://www.gov.uk/government/publications/pavement-licences-guidance"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Personal licence to sell alcohol",
+   "note": "Issuer: the local authority. Someone selling alcohol from licensed premises holds a personal licence (age 18+ and a licensing qualification). The page names no fee.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Personal licence to sell alcohol (England and Wales)",
+    "url": "https://www.gov.uk/personal-licence-to-sell-alcohol"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1044,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Plan check, restaurant 0 to 500 sq ft",
+   "note": "Issuer: County of Los Angeles Department of Public Health. 501-1,999 sq ft 1,530. 2,000-3,999 1,865. 4,000-9,999 2,276. 10,000+ 2,723.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 2723,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Plan check, restaurant 10,000 sq ft or more",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 319,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 719,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1206,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 0-30 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 344,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 762,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1309,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 31-60 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 370,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 838,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1375,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 61-150 seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 400,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, low risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 932,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, moderate risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "county",
+    "code": "US-CA-037",
+    "name": "Los Angeles County"
+   },
+   "value": 1438,
+   "unit": "USD",
+   "year": "2026-27",
+   "measure": "Public health permit, restaurant 151+ seats, high risk",
+   "note": "Issuer: County of Los Angeles Department of Public Health.",
+   "source": {
+    "publisher": "County of Los Angeles Department of Public Health",
+    "title": "FY 2026-2027 Public Health and Financial Management Fee Schedule",
+    "url": "https://admin.publichealth.lacounty.gov/eh/docs/permit/public-health-financial-management-fee-schedule.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1135,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 41 (on-sale beer and wine, eating place), original application",
+   "note": "Issuer: California Department of Alcoholic Beverage Control. Annual fee 565, collected with the application.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Application fee schedules (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 565,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 41, annual fee",
+   "note": "Issuer: California Department of Alcoholic Beverage Control.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Annual fee schedule (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/annual-fee-schedule/"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 19840,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 47 (on-sale general, eating place), new licence by priority drawing",
+   "note": "Issuer: California Department of Alcoholic Beverage Control. A new Type 47 is available only to priority drawing winners. Existing licences can be transferred person to person. Annual fee 1,545 in a city over 40,000.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Application fee schedules (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/application-fee-schedules/"
+   }
+  },
+  {
+   "item": "licence_annual_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1545,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Alcohol licence Type 47, annual fee, city with population over 40,000",
+   "note": "Issuer: California Department of Alcoholic Beverage Control.",
+   "source": {
+    "publisher": "California Department of Alcoholic Beverage Control",
+    "title": "Annual fee schedule (effective January 1, 2026)",
+    "url": "https://www.abc.ca.gov/licensing/license-fees/annual-fee-schedule/"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 1500,
+   "unit": "USD",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, LADOT application review fee, new participants (one-time)",
+   "note": "Issuer: LADOT with the Bureau of Engineering (LAMC 62.118.2). Also a BOE R-permit fee of 556 for new participants and a sewer facility charge per seat. The summary is dated June 2023.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 556,
+   "unit": "USD",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, Bureau of Engineering R-permit fee, new participants (one-time)",
+   "note": "Issuer: City of Los Angeles Bureau of Engineering.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 138,
+   "unit": "USD per seat",
+   "year": "2023",
+   "measure": "L.A. Al Fresco on-street dining, sewer facility charge, limited service",
+   "note": "Issuer: City of Los Angeles Bureau of Engineering. 165 a seat for full service, 138 for limited service.",
+   "source": {
+    "publisher": "City of Los Angeles Department of Transportation (LADOT)",
+    "title": "L.A. Al Fresco On-Street Dining Application Fees (fee summary, June 2023)",
+    "url": "https://ladot.lacity.gov/sites/default/files/2026-04/al-fresco-program-fee-summary-062023.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": null,
+   "unit": "EUR",
+   "year": "2026",
+   "measure": "SCIA for serving food and drink (somministrazione), opening outside the protected areas",
+   "note": "Issuer: the SUAP of Roma Capitale, filed online only. A spese istruttoria fee applies, set yearly in the Giunta Capitolina's tariff resolution. The amount was not readable.",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Somministrazione al pubblico di alimenti e bevande: SCIA apertura fuori dagli ambiti di tutela",
+    "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF44858"
+   }
+  },
+  {
+   "item": "licence_wait_days",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": 0,
+   "unit": "days",
+   "year": "2026",
+   "measure": "SCIA for serving food and drink, wait before trading",
+   "note": "Issuer: the SUAP of Roma Capitale. The activity may start on the date the SCIA is filed (its protocol receipt). This SCIA covers openings outside the protected areas (ambiti di tutela).",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Somministrazione al pubblico di alimenti e bevande: SCIA apertura fuori dagli ambiti di tutela",
+    "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF44858"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "cafes",
+   "geo": {
+    "level": "city",
+    "code": "HU-budapest",
+    "name": "Budapest"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Notice of catering (vendéglátás) to the district notary",
+   "note": "Issuer: in Budapest, the district's notary (kerületi jegyző), or the chief notary of the capital where it governs the area (Gov. Decree 210/2009, s. 2). The notary registers the notice. The decree refers to a duty, whose amount was not read.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "210/2009. (IX. 29.) Korm. rendelet a kereskedelmi tevékenységek végzésének feltételeiről, 2. § és 6. §",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2009-210-20-22"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "barbershops",
+   "geo": {
+    "level": "city",
+    "code": "GB-city-of-london",
+    "name": "City of London"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2025",
+   "measure": "Hairdresser and barber premises registration, City of London",
+   "note": "Issuer: City of London Corporation, under the Greater London Council (General Powers) Act 1967, s. 21. Application by email. Page updated 25/07/2025. No fee stated.",
+   "source": {
+    "publisher": "City of London Corporation",
+    "title": "Hairdresser and Barber registration",
+    "url": "https://www.cityoflondon.gov.uk/services/licensing/other-licence-and-business-permit-types/hairdresser-registration"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "barbershops",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 125,
+   "unit": "USD",
+   "year": "2025",
+   "measure": "Barber licence, application for examination and initial licence",
+   "note": "Issuer: California Board of Barbering and Cosmetology (form rev. August 2025). Non-refundable.",
+   "source": {
+    "publisher": "California Board of Barbering and Cosmetology",
+    "title": "Barber application for examination and initial license fee (form rev. August 2025)",
+    "url": "https://www.barbercosmo.ca.gov/forms_pubs/forms/barber_app.pdf"
+   }
+  },
+  {
+   "item": "licence_fee",
+   "trade": "barbershops",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 50,
+   "unit": "USD",
+   "year": "2024",
+   "measure": "Establishment licence for the shop, application",
+   "note": "Issuer: California Board of Barbering and Cosmetology (form rev. 25 March 2024). Non-refundable.",
+   "source": {
+    "publisher": "California Board of Barbering and Cosmetology",
+    "title": "Application for establishment license, instructions and checklist (form rev. 25 March 2024)",
+    "url": "https://www.barbercosmo.ca.gov/forms_pubs/forms/estab_app.pdf"
+   }
+  },
+  {
+   "item": "licence_required",
+   "trade": "barbershops",
+   "geo": {
+    "level": "city",
+    "code": "IT-rome",
+    "name": "Rome"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Hairdresser (acconciatore) qualification and SCIA",
+   "note": "Issuer: the SUAP of Roma Capitale. A professional qualification under Law 174/2005 is required, or a qualified technical manager. The SCIA is filed online and the activity may start on filing.",
+   "source": {
+    "publisher": "Roma Capitale",
+    "title": "Acconciatore: avvio attività",
+    "url": "https://www.comune.roma.it/web/it/scheda-servizi.page?contentId=INF37582"
+   }
+  },
+  {
+   "item": "tax_rate",
+   "trade": "barbershops",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 4.25,
+   "unit": "USD per USD 1,000 of gross receipts",
+   "year": "2026",
+   "measure": "City of Los Angeles business tax, professions and occupations (barbers named as an example)",
+   "note": "Issuer: City of Los Angeles Office of Finance (LAMC 21.49(c)). Restaurants are retail sales at 1.27.",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Finance",
+    "title": "Tax Information Booklet",
+    "url": "https://finance.lacity.gov/tax-information-booklet"
+   }
+  }
+ ]
+}

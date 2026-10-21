@@ -1,0 +1,211 @@
+{
+ "id": "us-bls-oews-2025",
+ "source": {
+  "publisher": "U.S. Bureau of Labor Statistics",
+  "title": "Occupational Employment and Wage Statistics (OEWS), May 2025, Los Angeles-Long Beach-Anaheim MSA (area 31080)",
+  "url": "https://www.bls.gov/oes/current/oes_31080.htm",
+  "table": "BLS Public Data API v2, series OEUM0031080000000{SOC}{08 hourly median, 03 hourly mean}, period A01 2025 (bls.gov pages refuse this server; the API is the publisher's own)",
+  "licence": "U.S. federal government work, public domain (17 U.S.C. 105)"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-1011: Chefs and Head Cooks",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 33.65,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Chefs and Head Cooks",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035101108; hourly mean 33.30 USD (series OEUM003108000000035101103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035101108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035101108"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-2014: Cooks, Restaurant",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 21.38,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Cooks, Restaurant",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035201408; hourly mean 21.52 USD (series OEUM003108000000035201403).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035201408",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035201408"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-2021: Food Preparation Workers",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 19.12,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Food Preparation Workers",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035202108; hourly mean 19.82 USD (series OEUM003108000000035202103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035202108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035202108"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-3031: Waiters and Waitresses",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 17.24,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Waiters and Waitresses",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035303108; hourly mean 20.50 USD (series OEUM003108000000035303103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035303108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035303108"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-3011: Bartenders",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 17.07,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Bartenders",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035301108; hourly mean 19.96 USD (series OEUM003108000000035301103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035301108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035301108"
+   }
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 35-3023: Fast Food and Counter Workers",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 20.24,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Fast Food and Counter Workers",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000035302308; hourly mean 19.75 USD (series OEUM003108000000035302303). The BLS definition: serve customers at counter or from a steam table, may prepare food and beverages; it does not name baristas, and the occupation spans fast food and coffee counters alike.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000035302308",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000035302308"
+   },
+   "trade": "cafes"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 11-9051: Food Service Managers",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 37.43,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Food Service Managers",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000011905108; hourly mean 40.66 USD (series OEUM003108000000011905103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000011905108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000011905108"
+   },
+   "trade": "restaurants"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 39-5011: Barbers",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 18.11,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Barbers",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000039501108; hourly mean 22.91 USD (series OEUM003108000000039501103).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000039501108",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000039501108"
+   },
+   "trade": "barbershops"
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "SOC 39-5012: Hairdressers, Hairstylists, and Cosmetologists",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 20.91,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: Hairdressers, Hairstylists, and Cosmetologists",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000039501208; hourly mean 26.10 USD (series OEUM003108000000039501203).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000039501208",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000039501208"
+   }
+  },
+  {
+   "item": "pay_hourly",
+   "officialClass": "00-0000: All Occupations",
+   "geo": {
+    "level": "metro",
+    "code": "31080",
+    "name": "Los Angeles-Long Beach-Anaheim, CA Metropolitan Statistical Area"
+   },
+   "value": 26.85,
+   "unit": "USD per hour",
+   "year": "2025",
+   "measure": "median hourly wage, May 2025, all industries: All Occupations",
+   "note": "Employees only; the self-employed and owners are not covered. Series OEUM003108000000000000008; hourly mean 37.15 USD (series OEUM003108000000000000003).",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Occupational Employment and Wage Statistics, May 2025, series OEUM003108000000000000008",
+    "url": "https://api.bls.gov/publicAPI/v2/timeseries/data/OEUM003108000000000000008"
+   },
+   "trade": "all"
+  }
+ ]
+}

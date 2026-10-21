@@ -1,0 +1,403 @@
+{
+ "id": "employer-charges",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "What a hire costs on top of pay: the employer's charges by name, and the wage floor and its kind",
+  "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 15,
+   "unit": "%",
+   "year": "2026-27",
+   "measure": "Employer (secondary) Class 1 National Insurance, category A, above the secondary threshold",
+   "note": "Secondary threshold GBP 5,000 a year (96 a week).",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Rates and thresholds for employers 2026 to 2027",
+    "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
+   }
+  },
+  {
+   "item": "employer_charge_threshold",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 5000,
+   "unit": "GBP a year",
+   "year": "2026-27",
+   "measure": "Secondary threshold, employer National Insurance",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Rates and thresholds for employers 2026 to 2027",
+    "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
+   }
+  },
+  {
+   "item": "employer_allowance",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 10500,
+   "unit": "GBP a year",
+   "year": "2026-27",
+   "measure": "Employment Allowance (reduces the employer's National Insurance bill)",
+   "source": {
+    "publisher": "HM Revenue & Customs",
+    "title": "Rates and thresholds for employers 2026 to 2027",
+    "url": "https://www.gov.uk/guidance/rates-and-thresholds-for-employers-2026-to-2027"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 3,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Workplace pension, employer's minimum, automatic enrolment",
+   "note": "On earnings between GBP 6,240 and 50,270 in most schemes. Total minimum 8% with the worker's 5%.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Workplace pensions: what you, your employer and the government pay",
+    "url": "https://www.gov.uk/workplace-pensions/what-you-your-employer-and-the-government-pay"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 6.2,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Social Security, employer's share",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Topic no. 751, Social Security and Medicare withholding rates",
+    "url": "https://www.irs.gov/taxtopics/tc751"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 1.45,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Medicare, employer's share",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Topic no. 751, Social Security and Medicare withholding rates",
+    "url": "https://www.irs.gov/taxtopics/tc751"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 6.0,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Federal unemployment tax (FUTA), on the first USD 7,000 a worker",
+   "note": "0.6% after the full 5.4% state credit. California employers lose part of that credit (next rows).",
+   "source": {
+    "publisher": "Internal Revenue Service",
+    "title": "Topic no. 759, Form 940, Employer's Annual Federal Unemployment (FUTA) Tax Return",
+    "url": "https://www.irs.gov/taxtopics/tc759"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 1.2,
+   "unit": "%",
+   "year": "2025",
+   "measure": "FUTA credit reduction, California, calendar year 2025",
+   "note": "So California employers paid FUTA of 1.8% for 2025 (0.6 plus 1.2) on the first USD 7,000.",
+   "source": {
+    "publisher": "U.S. Department of Labor, Employment and Training Administration",
+    "title": "FUTA credit reductions (Actual FUTA Credit Reductions 2010-2025, and Potential 2026 Credit Reductions)",
+    "url": "https://oui.doleta.gov/unemploy/futa_credit.asp"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 3.4,
+   "unit": "%",
+   "year": "2026",
+   "measure": "California unemployment insurance (UI), new employer, on the first USD 7,000",
+   "note": "Assigned for two to three years. Then 1.5% to 6.2% by experience (schedule F+ in 2026).",
+   "source": {
+    "publisher": "California Employment Development Department",
+    "title": "Tax rates, wage limits, and value of meals and lodging",
+    "url": "https://edd.ca.gov/en/payroll_taxes/rates_and_withholding"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 0.1,
+   "unit": "%",
+   "year": "2026",
+   "measure": "California Employment Training Tax (ETT), on the first USD 7,000",
+   "source": {
+    "publisher": "California Employment Development Department",
+    "title": "Tax rates, wage limits, and value of meals and lodging",
+    "url": "https://edd.ca.gov/en/payroll_taxes/rates_and_withholding"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 12.71,
+   "unit": "GBP an hour",
+   "year": "2026-04-01",
+   "measure": "National Living Wage, aged 21 and over",
+   "note": "Statutory minimum. 18 to 20: 10.85. Under 18 and apprentices: 8.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "National Minimum Wage and National Living Wage rates",
+    "url": "https://www.gov.uk/national-minimum-wage-rates"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "city",
+    "code": "US-los-angeles",
+    "name": "Los Angeles"
+   },
+   "value": 18.42,
+   "unit": "USD an hour",
+   "year": "2026-07-01",
+   "measure": "City of Los Angeles minimum wage",
+   "note": "City ordinance (LAMC 187.02), indexed each 1 July to the Los Angeles CPI-W. California's own minimum is 16.90. Fast-food chains of 60+ establishments 20.00.",
+   "source": {
+    "publisher": "City of Los Angeles, Office of Wage Standards",
+    "title": "July 1, 2026 Minimum Wage Ordinance wage rate increase (notice of 30 January 2026)",
+    "url": "https://wagesla.lacity.gov/sites/g/files/wph1941/files/2026-04/2026%20MWR%20Increase%20Memo%2001-30-26%20ADA%20Final.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 16.9,
+   "unit": "USD an hour",
+   "year": "2026-01-01",
+   "measure": "California minimum wage, all employers",
+   "source": {
+    "publisher": "California Department of Industrial Relations",
+    "title": "Minimum wage frequently asked questions",
+    "url": "https://www.dir.ca.gov/dlse/faq_minimumwage.htm"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "region",
+    "code": "US-CA",
+    "name": "California"
+   },
+   "value": 20.0,
+   "unit": "USD an hour",
+   "year": "2024-04-01",
+   "measure": "California fast food restaurant employees (chains of at least 60 establishments nationally)",
+   "source": {
+    "publisher": "California Department of Industrial Relations",
+    "title": "Fast food minimum wage frequently asked questions",
+    "url": "https://www.dir.ca.gov/dlse/Fast-Food-Minimum-Wage-FAQ.htm"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": null,
+   "unit": "EUR a month",
+   "year": "2026",
+   "measure": "Statutory minimum wage",
+   "note": "Italy has no statutory minimum wage. National collective agreements set pay floors (for restaurants, bars and cafes the CCNL Pubblici Esercizi, next rows). The hairdressing agreement was not read.",
+   "source": {
+    "publisher": "Federazione Italiana Pubblici Esercizi (signatory)",
+    "title": "Accordo integrativo del 26 giugno 2024 all'ipotesi di rinnovo del CCNL Pubblici Esercizi, Ristorazione Collettiva e Commerciale e Turismo del 5 giugno 2024: tabelle retributive (artt. 161, 162, 164)",
+    "url": "https://www.fipe.it/wp-content/uploads/2018/03/Tabelle-retributive-CCNL-2024.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "trade": "restaurants",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1390.2,
+   "unit": "EUR a month",
+   "year": "2026-06",
+   "measure": "Collective agreement floor, CCNL Pubblici Esercizi, level 7, monthly pay (contingenza plus paga base)",
+   "note": "Not a statutory minimum: the national collective agreement signed by FIPE, Legacoop, Confcooperative, Agci and Filcams-CGIL, Fisascat-CISL, Uiltucs. From June 2026 in the agreement's first table. Firms under art. 1, c. 1, paragraph II reach the same amounts from September 2026. Level 7 is the lowest grade.",
+   "source": {
+    "publisher": "Federazione Italiana Pubblici Esercizi (signatory)",
+    "title": "Accordo integrativo del 26 giugno 2024 all'ipotesi di rinnovo del CCNL Pubblici Esercizi, Ristorazione Collettiva e Commerciale e Turismo del 5 giugno 2024: tabelle retributive (artt. 161, 162, 164)",
+    "url": "https://www.fipe.it/wp-content/uploads/2018/03/Tabelle-retributive-CCNL-2024.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "trade": "cafes",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1390.2,
+   "unit": "EUR a month",
+   "year": "2026-06",
+   "measure": "Collective agreement floor, CCNL Pubblici Esercizi, level 7, monthly pay (contingenza plus paga base)",
+   "note": "Not a statutory minimum: the national collective agreement for restaurants, bars and cafes. Level 7 is the lowest grade.",
+   "source": {
+    "publisher": "Federazione Italiana Pubblici Esercizi (signatory)",
+    "title": "Accordo integrativo del 26 giugno 2024 all'ipotesi di rinnovo del CCNL Pubblici Esercizi, Ristorazione Collettiva e Commerciale e Turismo del 5 giugno 2024: tabelle retributive (artt. 161, 162, 164)",
+    "url": "https://www.fipe.it/wp-content/uploads/2018/03/Tabelle-retributive-CCNL-2024.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "trade": "restaurants",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1692.69,
+   "unit": "EUR a month",
+   "year": "2026-06",
+   "measure": "Collective agreement floor, CCNL Pubblici Esercizi, level 4, monthly pay (contingenza plus paga base)",
+   "note": "Not a statutory minimum: the national collective agreement signed by FIPE, Legacoop, Confcooperative, Agci and Filcams-CGIL, Fisascat-CISL, Uiltucs. From June 2026 in the agreement's first table. Firms under art. 1, c. 1, paragraph II reach the same amounts from September 2026. Level 7 is the lowest grade.",
+   "source": {
+    "publisher": "Federazione Italiana Pubblici Esercizi (signatory)",
+    "title": "Accordo integrativo del 26 giugno 2024 all'ipotesi di rinnovo del CCNL Pubblici Esercizi, Ristorazione Collettiva e Commerciale e Turismo del 5 giugno 2024: tabelle retributive (artt. 161, 162, 164)",
+    "url": "https://www.fipe.it/wp-content/uploads/2018/03/Tabelle-retributive-CCNL-2024.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "trade": "cafes",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 1692.69,
+   "unit": "EUR a month",
+   "year": "2026-06",
+   "measure": "Collective agreement floor, CCNL Pubblici Esercizi, level 4, monthly pay (contingenza plus paga base)",
+   "note": "Not a statutory minimum: the national collective agreement for restaurants, bars and cafes. Level 7 is the lowest grade.",
+   "source": {
+    "publisher": "Federazione Italiana Pubblici Esercizi (signatory)",
+    "title": "Accordo integrativo del 26 giugno 2024 all'ipotesi di rinnovo del CCNL Pubblici Esercizi, Ristorazione Collettiva e Commerciale e Turismo del 5 giugno 2024: tabelle retributive (artt. 161, 162, 164)",
+    "url": "https://www.fipe.it/wp-content/uploads/2018/03/Tabelle-retributive-CCNL-2024.pdf"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 322800,
+   "unit": "HUF a month",
+   "year": "2026-01-01",
+   "measure": "Minimum wage (minimálbér), full time",
+   "note": "Statutory, Gov. Decree 426/2025. Hourly 1,856.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "426/2025. (XII. 23.) Korm. rendelet a kötelező legkisebb munkabér (minimálbér) és a garantált bérminimum megállapításáról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2025-426-20-22"
+   }
+  },
+  {
+   "item": "wage_floor",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 373200,
+   "unit": "HUF a month",
+   "year": "2026-01-01",
+   "measure": "Guaranteed wage minimum (garantált bérminimum), jobs needing at least a secondary qualification",
+   "note": "Statutory. Hourly 2,145.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "426/2025. (XII. 23.) Korm. rendelet a kötelező legkisebb munkabér (minimálbér) és a garantált bérminimum megállapításáról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2025-426-20-22"
+   }
+  },
+  {
+   "item": "employer_charge_rate",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 13,
+   "unit": "%",
+   "year": "2026",
+   "measure": "Social contribution tax (szocho), employer, on gross pay",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2018. évi LII. törvény a szociális hozzájárulási adóról, 2. § (1)",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2018-52-00-00"
+   }
+  }
+ ]
+}

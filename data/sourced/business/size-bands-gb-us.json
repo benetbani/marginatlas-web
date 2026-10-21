@@ -1,0 +1,852 @@
+{
+ "id": "size-bands-gb-us",
+ "source": {
+  "publisher": "Office for National Statistics and U.S. Census Bureau (each row names its own)",
+  "title": "Business size classes: UK Business Counts (London) and County Business Patterns (Los Angeles County)",
+  "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+  "table": "NM_141_1 employment size bands, March 2026; cbp23co establishment size classes, 2023"
+ },
+ "retrieved": "2026-10-18",
+ "rows": [
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 76.1,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 0 to 4 employees, snapshot of March 2026",
+   "note": "465400 of 611340 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 10.8,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 5 to 9 employees, snapshot of March 2026",
+   "note": "65940 of 611340 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 6.5,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 10 to 19 employees, snapshot of March 2026",
+   "note": "39955 of 611340 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 3.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 20 to 49 employees, snapshot of March 2026",
+   "note": "23620 of 611340 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 2.7,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 50 or more employees, snapshot of March 2026",
+   "note": "16425 of 611340 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 30.5,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 0 to 4 employees, snapshot of March 2026",
+   "note": "2920 of 9560 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 21.2,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 5 to 9 employees, snapshot of March 2026",
+   "note": "2025 of 9560 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 24.1,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 10 to 19 employees, snapshot of March 2026",
+   "note": "2300 of 9560 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 19.2,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 20 to 49 employees, snapshot of March 2026",
+   "note": "1840 of 9560 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 subclass 56101 : Licensed restaurants",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 5.0,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 50 or more employees, snapshot of March 2026",
+   "note": "475 of 9560 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 46.3,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 0 to 4 employees, snapshot of March 2026",
+   "note": "3600 of 7780 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 28.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 5 to 9 employees, snapshot of March 2026",
+   "note": "2250 of 7780 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 16.6,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 10 to 19 employees, snapshot of March 2026",
+   "note": "1290 of 7780 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 5.3,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 20 to 49 employees, snapshot of March 2026",
+   "note": "415 of 7780 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 subclass 56102 : Unlicensed restaurants and cafes",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 2.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 50 or more employees, snapshot of March 2026",
+   "note": "225 of 7780 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 81.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 0 to 4 employees, snapshot of March 2026",
+   "note": "8105 of 9895 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 12.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 5 to 9 employees, snapshot of March 2026",
+   "note": "1275 of 9895 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 4.2,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 10 to 19 employees, snapshot of March 2026",
+   "note": "420 of 9895 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 0.9,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 20 to 49 employees, snapshot of March 2026",
+   "note": "85 of 9895 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 subclass 96020 : Hairdressing and other beauty treatment",
+   "geo": {
+    "level": "city",
+    "code": "E12000007",
+    "name": "London (Greater London)"
+   },
+   "value": 0.1,
+   "unit": "percent of local units",
+   "year": "2026",
+   "measure": "share of local units with 50 or more employees, snapshot of March 2026",
+   "note": "10 of 9895 local units in Greater London; employees, not owners, are counted (the UK register's employment size band).",
+   "source": {
+    "publisher": "Office for National Statistics",
+    "title": "UK Business Counts, local units by industry and employment size band (NM_141_1), via Nomis",
+    "url": "https://www.nomisweb.co.uk/datasets/idbrlu",
+    "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "NAICS 2017: Total for all sectors",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 63.6,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 1 to 4 employees (week of March 12), 2023",
+   "note": "194117 of 304988 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "NAICS 2017: Total for all sectors",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 14.7,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 5 to 9 employees (week of March 12), 2023",
+   "note": "44699 of 304988 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "NAICS 2017: Total for all sectors",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 10.2,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 10 to 19 employees (week of March 12), 2023",
+   "note": "31163 of 304988 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "NAICS 2017: Total for all sectors",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 7.2,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 20 to 49 employees (week of March 12), 2023",
+   "note": "21960 of 304988 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "all",
+   "officialClass": "NAICS 2017: Total for all sectors",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 4.3,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 50 or more employees (week of March 12), 2023",
+   "note": "13049 of 304988 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2017: Full-service restaurants (722511)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 26.5,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 1 to 4 employees (week of March 12), 2023",
+   "note": "2174 of 8214 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2017: Full-service restaurants (722511)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 17.6,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 5 to 9 employees (week of March 12), 2023",
+   "note": "1442 of 8214 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2017: Full-service restaurants (722511)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 22.4,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 10 to 19 employees (week of March 12), 2023",
+   "note": "1839 of 8214 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2017: Full-service restaurants (722511)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 23.3,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 20 to 49 employees (week of March 12), 2023",
+   "note": "1913 of 8214 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "restaurants",
+   "officialClass": "NAICS 2017: Full-service restaurants (722511)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 10.3,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 50 or more employees (week of March 12), 2023",
+   "note": "846 of 8214 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "NAICS 2017: Snack and nonalcoholic beverage bars (722515)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 32.1,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 1 to 4 employees (week of March 12), 2023",
+   "note": "1196 of 3726 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "NAICS 2017: Snack and nonalcoholic beverage bars (722515)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 20.7,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 5 to 9 employees (week of March 12), 2023",
+   "note": "771 of 3726 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "NAICS 2017: Snack and nonalcoholic beverage bars (722515)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 28.1,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 10 to 19 employees (week of March 12), 2023",
+   "note": "1047 of 3726 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "NAICS 2017: Snack and nonalcoholic beverage bars (722515)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 18.3,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 20 to 49 employees (week of March 12), 2023",
+   "note": "681 of 3726 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "cafes",
+   "officialClass": "NAICS 2017: Snack and nonalcoholic beverage bars (722515)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 0.8,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 50 or more employees (week of March 12), 2023",
+   "note": "31 of 3726 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2017: Barber shops (812111)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 77.7,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 1 to 4 employees (week of March 12), 2023",
+   "note": "136 of 175 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2017: Barber shops (812111)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 7.4,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 5 to 9 employees (week of March 12), 2023",
+   "note": "13 of 175 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2017: Barber shops (812111)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 12.6,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 10 to 19 employees (week of March 12), 2023",
+   "note": "22 of 175 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2017: Barber shops (812111)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 2.3,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 20 to 49 employees (week of March 12), 2023",
+   "note": "4 of 175 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  },
+  {
+   "item": "size_class_share",
+   "trade": "barbershops",
+   "officialClass": "NAICS 2017: Barber shops (812111)",
+   "geo": {
+    "level": "county",
+    "code": "06037",
+    "name": "Los Angeles County, California"
+   },
+   "value": 0.0,
+   "unit": "percent of employer establishments",
+   "year": "2023",
+   "measure": "share of establishments with paid employees with 50 or more employees (week of March 12), 2023",
+   "note": "0 of 175 employer establishments in Los Angeles County; businesses with no employees are not counted. \"N\" (not available) classes read as none, as the class counts add to the total.",
+   "source": {
+    "publisher": "U.S. Census Bureau",
+    "title": "County Business Patterns 2023, county file (cbp23co)",
+    "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2023/cbp23co.zip",
+    "licence": "Public domain (U.S. Government work)"
+   }
+  }
+ ]
+}

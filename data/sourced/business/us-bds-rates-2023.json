@@ -1,0 +1,733 @@
+{
+ "id": "us-bds-rates-2023",
+ "source": {
+  "publisher": "U.S. Census Bureau",
+  "title": "Business Dynamics Statistics (BDS) 2023 release",
+  "url": "https://www.census.gov/programs-surveys/bds/data/data-tables.html",
+  "table": "https://www2.census.gov/programs-surveys/bds/tables/time-series/2023/ files bds2023.csv, bds2023_st.csv, bds2023_vcn4.csv, bds2023_st_sec.csv; columns estabs_entry_rate, estabs_exit_rate, years 2021 to 2023",
+  "licence": "US federal work, public domain"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 9.768,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 52,381 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10.346,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 55,481 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 9.768,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 52,381 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10.346,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 55,481 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 17.143,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 21,700 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 16.087,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 20,364 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.546,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 62,819 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8.213,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 44,685 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.546,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 62,819 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8.213,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 44,685 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 17.649,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 23,246 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.106,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 14,628 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.018,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 61,725 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8.81,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 49,355 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.018,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 61,725 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 7225: Restaurants and other eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 8.81,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "Full-service and limited-service restaurants, cafeterias, snack and coffee bars together; the 6-digit classes are not published. Establishments, not firms: 49,355 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 15.3,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 21,238 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 8121: Personal care services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.358,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "Barber shops (812111) with beauty salons, nail salons and other personal care; 812111 is not published. Establishments, not firms: 15,766 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_vcn4.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 9.569,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 7,999 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 13.669,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 11,427 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 9.569,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 7,999 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 13.669,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 11,427 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 10.244,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 7,243 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 15.258,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 10,788 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 13.47,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 11,353 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 7.985,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 6,730 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 13.47,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 11,353 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 7.985,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 6,730 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 15.377,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 10,993 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 8.366,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 5,981 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 10.63,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 9,293 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 8.739,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 7,640 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 10.63,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 9,293 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and food services",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 8.739,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds hotels with restaurants, cafes and bars. Establishments, not firms: 7,640 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 11.325,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 8,493 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other services (except public administration)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 8.746,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "California by sector only: the sector holds repair, personal care, laundries, religious and civic organisations. Establishments, not firms: 6,559 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st_sec.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10.845,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "Establishments, not firms: 783,793 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10.11,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "Establishments, not firms: 730,639 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 11.651,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "Establishments, not firms: 854,030 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 9.512,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "Establishments, not firms: 697,225 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 10.608,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "Establishments, not firms: 790,295 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 9.396,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "Establishments, not firms: 699,980 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 11.835,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment entries rate, employer establishments, 2021",
+   "note": "Establishments, not firms: 101,876 establishment entries in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 12.182,
+   "unit": "per 100 establishments",
+   "year": "2021",
+   "measure": "establishment exits rate, employer establishments, 2021",
+   "note": "Establishments, not firms: 104,859 establishment exits in the year to March 2021; the denominator is the average of the establishment counts of 2020 and 2021 (bds2023_st.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 13.734,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment entries rate, employer establishments, 2022",
+   "note": "Establishments, not firms: 120,328 establishment entries in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 9.839,
+   "unit": "per 100 establishments",
+   "year": "2022",
+   "measure": "establishment exits rate, employer establishments, 2022",
+   "note": "Establishments, not firms: 86,207 establishment exits in the year to March 2022; the denominator is the average of the establishment counts of 2021 and 2022 (bds2023_st.csv)."
+  },
+  {
+   "item": "birth_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 11.401,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment entries rate, employer establishments, 2023",
+   "note": "Establishments, not firms: 102,404 establishment entries in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st.csv)."
+  },
+  {
+   "item": "death_rate",
+   "trade": "all",
+   "officialClass": "All sectors (private non-farm employer establishments)",
+   "geo": {
+    "level": "region",
+    "code": "06",
+    "name": "California"
+   },
+   "value": 10.256,
+   "unit": "per 100 establishments",
+   "year": "2023",
+   "measure": "establishment exits rate, employer establishments, 2023",
+   "note": "Establishments, not firms: 92,125 establishment exits in the year to March 2023; the denominator is the average of the establishment counts of 2022 and 2023 (bds2023_st.csv)."
+  }
+ ]
+}

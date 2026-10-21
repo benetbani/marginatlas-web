@@ -1,0 +1,171 @@
+{
+ "id": "insolvency",
+ "source": {
+  "publisher": "Each row's own issuer (see the row's source)",
+  "title": "If it fails: a company and a sole trader, by national law",
+  "url": "https://www.gov.uk/liquidate-your-company/apply-to-court"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "liquidation_court_fee",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 2600,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Compulsory liquidation: fee to submit the winding-up petition",
+   "note": "Plus GBP 280 for the court hearing.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Liquidate your limited company: apply directly to the court",
+    "url": "https://www.gov.uk/liquidate-your-company/apply-to-court"
+   }
+  },
+  {
+   "item": "liquidation_court_fee",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 280,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Compulsory liquidation: court hearing fee",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Liquidate your limited company: apply directly to the court",
+    "url": "https://www.gov.uk/liquidate-your-company/apply-to-court"
+   }
+  },
+  {
+   "item": "bankruptcy_fee",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 680,
+   "unit": "GBP",
+   "year": "2026",
+   "measure": "Sole trader: applying to become bankrupt",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Applying to become bankrupt",
+    "url": "https://www.gov.uk/bankruptcy"
+   }
+  },
+  {
+   "item": "bankruptcy_discharge",
+   "geo": {
+    "level": "region",
+    "code": "GB-ENG",
+    "name": "England"
+   },
+   "value": 12,
+   "unit": "months",
+   "year": "2026",
+   "measure": "Sole trader: usually released (discharged) from bankruptcy debts after",
+   "note": "Longer without co-operation with the trustee. A sole trader's business is very likely to close.",
+   "source": {
+    "publisher": "GOV.UK",
+    "title": "Becoming bankrupt: when bankruptcy ends",
+    "url": "https://www.gov.uk/becoming-bankrupt/when-bankruptcy-ends"
+   }
+  },
+  {
+   "item": "bankruptcy_fee",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 335,
+   "unit": "USD",
+   "year": "2026",
+   "measure": "Chapter 7: filing fee 245, administrative fee 75, trustee surcharge 15",
+   "note": "Federal law. A Chapter 7 discharge is available to individuals, not to partnerships or corporations.",
+   "source": {
+    "publisher": "United States Courts",
+    "title": "Chapter 7 - Bankruptcy Basics",
+    "url": "https://www.uscourts.gov/court-programs/bankruptcy/bankruptcy-basics/chapter-7-bankruptcy-basics"
+   }
+  },
+  {
+   "item": "bankruptcy_discharge",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": null,
+   "unit": "days",
+   "year": "2026",
+   "measure": "Chapter 7: discharge order, individual",
+   "note": "Usually 60 to 90 days after the date first set for the meeting of creditors. Granted in more than 99% of individual cases.",
+   "source": {
+    "publisher": "United States Courts",
+    "title": "Chapter 7 - Bankruptcy Basics",
+    "url": "https://www.uscourts.gov/court-programs/bankruptcy/bankruptcy-basics/chapter-7-bankruptcy-basics"
+   }
+  },
+  {
+   "item": "bankruptcy_discharge",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 3,
+   "unit": "years",
+   "year": "2026",
+   "measure": "Liquidazione controllata (small entrepreneurs, sole traders): discharge of debts (esdebitazione)",
+   "note": "On closing, or three years after opening if earlier (D.Lgs. 14/2019, art. 282).",
+   "source": {
+    "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+    "title": "D.Lgs. 12 gennaio 2019, n. 14 (Codice della crisi d'impresa e dell'insolvenza), art. 282, testo vigente",
+    "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2019-01-12;14~art282!vig=2026-10-17"
+   }
+  },
+  {
+   "item": "insolvency_procedure",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Company: liquidation (felszámolás) under Act XLIX of 1991",
+   "note": "Act XLIX of 1991 governs bankruptcy (csődeljárás) and liquidation (felszámolás) of insolvent business organisations.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "1991. évi XLIX. törvény a csődeljárásról és a felszámolási eljárásról",
+    "url": "https://njt.jog.gov.hu/jogszabaly/1991-49-00-00"
+   }
+  },
+  {
+   "item": "insolvency_procedure",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": null,
+   "unit": "none",
+   "year": "2026",
+   "measure": "Natural person: debt settlement under Act CV of 2015",
+   "note": "The act governs the debt settlement of indebted natural persons.",
+   "source": {
+    "publisher": "Nemzeti Jogszabálytár",
+    "title": "2015. évi CV. törvény a természetes személyek adósságrendezéséről",
+    "url": "https://njt.jog.gov.hu/jogszabaly/2015-105-00-00"
+   }
+  }
+ ]
+}

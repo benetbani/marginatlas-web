@@ -1,0 +1,3931 @@
+{
+ "id": "unsd-household-spending",
+ "source": {
+  "publisher": "United Nations Statistics Division (UNdata)",
+  "title": "National Accounts Official Country Data, Table 3.2: individual consumption expenditure of households by purpose, current prices",
+  "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302",
+  "table": "SNA mart, group_code 302 (Table 3.2), sub-group 'Individual consumption expenditure of households', COICOP divisions 01 to 12 and the domestic-market total",
+  "licence": "UNdata terms of use: data and metadata free of charge, may be copied, duplicated and further distributed provided UNdata is cited as the reference, https://data.un.org/Host.aspx?Content=UNdataUse"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 24954400000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 2532300000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 6727000000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 7226700000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 4204700000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 2658800000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 6292800000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 3371600000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 2976300000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 992400000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 2453500000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 2230400000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "AZ",
+    "name": "Azerbaijan"
+   },
+   "value": 66620900000.0,
+   "unit": "Azerbaijan new manat (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 400, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a031"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 934296000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 136948000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 247454000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 1170784000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 429463000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 376676000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 338810000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 222769000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 32312000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 128954000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 233677000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 447942000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "BR",
+    "name": "Brazil"
+   },
+   "value": 4700085000000.0,
+   "unit": "real (currency units, as published)",
+   "year": "2020",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market. The country prints no adjustment for purchases abroad, so its one total stands as the domestic-market total.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a076"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 625112184126.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 45459127275.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 62534461434.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 360418377981.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 76792533770.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 26344737970.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 40289164896.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 27123365494.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 4629098598.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 1688475541.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 71050390231.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 100139151901.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "ET",
+    "name": "Ethiopia"
+   },
+   "value": 1441581069218.0,
+   "unit": "Ethiopian birr (currency units, as published)",
+   "year": "2018",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 1993, series 300, fiscal year ending 7 july; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a231"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 39012433990000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 2604112749000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 5751204529000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 17322627190000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 3068780003000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 6091897099000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 17593783680000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 2967425082000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 926427024200.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 5550209289000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 1189900000000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 18070938660000.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "IN",
+    "name": "India"
+   },
+   "value": 120149739295200.0,
+   "unit": "Indian rupee (currency units, as published)",
+   "year": "2020",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 1 april; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a356"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 45420772294689.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 2437946729788.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 7054585454282.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 33067242124407.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 6875089044375.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 11011195121685.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 13353563420652.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 3262289865490.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 2160216980660.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 1349330741166.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 860140642997.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 5342076189151.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "IQ",
+    "name": "Iraq"
+   },
+   "value": 132194448609343.0,
+   "unit": "Iraqi dinar (currency units, as published)",
+   "year": "2022",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 1968, series 20, western calendar year; current prices, domestic market. The country prints no adjustment for purchases abroad, so its one total stands as the domestic-market total.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a368"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 2.18013018806683e+16,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 376217739703397.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 2369388288748840.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 2.88861415068222e+16,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 3371729679411680.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 3974055773403750.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 4559101092184060.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 1604645916499400.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 642597980524998.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 1031129343494160.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 1050588841055610.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 1925219568982820.0,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "IR",
+    "name": "Iran"
+   },
+   "value": 7.15921176114992e+16,
+   "unit": "Iranian rial (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, fiscal year beginning 21 march; current prices, domestic market. The country prints no adjustment for purchases abroad, so its one total stands as the domestic-market total.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a364"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 4931695341221.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 419936723633.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 235885441406.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 1814597552662.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 367036378408.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 240234328125.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 1694403237834.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 239422911896.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 213073701808.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 446454093750.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 500635671875.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "KE",
+    "name": "Kenya"
+   },
+   "value": 1557645003967.0,
+   "unit": "Kenya Shillings (currency units, as published)",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market. The country prints no domestic-market total for this year; the twelve divisions are its parts.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a404"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 5652257000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 301634000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 1586376000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 1452691000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 248767000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 553538000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 5658478000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 112562000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 535565000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 265919000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 1038877000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 2380321000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "LK",
+    "name": "Sri Lanka"
+   },
+   "value": 19786985000000.0,
+   "unit": "Sri Lanka rupee (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a144"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 10858338987943.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 2253494772005.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 1817256920641.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 4338883897663.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 1008837975670.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 486197987694.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 3832515314831.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 1358127807533.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 660410679738.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 1642743839813.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 468543698956.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 1386549447798.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "MN",
+    "name": "Mongolia"
+   },
+   "value": 30111901330284.0,
+   "unit": "Togrog (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a496"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 311104000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 17787000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 36913000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 184441000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 55860000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 37671000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 152821000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 105322000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 42779000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 22087000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 120465000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 123107000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "MY",
+    "name": "Malaysia"
+   },
+   "value": 1210356000000.0,
+   "unit": "ringgit (currency units, as published)",
+   "year": "2024",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a458"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 7253561000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 379666000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 276463000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 2446525000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 512770000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 902699000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 1980593000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 524253000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 323465000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 995315000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 1692668000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 2849715000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "PH",
+    "name": "Philippines"
+   },
+   "value": 20137692000000.0,
+   "unit": "Philippine peso (currency units, as published)",
+   "year": "2024",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a608"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 14567300000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 3114000000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 6964400000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 38013700000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 8992000000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 17349200000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 26883200000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 5828300000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 20518600000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 9618700000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 21487200000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 55093300000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "SG",
+    "name": "Singapore"
+   },
+   "value": 228430000000.0,
+   "unit": "Singapore dollar (currency units, as published)",
+   "year": "2024",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a702"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 6944379000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 100696000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 544739000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 1644146000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 245880000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 173900000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 343526000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 750965000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 63647000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 116330000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 393582000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 1293669000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "SN",
+    "name": "Senegal"
+   },
+   "value": 12615459000000.0,
+   "unit": "CFA franc (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a686"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 2714576000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 296765000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 311546000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1003163000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 362818000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 585919000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1329284000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 200202000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 459173000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 130742000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 2056638000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 1320180000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "TH",
+    "name": "Thailand"
+   },
+   "value": 10771006000000.0,
+   "unit": "baht (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a764"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 1479111000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 315795000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 163758000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 547293000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 157896000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 323225000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 350078000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 101838000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 151716000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 40173000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 101273000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 185898000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "UA",
+    "name": "Ukraine"
+   },
+   "value": 3918054000000.0,
+   "unit": "hryvnia (currency units, as published)",
+   "year": "2023",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1000, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a804"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 01",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 792860879881.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Food and non-alcoholic beverages",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 02",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 185547863433.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Alcoholic beverages, tobacco and narcotics",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 03",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 219603043612.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Clothing and footwear",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 04",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 708938617629.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Housing, water, electricity, gas and other fuels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 05",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 256242979044.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Furnishings, household equipment and routine maintenance of the house",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 06",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 341322235548.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Health",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 07",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 789786859340.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Transport",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 08",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 168466292110.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Communication",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 09",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 274514449555.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Recreation and culture",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 10",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 173265863711.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Education",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 11",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 251680221429.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Restaurants and hotels",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending",
+   "officialClass": "COICOP 1999 12",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 595174368200.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Miscellaneous goods and services",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  },
+  {
+   "item": "household_spending_total",
+   "geo": {
+    "level": "country",
+    "code": "ZA",
+    "name": "South Africa"
+   },
+   "value": 4757403673491.0,
+   "unit": "rand (currency units, as published)",
+   "year": "2024",
+   "measure": "Household final consumption expenditure in the domestic market",
+   "note": "National accounts as the country reports them to the UN, SNA 2008, series 1100, western calendar year; current prices, domestic market.",
+   "source": {
+    "publisher": "United Nations Statistics Division",
+    "title": "National Accounts Official Country Data, Table 3.2 Individual consumption expenditure of households, NPISHs, and general government at current prices",
+    "url": "https://data.un.org/Data.aspx?d=SNA&f=group_code%3a302%3bcountry_code%3a710"
+   }
+  }
+ ]
+}

@@ -1,0 +1,1053 @@
+{
+ "id": "us-bls-bed",
+ "source": {
+  "publisher": "U.S. Bureau of Labor Statistics",
+  "title": "Business Employment Dynamics, establishment age and survival data, Table 7",
+  "url": "https://www.bls.gov/bdm/bdmage.htm",
+  "table": "us_age_naics_72_table7.txt, us_age_naics_81_table7.txt, us_age_naics_00_table7.txt (latest data March 2025); cohorts opened in the years ended March 2020 to March 2024",
+  "licence": "U.S. federal government work, public domain (17 U.S.C. 105)"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.5,
+   "unit": "percent of establishments opened",
+   "year": "2021",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2021)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 42947 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.5,
+   "unit": "percent of establishments opened",
+   "year": "2021",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2021)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 42947 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 80.1,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2022)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 40269 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 80.1,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2022)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 40269 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 72.1,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 36261 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 72.1,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 36261 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_5y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 59.3,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "5-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 29826 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_5y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 59.3,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "5-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 29826 of 50259 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.6,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2022)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 37728 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.6,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2022)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 37728 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.4,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 33286 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.4,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 33286 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 68.5,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 29841 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 68.5,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 29841 of 43571 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.2,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 46258 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.2,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2023)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 46258 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.3,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 40960 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.3,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 40960 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 68.2,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 36579 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 68.2,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 36579 of 53659 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.7,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 50303 of 58006 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86.7,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2024)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 50303 of 58006 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.4,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 44314 of 58006 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.4,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 44314 of 58006 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.3,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2024 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 49090 of 57581 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "NAICS 72: Accommodation and Food Services",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.3,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2024 (as of March 2025)",
+   "note": "Whole sector NAICS 72: hotels and all food and drink places together. Establishments with employees, not firms. 49090 of 57581 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Accommodation and Food Services",
+    "url": "https://www.bls.gov/bdm/us_age_naics_72_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.2,
+   "unit": "percent of establishments opened",
+   "year": "2021",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2021)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 34617 of 40638 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 79.0,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2022)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 32122 of 40638 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 71.8,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2023)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 29196 of 40638 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_5y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 60.0,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "5-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2025)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 24374 of 40638 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 83.3,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2022)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 35835 of 43039 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 74.4,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2023)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 32002 of 43039 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 67.3,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2024)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 28945 of 43039 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.1,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2023)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 43178 of 50727 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 75.8,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2024)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 38472 of 50727 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 67.6,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2025)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 34300 of 50727 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85.1,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2024)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 44897 of 52757 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 74.8,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2025)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 39460 of 52757 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "NAICS 81: Other Services (except Public Administration)",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 82.6,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2024 (as of March 2025)",
+   "note": "Whole sector NAICS 81: repair, personal care, laundry, religious and civic organisations and others. Establishments with employees, not firms. 41372 of 50097 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Other Services (except Public Administration)",
+    "url": "https://www.bls.gov/bdm/us_age_naics_81_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 80.9,
+   "unit": "percent of establishments opened",
+   "year": "2021",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2021)",
+   "note": "All private industries. Establishments with employees, not firms. 621249 of 767573 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 72.3,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2022)",
+   "note": "All private industries. Establishments with employees, not firms. 554747 of 767573 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 63.6,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2023)",
+   "note": "All private industries. Establishments with employees, not firms. 488169 of 767573 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_5y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 51.4,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "5-year survival rate since birth of private establishments opened in the year ended March 2020 (as of March 2025)",
+   "note": "All private industries. Establishments with employees, not firms. 394689 of 767573 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 79.1,
+   "unit": "percent of establishments opened",
+   "year": "2022",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2022)",
+   "note": "All private industries. Establishments with employees, not firms. 663801 of 839297 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 67.0,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2023)",
+   "note": "All private industries. Establishments with employees, not firms. 562531 of 839297 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 59.1,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2021 (as of March 2024)",
+   "note": "All private industries. Establishments with employees, not firms. 495621 of 839297 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76.3,
+   "unit": "percent of establishments opened",
+   "year": "2023",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2023)",
+   "note": "All private industries. Establishments with employees, not firms. 812349 of 1065228 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 64.8,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2024)",
+   "note": "All private industries. Establishments with employees, not firms. 690200 of 1065228 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 56.3,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "3-year survival rate since birth of private establishments opened in the year ended March 2022 (as of March 2025)",
+   "note": "All private industries. Establishments with employees, not firms. 599752 of 1065228 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 78.2,
+   "unit": "percent of establishments opened",
+   "year": "2024",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2024)",
+   "note": "All private industries. Establishments with employees, not firms. 820039 of 1049106 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 65.9,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "2-year survival rate since birth of private establishments opened in the year ended March 2023 (as of March 2025)",
+   "note": "All private industries. Establishments with employees, not firms. 691774 of 1049106 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "NAICS Total Private",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 77.9,
+   "unit": "percent of establishments opened",
+   "year": "2025",
+   "measure": "1-year survival rate since birth of private establishments opened in the year ended March 2024 (as of March 2025)",
+   "note": "All private industries. Establishments with employees, not firms. 769449 of 988310 establishments still operating.",
+   "source": {
+    "publisher": "U.S. Bureau of Labor Statistics",
+    "title": "Business Employment Dynamics, Table 7. Survival of private sector establishments by opening year, Total Private",
+    "url": "https://www.bls.gov/bdm/us_age_naics_00_table7.txt"
+   }
+  }
+ ]
+}

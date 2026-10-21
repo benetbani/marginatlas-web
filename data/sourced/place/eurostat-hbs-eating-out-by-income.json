@@ -1,0 +1,2563 @@
+{
+ "id": "eurostat-hbs-eating-out-by-income",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Structure of consumption expenditure by income quintile and COICOP consumption purpose (hbs_str_t223)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/hbs_str_t223/default/table",
+  "table": "hbs_str_t223, coicop CP111, unit PM (per mille), quant_inc QU1 to QU5; each country's latest wave with all five fifths",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 53,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 55,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 52,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 53,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 57,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 29,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 45,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 12,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 19,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 31,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 62,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 40,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 61,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 78,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 86,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 99,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 38,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 52,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 59,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 34,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 40,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 45,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 48,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 33,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 39,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 18,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 17,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 24,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 29,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 59,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 54,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 61,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 66,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 69,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 49,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 53,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 61,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 69,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 29,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 33,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 30,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 43,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 54,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 7,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 11,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 20,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 27,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 28,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 15,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 16,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 18,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 21,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 27,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 49,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 55,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 63,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 16,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2005",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2005",
+   "note": "Household budget survey wave 2005; households ranked by income into fifths. The country's newest wave with every fifth published is 2005."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2005",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2005",
+   "note": "Household budget survey wave 2005; households ranked by income into fifths. The country's newest wave with every fifth published is 2005."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2005",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2005",
+   "note": "Household budget survey wave 2005; households ranked by income into fifths. The country's newest wave with every fifth published is 2005."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2005",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2005",
+   "note": "Household budget survey wave 2005; households ranked by income into fifths. The country's newest wave with every fifth published is 2005."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2005",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2005",
+   "note": "Household budget survey wave 2005; households ranked by income into fifths. The country's newest wave with every fifth published is 2005."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 19,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 19,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 60,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 49,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 47,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 47,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 45,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 48,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 13,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 24,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 38,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 55,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 4,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 11,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 14,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 22,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 31,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 11,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 34,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 50,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 64,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 73,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 80,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 78,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 84,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries. Eurostat flags this value as: estimated."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 21,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 24,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 28,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 30,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 35,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 42,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 27,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 37,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 34,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 27,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 24,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 61,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 72,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 74,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 81,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 93,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 4,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 5,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 5,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 8,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 15,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 10,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 16,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 19,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 28,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 38,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 29,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 38,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 26,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 32,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 36,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 48,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 57,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 30,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 34,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 49,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 49,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 54,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 41,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 50,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 55,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 59,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 67,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2020",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2020",
+   "note": "Household budget survey wave 2020; households ranked by income into fifths. The 2020 wave's reference year includes the pandemic closures of restaurants and cafes in most countries."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 45,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 64,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 74,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 85,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 88,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 6,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 1,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the lowest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 9,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 2,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the second fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 14,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 3,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the third fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 16,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 4,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the fourth fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  },
+  {
+   "item": "eating_out_by_income",
+   "officialClass": "COICOP CP111: Catering services",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 30,
+   "unit": "per 1,000 of household consumption expenditure",
+   "year": "2015",
+   "quintile": 5,
+   "measure": "catering services (restaurants, cafes, canteens) per 1,000 of consumption expenditure, households in the highest fifth by income, 2015",
+   "note": "Household budget survey wave 2015; households ranked by income into fifths."
+  }
+ ]
+}

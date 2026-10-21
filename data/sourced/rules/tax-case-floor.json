@@ -1,0 +1,817 @@
+{
+  "id": "tax-case-floor",
+  "source": {
+    "publisher": "Each row's own issuer (see the row's source)",
+    "title": "The tax case's further parameters: the bands a sole trader's profit of twice the yearly wage floor reaches, 2026 rules",
+    "url": "https://www.gov.uk/income-tax-rates"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 50270,
+      "unit": "GBP",
+      "year": "2026-27",
+      "measure": "Income tax basic rate band, upper limit of taxable income",
+      "source": {
+        "publisher": "HM Revenue & Customs",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      },
+      "note": "Basic rate 20% from GBP 12,571 to 50,270."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 40,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Income tax higher rate, GBP 50,271 to 125,140",
+      "source": {
+        "publisher": "HM Revenue & Customs",
+        "title": "Income Tax rates and Personal Allowances",
+        "url": "https://www.gov.uk/income-tax-rates"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 50270,
+      "unit": "GBP",
+      "year": "2026-27",
+      "measure": "Class 4 National Insurance upper profits limit",
+      "source": {
+        "publisher": "HM Revenue & Customs",
+        "title": "Self-employed National Insurance rates",
+        "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+      },
+      "note": "6% on profits over GBP 12,570 up to 50,270."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "GB",
+        "name": "United Kingdom"
+      },
+      "value": 2,
+      "unit": "%",
+      "year": "2026-27",
+      "measure": "Class 4 National Insurance, profits over GBP 50,270",
+      "source": {
+        "publisher": "HM Revenue & Customs",
+        "title": "Self-employed National Insurance rates",
+        "url": "https://www.gov.uk/self-employed-national-insurance-rates"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 50400,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "Federal income tax 12% band, upper limit of taxable income, single",
+      "source": {
+        "publisher": "Internal Revenue Service",
+        "title": "IRS releases tax inflation adjustments for tax year 2026",
+        "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+      },
+      "note": "22% over 50,400."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "US",
+        "name": "United States"
+      },
+      "value": 22,
+      "unit": "%",
+      "year": "2026",
+      "measure": "Federal income tax 22%, single, taxable income over USD 50,400",
+      "source": {
+        "publisher": "Internal Revenue Service",
+        "title": "IRS releases tax inflation adjustments for tax year 2026",
+        "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 0,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 0 to 11,456: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 0.0,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 0 to 11,456: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 1.0,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 0 to 11,456: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 11456,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 11,456 to 27,157: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 114.56,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 11,456 to 27,157: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 2.0,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 11,456 to 27,157: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 27157,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 27,157 to 42,861: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 428.58,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 27,157 to 42,861: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 4.0,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 27,157 to 42,861: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 42861,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 42,861 to 59,498: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 1056.74,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 42,861 to 59,498: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 6.0,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 42,861 to 59,498: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 59498,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 59,498 to 75,197: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 2054.96,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 59,498 to 75,197: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 8.0,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 59,498 to 75,197: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 75197,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 75,197 to 384,109: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 3310.88,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 75,197 to 384,109: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 9.3,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 75,197 to 384,109: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 384109,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 384,109 to 460,927: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 32039.7,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 384,109 to 460,927: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 10.3,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 384,109 to 460,927: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 460927,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 460,927 to 768,213: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 39951.95,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 460,927 to 768,213: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 11.3,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 460,927 to 768,213: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 768213,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 768,213: lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 74675.27,
+      "unit": "USD",
+      "year": "2026",
+      "measure": "California Schedule X over USD 768,213: tax at the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "US-CA",
+        "name": "California"
+      },
+      "value": 12.3,
+      "unit": "%",
+      "year": "2026",
+      "measure": "California Schedule X over USD 768,213: rate on the amount over the lower limit",
+      "source": {
+        "publisher": "California Franchise Tax Board",
+        "title": "Tax News, October 2026: 2026 indexing (2026 California tax rate schedules)",
+        "url": "https://www.ftb.ca.gov/about-ftb/newsroom/tax-news/index.html"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "IT-62",
+        "name": "Lazio"
+      },
+      "value": 1.73,
+      "unit": "%",
+      "year": "2026",
+      "measure": "Lazio regional surcharge, taxable income to EUR 28,000: single rate",
+      "source": {
+        "publisher": "Regione Lazio",
+        "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+        "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "IT-62",
+        "name": "Lazio"
+      },
+      "value": 60,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Lazio regional surcharge, deduction for taxable income from EUR 28,001 to 30,000",
+      "source": {
+        "publisher": "Regione Lazio",
+        "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+        "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+      },
+      "note": "Art. 2, c. 3, L.R. 20/2025."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "HU",
+        "name": "Hungary"
+      },
+      "value": 13,
+      "unit": "%",
+      "year": "2026",
+      "measure": "Social contribution tax (szocho) on the entrepreneur's dividend base",
+      "source": {
+        "publisher": "Nemzeti Adó- és Vámhivatal",
+        "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+        "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+      },
+      "note": "Paid while the year's income counted toward the ceiling stays under 24 times the minimum wage (Szocho tv. 2. § (2))."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "HU",
+        "name": "Hungary"
+      },
+      "value": 7747200,
+      "unit": "HUF",
+      "year": "2026",
+      "measure": "Ceiling for the social contribution tax on the dividend base: 24 times the monthly minimum wage",
+      "source": {
+        "publisher": "Nemzeti Adó- és Vámhivatal",
+        "title": "Információs füzet: Az egyéni vállalkozók szja- és járulékkötelezettsége (közzétéve 2026. 08. 31.)",
+        "url": "https://nav.gov.hu/pfile/file?path=%2Fugyfeliranytu%2Fnezzen-utana%2Finf_fuz%2Frejtett%2FInformacios-fuzetek---Aktualis%2F03_Az-egyeni-vallalkozok-szja--es-jarulekkotelezettsege"
+      },
+      "note": "The ceiling for 2026 as the tax authority states it."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 28000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "IRPEF first band, upper limit of income",
+      "source": {
+        "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+        "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 50000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "IRPEF second band, upper limit of income",
+      "source": {
+        "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+        "title": "D.P.R. 22 dicembre 1986, n. 917 (TUIR), art. 11, testo vigente dal 1-1-2026",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art11!vig=2026-10-17"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 28000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Deduction for business income (art. 13, c. 5, b-bis): income from which the full EUR 500 tapers",
+      "source": {
+        "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+        "title": "D.P.R. 917/1986 (TUIR), art. 13, c. 5 and 6, testo vigente",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art13!vig=2026-10-17"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 50000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Deduction for business income (art. 13, c. 5, b-bis): income at which it reaches nil",
+      "source": {
+        "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+        "title": "D.P.R. 917/1986 (TUIR), art. 13, c. 5 and 6, testo vigente",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art13!vig=2026-10-17"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 22000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Deduction for business income (art. 13, c. 5, b-bis): the divisor of the taper",
+      "source": {
+        "publisher": "Normattiva (Istituto Poligrafico e Zecca dello Stato)",
+        "title": "D.P.R. 917/1986 (TUIR), art. 13, c. 5 and 6, testo vigente",
+        "url": "https://www.normattiva.it/uri-res/N2Ls?urn:nir:presidente.repubblica:decreto:1986-12-22;917~art13!vig=2026-10-17"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "country",
+        "code": "IT",
+        "name": "Italy"
+      },
+      "value": 56224,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "INPS commercianti: upper limit of income for the first rate",
+      "source": {
+        "publisher": "INPS",
+        "title": "Circolare n. 14 del 9 febbraio 2026: artigiani e commercianti, contribuzione 2026",
+        "url": "https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/02/Circolare_15162/Allegati/16561_Circolare-numero-14-del-09-02-2026.pdf"
+      },
+      "note": "25.48% above it."
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "IT-62",
+        "name": "Lazio"
+      },
+      "value": 28000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Lazio regional surcharge: taxable income above which the banded rates apply",
+      "source": {
+        "publisher": "Regione Lazio",
+        "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+        "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "IT-62",
+        "name": "Lazio"
+      },
+      "value": 15000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Lazio regional surcharge, banded rates: upper limit of the 1.73% band",
+      "source": {
+        "publisher": "Regione Lazio",
+        "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+        "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "region",
+        "code": "IT-62",
+        "name": "Lazio"
+      },
+      "value": 30000,
+      "unit": "EUR",
+      "year": "2026",
+      "measure": "Lazio regional surcharge, EUR 60 deduction: upper limit of taxable income",
+      "source": {
+        "publisher": "Regione Lazio",
+        "title": "Addizionale regionale all'IRPEF, anno d'imposta 2026 (aliquote per scaglione)",
+        "url": "https://www.regione.lazio.it/sites/default/files/2026-01/Addizionale-regionale-2026.pdf"
+      }
+    },
+    {
+      "item": "tax_case_parameter",
+      "geo": {
+        "level": "city",
+        "code": "IT-rome",
+        "name": "Rome"
+      },
+      "value": 14000,
+      "unit": "EUR",
+      "year": "2025",
+      "measure": "Rome municipal surcharge: exempt to taxable income of",
+      "source": {
+        "publisher": "Ministero dell'Economia e delle Finanze, Dipartimento delle Finanze",
+        "title": "Addizionale comunale all'IRPEF, Roma (H501): delibera n. 186 del 19-12-2024",
+        "url": "https://www1.finanze.gov.it/finanze2/dipartimentopolitichefiscali/fiscalitalocale/nuova_addcomirpef/risultato.htm?anno=9999&lista=1&pagina=lazio.htm&cm=&pr=RM&cc=H501&r=1"
+      }
+    }
+  ]
+}

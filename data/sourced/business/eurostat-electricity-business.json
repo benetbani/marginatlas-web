@@ -1,0 +1,3253 @@
+{
+ "id": "eurostat-electricity-business",
+ "source": {
+  "publisher": "Eurostat",
+  "title": "Electricity prices for non-household consumers - bi-annual data (from 2007 onwards) (nrg_pc_205)",
+  "url": "https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_205/default/table",
+  "table": "nrg_pc_205, unit KWH, tax X_VAT, currency EUR and NAC (NAC only where the country is outside the euro), nrg_cons MWH_LT20, MWH20-499; the latest two semesters each country publishes",
+  "licence": "Eurostat copyright notice: free reuse with acknowledgement of the source (Commission Decision 2011/833/EU), https://ec.europa.eu/eurostat/help/copyright-notice"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 0.1321,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 12.81,
+   "unit": "ALL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 0.1337,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 12.81,
+   "unit": "ALL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 0.1321,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 12.81,
+   "unit": "ALL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 0.1337,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AL",
+    "name": "Albania"
+   },
+   "value": 12.81,
+   "unit": "ALL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.232,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.2233,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.2806,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "AT",
+    "name": "Austria"
+   },
+   "value": 0.2755,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.1226,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.2398,
+   "unit": "BAM per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.1273,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.2491,
+   "unit": "BAM per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.132,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.2582,
+   "unit": "BAM per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.1383,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+   },
+   "value": 0.2704,
+   "unit": "BAM per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.2158,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.2318,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.2808,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BE",
+    "name": "Belgium"
+   },
+   "value": 0.3172,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.1508,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.1575,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.1591,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "BG",
+    "name": "Bulgaria"
+   },
+   "value": 0.174,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 0.2519,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 0.2427,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 0.2666,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CY",
+    "name": "Cyprus"
+   },
+   "value": 0.2618,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.2302,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 5.6125,
+   "unit": "CZK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.2004,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 4.8731,
+   "unit": "CZK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.2866,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 6.9883,
+   "unit": "CZK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 0.2556,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "CZ",
+    "name": "Czechia"
+   },
+   "value": 6.2148,
+   "unit": "CZK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.2618,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.2366,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: provisional.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.3258,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DE",
+    "name": "Germany"
+   },
+   "value": 0.2957,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: provisional.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.1347,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.0057,
+   "unit": "DKK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.1462,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.0928,
+   "unit": "DKK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.1908,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.4245,
+   "unit": "DKK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 0.1786,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "DK",
+    "name": "Denmark"
+   },
+   "value": 1.3345,
+   "unit": "DKK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.152,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.156,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.2042,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "EE",
+    "name": "Estonia"
+   },
+   "value": 0.191,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.2198,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.221,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.2426,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GR",
+    "name": "Greece"
+   },
+   "value": 0.266,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.1618,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.1631,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.2419,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "ES",
+    "name": "Spain"
+   },
+   "value": 0.2417,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.2179,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.2165,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.298,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "eu",
+    "code": "EU27_2020",
+    "name": "European Union - 27 countries (from 2020)"
+   },
+   "value": 0.2868,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.0923,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.1171,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.1045,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "FI",
+    "name": "Finland"
+   },
+   "value": 0.1299,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.1946,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.2049,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.2688,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "FR",
+    "name": "France"
+   },
+   "value": 0.2527,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0862,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.272,
+   "unit": "GEL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0861,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.27,
+   "unit": "GEL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0872,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.2753,
+   "unit": "GEL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.0868,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "GE",
+    "name": "Georgia"
+   },
+   "value": 0.2722,
+   "unit": "GEL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.1785,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.1879,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.2089,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HR",
+    "name": "Croatia"
+   },
+   "value": 0.222,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.2434,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 95.1947,
+   "unit": "HUF per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.2483,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 92.4026,
+   "unit": "HUF per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.241,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 94.2658,
+   "unit": "HUF per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 0.246,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "HU",
+    "name": "Hungary"
+   },
+   "value": 91.5604,
+   "unit": "HUF per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.2915,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.3071,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.3012,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IE",
+    "name": "Ireland"
+   },
+   "value": 0.3557,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0.1387,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 20.0,
+   "unit": "ISK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0.1326,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 19.14,
+   "unit": "ISK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0.1661,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 23.95,
+   "unit": "ISK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it. Eurostat flags this value as: estimated.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 0.1811,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IS",
+    "name": "Iceland"
+   },
+   "value": 26.15,
+   "unit": "ISK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.2377,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.2575,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.3771,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "IT",
+    "name": "Italy"
+   },
+   "value": 0.3887,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.185,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.202,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.2651,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LT",
+    "name": "Lithuania"
+   },
+   "value": 0.2819,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.2051,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.1553,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.2273,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LU",
+    "name": "Luxembourg"
+   },
+   "value": 0.1813,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.1641,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.1677,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.245,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "LV",
+    "name": "Latvia"
+   },
+   "value": 0.248,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.1683,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 3.3119,
+   "unit": "MDL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.1596,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 3.2092,
+   "unit": "MDL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.1823,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 3.5878,
+   "unit": "MDL per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 0.1736,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MD",
+    "name": "Moldova"
+   },
+   "value": 3.4904,
+   "unit": "MDL per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 0.1055,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 0.1095,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 0.106,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "ME",
+    "name": "Montenegro"
+   },
+   "value": 0.1102,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.1356,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 8.352,
+   "unit": "MKD per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.132,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 8.1382,
+   "unit": "MKD per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.2491,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 15.34,
+   "unit": "MKD per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 0.2654,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MK",
+    "name": "North Macedonia"
+   },
+   "value": 16.3679,
+   "unit": "MKD per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 0.152,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 0.1514,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: provisional.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 0.1878,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "MT",
+    "name": "Malta"
+   },
+   "value": 0.1884,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: provisional.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.2463,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.2693,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.4083,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NL",
+    "name": "Netherlands"
+   },
+   "value": 0.4113,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.0825,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.9707,
+   "unit": "NOK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.1195,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 1.335,
+   "unit": "NOK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.0951,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 1.1193,
+   "unit": "NOK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 0.1359,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "NO",
+    "name": "Norway"
+   },
+   "value": 1.5179,
+   "unit": "NOK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.2635,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.1193,
+   "unit": "PLN per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.265,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.1243,
+   "unit": "PLN per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.3576,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.5191,
+   "unit": "PLN per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 0.3415,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PL",
+    "name": "Poland"
+   },
+   "value": 1.4488,
+   "unit": "PLN per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.171,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.1662,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.232,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "PT",
+    "name": "Portugal"
+   },
+   "value": 0.2298,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2142,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.0881,
+   "unit": "RON per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2122,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.0915,
+   "unit": "RON per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2169,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.1015,
+   "unit": "RON per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 0.2265,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RO",
+    "name": "Romania"
+   },
+   "value": 1.1649,
+   "unit": "RON per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.1691,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 19.8212,
+   "unit": "RSD per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.1679,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 19.7048,
+   "unit": "RSD per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.1504,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 17.6313,
+   "unit": "RSD per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 0.156,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "RS",
+    "name": "Serbia"
+   },
+   "value": 18.3079,
+   "unit": "RSD per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.114,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.2587,
+   "unit": "SEK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.1347,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 1.4537,
+   "unit": "SEK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.1957,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 2.1601,
+   "unit": "SEK per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 0.2085,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SE",
+    "name": "Sweden"
+   },
+   "value": 2.2502,
+   "unit": "SEK per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.1576,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.1533,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.1849,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SI",
+    "name": "Slovenia"
+   },
+   "value": 0.1845,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.2366,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.2127,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.306,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "SK",
+    "name": "Slovakia"
+   },
+   "value": 0.2543,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0955,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 4.6244,
+   "unit": "TRY per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.0763,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 3.975,
+   "unit": "TRY per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.1023,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 4.9538,
+   "unit": "TRY per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 0.1117,
+   "unit": "EUR per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "TR",
+    "name": "Türkiye"
+   },
+   "value": 5.8179,
+   "unit": "TRY per kWh",
+   "year": "2026-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2026 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). In the country's own currency as Eurostat publishes it.",
+   "currency": "NAC"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 0.0927,
+   "unit": "EUR per kWh",
+   "year": "2024-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2024 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IB",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 0.1716,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IB, consumption 20 to 499 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IB, consumption 20 to 499 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 0.1365,
+   "unit": "EUR per kWh",
+   "year": "2024-S1",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2024 first half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included).",
+   "currency": "EUR"
+  },
+  {
+   "item": "energy_price_business",
+   "officialClass": "electricity, non-household consumers, band IA",
+   "geo": {
+    "level": "country",
+    "code": "XK",
+    "name": "Kosovo*"
+   },
+   "value": 0.1685,
+   "unit": "EUR per kWh",
+   "year": "2025-S2",
+   "measure": "average electricity price a kWh for a business, band IA, consumption below 20 MWh a year, 2025 second half",
+   "note": "Non-household consumers, band IA, consumption below 20 MWh a year; excluding VAT and other recoverable taxes and levies (non-recoverable taxes and levies included). Eurostat flags this value as: estimated.",
+   "currency": "EUR"
+  }
+ ]
+}

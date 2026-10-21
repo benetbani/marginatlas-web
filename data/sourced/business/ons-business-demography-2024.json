@@ -1,0 +1,793 @@
+{
+ "id": "ons-business-demography-2024",
+ "source": {
+  "publisher": "Office for National Statistics",
+  "title": "Business demography, UK: 2024, reference tables (businessdemographyexceltables2024.xlsx), tables 5.2a to 5.2e",
+  "url": "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable",
+  "table": "Tables 5.2a-5.2e, survival of newly born enterprises by SIC 2007 group, births 2019 to 2023; published 20 November 2025",
+  "licence": "Open Government Licence v3.0, https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+ },
+ "retrieved": "2026-10-17",
+ "rows": [
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 93.6,
+   "unit": "percent of enterprises born",
+   "year": "2020",
+   "measure": "1-year survival rate of enterprises born in 2019 (reference year 2020)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 16955 of 18105 enterprises born in 2019 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 77.1,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of enterprises born in 2019 (reference year 2021)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 13955 of 18105 enterprises born in 2019 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 63.6,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of enterprises born in 2019 (reference year 2022)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 11515 of 18105 enterprises born in 2019 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 39.1,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of enterprises born in 2019 (reference year 2024)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 7085 of 18105 enterprises born in 2019 still active 5 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.0,
+   "unit": "percent of enterprises born",
+   "year": "2020",
+   "measure": "1-year survival rate of enterprises born in 2019 (reference year 2020)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 4505 of 4795 enterprises born in 2019 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 76.9,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of enterprises born in 2019 (reference year 2021)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3685 of 4795 enterprises born in 2019 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 63.5,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of enterprises born in 2019 (reference year 2022)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3045 of 4795 enterprises born in 2019 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 43.7,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of enterprises born in 2019 (reference year 2024)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2095 of 4795 enterprises born in 2019 still active 5 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.7,
+   "unit": "percent of enterprises born",
+   "year": "2020",
+   "measure": "1-year survival rate of enterprises born in 2019 (reference year 2020)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 6400 of 6755 enterprises born in 2019 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 81.3,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of enterprises born in 2019 (reference year 2021)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 5495 of 6755 enterprises born in 2019 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 70.5,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of enterprises born in 2019 (reference year 2022)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 4760 of 6755 enterprises born in 2019 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 51.4,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of enterprises born in 2019 (reference year 2024)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 3475 of 6755 enterprises born in 2019 still active 5 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.6,
+   "unit": "percent of enterprises born",
+   "year": "2020",
+   "measure": "1-year survival rate of enterprises born in 2019 (reference year 2020)",
+   "note": "All industries. 344135 of 363825 enterprises born in 2019 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 74.7,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "2-year survival rate of enterprises born in 2019 (reference year 2021)",
+   "note": "All industries. 271925 of 363825 enterprises born in 2019 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 55.9,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "3-year survival rate of enterprises born in 2019 (reference year 2022)",
+   "note": "All industries. 203465 of 363825 enterprises born in 2019 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_5y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 38.4,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "5-year survival rate of enterprises born in 2019 (reference year 2024)",
+   "note": "All industries. 139845 of 363825 enterprises born in 2019 still active 5 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.8,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of enterprises born in 2020 (reference year 2021)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 14960 of 15785 enterprises born in 2020 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 80.4,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of enterprises born in 2020 (reference year 2022)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 12685 of 15785 enterprises born in 2020 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 60.7,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of enterprises born in 2020 (reference year 2023)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 9580 of 15785 enterprises born in 2020 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 93.6,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of enterprises born in 2020 (reference year 2021)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3385 of 3615 enterprises born in 2020 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 79.9,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of enterprises born in 2020 (reference year 2022)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2890 of 3615 enterprises born in 2020 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 63.1,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of enterprises born in 2020 (reference year 2023)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2280 of 3615 enterprises born in 2020 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 95.0,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of enterprises born in 2020 (reference year 2021)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 5885 of 6195 enterprises born in 2020 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 81.0,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of enterprises born in 2020 (reference year 2022)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 5020 of 6195 enterprises born in 2020 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 66.3,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of enterprises born in 2020 (reference year 2023)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 4105 of 6195 enterprises born in 2020 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 92.9,
+   "unit": "percent of enterprises born",
+   "year": "2021",
+   "measure": "1-year survival rate of enterprises born in 2020 (reference year 2021)",
+   "note": "All industries. 309470 of 333015 enterprises born in 2020 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 71.3,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "2-year survival rate of enterprises born in 2020 (reference year 2022)",
+   "note": "All industries. 237400 of 333015 enterprises born in 2020 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 53.0,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "3-year survival rate of enterprises born in 2020 (reference year 2023)",
+   "note": "All industries. 176410 of 333015 enterprises born in 2020 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 95.7,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of enterprises born in 2021 (reference year 2022)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 18040 of 18845 enterprises born in 2021 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 74.9,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of enterprises born in 2021 (reference year 2023)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 14110 of 18845 enterprises born in 2021 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 53.6,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of enterprises born in 2021 (reference year 2024)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 10105 of 18845 enterprises born in 2021 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 96.4,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of enterprises born in 2021 (reference year 2022)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3220 of 3340 enterprises born in 2021 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 80.2,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of enterprises born in 2021 (reference year 2023)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2680 of 3340 enterprises born in 2021 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 61.5,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of enterprises born in 2021 (reference year 2024)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2055 of 3340 enterprises born in 2021 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 96.6,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of enterprises born in 2021 (reference year 2022)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 8640 of 8945 enterprises born in 2021 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 78.0,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of enterprises born in 2021 (reference year 2023)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 6980 of 8945 enterprises born in 2021 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 62.6,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of enterprises born in 2021 (reference year 2024)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 5600 of 8945 enterprises born in 2021 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 93.4,
+   "unit": "percent of enterprises born",
+   "year": "2022",
+   "measure": "1-year survival rate of enterprises born in 2021 (reference year 2022)",
+   "note": "All industries. 339920 of 363995 enterprises born in 2021 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 70.4,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "2-year survival rate of enterprises born in 2021 (reference year 2023)",
+   "note": "All industries. 256265 of 363995 enterprises born in 2021 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_3y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 53.5,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "3-year survival rate of enterprises born in 2021 (reference year 2024)",
+   "note": "All industries. 194685 of 363995 enterprises born in 2021 still active 3 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 92.5,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of enterprises born in 2022 (reference year 2023)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 16200 of 17520 enterprises born in 2022 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 69.1,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of enterprises born in 2022 (reference year 2024)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 12115 of 17520 enterprises born in 2022 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.9,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of enterprises born in 2022 (reference year 2023)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3325 of 3505 enterprises born in 2022 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 75.3,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of enterprises born in 2022 (reference year 2024)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 2640 of 3505 enterprises born in 2022 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 92.5,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of enterprises born in 2022 (reference year 2023)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 8755 of 9465 enterprises born in 2022 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 72.2,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of enterprises born in 2022 (reference year 2024)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 6835 of 9465 enterprises born in 2022 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 92.3,
+   "unit": "percent of enterprises born",
+   "year": "2023",
+   "measure": "1-year survival rate of enterprises born in 2022 (reference year 2023)",
+   "note": "All industries. 311110 of 336925 enterprises born in 2022 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_2y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 68.9,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "2-year survival rate of enterprises born in 2022 (reference year 2024)",
+   "note": "All industries. 232125 of 336925 enterprises born in 2022 still active 2 years later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "restaurants",
+   "officialClass": "SIC 2007 group 561 : Restaurants and mobile food service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.0,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of enterprises born in 2023 (reference year 2024)",
+   "note": "Group 56.1: restaurants, cafes and takeaways together. 18085 of 19240 enterprises born in 2023 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "cafes",
+   "officialClass": "SIC 2007 group 563 : Beverage serving activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 95.0,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of enterprises born in 2023 (reference year 2024)",
+   "note": "Group 56.3: beverage serving (pubs, bars, clubs). 3885 of 4090 enterprises born in 2023 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "barbershops",
+   "officialClass": "SIC 2007 group 960 : Other personal service activities",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 94.7,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of enterprises born in 2023 (reference year 2024)",
+   "note": "Group 96.0: all other personal services (hairdressing and beauty, laundries, funeral, wellbeing and others). 9385 of 9910 enterprises born in 2023 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  },
+  {
+   "item": "survival_1y",
+   "trade": "all",
+   "officialClass": "All industries (Total)",
+   "geo": {
+    "level": "country",
+    "code": "GB",
+    "name": "United Kingdom"
+   },
+   "value": 93.4,
+   "unit": "percent of enterprises born",
+   "year": "2024",
+   "measure": "1-year survival rate of enterprises born in 2023 (reference year 2024)",
+   "note": "All industries. 295140 of 316025 enterprises born in 2023 still active 1 year later (counts rounded to 5 by the publisher). No London figure by industry is published."
+  }
+ ]
+}

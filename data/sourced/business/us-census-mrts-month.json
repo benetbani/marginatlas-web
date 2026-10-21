@@ -1,0 +1,733 @@
+{
+ "id": "us-census-mrts-month",
+ "source": {
+  "publisher": "U.S. Census Bureau",
+  "title": "Monthly Retail Trade Survey: Estimates of Monthly Retail and Food Services Sales by Kind of Business",
+  "url": "https://www.census.gov/retail/sales.html",
+  "table": "https://www.census.gov/retail/mrts/www/mrtssales92-present.xlsx, sheets 2024 to 2026, NOT ADJUSTED block, rows 722 and 722513-722515; the latest 24 months",
+  "licence": "US federal work, public domain"
+ },
+ "retrieved": "2026-10-19",
+ "rows": [
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 80688,
+   "unit": "USD million",
+   "year": "2024-09",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-09",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 84072,
+   "unit": "USD million",
+   "year": "2024-10",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-10",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 81227,
+   "unit": "USD million",
+   "year": "2024-11",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-11",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 83362,
+   "unit": "USD million",
+   "year": "2024-12",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-12",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 76754,
+   "unit": "USD million",
+   "year": "2025-01",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-01",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 75757,
+   "unit": "USD million",
+   "year": "2025-02",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-02",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 89020,
+   "unit": "USD million",
+   "year": "2025-03",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-03",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86486,
+   "unit": "USD million",
+   "year": "2025-04",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-04",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 92764,
+   "unit": "USD million",
+   "year": "2025-05",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-05",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 87956,
+   "unit": "USD million",
+   "year": "2025-06",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-06",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 88188,
+   "unit": "USD million",
+   "year": "2025-07",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-07",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 91266,
+   "unit": "USD million",
+   "year": "2025-08",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-08",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 85187,
+   "unit": "USD million",
+   "year": "2025-09",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-09",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 88541,
+   "unit": "USD million",
+   "year": "2025-10",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-10",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 84189,
+   "unit": "USD million",
+   "year": "2025-11",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-11",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 86619,
+   "unit": "USD million",
+   "year": "2025-12",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-12",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 80204,
+   "unit": "USD million",
+   "year": "2026-01",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-01",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 79616,
+   "unit": "USD million",
+   "year": "2026-02",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-02",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 90251,
+   "unit": "USD million",
+   "year": "2026-03",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-03",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 88877,
+   "unit": "USD million",
+   "year": "2026-04",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-04",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 96336,
+   "unit": "USD million",
+   "year": "2026-05",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-05",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 91907,
+   "unit": "USD million",
+   "year": "2026-06",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-06",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 93281,
+   "unit": "USD million",
+   "year": "2026-07",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-07",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "restaurants",
+   "officialClass": "NAICS 722: Food services and drinking places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 94822,
+   "unit": "USD million",
+   "year": "2026-08",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-08",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. The subsector holds full-service restaurants with limited-service places, caterers and drinking places; full-service restaurants (722511) are not published monthly. Preliminary estimate."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 37621,
+   "unit": "USD million",
+   "year": "2024-09",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-09",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 39515,
+   "unit": "USD million",
+   "year": "2024-10",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-10",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 37396,
+   "unit": "USD million",
+   "year": "2024-11",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-11",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 37944,
+   "unit": "USD million",
+   "year": "2024-12",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2024-12",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 36093,
+   "unit": "USD million",
+   "year": "2025-01",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-01",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 34934,
+   "unit": "USD million",
+   "year": "2025-02",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-02",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 41225,
+   "unit": "USD million",
+   "year": "2025-03",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-03",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 40542,
+   "unit": "USD million",
+   "year": "2025-04",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-04",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 42865,
+   "unit": "USD million",
+   "year": "2025-05",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-05",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 41504,
+   "unit": "USD million",
+   "year": "2025-06",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-06",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 42141,
+   "unit": "USD million",
+   "year": "2025-07",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-07",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 42500,
+   "unit": "USD million",
+   "year": "2025-08",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-08",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 39351,
+   "unit": "USD million",
+   "year": "2025-09",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-09",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 41069,
+   "unit": "USD million",
+   "year": "2025-10",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-10",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 38072,
+   "unit": "USD million",
+   "year": "2025-11",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-11",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 38981,
+   "unit": "USD million",
+   "year": "2025-12",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2025-12",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 36906,
+   "unit": "USD million",
+   "year": "2026-01",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-01",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 35927,
+   "unit": "USD million",
+   "year": "2026-02",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-02",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 41393,
+   "unit": "USD million",
+   "year": "2026-03",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-03",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 40694,
+   "unit": "USD million",
+   "year": "2026-04",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-04",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 43733,
+   "unit": "USD million",
+   "year": "2026-05",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-05",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 42761,
+   "unit": "USD million",
+   "year": "2026-06",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-06",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 43760,
+   "unit": "USD million",
+   "year": "2026-07",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-07",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart."
+  },
+  {
+   "item": "turnover_index_month",
+   "trade": "cafes",
+   "officialClass": "NAICS 722513, 722514, 722515: Limited service eating places",
+   "geo": {
+    "level": "country",
+    "code": "US",
+    "name": "United States"
+   },
+   "value": 43441,
+   "unit": "USD million",
+   "year": "2026-08",
+   "measure": "sales in the month, not adjusted for season, holidays, trading days or prices, 2026-08",
+   "note": "The publisher prints money, not an index: the month's sales in USD million is the series. National only: no state is published monthly. Limited-service restaurants, cafeterias and snack and nonalcoholic beverage bars together; coffee shops (722515) are not published apart. Preliminary estimate."
+  }
+ ]
+}

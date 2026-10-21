@@ -1,0 +1,260 @@
+{
+  "id": "place-uk3-caa-airports-2025",
+  "source": {
+    "publisher": "Civil Aviation Authority",
+    "title": "UK airport data, annual 2025, Table 09: terminal and transit passengers 2025 compared with 2024 (CSV)",
+    "url": "https://www.caa.co.uk/Documents/Download/24007/87fb7670-4e10-4aeb-942d-509238aa25a1/17551",
+    "table": "Table 09, column term_pax_tp; listed on https://www.caa.co.uk/data-and-analysis/uk-aviation-market/airports/uk-airport-data/uk-airport-data-2025/annual-2025/",
+    "licence": "CAA conditions on the data page: no statistical data provided by CAA may be sold on to a third party, and CAA insists that it is referenced in any publication that refers to CAA statistics (no open licence is named)"
+  },
+  "retrieved": "2026-10-20",
+  "rows": [
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 42769164,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Gatwick airport",
+      "note": "GATWICK in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 6,077 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 84462273,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Heathrow airport",
+      "note": "HEATHROW in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 18,905 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 3737888,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at London City airport",
+      "note": "LONDON CITY in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 0 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 17768944,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Luton airport",
+      "note": "LUTON in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 1,303 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 719513,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Southend airport",
+      "note": "SOUTHEND in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 0 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 29758490,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Stansted airport",
+      "note": "STANSTED in the CAA's table, group 'London Area Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 0 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "London"
+      },
+      "value": 179216272,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 6 airport rows of this file (Gatwick 42,769,164, Heathrow 84,462,273, London City 3,737,888, Luton 17,768,944, Southend 719,513, Stansted 29,758,490); the airports are the CAA's own group 'London Area Airports' (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 32061307,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Manchester airport",
+      "note": "MANCHESTER in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 10,829 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000003",
+        "name": "Manchester"
+      },
+      "value": 32061307,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Manchester 32,061,307); the airports are the airport the CAA lists as MANCHESTER, the one carrying the city's name (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 13660382,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Birmingham airport",
+      "note": "BIRMINGHAM in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 3,495 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000025",
+        "name": "Birmingham"
+      },
+      "value": 13660382,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Birmingham 13,660,382); the airports are the airport the CAA lists as BIRMINGHAM, the one carrying the city's name (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 4447024,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Leeds Bradford airport",
+      "note": "LEEDS BRADFORD in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 0 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E08000035",
+        "name": "Leeds"
+      },
+      "value": 4447024,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Leeds Bradford 4,447,024); the airports are the airport the CAA lists as LEEDS BRADFORD, the one carrying the city's name (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 10832713,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Bristol airport",
+      "note": "BRISTOL in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 1,017 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "E06000023",
+        "name": "Bristol"
+      },
+      "value": 10832713,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Bristol 10,832,713); the airports are the airport the CAA lists as BRISTOL, the one carrying the city's name (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 16969731,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Edinburgh airport",
+      "note": "EDINBURGH in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 954 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000036",
+        "name": "Edinburgh"
+      },
+      "value": 16969731,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Edinburgh 16,969,731); the airports are the airport the CAA lists as EDINBURGH, the one carrying the city's name (README-uk3-indices.md)"
+    },
+    {
+      "item": "airport_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 8205280,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers at Glasgow airport",
+      "note": "GLASGOW in the CAA's table, group 'Other UK Airports'; terminal passengers are people joining or leaving a flight at the airport (a domestic traveller counts at both ends; transit passengers, 2,115 here, are left out); calendar year 2025"
+    },
+    {
+      "item": "connectivity_air_passengers",
+      "geo": {
+        "level": "city",
+        "code": "S12000049",
+        "name": "Glasgow"
+      },
+      "value": 8205280,
+      "unit": "terminal passengers a year",
+      "year": "2025",
+      "measure": "terminal passengers a year at the airports serving the city",
+      "note": "Computed: the sum of 1 airport row of this file (Glasgow 8,205,280); the airports are the airport the CAA lists as GLASGOW, the one carrying the city's name (README-uk3-indices.md)"
+    }
+  ]
+}

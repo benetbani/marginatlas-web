@@ -1,0 +1,126 @@
+{
+ "id": "place-uk-transport-passes-2026",
+ "source": {
+  "publisher": "Transport for Greater Manchester",
+  "title": "28-day Bee Bus ticket (adult)",
+  "url": "https://tfgm.com/tickets-and-passes/28-day-bee-bus-adult",
+  "licence": "Operator's tariff quoted as published"
+ },
+ "retrieved": "2026-10-20",
+ "rows": [
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000003",
+    "name": "Manchester"
+   },
+   "value": 80,
+   "unit": "GBP per 28 days",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "28-day Bee Bus ticket, adult: unlimited travel on all buses in Greater Manchester for 28 days; buses only, the tram is a dearer ticket; a four-week pass, not a calendar month",
+   "source": {
+    "publisher": "Transport for Greater Manchester",
+    "title": "28-day Bee Bus ticket (adult)",
+    "url": "https://tfgm.com/tickets-and-passes/28-day-bee-bus-adult",
+    "licence": "Operator's tariff quoted as published"
+   }
+  },
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000025",
+    "name": "Birmingham"
+   },
+   "value": 73,
+   "unit": "GBP per 28 days",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "National Express West Midlands 4 week adult ticket: unlimited travel for 28 days on National Express buses and every operator in the nBus scheme within the nBus zone; buses only",
+   "source": {
+    "publisher": "National Express West Midlands",
+    "title": "Adult bus tickets",
+    "url": "https://nxbus.co.uk/west-midlands/tickets-prices/adult-bus-tickets",
+    "licence": "Operator's tariff quoted as published"
+   }
+  },
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "E08000035",
+    "name": "Leeds"
+   },
+   "value": 93,
+   "unit": "GBP per month",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "MCard Countywide Bus Month ticket, adult: any bus in West Yorkshire, valid anytime; no Leeds-only pass is sold; buses only (bus and rail zones 1-3 monthly is GBP 149.60)",
+   "source": {
+    "publisher": "West Yorkshire Combined Authority (West Yorkshire Metro)",
+    "title": "MCard Adult tickets",
+    "url": "https://www.wymetro.com/tickets-and-passes/mcard-adult-tickets/",
+    "licence": "Operator's tariff quoted as published"
+   }
+  },
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "E06000023",
+    "name": "Bristol"
+   },
+   "value": 101.2,
+   "unit": "GBP per month",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "First Bus FirstMonth, adult, Bristol Zone: unlimited travel on First buses for one calendar month, metrobus included, Airport Flyer excluded",
+   "source": {
+    "publisher": "First Bus (First West of England)",
+    "title": "Ticket prices, Bristol, Bath and the West: FirstMonth, Adult",
+    "url": "https://www.firstbus.co.uk/bristol-bath-and-west/tickets/ticket-prices",
+    "licence": "Operator's tariff quoted as published"
+   }
+  },
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "S12000036",
+    "name": "City of Edinburgh"
+   },
+   "value": 80,
+   "unit": "GBP per 28 days",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "Ridacard 4 week, adult: the season ticket for unlimited journeys on day and night services across Edinburgh, including Edinburgh Airport (Lothian's fares page); GBP 80 from 22 February 2026 (was GBP 73); a four-week pass",
+   "source": {
+    "publisher": "Lothian Buses",
+    "title": "Fares Revision from Sunday 22 February (30 January 2026)",
+    "url": "https://www.lothianbuses.com/news/2026/01/fares-revision/",
+    "licence": "Operator's tariff quoted as published"
+   }
+  },
+  {
+   "item": "transport_pass_month",
+   "geo": {
+    "level": "city",
+    "code": "S12000049",
+    "name": "Glasgow City"
+   },
+   "value": 88,
+   "unit": "GBP per 28 days",
+   "year": "2026",
+   "measure": "monthly or four-week public transport pass, adult, full price (the unit says which)",
+   "note": "First Glasgow Adult 4 Week, City & Local zone: First buses in Glasgow; GBP 88 from 7 September 2026 (the Network zone is GBP 114); a four-week pass; buses only",
+   "source": {
+    "publisher": "First Bus (First Glasgow)",
+    "title": "Changes to Tickets Across Glasgow and Surrounding areas from 2 September",
+    "url": "https://www.firstbus.co.uk/greater-glasgow/news-and-service-updates/updates/changes-tickets-across-glasgow-and-surrounding",
+    "licence": "Operator's tariff quoted as published"
+   }
+  }
+ ]
+}

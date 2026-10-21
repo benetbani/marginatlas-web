@@ -1,0 +1,211 @@
+{
+  "id": "place-visitors",
+  "source": {
+    "publisher": "Office for National Statistics",
+    "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+    "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+    "table": "Table 17",
+    "licence": "Open Government Licence v3.0"
+  },
+  "retrieved": "2026-10-17",
+  "rows": [
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 19292000,
+      "unit": "visits",
+      "year": "2025",
+      "measure": "visits to London by overseas residents (all purposes)",
+      "note": "a visit counts once however many nights it lasts; London as a city visited; 2025 estimates published 16 October 2026",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+        "table": "Table 17",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "E12000007",
+        "name": "Greater London"
+      },
+      "value": 106954000,
+      "unit": "nights",
+      "year": "2025",
+      "measure": "nights spent in London by overseas residents (all purposes)",
+      "note": "London as a city visited",
+      "source": {
+        "publisher": "Office for National Statistics",
+        "title": "Overseas residents' visits to the UK: estimates of overseas residents' visits, spending and nights, 2025 (Table 17: top 50 Great Britain cities and towns visited)",
+        "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/leisureandtourism/datasets/overseasresidentsvisitstotheuk/2025/osresidents2025annual.xlsx",
+        "table": "Table 17",
+        "licence": "Open Government Licence v3.0"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles"
+      },
+      "value": 49500000,
+      "unit": "visitors",
+      "year": "2025",
+      "measure": "visitors to Los Angeles, domestic and international",
+      "note": "the destination body's estimate, rounded to 0.1 million; the release does not name the boundary it counts",
+      "source": {
+        "publisher": "Los Angeles Tourism and Convention Board, with Tourism Economics",
+        "title": "Visitors to Los Angeles generated $42.6 billion in business sales and supported more than 530,000 jobs (press release, 29 July 2026)",
+        "url": "https://www.discoverlosangeles.com/visitors-to-los-angeles-generated-426-billion-in-business-sales-and-supported-more-than-530000-jobs",
+        "licence": "Publisher's copyright; one cited figure, attributed"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "0644000",
+        "name": "Los Angeles"
+      },
+      "value": 6400000,
+      "unit": "visitors",
+      "year": "2025",
+      "measure": "international visitors to Los Angeles",
+      "note": "the destination body's estimate, rounded to 0.1 million; the release does not name the boundary it counts",
+      "source": {
+        "publisher": "Los Angeles Tourism and Convention Board, with Tourism Economics",
+        "title": "Visitors to Los Angeles generated $42.6 billion in business sales and supported more than 530,000 jobs (press release, 29 July 2026)",
+        "url": "https://www.discoverlosangeles.com/visitors-to-los-angeles-generated-426-billion-in-business-sales-and-supported-more-than-530000-jobs",
+        "licence": "Publisher's copyright; one cited figure, attributed"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 50383357,
+      "unit": "nights",
+      "year": "2025",
+      "measure": "nights spent in tourist accommodation establishments, all guests",
+      "note": "nights, not visitors; Eurostat flags 2024 and 2025 as a break in series (bed-places counted rose from 226,585 in 2023 to 419,238 in 2025)",
+      "source": {
+        "publisher": "Eurostat",
+        "title": "Culture and tourism - cities and greater cities (urb_ctour), from Istat",
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&cities=IT001C",
+        "table": "urb_ctour",
+        "licence": "Eurostat reuse policy: Creative Commons Attribution 4.0 (CC BY 4.0), source acknowledged"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "058091",
+        "name": "Roma (comune)"
+      },
+      "value": 39731251,
+      "unit": "nights",
+      "year": "2025",
+      "measure": "nights spent in tourist accommodation establishments by non-residents of Italy",
+      "note": "nights, not visitors; break in series in 2024 and 2025",
+      "source": {
+        "publisher": "Eurostat",
+        "title": "Culture and tourism - cities and greater cities (urb_ctour), from Istat",
+        "url": "https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/urb_ctour?format=JSON&cities=IT001C",
+        "table": "urb_ctour",
+        "licence": "Eurostat reuse policy: Creative Commons Attribution 4.0 (CC BY 4.0), source acknowledged"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 7685984,
+      "unit": "arrivals",
+      "year": "2025",
+      "measure": "tourist arrivals at tourist accommodation establishments, all guests",
+      "note": "a guest counted at each establishment checked into; commercial plus private and other accommodation",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.1.2.2. Tourist arrivals at tourist accommodation establishments by county and region",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0089.html",
+        "table": "27.1.2.2 (tur0089)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 6624323,
+      "unit": "arrivals",
+      "year": "2025",
+      "measure": "international tourist arrivals at tourist accommodation establishments",
+      "note": "a guest counted at each establishment checked into",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.1.2.2. Tourist arrivals at tourist accommodation establishments by county and region",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0089.html",
+        "table": "27.1.2.2 (tur0089)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 18251000,
+      "unit": "nights",
+      "year": "2025",
+      "measure": "tourism nights at tourist accommodation establishments, all guests",
+      "note": "published in thousands (18,251)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.1.1.20. Tourist arrivals and tourism nights at tourist accommodation establishments in Budapest and by tourism areas",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0086.html",
+        "table": "27.1.1.20 (tur0086)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    },
+    {
+      "item": "visitors",
+      "geo": {
+        "level": "city",
+        "code": "HU110",
+        "name": "Budapest"
+      },
+      "value": 15870000,
+      "unit": "nights",
+      "year": "2025",
+      "measure": "international tourism nights at tourist accommodation establishments",
+      "note": "published in thousands (15,870)",
+      "source": {
+        "publisher": "Hungarian Central Statistical Office (KSH)",
+        "title": "STADAT 27.1.1.20. Tourist arrivals and tourism nights at tourist accommodation establishments in Budapest and by tourism areas",
+        "url": "https://www.ksh.hu/stadat_files/tur/en/tur0086.html",
+        "table": "27.1.1.20 (tur0086)",
+        "licence": "Creative Commons Attribution 4.0 International (CC BY 4.0), source named as KSH (ksh.hu/copyright)"
+      }
+    }
+  ]
+}
