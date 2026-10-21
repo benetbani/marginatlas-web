@@ -15,6 +15,8 @@ Items, each read or worked out from the survey's own totals (a worked-out row sa
   fte_share                 employees in full-time equivalents over employees, percent (worked out)
   investment_per_business   gross investment in tangible non-current assets over enterprises (EUR, worked out)
   investment_share_of_surplus  that investment over the gross operating surplus, percent (worked out)
+  value_added_margin        value added over sales, percent (worked out); wage_share = staff cost over value added (worked out)
+  sales_per_person          net turnover per person employed (EUR, published); sales_per_hour = sales over hours worked (worked out)
 Run: python3 scripts/industry_economics.py"""
 import collections, os, urllib.request
 from spines_lib import jsonstat, geo_eu, flagnote, write
@@ -23,7 +25,7 @@ DL = "/srv/atlas/runs/data-industry/dl"
 os.makedirs(DL, exist_ok=True)
 TRADE = {"I5610": "restaurants", "I5630": "cafes", "S9602": "barbershops", "B-S_X_O_S94": "all"}
 IND = ["ENT_NR", "EMP_NR", "SAL_NR", "SAL_FTE_NR", "NETTUR_MEUR", "PUR_MEUR", "EXPN_SAL_BEN_MEUR", "GOS_MEUR", "GRSINV_TNCA_MEUR",
-       "EXPN_SAL_BEN_HW_EUR", "AV_HW_EUR"]
+       "EXPN_SAL_BEN_HW_EUR", "AV_HW_EUR", "AV_MEUR", "NETTUR_EMP_TEUR", "HW_NR"]
 URL = ("https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/sbs_ovw_act?time=2023"
        + "".join(f"&nace_r2={n}" for n in TRADE) + "".join(f"&indic_sbs={i}" for i in IND))
 path = os.path.join(DL, "sbs_ovw_act_economics_2023.json")
@@ -74,6 +76,20 @@ for (nace, geo), d in sorted(D.items()):
     if fte is not None and sal:
         row("fte_share", nace, geo, round(100 * fte / sal, 1), "percent of employees", "employees in full-time equivalent units over employees",
             " ".join(y for y in [f"Worked out: {int(fte)} full-time equivalents of {int(sal)} employees.", f("SAL_FTE_NR", "SAL_NR")] if y))
+    av, tur, pers, hw = g("AV_MEUR"), g("NETTUR_MEUR"), g("NETTUR_EMP_TEUR"), g("HW_NR")
+    if av is not None and tur:
+        row("value_added_margin", nace, geo, round(100 * av / tur, 1), "percent of net turnover", "value added at factor cost over net turnover",
+            " ".join(y for y in [f"Worked out: {av} over {tur} million EUR.", f("AV_MEUR", "NETTUR_MEUR")] if y))
+    sb = g("EXPN_SAL_BEN_MEUR")
+    if av and sb is not None:
+        row("wage_share", nace, geo, round(100 * sb / av, 1), "percent of value added", "employee benefits expense over value added at factor cost",
+            " ".join(y for y in [f"Worked out: {sb} over {av} million EUR.", f("EXPN_SAL_BEN_MEUR", "AV_MEUR")] if y))
+    if pers is not None:
+        row("sales_per_person", nace, geo, int(round(pers * 1000, -2)), "EUR", "net turnover per person employed, rounded to 100 EUR (published in thousand EUR)",
+            f("NETTUR_EMP_TEUR"))
+    if tur and hw:
+        row("sales_per_hour", nace, geo, round(tur * 1e6 / hw, 2), "EUR", "net turnover per hour worked by employees",
+            " ".join(y for y in [f"Worked out: {tur} million EUR over {int(hw)} hours worked by employees.", f("NETTUR_MEUR", "HW_NR")] if y))
     inv, gos = g("GRSINV_TNCA_MEUR"), g("GOS_MEUR")
     if inv is not None and gos:
         row("investment_share_of_surplus", nace, geo, round(100 * inv / gos, 1), "percent of gross operating surplus",
