@@ -34,6 +34,7 @@ import { preflight } from "./preflight.mjs";
 import { red, redSummary } from "../lib/red.mjs";
 import { lockedLevelKeys } from "../../src/lib/monetization/levels";
 import { COPY } from "../../src/lib/spine/copy";
+import { isPaywallOn } from "../../src/lib/feature_flags";
 
 preflight({ name: "check_paywall" });
 
@@ -159,6 +160,12 @@ for (const p of PAGES) {
   }
 
   // From step 16: the open render carries no lock. And rule 7: the links a free reader would lose, none.
+  /* HIS RULING OF 2026-10-21 (FOUNDER-VERDICTS, "London v9 ported: the locked page left as it is"): "Leave the locked London page as it
+     is until the paywall goes on." London's open page is v9 (src/components/spine/city/sourced-view.tsx), its locked page the
+     September view, which links no method page. While the paywall is off no reader is served the locked page, so that one lost link
+     is printed and not a red; any other lost link still reds, and with the paywall on (isPaywallOn) this one reds again. */
+  const LEFT_UNTIL_PAYWALL = { "city-london": ["/methodology"] };
+  const excused = isPaywallOn() ? [] : (LEFT_UNTIL_PAYWALL[p.stem] ?? []);
   const openFile = `${DIR}/${p.open}.html`;
   if (existsSync(openFile)) {
     const openDoc = new JSDOM(readFileSync(openFile, "utf8").replace(/<style[\s\S]*?<\/style>/g, "")).window.document;
@@ -167,7 +174,9 @@ for (const p of PAGES) {
     const kept = internalLinks(doc);
     const lost = [...open].filter((h) => !kept.has(h));
     console.log(`  ${p.stem}: ${locked.length} locked section(s); internal links ${open.size} open, ${kept.size} locked (${lost.length} lost${lost.length ? `: ${lost.slice(0, 8).join(" ")}${lost.length > 8 ? " ..." : ""}` : ""})`);
-    if (lost.length) fault(p, `a free reader loses ${lost.length} page(s) the open page links (${lost.slice(0, 8).join(" ")}); rule 7, his ruling of 2026-10-05 on P20.1: the locked levels' links stand as free doors in the close`);
+    const lostNow = lost.filter((h) => !excused.includes(h));
+    if (lostNow.length) fault(p, `a free reader loses ${lostNow.length} page(s) the open page links (${lostNow.slice(0, 8).join(" ")}); rule 7, his ruling of 2026-10-05 on P20.1: the locked levels' links stand as free doors in the close`);
+    else if (lost.length) console.log(`  ${p.stem}: ${lost.join(" ")} lost on the locked page, left as it is until the paywall goes on (his ruling of 2026-10-21)`);
   } else {
     console.log(`  ${p.stem}: ${locked.length} locked section(s); no open render at ${openFile} to compare (pages-fresh writes it)`);
   }
