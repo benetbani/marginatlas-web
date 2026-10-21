@@ -34,8 +34,9 @@ export function gbp(v: number, opt: { dp?: number; sig3?: boolean } = {}): Money
   }
   return { local: `£${comma(roundHalfUp(v))}`, usd: `$${comma(roundHalfUp(u))}` };
 }
-/** Pence with their dollars, as the target's pence(): "38.2p" ($0.51). */
-const pence = (p: number): Money => ({ local: `${p}p`, usd: `$${(p / 100 / GBP).toFixed(2)}` });
+/** A rate in pence for each pound, printed alone: "38.2p". A rate is no price, so it carries no dollars (his ruling of 2026-10-21:
+ *  "print the property tax rate as 38.2p alone"; "$0.51" read to a dollar reader as 51 cents on each dollar, a third too high). */
+const penceRate = (p: number): string => `${p}p`;
 /** Millions to one decimal: "19.3 million". */
 export const mill = (n: number): string => `${(n / 1e6).toFixed(1)} million`;
 /** A count as the peers table prints it: millions from a million, else the nearest thousand. */
@@ -105,7 +106,7 @@ const num = (s: string | undefined, re: RegExp, k = 1): number | null => {
 export type IndexCell = { score: number; level: "High" | "Medium" | "Low" };
 export type V9Hero = {
   pay: Money;
-  cells: { wage: Money; shop: Money; tax: Money; employer: number; visits: string; pull: IndexCell; connect: IndexCell; unemp: number };
+  cells: { wage: Money; shop: Money; tax: string; employer: number; visits: string; pull: IndexCell; connect: IndexCell; unemp: number };
 };
 export type V9Prime = { month: Money; mid: Money; hundred: Money; midHundred: Money; count: number };
 export type V9Band = { key: string; lo: number | null; hi: number | null; label: string; usd: string; shop: string; other: string; lit: boolean };
@@ -202,7 +203,7 @@ function build(): CityV9 | null {
     cells: {
       wage: gbp(wage, { dp: 2 }),
       shop: gbp(shop, { dp: 2 }),
-      tax: pence(retailLow.value as number),
+      tax: penceRate(retailLow.value as number),
       employer,
       visits: mill(visits),
       pull: { score: pullRow.value as number, level: pullLevel },
@@ -244,7 +245,7 @@ function build(): CityV9 | null {
   });
   const exampleRate = retailLow.value as number;
   const tax: V9Tax = {
-    rate: `${exampleRate}p`,
+    rate: penceRate(exampleRate),
     under: gbp(lowTop),
     bands: [
       band("relief", null, relief, 0, 0),

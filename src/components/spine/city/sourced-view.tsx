@@ -232,7 +232,7 @@ function Hero({ v }: { v: CityV9 }) {
   const cells: Array<{ key: keyof typeof T.hero.cells; glyph: keyof typeof GLYPH; src: string; value: React.ReactNode }> = [
     { key: "wage", glyph: "wage", src: srcOf("EMPLOYER", "wage_floor", "GB"), value: <M m={c.wage} /> },
     { key: "shop", glyph: "shop", src: srcOf("SHOP", "shop_rent_m2_month", LON), value: <M m={c.shop} /> },
-    { key: "tax", glyph: "receipt", src: srcOf("RATES", "local_tax_rate", "GB-ENG", "retail-low"), value: <M m={c.tax} /> },
+    { key: "tax", glyph: "receipt", src: srcOf("RATES", "local_tax_rate", "GB-ENG", "retail-low"), value: c.tax },
     { key: "employer", glyph: "hire", src: srcOf("EMPLOYER", "employer_charge_rate", "GB", "class-1"), value: `${c.employer}%` },
     { key: "visits", glyph: "plane", src: srcOf("VISITORS", "visitors", LON, "visits"), value: c.visits },
     { key: "pull", glyph: "pin", src: srcOf("PULL", "visitor_pull_index", LON), value: <Index c={c.pull} /> },
