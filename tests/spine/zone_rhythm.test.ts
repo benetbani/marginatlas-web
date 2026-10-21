@@ -43,7 +43,9 @@ check("no run of three equal halves crosses a chapter's head", same(zoneRhythm([
 check("lone zones that alternate their side are no repeat; two on one side are", same(zoneRhythm(["wide", "lone", "lone-end", "lone", "wide"], [false, true, false, false, false]), []) && same(zoneRhythm(["lone-end", "lone-end"]), ["zones 1 and 2 both split lone-end"]));
 check("the art-direction gate reads a right-hand lone zone as lone-end", /data-zone-side/.test(gate) && /"lone-end"/.test(gate));
 check("the art-direction gate reads the zones, judges them with zone_rhythm.mjs, a chapter's opening zone afresh, and no longer looks for the old Band class", /from "\.\/lib\/zone_rhythm\.mjs"/.test(gate) && /querySelectorAll\("main \[data-zone\]"\)/.test(gate) && /zoneRhythm\(result\.zoneSplits, result\.zoneStarts\)/.test(gate) && /zoneLadder\(result\)/.test(gate) && !/mt-8 grid grid-cols-1 items-start gap-8/.test(gate), GATE, "read `main [data-zone]` in collect() and judge in node with zoneRhythm and zoneLadder");
-const unreadAt = gate.indexOf("const unread = pages.filter((p) => !p.result.zoneSplits.length);");
+/* The one page read with no zone by design is a kit page (the industry page v4, his "Go" of 2026-10-21; verify_art_direction.mjs says why):
+   the stop keeps every other render, so the line names `result.kit` as its only exception. */
+const unreadAt = gate.indexOf("const unread = pages.filter((p) => !p.result.zoneSplits.length && !p.result.kit);");
 const unreadExit = unreadAt === -1 ? -1 : gate.indexOf("process.exit(1);", unreadAt);
 check("the art-direction gate stops on a render that read no zone, printing NO_ZONE_READ, ahead of the baseline's write and compare", unreadAt !== -1 && unreadExit !== -1 && gate.slice(unreadAt, unreadExit).includes("if (unread.length)") && gate.slice(unreadAt, unreadExit).includes("NO_ZONE_READ") && unreadExit < gate.indexOf('process.argv.includes("--write-baseline")'), GATE, "keep `const unread = pages.filter(...)`, its NO_ZONE_READ line and its process.exit(1) above the --write-baseline branch, so no baseline can absorb a render that was not read");
 
