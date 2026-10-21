@@ -136,6 +136,41 @@ if (wrongValue.length) {
   );
 } else ok("every declared step matches the ladder");
 
+/* ---- 1b. The kit's sizes, held to the kit and to the one page that reads them. Hard. ----
+   THE INDUSTRY PAGE v4 draws at the shared kit's sizes (sheets/kit/kit.css, KIT-VERSION 2: h1 72, the answer 48, a card's figure 32,
+   a hero cell 25), off this gate's ladder, because he approved the page drawn at them (his "Go" of 2026-10-21, FOUNDER-VERDICTS "The
+   industry page (/industries/restaurants) v4 approved"; the kit's RULEBOOK Q1 keeps "the targets' sizes until he picks"). They are
+   tokens (src/lib/design-tokens.ts `kit.type`), reach the page as `--k-t-*` variables, and the census above cannot see a size behind
+   a variable: so this section is what holds them. It reds when the tokens drift from the kit's list, and when a `--k-t-` variable is
+   read anywhere but a `.kit4` rule of globals.css (the kit page's scope), so the kit's sizes cannot leak onto another page unseen. */
+const KIT_SIZES = [72, 56, 48, 40, 32, 28, 25, 21, 20, 22, 19, 18, 17, 16, 15, 14];
+{
+  const tokens = readFileSync("src/lib/design-tokens.ts", "utf8");
+  const block = tokens.match(/export const kit = \{[\s\S]*?\n {2}type: \{([\s\S]*?)\n {2}\},/);
+  const declared = block ? [...block[1].matchAll(/"(\d+)px"/g)].map((m) => Number(m[1])) : [];
+  const same = declared.length === KIT_SIZES.length && declared.every((v, i) => v === KIT_SIZES[i]);
+  if (same) ok(`the kit's ${KIT_SIZES.length} sizes in design-tokens kit.type match kit.css`);
+  else fail("design-tokens kit.type differs from the kit's sizes", `declared ${declared.join(", ") || "none"}; the kit ${KIT_SIZES.join(", ")}`);
+  const leaks: string[] = [];
+  const walk = (dir: string) => {
+    for (const e of readdirSync(dir)) {
+      const p = join(dir, e);
+      if (statSync(p).isDirectory()) { walk(p); continue; }
+      if (![".ts", ".tsx", ".css"].includes(extname(p))) continue;
+      const rel = relative(process.cwd(), p).split(sep).join("/");
+      if (rel === "src/lib/design-tokens.ts") continue;
+      stripCommentLines(readFileSync(p, "utf8").split("\n")).forEach((line, i) => {
+        if (!line.includes("var(--k-t-")) return;
+        if (rel === "src/app/globals.css" && /^\s*(@media[^{]*\{\s*)?\.kit4[\s.\[:{]/.test(line)) return;
+        leaks.push(`${rel}:${i + 1}`);
+      });
+    }
+  };
+  walk("src");
+  if (leaks.length) fail("a kit size is read outside the kit page's .kit4 rules", leaks.slice(0, 8).join(", "));
+  else ok("the kit's sizes are read only by the kit page's .kit4 rules");
+}
+
 /* ---- 2. Off-ladder sizes may only shrink. ---- */
 const all = collectSizes();
 const offLadder = all.filter((f) => !LADDER.includes(f.px));

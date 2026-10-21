@@ -112,7 +112,7 @@ function Rows({ rows, className = "" }: { rows: Array<{ key: string; label: Reac
 /** One subsection: a title, the question, the figure, one drawing, at most one fold, the caption "Place, 2026." */
 function Card({ id, title, ask, tag, loud, per100, children, caption }: { id: string; title: string; ask: string; tag?: string; loud?: boolean; per100?: boolean; children: React.ReactNode; caption: string }) {
   return (
-    <article className="k-sub" data-section={id} {...(loud ? { "data-loud": "" } : {})} {...(per100 ? { "data-per": "100" } : {})} aria-labelledby={`k-${id}`}>
+    <article className="k-sub" data-section={id} data-block={id} data-card="" {...(loud ? { "data-loud": "" } : {})} {...(per100 ? { "data-per": "100" } : {})} aria-labelledby={`k-${id}`}>
       <header>
         <h3 id={`k-${id}`}>
           {title}
@@ -155,7 +155,7 @@ function Hero({ v }: { v: IndustryV4 }) {
           <h1 id="k-ind-h">{T.nextDoor.names.restaurants}</h1>
           <p className="k-lede">{T.hero.lede}</p>
         </div>
-        <div className="k-fig-card" data-answer-card="">
+        <div className="k-fig-card" data-answer-card="" data-block="take" data-card="">
           <div className="k-answer">
             <div>
               <p className="k-al">{T.hero.answerLabel}</p>
@@ -471,7 +471,7 @@ function Table({ v }: { v: IndustryV4 }) {
     </table>
   );
   return (
-    <article className="k-sub k-wide" data-section="places" aria-labelledby="k-places">
+    <article className="k-sub k-wide" data-section="places" data-block="places" data-card="" aria-labelledby="k-places">
       <header className="k-hsw">
         <div>
           <h3 id="k-places">{T.table.title}</h3>
