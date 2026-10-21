@@ -101,6 +101,13 @@ function measure() {
 
   const out = [];
   for (const c of outer) {
+    /* AN OPEN SECTION HAS NO BOX TO GATHER EMPTINESS IN (KIT-VERSION 3, his approval of version 3, "Go: build kit version 3 ... (type
+       ladder, open sections, one card system ...)" and "The gallery is right: move the pages onto kit version 3", and of the industry
+       page v6 drawn on it, "v6 is the approved industry target.", 2026-10-21): on a `.kit3` page a section is open on its band and the
+       sections of a band share their rows (his London v8 words, "the same line across the cards of one band"), so the air beside a
+       shorter section is the band's. Version 3's own law reads emptiness only inside a box (DENSITY BLANK). An open section (no
+       `data-surface`) is not read; a box on that page still is. */
+    if (c.closest(".kit3") && !c.hasAttribute("data-surface")) continue;
     const cb = c.getBoundingClientRect();
     const cs = getComputedStyle(c);
     const x0 = cb.left + parseFloat(cs.paddingLeft);

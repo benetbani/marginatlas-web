@@ -115,7 +115,12 @@ export function lineRuleInPage() {
       const above = fig ? (figBeside ? "beside" : px(bb.top - box(fig).bottom)) : "-";
       const next = el.nextElementSibling;
       const last = next && next.hasAttribute("data-placement") && isGroup(next) ? next : el;
-      const lastBottom = figBeside ? Math.max(box(last).bottom, box(fig).bottom) : box(last).bottom;
+      /* ON KIT-VERSION 3 THE FIGURE'S ROW IS THE BAND'S (his London v8 words of 2026-10-21, "each section defines where its title, its
+         question and its answer begin, the same line across the cards of one band", and his approval of version 3, whose sections of a band
+         share four rows): a figure with one line of words stands in a row as tall as its neighbour's two, so on a `.kit3` page the group
+         below is read from the end of that shared row (the section's `.sfig`), where the kit sets its 24. */
+      const sharedRow = el.closest(".kit3 .sub > .sfig");
+      const lastBottom = Math.max(figBeside ? Math.max(box(last).bottom, box(fig).bottom) : box(last).bottom, sharedRow ? box(sharedRow).bottom : -Infinity);
       const dn = climb(last, card, 1);
       const below = dn ? (box(dn).top < lastBottom - 1 ? "beside" : px(box(dn).top - lastBottom)) : "-";
       const read = `${above}|${below}`;

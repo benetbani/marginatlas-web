@@ -3707,3 +3707,11 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
 .kit3.k-industry [data-src], .kit3.k-industry [data-src] * { font-variant-numeric: tabular-nums; }
 /* A link standing alone in a note (the table's "How the figures are calculated") is a tap of 44, as the hero's and the exit's are. */
 .kit3.k-industry .sbody > p.note > a:only-child { min-height: 44px; display: inline-flex; align-items: center; }
+/* ...the kit's `font` shorthand on a money pair's halves, the answer and the part bar's labels resets them, so they are named again. */
+.kit3.k-industry .m :is(.p, .s), .kit3.k-industry .av .big, .kit3.k-industry .kt i { font-variant-numeric: tabular-nums; }
+/* The reading measure on this page (his "narrow the words, keep the pictures wide", 2026-08-21; the readability gate's 78 a line and
+   the page laws' half a page under 1024): a note and the table's key at 32em, never past half the page; a section's question at half
+   the page under 1024, and free at 1024 and over, where version 3 keeps each question to its one line. */
+.kit3.k-industry :is(.note, .key > span, .def2) { max-width: min(32em, var(--measure-half)); }
+@media (max-width: 1023px) { .kit3.k-industry .sub > header .ask { max-width: var(--measure-half); } }
+.kit3.k-industry :is(.av .big, .fig) > .m :is(.p, .s), .kit3.k-industry[data-cur="usd"] :is(.av .big, .fig) > .m :is(.p, .s) { font-variant-numeric: tabular-nums; }

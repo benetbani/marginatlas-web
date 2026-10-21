@@ -142,7 +142,7 @@ function Rows({ rows, className = "kv" }: { rows: Array<{ key: string; label: Re
   return (
     <dl className={className}>
       {rows.map((r) => (
-        <div key={r.key}>
+        <div key={r.key} data-row="">
           <dt>{r.label}</dt>
           <dd>{r.value}</dd>
         </div>
@@ -302,11 +302,11 @@ function NextDoor({ v }: { v: IndustryV6 }) {
       caption={T.eu}
       fig={
         <p className="fig">
-          {nd.rankWord} <Unit>{T.nextDoor.unit}</Unit>
+          <span>{nd.rankWord}</span> <Unit>{T.nextDoor.unit}</Unit>
         </p>
       }
     >
-      <div className="rbars" data-kind="ranked-bars" role="img" aria-label={aria}>
+      <div className="rbars" data-kind="ranked-bars" data-visual="" role="img" aria-label={aria}>
         {nd.items.map((i) => (
           <div key={i.key} className="rb" {...(i.me ? { "data-focal": "" } : {})}>
             <span>{name(i.key)}</span>
@@ -375,7 +375,7 @@ function Split({ v }: { v: IndustryV6 }) {
         </p>
       }
     >
-      <div className="kbars" data-kind="part-bar" data-focal="" role="img" aria-label={aria}>
+      <div className="kbars" data-kind="part-bar" data-visual="" data-focal="" role="img" aria-label={aria}>
         {bar(T.split.rows.trade, r, R)}
         {bar(T.split.rows.all, a, "all")}
       </div>
@@ -460,7 +460,7 @@ function Hour({ v }: { v: IndustryV6 }) {
         </p>
       }
     >
-      <div className="rstrip hstrip" data-kind="range-strip" role="img" aria-label={aria}>
+      <div className="rstrip hstrip" data-kind="range-strip" data-visual="" role="img" aria-label={aria}>
         <span className="rail" data-rail="" />
         <span className="gap" data-focal="" style={{ left: at(h.costs), width: `${(pos(h.adds) - pos(h.costs)).toFixed(1)}%` }} />
         <span className="mk" data-mark="" style={{ left: at(h.costs) }} />
@@ -811,7 +811,7 @@ function Months({ v }: { v: IndustryV6 }) {
       }
     >
       {/* The busiest month the section's focal part, the next two in ink, the rest quiet (the target's `order`). */}
-      <div className="vchart" data-kind="month-columns" role="img" aria-label={aria}>
+      <div className="vchart" data-kind="month-columns" data-visual="" role="img" aria-label={aria}>
         {m.shape.map((x, i) => (
           <div className={`vcol${m.order.slice(1, 3).includes(i) ? " top" : ""}`} key={i} {...(i === m.order[0] ? { "data-focal": "" } : {})}>
             <div className="vb">
@@ -880,7 +880,7 @@ function Donut({ v }: { v: IndustryV6 }) {
       }
     >
       <div className="ringrow">
-        <svg className="donut" data-kind="donut" data-focal="" viewBox="0 0 144 144" role="img" aria-label={aria}>
+        <svg className="donut" data-kind="donut" data-visual="" data-focal="" viewBox="0 0 144 144" role="img" aria-label={aria}>
           {arcs}
         </svg>
         <Rows

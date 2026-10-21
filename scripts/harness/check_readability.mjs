@@ -264,7 +264,12 @@ function inPage() {
       const counts = lineCharCounts(el, lineRects);
       const cpl = counts.length ? Math.max(...counts) : text.length;
       const w = el.getBoundingClientRect().width;
-      if (cpl > 78) out.push({ id, rule: "MEASURE", detail: `${cpl} characters a line over ${Math.round(w)}px across ${lines} line(s), past 78 ("${snip}")` });
+      /* A KIT 3 SECTION'S QUESTION IS ONE LINE AT 1280 (version 3's ALIGN law, from his London v8 words of 2026-10-21, "each section
+         defines where its title, its question and its answer begin, the same line across the cards of one band"; the industry page v6
+         he approved prints them so, "v6 is the approved industry target."): a question of up to 90 characters stands on its one line
+         there; under 1024 it keeps to the reading measure and is read as any line. */
+      const kit3Ask = innerWidth >= 1024 && !!el.closest(".kit3 .sub > header .ask") && text.length <= 90 && lines === 1;
+      if (cpl > 78 && !kit3Ask) out.push({ id, rule: "MEASURE", detail: `${cpl} characters a line over ${Math.round(w)}px across ${lines} line(s), past 78 ("${snip}")` });
       // FINDING E: the used line-height, measured, not assumed, whenever it
       // can matter (LEADING never fires at two lines or fewer, and two
       // gaps, i.e. three lines, is exactly what this needs to measure one).
