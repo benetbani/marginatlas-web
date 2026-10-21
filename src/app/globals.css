@@ -3469,6 +3469,7 @@ main :where(p, li, blockquote, dd) {
   .kit4 .k-vm .k-ms { display: inline; }
 }
 @media (prefers-reduced-motion: reduce) { .kit4 .k-seeall svg { transition: none; } }
+/* =============================================================================
    THE KIT 3 PAGE: THE INDUSTRY. The industry page v6 (his "v6 is the approved industry target.", 2026-10-21, FOUNDER-VERDICTS "The
    industry page (/industries/restaurants) v6 approved"), drawn by src/components/spine/industry/kit3-view.tsx in KIT-VERSION 3's
    forms (his "The gallery is right: move the pages onto kit version 3, each at its next version.", 2026-10-21). The rules are
