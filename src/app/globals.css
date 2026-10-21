@@ -3695,3 +3695,8 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
    plain words, against the average business." measures 360 against 352 in a column of 355, and wraps. The questions are tightened by a
    hundredth of an em so each stays one line at 1280, as in the target (the ALIGN law, his FV 2109). */
 .kit3.k-industry .sub .ask { letter-spacing: -0.01em; }
+/* The site's reset takes a list's markers away; the target's "What they say" keeps the browser's discs. */
+.kit3.k-industry ul.says { list-style: disc; }
+/* The site's reset takes a link's underline away; the target's links keep the browser's (the doors, cards, take theirs off). */
+.kit3.k-industry a { text-decoration-line: underline; }
+.kit3.k-industry nav[data-crumbs] a { text-decoration-line: none; }
