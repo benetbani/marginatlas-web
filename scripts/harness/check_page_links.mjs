@@ -63,7 +63,12 @@ const LINK_FLOOR = { country: 2, city: 16, cell: 8, industry: 3, hood: 11, howto
    lowering of the surface's. city-manchester 5 (fix round 1 of rhythm-t6, 2026-10-16): the state of 209 of 252 cities, which draws no districts,
    no neighbourhoods and no trades here, so its ways out are the trail and the close; the city floor of 16 was set on London, which draws all
    three. Listed for the owner as the ways out those cities offer. */
-const LINK_FLOOR_PAGE = { "city-manchester": 5 };
+/* city-london 5 (2026-10-21), HIS RULING, the one floor ever brought down and only by his word: "Lower the city link floor for London to
+   what v9 draws; v9 is my approved design." The city page v9 (src/components/spine/city/sourced-view.tsx) offers the trail (the
+   country), how the figures are calculated, its three doors (the country, a London trade, the side-by-side tool) and the report
+   link: his v9 words removed the trades rows and the districts door that carried the September view's 16, and a compare table's
+   rows never navigate (M23). From here it only rises again. The surface floor of 16 stays for a city drawing the September view. */
+const LINK_FLOOR_PAGE = { "city-manchester": 5, "city-london": 5 };
 
 const surfaceOf = (name) =>
   name.startsWith("country-") ? "country" :
