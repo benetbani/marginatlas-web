@@ -413,6 +413,21 @@ function sectionsOf(file: string): Section[] {
     const kicker = kickerOf(block, copyAliases(scope));
     out.push({ page: pageOf(file), file: basename(file), id: reg === EVERY ? EVERY : id, component: fn?.name ?? "", kicker: reg && reg !== EVERY && kicker === "def.heading" ? reg.heading : kicker, archetype, builder: reg && reg !== EVERY ? PLAN_BUILDERS.get(reg.id) ?? builder : builder, at });
   }
+  /* A KIT VIEW'S CARDS (the industry page v4, src/components/spine/industry/sourced-view.tsx, which exports LOUD_SEATS_KIT): it draws no
+     Box; its sections are its own `Card` called with a literal id, and two cards stamped with a literal `data-block` (the hero's answer
+     card, the table). Each is a section of its page, its kicker the call's `title` as written, its builder buildIndustryV4. */
+  if (/export\s+const\s+LOUD_SEATS_KIT\b/.test(src)) {
+    const kitRe = /<Card\s+id="([a-z][a-z0-9-]*)"|<(?:div|article)\b[^>]*?\sdata-block="([a-z][a-z0-9-]*)"/g;
+    let km: RegExpExecArray | null;
+    while ((km = kitRe.exec(src))) {
+      const at = km.index;
+      const tagEnd = openTagEnd(src, at);
+      const tag = tagEnd === -1 ? "" : src.slice(at, tagEnd);
+      const fn = fnAt(at);
+      const title = /\btitle=\{([^}]*)\}/.exec(tag)?.[1] ?? "";
+      out.push({ page: pageOf(file), file: basename(file), id: km[1] ?? km[2], component: fn?.name ?? "", kicker: title, archetype: "kit", builder: "buildIndustryV4", at });
+    }
+  }
   /* THE CARDS AN ARCHETYPE DRAWS (the header's SECTION): a card-owning
      archetype called with an id, outside every Box of this file. Without an
      id it is a cell of a band or a piece of a card, never a block. */

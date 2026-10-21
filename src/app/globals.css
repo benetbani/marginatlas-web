@@ -3002,6 +3002,8 @@ main :where(p, li, blockquote, dd) {
 .kit4 a { color: inherit; }
 .kit4 :focus-visible { outline: 2px solid var(--k-ink); outline-offset: 3px; border-radius: 6px; }
 .kit4 h1, .kit4 h2, .kit4 h3, .kit4 p { margin: 0; }
+/* every printed figure in tabular numerals (art direction F1: figures that stack line up) */
+.kit4 [data-src], .kit4 [data-src] *, .kit4 .k-kt i, .kit4 .k-vm { font-variant-numeric: tabular-nums; }
 .kit4 .k-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 /* the money pair: local first, its dollars in parentheses; the switch (data-cur="usd" on the root) puts dollars first */
@@ -3043,11 +3045,17 @@ main :where(p, li, blockquote, dd) {
 .kit4 .k-answer > div { flex: 1 1 auto; min-width: 0; }
 .kit4 .k-al { font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink2); }
 .kit4 .k-av { margin: 2px 0 2px; font-size: var(--k-t-body); color: var(--k-ink2); }
+.kit4 .k-av { display: flex; align-items: baseline; flex-wrap: wrap; column-gap: .3em; }
+.kit4 .k-av .k-avu { flex: 1 1 auto; }
 .kit4 .k-av .k-big { font-family: var(--k-f-fig); font-size: var(--k-t-answer); font-weight: 600; letter-spacing: -0.02em; color: var(--k-terra); line-height: 1.05; }
 .kit4 .k-as { font-size: var(--k-t-small); color: var(--k-muted); }
 /* the kit's lines run their card's width, as the target draws them (the site's prose measure, main :where(p, dd), held the notes and
    the answer to half a wide card at 768 and left the other half blank, the page filter's WHITE SPACE) */
 .kit4 p, .kit4 dd, .kit4 li { max-width: none; }
+/* ... save the card's sentences, held to the reading measure (the readability gate's 78 characters a line; the site's 68ch) */
+.kit4 .k-ask, .kit4 .k-note, .kit4 .k-key, .kit4 .k-fig .k-unit, .kit4 .k-as { max-width: 32em; }
+.kit4 .k-foot2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px 32px; align-items: start; }
+@media (max-width: 640px) { .kit4 .k-foot2 { grid-template-columns: minmax(0, 1fr); } }
 .kit4 .k-cells { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
 .kit4 .k-cell { background: var(--k-paper); border-radius: 12px; padding: 12px 14px 13px; min-width: 0; }
 .kit4 .k-cl { display: flex; align-items: center; gap: 8px; font-size: var(--k-t-text); font-weight: 600; color: var(--k-ink); }
@@ -3077,8 +3085,11 @@ main :where(p, li, blockquote, dd) {
 .kit4[data-cur="usd"] .k-fig > .k-m .k-s { font-size: inherit; }
 .kit4 .k-fig .k-unit { display: block; margin-top: 8px; font-family: var(--k-f-text); font-size: var(--k-t-text); font-weight: 400; color: var(--k-ink2); letter-spacing: 0; line-height: 1.45; }
 .kit4 .k-fig .k-unit .k-m { white-space: nowrap; }
+/* a figure followed by its words takes its whole line (it does already: the words are a block), so the line reads as drawn */
+.kit4 .k-fig > [data-src]:has(+ .k-unit) { display: block; }
 .kit4 .k-caption { margin-top: auto; padding-top: 4px; font-size: var(--k-t-small); color: var(--k-muted); }
 .kit4 .k-note { font-size: var(--k-t-small); color: var(--k-muted); }
+.kit4 .k-note .k-line, .kit4 .k-unit .k-line { display: block; }
 .kit4 .k-note a { min-height: 44px; display: inline-flex; align-items: center; text-underline-offset: 3px; }
 .kit4 .k-sub header.k-hsw { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
 
@@ -3104,7 +3115,7 @@ main :where(p, li, blockquote, dd) {
 .kit4 .k-fold[open] summary svg { transform: rotate(45deg); }
 .kit4 .k-fold-in { padding: 0 16px 14px; display: grid; gap: 8px; }
 .kit4 .k-def { margin: 0 0 10px; font-size: var(--k-t-text); color: var(--k-ink2); }
-.kit4 .k-def b { color: var(--k-ink); font-weight: 600; }
+.kit4 .k-def b { display: block; color: var(--k-ink); font-weight: 600; }
 
 /* the comparison table (each column's best in terracotta with a tick) and the small table of the forms */
 .kit4 table.k-peers { width: 100%; border-collapse: collapse; }
@@ -3167,11 +3178,15 @@ main :where(p, li, blockquote, dd) {
 .kit4 .k-hl { position: absolute; transform: translateX(-100%); width: max-content; white-space: nowrap; font-size: var(--k-t-small); line-height: 20px; color: var(--k-ink2); }
 .kit4 .k-hl.k-up { top: 0; } .kit4 .k-hl.k-dn { top: 40px; }
 .kit4 .k-hl .k-m { flex-wrap: nowrap; font-family: var(--k-f-fig); font-weight: 600; color: var(--k-ink); }
-/* the density's level, a word in ink beside its figure */
+/* the density's level, a word in ink beside its figure; the pill raises the figure's line box, so its words come 5 nearer (8 seen) */
+.kit4 .k-fig:has(.k-lvl) .k-unit { margin-top: 3px; }
 .kit4 .k-fig .k-lvl { display: inline-block; vertical-align: 6px; margin-left: 10px; padding: 2px 12px; border-radius: 99px; background: var(--k-paper2); font-family: var(--k-f-text); font-weight: 600; font-size: var(--k-t-small); line-height: 1.5; color: var(--k-ink); letter-spacing: 0; }
 /* the band of three: the months, the density, who makes the sales */
 .kit4 .k-cluster { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--k-gap); align-items: stretch; }
 .kit4 .k-cluster .k-drow .k-kv > div { padding: 4px 0; }
+/* rows in the band of three's narrow cards: the label, then the value at the row's end, as the target draws them there */
+.kit4 .k-cluster .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+.kit4 .k-cluster .k-kv dd { grid-column: auto; text-align: right; }
 .kit4 .k-drow { display: grid; gap: 18px; }
 /* the donut centred in its card (the target draws it at the card's left; centred, no blank stands beside it, the page filter's WHITE SPACE) */
 .kit4 .k-dnut { width: 144px; height: 144px; display: block; justify-self: center; }
@@ -3194,9 +3209,20 @@ main :where(p, li, blockquote, dd) {
 @media (max-width: 1000px) {
   .kit4 .k-cluster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .kit4 .k-cluster > :nth-child(3) { grid-column: 1 / -1; }
-  .kit4 .k-cluster > :nth-child(3) .k-drow { grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 32px; }
+  /* the card across both halves in two columns of its own: its words on the left, the donut and its key on the right, so no sentence
+     runs over half the page (the page laws' clause 51) and no half of the card stands blank (the page filter's WHITE SPACE) */
+  .kit4 .k-cluster > :nth-child(3) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 32px; align-content: start; }
+  .kit4 .k-cluster > :nth-child(3) > * { grid-column: 1; }
+  .kit4 .k-cluster > :nth-child(3) > .k-drow { grid-column: 2; grid-row: 1 / span 4; }
 }
 @media (max-width: 960px) {
+  /* a wide card's lines under half the page (the page laws' clause 51) */
+  .kit4 .k-wide .k-ask, .kit4 .k-as { max-width: 340px; }
+  /* the hero's answer card at the kit's desktop width on a tablet, so its short lines do not leave half a wide card blank */
+  .kit4 .k-fig-card { max-width: 560px; }
+  /* rows in a half: the label, then the value at the row's end (the kit's phone rows), so no value runs past a narrow card */
+  .kit4 .k-kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; }
+  .kit4 .k-kv dd { grid-column: auto; text-align: right; }
   .kit4 .k-pano { position: relative; height: 300px; }
   .kit4 .k-hero-grid { display: block; padding-top: 0; padding-bottom: 48px; min-height: 0; }
   .kit4 .k-title-plate { position: relative; left: auto; top: auto; transform: none; margin-top: -56px; max-width: none; padding: 18px 20px 20px; }
@@ -3212,7 +3238,7 @@ main :where(p, li, blockquote, dd) {
 }
 @media (max-width: 640px) {
   .kit4 .k-pair, .kit4 .k-pair.k-w75, .kit4 .k-pair.k-w57, .kit4 .k-cluster { grid-template-columns: minmax(0, 1fr); }
-  .kit4 .k-cluster > :nth-child(3) .k-drow { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+  .kit4 .k-cluster > :nth-child(3) { display: flex; }
   /* the donut centred in its card on a phone, so no blank stands beside it */
   .kit4 .k-dnut { justify-self: center; }
   /* the comparison table becomes one block a row: no sideways scroll */

@@ -3073,12 +3073,16 @@ export const COPY = {
       ask: "A typical restaurant's year in money, before the owner is paid.",
       unit: "left a year, from which come the owner's own pay, the loan, the kitchen's wear and the tax",
       rows: { sales: "Sales", bought: "Bought in", staff: "Staff", left: "Left" },
-      note: "Bought in is food, drink, rent and bills. In the average business of any kind {all} is left.",
+      /* Two sentences, drawn as two lines of one note (the view sets the first on its own line). */
+      note: "Bought in is food, drink, rent and bills.",
+      noteAll: "In the average business of any kind {all} is left.",
     },
     hour: {
       title: "An hour of work",
       ask: "What an hour of staff time costs, and what it brings in.",
-      unit: "is what a staff hour leaves, against {all} in the average business",
+      /* One sentence, drawn as two lines (the view sets the first on its own line). */
+      unit: "is what a staff hour leaves,",
+      unitAll: "against {all} in the average business",
       costs: "Costs",
       adds: "Adds",
       aria: "An hour of staff time costs {c} euros and adds {v} euros, so it leaves {l}",

@@ -773,7 +773,9 @@ export const kit = {
     head: "20px", door: "22px",
     fig2: "19px", lede: "18px", money: "17px", body: "16px", text: "15px", small: "14px",
   },
-  radius: { card: "16px", plate: "12px", hero: "20px", title: "18px" },
+  /* The card and the hero card at the site's one card radius, 12 (his "one card radius across the site", 2026-08-27 verdicts 2, 4 and 7;
+     DISTANCES 3.2; the radius-uniform gate), not the kit's 16 and 20, which he never ruled over it. The plates keep the kit's. */
+  radius: { card: "12px", plate: "12px", hero: "12px", title: "18px" },
   space: { gap: "20px", pad: "28px", padSm: "20px" },
 } as const;
 

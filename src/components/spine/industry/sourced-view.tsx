@@ -176,7 +176,7 @@ function Hero({ v }: { v: IndustryV4 }) {
   const glyph = { high: "globe", low: "pin", all: "bars", next: "shop" } as const;
   return (
     <section className="k-hero" aria-labelledby="k-ind-h" data-hero="1">
-      <div className="k-pano">
+      <div className="k-pano" data-visual="1">
         {/* Bright, never darkened, no credit (FV 1604 to 1605, 1631 to 1633, 1777 to 1778). */}
         <img src={HERO.src} srcSet={`${HERO.small} 1200w, ${HERO.src} 2400w`} sizes="100vw" alt={T.hero.photoAlt} width={HERO.w} height={HERO.h} fetchPriority="high" />
       </div>
@@ -191,7 +191,7 @@ function Hero({ v }: { v: IndustryV4 }) {
             <div>
               <p className="k-al">{T.hero.answerLabel}</p>
               <p className="k-av">
-                <span className="k-big" data-src={srcOf("SBS", "gross_operating_rate", R, EU)}>{v.hero.answer}</span> {T.hero.answerUnit}
+                <span className="k-big" data-src={srcOf("SBS", "gross_operating_rate", R, EU)}>{v.hero.answer}</span> <span className="k-avu">{T.hero.answerUnit}</span>
               </p>
               <p className="k-as">{T.hero.basis}</p>
             </div>
@@ -352,9 +352,10 @@ function Year({ v }: { v: IndustryV4 }) {
         ]}
       />
       <p className="k-note">
-        {T.year.note.split("{all}")[0]}
+        <span className="k-line">{T.year.note}</span>
+        {T.year.noteAll.split("{all}")[0]}
         <S src={srcOf("ECON", "surplus_per_business", "all", EU)}><M m={y.allLeft} /></S>
-        {T.year.note.split("{all}")[1]}
+        {T.year.noteAll.split("{all}")[1]}
       </p>
     </Card>
   );
@@ -369,9 +370,10 @@ function Hour({ v }: { v: IndustryV4 }) {
       <p className="k-fig">
         <S src={srcOf("ECON", "surplus_per_hour", R, EU)}><M m={h.leaves} /></S>
         <Unit>
-          <span>{T.hour.unit.split("{all}")[0]}</span>
+          <span className="k-line">{T.hour.unit}</span>
+          {T.hour.unitAll.split("{all}")[0]}
           <S src={srcOf("ECON", "surplus_per_hour", "all", EU)}><M m={h.allLeaves} /></S>
-          <span>{T.hour.unit.split("{all}")[1]}</span>
+          {T.hour.unitAll.split("{all}")[1]}
         </Unit>
       </p>
       <div className="k-hstrip" data-kind="range-strip" role="img" aria-label={aria}>
@@ -490,7 +492,7 @@ function Table({ v }: { v: IndustryV4 }) {
     );
   };
   const table = (rows: V4Row[], caption: string) => (
-    <table className="k-peers">
+    <table className="k-peers" data-archetype="compare-table">
       <caption className="k-sr">{caption}</caption>
       <thead>
         <tr>
@@ -507,7 +509,7 @@ function Table({ v }: { v: IndustryV4 }) {
     </table>
   );
   return (
-    <article id="places" className="k-sub k-wide spine-card" data-section="places" data-block="places" data-card="" aria-labelledby="k-places">
+    <article id="places" className="k-sub k-wide spine-card" data-section="places" data-block="places" data-card="" data-wide-table="" aria-labelledby="k-places">
       <header className="k-hsw">
         <div>
           <h3 id="k-places">{T.table.title}</h3>
@@ -517,11 +519,14 @@ function Table({ v }: { v: IndustryV4 }) {
       </header>
       {table(t.first, T.table.captionFirst)}
       <Fold summary={fill(T.table.fold, { n: String(t.rest.length) })}>{table(t.rest, fill(T.table.captionRest, { n: String(t.rest.length) }))}</Fold>
-      <p className="k-key">
-        <Tick />
-        <span>{T.table.key}</span>
-      </p>
-      <p className="k-note">{T.table.usNote}</p>
+      {/* The table's key and its US note side by side, each at a reading measure (two lines of their own, the readability gate's remedy). */}
+      <div className="k-foot2">
+        <p className="k-key">
+          <Tick />
+          <span>{T.table.key}</span>
+        </p>
+        <p className="k-note">{T.table.usNote}</p>
+      </div>
       <p className="k-note">
         <a href={METHOD}>{T.hero.how}</a>
       </p>
