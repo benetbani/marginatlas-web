@@ -50,7 +50,11 @@ export const SERVED_FILES: ReadonlySet<string> = new Set([
   "/spine/_skyline.jpeg",
   "/spine/industry-restaurants-1200.webp",
   "/spine/industry-restaurants.webp",
+  "/spine/landmark-berlin-gate.webp",
+  "/spine/landmark-paris-eiffel.webp",
   "/spine/london.jpeg",
+  "/spine/restaurants-1200.webp",
+  "/spine/run-bnb-bed.webp",
   /* src/app/manifest.ts */
   "/manifest.webmanifest",
   /* src/app/robots.ts */

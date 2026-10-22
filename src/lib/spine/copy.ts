@@ -3363,10 +3363,11 @@ export const COPY = {
            place here, beside the words that name it (the hardcoded-place gate), as v4's doors did. Hotels goes to the site's own
            hotels trade page (/industries/* in src/lib/routing/route_shapes.ts, the slug hotels-lodging); the countries side by side
            to the compare tool (the site holds no page of one trade in every country), as v6's and v7's third door; its count is the
-           table's. The photographs are the target's own (v8/img), copied to public/spine. */
-        { kicker: "A city", icon: "pin", title: "Restaurants in London", line: "What one takes in, and what it keeps.", go: "Open the trade here", img: ["restaurants-1200"], alt: ["A busy restaurant dining room, waiters serving"], country: "gb", city: "london", href: null },
-        { kicker: "A trade", icon: "shop", title: "Hotels", line: "The nearby trade that keeps the most.", go: "Open the trade", img: ["run-bnb-bed"], alt: ["A neatly made bed with white linen in a softly lit guest room"], country: null, city: null, href: "/industries/hotels-lodging" },
-        { kicker: "Side by side", icon: "bars", title: "Restaurants in {n} countries", line: "One trade, country by country.", go: "Compare", img: ["landmark-paris-eiffel", "landmark-berlin-gate"], alt: ["The Eiffel Tower above the Seine", "The Brandenburg Gate from above at sunrise"], country: null, city: null, href: "/compare" },
+           table's. The photographs are the target's own (v8/img), copied to public/spine; each path stands whole here, never
+           assembled in the view (the geo-link-construction gate reads an assembled path as a built address). */
+        { kicker: "A city", icon: "pin", title: "Restaurants in London", line: "What one takes in, and what it keeps.", go: "Open the trade here", img: ["/spine/restaurants-1200.webp"], alt: ["A busy restaurant dining room, waiters serving"], country: "gb", city: "london", href: null },
+        { kicker: "A trade", icon: "shop", title: "Hotels", line: "The nearby trade that keeps the most.", go: "Open the trade", img: ["/spine/run-bnb-bed.webp"], alt: ["A neatly made bed with white linen in a softly lit guest room"], country: null, city: null, href: "/industries/hotels-lodging" },
+        { kicker: "Side by side", icon: "bars", title: "Restaurants in {n} countries", line: "One trade, country by country.", go: "Compare", img: ["/spine/landmark-paris-eiffel.webp", "/spine/landmark-berlin-gate.webp"], alt: ["The Eiffel Tower above the Seine", "The Brandenburg Gate from above at sunrise"], country: null, city: null, href: "/compare" },
       ],
       how: "How the figures are calculated",
       report: "Report a mistake",

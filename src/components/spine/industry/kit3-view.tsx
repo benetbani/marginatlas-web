@@ -1009,8 +1009,9 @@ function Close({ v, path }: { v: IndustryV8; path: string }) {
           {T.close.cards.map((d, i) => (
             <a key={d.title} className="icard" data-surface="card" href={v.doors[i].href} data-door={doorKey(d)} data-lands={lands(d)}>
               <span className={`icimg${d.img.length > 1 ? " split" : ""}`} data-media="">
+                {/* each photograph's path stands whole in the copy, never assembled here (the geo-link-construction gate) */}
                 {d.img.map((img, j) => (
-                  <img key={img} src={`/spine/${img}.webp`} alt={d.alt[j]} loading="lazy" />
+                  <img key={img} src={img} alt={d.alt[j]} loading="lazy" />
                 ))}
               </span>
               <span className="icbody">
