@@ -1,25 +1,29 @@
 /**
- * THE INDUSTRY PAGE, TARGET v7 (FOUNDER-VERDICTS "The industry page (/industries/restaurants) v7 approved, his choice delegated"; his
- * "Yes: port v7 onto the site on the server."): the builder. v7 is v6 (v4's page with chapter 02, "The ratios it runs on", on the
- * kit's version 3) with the kit review's tips (sheets/industry/README.md, "v7"; the target's builder
- * sheets/industry/v7/src/build_industry_v7.py). Every figure is read from data/sourced/ through the sourced-data loader and nowhere
- * else: no modelled shard, no hand-typed number.
+ * THE INDUSTRY PAGE, TARGET v8 (FOUNDER-VERDICTS "v8 is the approved industry target."; his "Yes: port v8 onto the site on the
+ * server once the v7 port is done."): the builder. v8 is v7 through the section filter on the kit of 2026-10-22 (RULEBOOK 3.7;
+ * sheets/industry/README.md, "v8"; the target's builder sheets/industry/v8/src/build_industry_v8.py; the filter's record
+ * v8/FILTER.md). Every figure is read from data/sourced/ through the sourced-data loader and nowhere else: no modelled shard, no
+ * hand-typed number.
  *
- * What v7 shares with v4 (the hero, the opening band, chapter 01, the country table, chapter 04) is read by the v4 builder
- * (src/lib/spine/industry_v4.ts, each figure's file named there) and re-cut here only where v7 cuts it differently: the table shows
- * the European survey's seven that keep the most on arrival, then the United Kingdom and the United States as their own group, each
- * column's best ticked over every row (sales within the European survey); the months scaled with headroom for the busiest month's
- * figure; Sales by size in his four sizes, the Medium row worked out below. The seventeen official ratios are worked out below, line
- * for line as the target's own script does it (sheets/industry/v6/src/server/ratio_table.py, which read data/sourced on branch
- * industry-data) and in the order of its result (industry_v5_ratios.json), named as v7 names them (one name a quantity: no value
- * moves). The view (src/components/spine/industry/kit3-view.tsx) arranges what this returns and computes nothing.
+ * What v8 shares with v4 (the hero, the opening band, chapter 01, the country table, chapter 04) is read by the v4 builder
+ * (src/lib/spine/industry_v4.ts, each figure's file named there) and re-cut here only where v8 cuts it differently: How many last
+ * as one falling line (the survival rates read again below for its points); the table's best of the European survey in each column
+ * (the United States never ticked: it counts hotels in, Round B on v8); How crowded it is as people for every restaurant (10,000
+ * over restaurants for every 10,000 people, to the nearest 10), the EU placed among its countries; Sales by size in his four sizes
+ * (the Medium row worked out below) behind Who makes the sales' fold. The seventeen official ratios are worked out below, line for
+ * line as the target's own script does it (sheets/industry/v6/src/server/ratio_table.py, which read data/sourced on branch
+ * industry-data) and in the order of its result (industry_v5_ratios.json), named as v7 named them (one name a quantity: no value
+ * moves). The view (src/components/spine/industry/kit3-view.tsx) arranges what this returns and computes only each drawing's
+ * geometry. Cut by v8: An hour of work (his word of 2026-10-22, "Cut An hour of work from the industry page."; its four figures
+ * stand in the official ratios' fold); What it puts back and Sales by size as sections (merged into What a year leaves' notes and
+ * Who makes the sales' fold).
  *
- * WHICH TRADES: v7 draws wherever v4 draws (restaurants alone today, v4's header says why) and every ratio holds; elsewhere null, and
+ * WHICH TRADES: v8 draws wherever v4 draws (restaurants alone today, v4's header says why) and every ratio holds; elsewhere null, and
  * the trade keeps today's page.
  */
 import { sourcedRows, yearOrder } from "@/lib/sourced/load";
 import { convertFromUsd } from "@/lib/currency";
-import { EU, F, buildIndustryV4, d1, moneyCents, moneyShort, r0, srcOf, type IndustryV4, type Money, type V4Row } from "@/lib/spine/industry_v4";
+import { EU, F, buildIndustryV4, d1, moneyCents, moneyShort, roundHalfUp, srcOf, type IndustryV4, type Money, type V4Row } from "@/lib/spine/industry_v4";
 import { COPY } from "@/lib/spine/copy";
 
 /* ------------------------------------------------------------------ Python's own rounding, for ratio_table.py's round() */
@@ -204,31 +208,38 @@ export const HOUR_RATIOS = ["sales-per-staff-hour", "wage-cost-an-hour", "value-
 
 /* ------------------------------------------------------------------ the page */
 
-/** The country table, v7's cut (the target's `eu[:7]`, `own`, `eu[7:]`): the European survey's seven that keep the most, then the
- *  countries from their own counts (the United Kingdom, the United States) as a group, the rest of the survey behind the fold. */
-export type V7Table = {
+/** The country table, v8's cut (the target's `eu[:7]`, `own`, `eu[7:]`): the European survey's seven that keep the most, then the
+ *  countries from their own counts (the United Kingdom, the United States) as their own small table, the rest of the survey behind
+ *  the fold. */
+export type V8Table = {
   count: number;
   first: V4Row[];
   own: V4Row[];
   rest: V4Row[];
-  /** Each column's best (the target's `best`): operating profit over every row, sales within the European survey (the United States
-   *  counts companies with staff alone), how many last over every row, the United States' 59.3% among them. */
+  /** Each column's best, the European survey's (Round B on v8: the United States counts hotels in with restaurants, and companies
+   *  with staff alone, so its 59.3% is never ticked against the survey; the United Kingdom's own count neither). */
   best: { gor: number; salesUsd: number; open5: number };
 };
-export type V7Months = IndustryV4["months"] & {
-  /** The busiest month's figure printed over its column (the target's `r0(sh[b])`). */
-  busiestText: string;
-  /** The columns' scale: the busiest month with headroom for its figure (the target's `max(sh) * 1.18`). */
+export type V8Months = IndustryV4["months"] & {
+  /** The columns' scale, with the target's headroom (`max(sh) * 1.18`). */
   scaleTop: number;
 };
-/** Sales by size in his four sizes (FV 1679): small, medium (worked out), large, corporate. */
-export type V7SalesBySize = {
-  lead: Money;
-  smallShare: string;
+/** One point of the falling line: the year, the published rate, and the rate as printed (one decimal). */
+export type V8LinePoint = { year: number; value: number; text: string };
+/** How many last as one falling line (Round B on v7 and v8): restaurants to five years, all businesses to three. */
+export type V8Lasts = IndustryV4["lasts"] & { line: { rest: V8LinePoint[]; all: V8LinePoint[] } };
+/** What one sells in a year, his four sizes (FV 1679): small, medium (worked out), large, corporate; Who makes the sales' fold. */
+export type V8SalesBySize = {
   rows: Array<{ key: "small" | "medium" | "large" | "corporate"; money: Money; src: string }>;
-  times: string;
 };
-export type V7Ratios = {
+/** How crowded it is as people for every restaurant (10,000 over restaurants for every 10,000 people, to the nearest 10): customers
+ *  within reach of a door (RULEBOOK 3.7), never a rank; the EU placed among the countries it sums. */
+export type V8Density = {
+  eu: string;
+  rows: Array<{ name: string; people: string; eu: boolean; src: string }>;
+  src: string;
+};
+export type V8Ratios = {
   /** the eight shares on arrival */
   first: Ratio[];
   /** behind the fold: an hour of staff time, then the business and the trade */
@@ -238,16 +249,23 @@ export type V7Ratios = {
   hourThird: "under" | "about";
   byKey: Record<string, Ratio>;
 };
-export type IndustryV7 = Omit<IndustryV4, "table" | "months" | "smallBig"> & { table: V7Table; months: V7Months; salesBySize: V7SalesBySize; ratios: V7Ratios };
+export type IndustryV8 = Omit<IndustryV4, "table" | "months" | "lasts" | "density" | "hour"> & {
+  table: V8Table;
+  months: V8Months;
+  lasts: V8Lasts;
+  density: V8Density;
+  salesBySize: V8SalesBySize;
+  ratios: V8Ratios;
+};
 
-/** The slugs v7 draws: wherever v4 draws and every ratio holds. The route and the harness ask this one question. */
-export function drawsIndustryV7(slug: string): boolean {
-  return buildIndustryV7(slug) !== null;
+/** The slugs v8 draws: wherever v4 draws and every ratio holds. The route and the harness ask this one question. */
+export function drawsIndustryV8(slug: string): boolean {
+  return buildIndustryV8(slug) !== null;
 }
 
-const cache = new Map<string, IndustryV7 | null>();
+const cache = new Map<string, IndustryV8 | null>();
 
-export function buildIndustryV7(slug: string): IndustryV7 | null {
+export function buildIndustryV8(slug: string): IndustryV8 | null {
   const key = slug.toLowerCase();
   if (cache.has(key)) return cache.get(key) ?? null;
   const built = build(key);
@@ -262,34 +280,64 @@ function euOne(file: string, item: string, measure: string): number | null {
   return rows.reduce((b, r) => (yearOrder(r.year, b.year) > 0 ? r : b)).value as number;
 }
 
-function build(slug: string): IndustryV7 | null {
+/** One survival rate (the EU's, the latest year) from business/eurostat-business-demography.json, as v4 reads it. */
+function survOne(years: number, trade: string): number | null {
+  const rows = sourcedRows({ item: `survival_${years}y`, trade, geo: EU }).filter((r) => r.fileId === F.DEMO && r.value !== null);
+  if (!rows.length) return null;
+  return rows.reduce((b, r) => (yearOrder(r.year, b.year) > 0 ? r : b)).value as number;
+}
+
+/** Python's `round(10000 / d / 10) * 10`: people for every restaurant, to the nearest 10, from the one-decimal density. */
+const peoplePer = (density: number): number => roundHalfUp(10000 / density / 10, 0) * 10;
+
+function build(slug: string): IndustryV8 | null {
   const v4 = buildIndustryV4(slug);
   if (!v4 || v4.trade !== R) return null;
   const all = buildRatios();
   if (!all) return null;
 
   /* the country table: v4's rows, already ranked by operating profit (the United Kingdom placed among them by its own), re-cut as
-     the target cuts them */
+     the target cuts them; each column's best within the European survey (Round B on v8) */
   const ranked = [...v4.table.first, ...v4.table.rest];
   const eu = ranked.filter((r) => r.ownSurvey === "EU");
   const gb = ranked.filter((r) => r.ownSurvey === "GB");
   const us = ranked.find((r) => r.ownSurvey === "US");
   if (!us || gb.length !== 1) return null;
-  const rs = [...eu, ...gb];
   const best = {
-    gor: Math.max(...rs.map((r) => r.gor as number)),
+    gor: Math.max(...eu.map((r) => r.gor as number)),
     salesUsd: Math.max(...eu.filter((r) => r.salesUsd !== null).map((r) => r.salesUsd as number)),
-    open5: Math.max(...[...eu, ...gb, us].filter((r) => r.open5 !== null).map((r) => r.open5 as number)),
+    open5: Math.max(...eu.filter((r) => r.open5 !== null).map((r) => r.open5 as number)),
   };
-  const table: V7Table = { count: v4.table.count, first: eu.slice(0, 7), own: [...gb, us], rest: eu.slice(7), best };
+  const table: V8Table = { count: v4.table.count, first: eu.slice(0, 7), own: [...gb, us], rest: eu.slice(7), best };
 
-  /* the months: the busiest month's figure over its column, the columns scaled to it with 18 of every 100 of headroom */
-  const months: V7Months = { ...v4.months, busiestText: r0(v4.months.shape[v4.months.busiest]), scaleTop: Math.max(...v4.months.shape) * 1.18 };
+  /* the months: the columns scaled with 18 of every 100 of headroom, the target's own scale */
+  const months: V8Months = { ...v4.months, scaleTop: Math.max(...v4.months.shape) * 1.18 };
 
-  /* Sales by size, his four sizes (FV 1679): sales a business by size from business/eurostat-sbs-size.json (as v4 reads them).
-     Medium, 10 to 49, is the two published groups' sales a business weighted by each group's share of the restaurants
-     (business/eurostat-sbs-2023.json, size_class_share, published to 0.1, so the mean is good to about 1%: printed to three figures,
-     the target's own arithmetic). */
+  /* how many last as one falling line: the same published rates v4 prints, read again as numbers for the line's points */
+  const sr = [1, 2, 3, 5].map((y) => ({ year: y, v: survOne(y, R) }));
+  const sa = [1, 2, 3].map((y) => ({ year: y, v: survOne(y, "all") }));
+  if (sr.some((p) => p.v === null) || sa.some((p) => p.v === null)) return null;
+  const pt = (p: { year: number; v: number | null }): V8LinePoint => ({ year: p.year, value: p.v as number, text: d1(p.v as number) });
+  const lasts: V8Lasts = { ...v4.lasts, line: { rest: sr.map(pt), all: sa.map(pt) } };
+
+  /* how crowded it is: people for every restaurant, from the same one-decimal densities v4 ranks (the two ends and the five largest
+     members), the EU placed among them (before the first country with fewer people a restaurant, the target's own insertion) */
+  const lo = v4.density.rows.find((r) => r.end === "low"), hi = v4.density.rows.find((r) => r.end === "high");
+  if (!lo || !hi) return null;
+  const namedOrder = ["Poland", "Spain", "Germany", "France", "Italy"].map((n) => v4.density.rows.find((r) => r.name === n)).filter((r): r is NonNullable<typeof r> => !!r);
+  const withPpl = [lo, hi, ...namedOrder].map((r) => ({ name: r.name, ppl: peoplePer(Number(r.value)) }));
+  const ordered = [...withPpl].sort((a, b) => b.ppl - a.ppl);
+  const euPpl = peoplePer(Number(v4.density.eu));
+  const densSrc = (geo: string) => `derived:10000/${srcOf("SBS", "business_count", R, geo)}per10000of:population_1jan`;
+  const rows: V8Density["rows"] = ordered.map((r) => ({ name: r.name, people: r.ppl.toLocaleString("en-US"), eu: false, src: densSrc(r.name) }));
+  const euAt = rows.findIndex((r) => Number(r.people.replace(/,/g, "")) < euPpl);
+  rows.splice(euAt < 0 ? rows.length : euAt, 0, { name: "European Union", people: euPpl.toLocaleString("en-US"), eu: true, src: densSrc(EU) });
+  const density: V8Density = { eu: euPpl.toLocaleString("en-US"), rows, src: densSrc(EU) };
+
+  /* What one sells in a year, his four sizes (FV 1679), Who makes the sales' fold (Round B on v7: Sales by size merged into its
+     neighbour): sales a business by size from business/eurostat-sbs-size.json (as v4 reads them). Medium, 10 to 49, is the two
+     published groups' sales a business weighted by each group's share of the restaurants (business/eurostat-sbs-2023.json,
+     size_class_share, published to 0.1, so the mean is good to about 1%: printed to three figures, the target's own arithmetic). */
   const salesOf = (cls: string) => euOne(F.SIZE, "sales_per_business_by_size", `mean net turnover per enterprise, enterprises with ${cls}`);
   const shareOf = (cls: string) => euOne(F.SBS, "size_class_share", `share of enterprises with ${cls}`);
   const s0 = salesOf("0 to 9 persons employed"), s1 = salesOf("10 to 19 persons employed"), s2 = salesOf("20 to 49 persons employed");
@@ -298,34 +346,33 @@ function build(slug: string): IndustryV7 | null {
   if ([s0, s1, s2, s3, s4, w1, w2].some((x) => x === null)) return null;
   const medium = ((s1 as number) * (w1 as number) + (s2 as number) * (w2 as number)) / ((w1 as number) + (w2 as number));
   const sizeSrc = (cls: string) => srcOf("SIZE", "sales_per_business_by_size", R, EU, cls);
-  const salesBySize: V7SalesBySize = {
-    lead: v4.smallBig.lead,
-    smallShare: v4.smallBig.smallShare,
+  const salesBySize: V8SalesBySize = {
     rows: [
       { key: "small", money: moneyShort(s0 as number), src: sizeSrc("0 to 9 persons employed") },
       { key: "medium", money: moneyShort(medium), src: `derived:${sizeSrc("10 to 19 persons employed")}+${sizeSrc("20 to 49 persons employed")}:weighted by ${srcOf("SBS", "size_class_share", R, EU)}` },
       { key: "large", money: moneyShort(s3 as number), src: sizeSrc("50 to 249 persons employed") },
       { key: "corporate", money: moneyShort(s4 as number), src: sizeSrc("250 persons employed or more") },
     ],
-    times: r0(medium / (s0 as number)),
   };
 
-  /* the exit's doors (the target's close): London, the trade's own page there, its place read from the door's own words in
-     COPY.industryV7.close.doors; Hotels, the site's own hotels trade page; the countries side by side, the compare tool (the site holds
-     no page of one trade in 34 countries, as v6's third door) */
-  const doors: IndustryV4["doors"] = COPY.industryV7.close.doors.map((d) => ({ href: d.href ?? `/${d.country}/${d.city}/${R}` }));
+  /* the exit's cards (his approved example 19, FV 2026-10-22 "The examples are right"): London, the trade's own page there, its
+     place read from the card's own words in COPY.industryV8.close.cards; Hotels, the site's own hotels trade page; the countries
+     side by side, the compare tool (the site holds no page of one trade in 34 countries, as v6's and v7's third door) */
+  const doors: IndustryV4["doors"] = COPY.industryV8.close.cards.map((d) => ({ href: d.href ?? `/${d.country}/${d.city}/${R}` }));
 
-  const { smallBig: _smallBig, ...rest } = v4;
+  /* smallBig and putsBack stay on the built page: What a year leaves' two notes read them (what goes back into the place, the
+     small restaurant's sales), where v7 drew them as their own sections. */
+  const { hour: _hour, lasts: _lasts, density: _density, ...rest } = v4;
   const byKey = Object.fromEntries(all.map((r) => [r.key, r]));
   const h = byKey["sales-per-staff-hour"].raw;
-  const ratios: V7Ratios = {
+  const ratios: V8Ratios = {
     first: all.slice(0, 8),
     hour: all.slice(8).filter((r) => (HOUR_RATIOS as readonly string[]).includes(r.key)),
     trade: all.slice(8).filter((r) => !(HOUR_RATIOS as readonly string[]).includes(r.key)),
     hourThird: (h.restaurants as number) / (h.all as number) < 1 / 3 ? "under" : "about",
     byKey,
   };
-  return { ...rest, doors, table, months, salesBySize, ratios };
+  return { ...rest, doors, table, months, lasts, density, salesBySize, ratios };
 }
 
 export { EU, d1, moneyCents, srcOf };

@@ -416,9 +416,9 @@ function sectionsOf(file: string): Section[] {
   /* A KIT VIEW'S CARDS (a view that exports LOUD_SEATS_KIT: the industry page, src/components/spine/industry/kit3-view.tsx, v6 from
      2026-10-21 (his "v6 is the approved industry target."), v7 in its place since (FOUNDER-VERDICTS, "v7 approved")): it draws no Box; its sections are its own `Sub`
      (v4's `Card`) called with a literal id, and cards stamped with a literal `data-block` (the hero's answer card). Each is a section of
-     its page, its kicker the call's `title` as written, its builder the one whose type the view reads (buildIndustryV7, else V4). */
+     its page, its kicker the call's `title` as written, its builder the one whose type the view reads (buildIndustryV8, else V4). */
   if (/export\s+const\s+LOUD_SEATS_KIT\b/.test(src)) {
-    const kitBuilder = /\bIndustryV7\b/.test(src) ? "buildIndustryV7" : "buildIndustryV4";
+    const kitBuilder = /\bIndustryV8\b/.test(src) ? "buildIndustryV8" : "buildIndustryV4";
     const kitRe = /<(?:Card|Sub)\s+id="([a-z][a-z0-9-]*)"|<(?:div|article)\b[^>]*?\sdata-block="([a-z][a-z0-9-]*)"/g;
     let km: RegExpExecArray | null;
     while ((km = kitRe.exec(src))) {

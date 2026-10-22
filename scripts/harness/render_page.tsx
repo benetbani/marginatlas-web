@@ -41,8 +41,8 @@ import { GUTTER } from "../../src/lib/nav";
 import { SpineCityBody } from "../../src/components/spine/city/city-view";
 import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
-import { SpineIndustryV7Body } from "../../src/components/spine/industry/kit3-view";
-import { buildIndustryV7 } from "../../src/lib/spine/industry_v7";
+import { SpineIndustryV8Body } from "../../src/components/spine/industry/kit3-view";
+import { buildIndustryV8 } from "../../src/lib/spine/industry_v8";
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
@@ -96,8 +96,8 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
     case "country": C = SpineCountryBody; data = await buildSpineCountrySeed(slugs[0]); break;
     case "city": C = SpineCityBody; data = await buildSpineCitySeed(slugs[0]); break;
     case "cell": C = SpineCellBody; data = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); break;
-    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v7 where buildIndustryV7 holds the trade, else the spine. */
-    case "industry": { const v7 = buildIndustryV7(slugs[0]); if (v7) { C = (p: { data: unknown }) => React.createElement(SpineIndustryV7Body, { v: p.data as any, path: `/industries/${slugs[0]}` }); data = v7; } else { C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); } break; }
+    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v8 where buildIndustryV8 holds the trade, else the spine. */
+    case "industry": { const v8 = buildIndustryV8(slugs[0]); if (v8) { C = (p: { data: unknown }) => React.createElement(SpineIndustryV8Body, { v: p.data as any, path: `/industries/${slugs[0]}` }); data = v8; } else { C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); } break; }
     case "hood": C = SpineHoodBody; data = await buildSpineHoodSeed(slugs[0]); selfShelled = true; break;
     case "howto": C = HowToBody; data = { iso2: slugs[0].toUpperCase() }; break;
     /* The home page on the band page (masterplan step 32): its slug is the country it leads with. */

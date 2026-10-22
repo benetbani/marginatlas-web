@@ -1,31 +1,38 @@
 /**
- * THE INDUSTRY PAGE, TARGET v7 (FOUNDER-VERDICTS "The industry page (/industries/restaurants) v7 approved, his choice delegated"; his
- * "Yes: port v7 onto the site on the server."): the view. v7 is v6 with the kit review's tips (sheets/industry/README.md, "v7"). It
- * draws v7's sections in v7's order with v7's words (COPY.industryV7) and the figures the builder reads from data/sourced/
- * (src/lib/spine/industry_v7.ts); it computes no figure, only each drawing's geometry. v6's view and words are gone: this is the one.
+ * THE INDUSTRY PAGE, TARGET v8 (FOUNDER-VERDICTS "v8 is the approved industry target."; his "Yes: port v8 onto the site on the
+ * server once the v7 port is done."): the view. v8 is v7 through the section filter on the kit of 2026-10-22 (RULEBOOK 3.7;
+ * sheets/industry/README.md, "v8"; the filter's record v8/FILTER.md). It draws v8's sections in v8's order with v8's words
+ * (COPY.industryV8) and the figures the builder reads from data/sourced/ (src/lib/spine/industry_v8.ts); it computes no figure, only
+ * each drawing's geometry. v7's view and words are gone: this is the one.
  *
- * THE LOOK IS KIT-VERSION 3'S (sheets/kit/v3: tokens.json, kit3.css, kit3.py), through the site's tokens: version 3's tokens
- * (design-tokens.ts `kit3`) are set as the kit's own variables for this page (`kit3CssVars`, a :root rule this view writes, so the
- * KIT 3 laws, which read `var(--color-*)` and `var(--shadow-*)` at the page's root, read the page's own), and globals.css, THE KIT 3
- * PAGE: THE INDUSTRY, holds the rules under `.kit3.k-industry`. The markup is kit3.py's: the kit's class names and version 3's hooks
- * (`data-surface`, `data-disclosure`, `data-focal`, `data-kind`, `data-answer`, `data-display`), which the laws read. No hex and no
- * pixel in this file. The route sets `<meta name="ma:kit" content="3">` on this page alone.
+ * THE LOOK IS KIT-VERSION 3'S (sheets/kit/v3: tokens.json sha256:7302ecf366227259, kit3.css, kit3.py at 2a83eca), through the site's
+ * tokens: version 3's tokens (design-tokens.ts `kit3`) are set as the kit's own variables for this page (`kit3CssVars`, a :root rule
+ * this view writes, so the KIT 3 laws, which read `var(--color-*)` and `var(--shadow-*)` at the page's root, read the page's own),
+ * and globals.css, THE KIT 3 PAGE: THE INDUSTRY, holds the rules under `.kit3.k-industry`. The markup is kit3.py's: the kit's class
+ * names and version 3's hooks (`data-surface`, `data-disclosure`, `data-focal`, `data-kind`, `data-answer`, `data-display`,
+ * `data-case`), which the laws read. No hex and no pixel in this file. The route sets `<meta name="ma:kit" content="3">` on this
+ * page alone.
  *
  *   hero          the photograph (Storyblocks 357538047, lifted, never darkened, no credit), "A trade", the name, the lead; the plate:
- *                 operating profit of every 100 of sales, the basis line, four cells each with its unit (the range's up and down
- *                 arrows; all businesses "The same"), the place line and the method link
- *   opening band  How many last | Trades next door
- *   chapter 01    How it makes money: Where each 100 goes | What a year leaves (a receipt); An hour of work | Who works in it;
- *                 What it puts back | Sales by size (his four sizes)
- *   chapter 02    The ratios it runs on: The official ratios | What they say; Money in and out | Guests and seats
- *   chapter 03    Where it pays best: Country by country (the European survey's seven, then their own counts, the rest behind the
- *                 fold, € / $)
- *   chapter 04    Season, crowd and size: Busy and quiet months | How crowded it is | Who makes the sales
- *   exit          Where to next: London, Hotels, the countries side by side; the source line
+ *                 operating profit of every 100 of sales, "as in all businesses" in the answer's line, two cells with their units
+ *                 (the range's up and down arrows), the place line and the method link
+ *   opening band  How many last (one falling line, the table behind "Year by year") | Trades next door (bare: no mark, no key, no fold)
+ *   chapter 01    How it makes money, one band of three: Where each 100 goes (headed by operating profit) | What a year leaves (the
+ *                 receipt, two notes: what goes back into the place, a small restaurant's sales) | Who works in it
+ *                 (An hour of work cut on his word of 2026-10-22; its four figures stand in the official ratios' fold)
+ *   chapter 02    The ratios it runs on: The official ratios (the range on one line) | What they say; Money in and out | Guests and seats
+ *   chapter 03    Where it pays best: Country by country (the European survey's seven, their own counts as their own small table, the
+ *                 rest behind the fold, the three tables on one set of columns; the best of the European survey ticked, each ticked
+ *                 column naming its direction, data-best="high"; EUR / USD)
+ *   chapter 04    Season, crowd and size: Busy and quiet months (one figure) | How crowded it is (people for every restaurant, the EU
+ *                 among its countries) | Who makes the sales (the donut; What one sells in a year behind the fold)
+ *   exit          Where to next as the kit's informative cards (his approved example 19): Restaurants in London, Hotels, and
+ *                 Restaurants in 34 countries with two photographs; the source line
  *
- * THE FORMS (the kit's, a9c7023): the two owner's ratio lists `data-form="owner-ratios"` (the exempt form, his FV 2221, "The ratios
+ * THE FORMS (the kit's, 2a83eca): the two owner's ratio lists `data-form="owner-ratios"` (the exempt form, his FV 2221, "The ratios
  * chapter in v6 is right as it is."), the official ratios and the country table `data-form="compare-table"`, What they say
- * `data-form="note-list"`; the focal part (`data-focal`) where the target places it.
+ * `data-form="note-list"`; the focal part (`data-focal`) where the target places it. Every section carries its case (`data-case`,
+ * Round A of the filter: the decision it changes | why this page | why its own place), CASES below, the target's own words.
  *
  * THE RATIO NAMES ARE PLAIN TEXT. The target links each to its glossary entry, and those entries do not exist yet: a link to nowhere
  * would answer 404 at the edge (src/lib/routing/route_shapes.ts). They become links when the glossary does.
@@ -34,7 +41,7 @@ import * as React from "react";
 import { COPY } from "@/lib/spine/copy";
 import { kit3CssVars } from "@/lib/design-tokens";
 import { reportHref } from "@/lib/spine/report";
-import { EU, d1, srcOf, type IndustryV7, type Money, type Ratio, type RatioEnd, type RatioValue } from "@/lib/spine/industry_v7";
+import { EU, d1, srcOf, type IndustryV8, type Money, type Ratio, type RatioEnd, type RatioValue, type V8LinePoint } from "@/lib/spine/industry_v8";
 import { isUsdOnly, type V4Row } from "@/lib/spine/industry_v4";
 import { SURFACE_ANSWERS } from "@/lib/spine/door_kinds";
 import type { LoudSeat } from "@/lib/spine/loud_seats";
@@ -44,23 +51,44 @@ import { CurrencySwitch3 } from "./currency-switch";
 import { OpenAll } from "./kit3-islands";
 
 /**
- * THE LOUD MOMENTS OF v7 (the kit's LOUD law; MOVING.md: "terracotta on each section's focal part inside data-focal, one a section
+ * THE LOUD MOMENTS OF v8 (the kit's LOUD law; MOVING.md: "terracotta on each section's focal part inside data-focal, one a section
  * (FOCAL)"), declared for the loud-seats gate, which holds a kit render (`data-composition="kit"`) to the table its view exports. Seat
- * one is the hero's answer, 11.7 in terracotta. v7, as v6, marks no section loud (`data-loud`, none: version 3 moved the page's terracotta onto
- * each section's one focal part, his FV 2109 and FV 2128), so seats two and three hold none. Each column's best in the table is in
- * terracotta by his ruling (FV 1789 to 1790), marked `data-founder-accent`.
+ * one is the hero's answer, 11.7 in terracotta. v8, as v7, marks no section loud (`data-loud`, none: version 3 moved the page's
+ * terracotta onto each section's one focal part, his FV 2109 and FV 2128), so seats two and three hold none. Each column's best in
+ * the table is in terracotta by his ruling (FV 1789 to 1790), marked `data-founder-accent`.
  */
 export const LOUD_SEATS_KIT = [
-  { seat: 1, card: "00 take", figure: "operating profit of every 100 of sales, the EU's, 11.7", state: "LIT", condition: "v7's hero answer in the kit's terracotta, on the one trade v7 draws (buildIndustryV7 returns null wherever a row is missing)" },
-  { seat: 2, card: "none", figure: "no second loud section", state: "NO HONEST CANDIDATE", condition: "v7, approved 2026-10-21 as v6 was, marks no section loud: on kit version 3 each section's one focal part (data-focal) carries the terracotta instead (his FV 2109, FV 2128)" },
+  { seat: 1, card: "00 take", figure: "operating profit of every 100 of sales, the EU's, 11.7", state: "LIT", condition: "v8's hero answer in the kit's terracotta, on the one trade v8 draws (buildIndustryV8 returns null wherever a row is missing)" },
+  { seat: 2, card: "none", figure: "no second loud section", state: "NO HONEST CANDIDATE", condition: "v8, approved 2026-10-22 as v7 was, marks no section loud: on kit version 3 each section's one focal part (data-focal) carries the terracotta instead (his FV 2109, FV 2128)" },
   { seat: 3, card: "none", figure: "no third loud section", state: "NO HONEST CANDIDATE", condition: "as seat two; the table's column winners are his ruling, not a seat" },
 ] as const satisfies readonly LoudSeat[];
 
-const T = COPY.industryV7;
+const T = COPY.industryV8;
 const fill = (t: string, vars: Record<string, string>) => t.replace(/\{([\w:-]+)\}/g, (_m, k) => vars[k] ?? "");
 const METHOD = "/methodology";
 const HERO = { src: "/spine/industry-restaurants.webp", small: "/spine/industry-restaurants-1200.webp", w: 2400, h: 1350 };
 const R = "restaurants";
+
+/**
+ * Each section's case (Round A of the section filter, RULEBOOK 3.7; the CASE law reads `data-case`): three parts, the decision it
+ * changes | why this page | why its own place. The target's own words (build_industry_v8.py CASES); Round B judges whether each is
+ * true (v8/FILTER.md holds the verdicts).
+ */
+const CASES: Record<string, string> = {
+  lasts: "a visitor weighing whether to open a restaurant reads this to see the odds it is still open after five years | this page, because survival is the trade's own, the same in any city | its own place, because the odds are the first risk an owner weighs, before any money",
+  "next-door": "a visitor choosing between food, drink and lodging reads this to see which nearby trade keeps the most of each sale | this page, because it sets this trade beside its neighbours | its own place, because it answers which trade, where the rest of the page answers how this one works",
+  split: "a visitor setting prices and a team reads this to see where each 100 of sales goes | this page, because the split of sales is the trade's own economics | its own place, because it draws the page's answer whole: purchases, staff and operating profit",
+  year: "a visitor asking whether a restaurant can pay them reads this to see a year's operating profit in money | this page, because it is the trade's average year across Europe | its own place, because it turns the shares into a year's money, and what goes back into the place",
+  people: "a visitor planning a team reads this to see how many people a restaurant runs on, and how many are owners | this page, because team size is the trade's own | its own place, because it counts people, where its partners count money",
+  ratios: "a visitor checking their own books reads this to set them beside the trade's official ratios | this page, because the ratios are the trade's, across countries | its own place, because it gathers every official ratio in one table",
+  say: "a visitor reading the ratios table reads this to know what the ratios mean in plain words | this page, because it reads the table beside it | its own place, because it is the page's one prose reading",
+  money: "a visitor setting up their books reads this to know which money ratios to track and what moves them | this page, because they are the trade's working ratios | its own place, because no survey publishes them, so they carry a formula, not a number",
+  guests: "a visitor planning a dining room reads this to know which guest and seat ratios to track and what moves them | this page, because they are the trade's working ratios | its own place, because they count guests and seats, where its partner counts money",
+  places: "a visitor choosing where to open reads this to see what a restaurant keeps, sells and employs in each country | this page, because it sets the trade side by side across countries | its own place, because it is the page's one comparison of places",
+  months: "a visitor planning cash reads this to see when the money comes in through the year | this page, because the season is the trade's own | its own place, because it reads time, where its partners read rivals and size",
+  density: "a visitor weighing rivals reads this to see how many people each restaurant shares | this page, because density is the trade's, country by country | its own place, because it reads rivals, where its partners read time and size",
+  channels: "a visitor opening a small restaurant reads this to see how much of the trade's sales small ones make, and what one sells | this page, because the size split is the trade's own | its own place, because it is the page's one reading by size",
+};
 
 /** Version 3's tokens as the kit's own variables, for this page: a :root rule, so the page and the laws' probes read one set. */
 const ROOT_VARS = `:root{${Object.entries(kit3CssVars())
@@ -92,6 +120,18 @@ function Unit({ children }: { children: React.ReactNode }) {
     <span className="unit" data-focal-words="">
       {children}
     </span>
+  );
+}
+/** A sentence from the copy with figures in it: each `{key}` becomes its part (a stamped figure, a money pair). */
+function Fill({ text, parts }: { text: string; parts: Record<string, React.ReactNode> }) {
+  const bits = text.split(/(\{[\w:-]+\})/g).filter(Boolean);
+  return (
+    <>
+      {bits.map((p, i) => {
+        const m = /^\{([\w:-]+)\}$/.exec(p);
+        return <React.Fragment key={i}>{m ? parts[m[1]] : p}</React.Fragment>;
+      })}
+    </>
   );
 }
 
@@ -151,7 +191,7 @@ function Fold({ summary, children }: { summary: string; children: React.ReactNod
   );
 }
 
-/** Label and value rows (kit.rows): the value in the next column, never across the section. */
+/** Label and value rows (kit.rows): the value in the next column, 24 after the longest label (the kit of 2a83eca). */
 function Rows({ rows, className = "kv" }: { rows: Array<{ key: string; label: React.ReactNode; value: React.ReactNode }>; className?: string }) {
   return (
     <dl className={className}>
@@ -176,10 +216,10 @@ function Group({ title, children }: { title: string; children: React.ReactNode }
 }
 
 /** One open section in four parts (kit3.card): title and question; the figure; the body; the caption "Place, 2026.". `form` is the
- *  kit's named form (kit3.card's `form=`), the exempt forms the laws read. */
+ *  kit's named form (kit3.card's `form=`), the exempt forms the laws read; every section's case stands on it (`data-case`, CASES). */
 function Sub({ id, title, ask, tag, per100, cls, form, fig, children, caption }: { id: string; title: string; ask: string; tag?: string; per100?: boolean; cls?: string; form?: "compare-table" | "note-list" | "owner-ratios"; fig?: React.ReactNode; children: React.ReactNode; caption: string }) {
   return (
-    <article id={id} className={`sub spine-card${cls ? ` ${cls}` : ""}`} data-section={id} data-block={id} data-card="" {...(per100 ? { "data-per": "100" } : {})} {...(form ? { "data-form": form } : {})} aria-labelledby={`h-${id}`}>
+    <article id={id} className={`sub spine-card${cls ? ` ${cls}` : ""}`} data-section={id} data-block={id} data-card="" {...(per100 ? { "data-per": "100" } : {})} {...(form ? { "data-form": form } : {})} data-case={CASES[id]} aria-labelledby={`h-${id}`}>
       <header>
         <h3 id={`h-${id}`}>
           {title}
@@ -211,9 +251,10 @@ function Chapter({ num, id, title, tint, children }: { num: string; id: string; 
 
 /* ------------------------------------------------------------------ the hero */
 
-function Hero({ v }: { v: IndustryV7 }) {
-  /* the range's highest and lowest by the up and down arrows (the kit's sprite since a9c7023) */
-  const glyph = { high: "up", low: "down", all: "bars", next: "shop" } as const;
+function Hero({ v }: { v: IndustryV8 }) {
+  /* two cells, the range's highest and lowest, by the up and down arrows (all businesses in the answer's line, bars and cafes cut) */
+  const cells = v.hero.cells.filter((c) => c.key === "high" || c.key === "low");
+  const glyph = { high: "up", low: "down" } as const;
   return (
     <section className="city-hero ind" aria-labelledby="ind-h" data-hero="1">
       <div className="pano" data-visual="1">
@@ -242,22 +283,15 @@ function Hero({ v }: { v: IndustryV7 }) {
             </div>
           </div>
           <div className="cells">
-            {v.hero.cells.map((c) => (
+            {cells.map((c) => (
               <div className="cell" data-surface="panel" key={c.key}>
                 <p className="cl">
-                  <Icon id={glyph[c.key]} size={24} />
-                  {T.hero.cells[c.key]}
+                  <Icon id={glyph[c.key as "high" | "low"]} size={24} />
+                  {T.hero.cells[c.key as "high" | "low"]}
                 </p>
-                {/* Each cell with its unit; all businesses keep the answer's own figure, said in words (11.7 once a section). */}
                 <p className="cv">
-                  {c.key === "all" ? (
-                    T.hero.same
-                  ) : (
-                    <>
-                      <S src={c.src}>{c.value}</S>
-                      <span className="cn">{c.country ? fill(T.hero.unitPlace, { name: c.country }) : T.hero.unit}</span>
-                    </>
-                  )}
+                  <S src={c.src}>{c.value}</S>
+                  <span className="cn">{c.country ? fill(T.hero.unitPlace, { name: c.country }) : T.hero.unit}</span>
                 </p>
               </div>
             ))}
@@ -273,7 +307,14 @@ function Hero({ v }: { v: IndustryV7 }) {
 
 /* ------------------------------------------------------------------ the opening band: how many last | trades next door */
 
-function Lasts({ v }: { v: IndustryV7 }) {
+function Lasts({ v }: { v: IndustryV8 }) {
+  /* one falling line carries it (the kit's line, gallery "Still trading"; Round B on v7 and v8): restaurants to five years in
+     terracotta, all businesses to three on the benchmark grey; the year-by-year table behind the fold */
+  const x = (year: number) => ((year / 5) * 100).toFixed(1);
+  const yAt = (value: number) => (100 - value).toFixed(1);
+  /* each line starts at (opening, 100 of 100 still open), the target's own first point */
+  const points = (pts: V8LinePoint[]) => ["0.0,0.0", ...pts.map((p) => `${x(p.year)},${yAt(p.value)}`)].join(" ");
+  const aria = fill(T.lasts.lineAria, { r: v.lasts.line.rest.map((p) => p.text).join(", "), a: v.lasts.line.all.map((p) => p.text).join(", ") });
   return (
     <Sub
       id="lasts"
@@ -282,44 +323,72 @@ function Lasts({ v }: { v: IndustryV7 }) {
       caption={T.eu}
       fig={
         <p className="fig">
-          <S src={srcOf("DEMO", "survival_5y", R, EU)} focal>
-            {v.lasts.five}%
-          </S>{" "}
-          <Unit>{T.lasts.unit}</Unit>
+          <S src={srcOf("DEMO", "survival_5y", R, EU)}>{v.lasts.five}%</S> <Unit>{T.lasts.unit}</Unit>
         </p>
       }
     >
-      <table className="forms">
-        <caption className="sr">{T.lasts.caption}</caption>
-        <thead>
-          <tr>
-            <th scope="col">{T.lasts.head.open}</th>
-            <th scope="col">{T.lasts.head.trade}</th>
-            <th scope="col">{T.lasts.head.all}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {v.lasts.years.map((y) => (
-            <tr key={y.key}>
-              <th scope="row">{T.lasts.years[y.key as keyof typeof T.lasts.years]}</th>
-              <td data-l={T.lasts.label.trade}>
-                <S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, R, EU)}>{y.trade}</S>
-              </td>
-              <td data-l={T.lasts.label.all}>{y.all === null ? "–" : <S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, "all", EU)}>{y.all}</S>}</td>
-            </tr>
+      <div data-kind="line" data-visual="" role="img" aria-label={aria}>
+        <div className="lplot" data-plot="" data-focal="">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <polyline points={points(v.lasts.line.all)} fill="none" stroke="var(--color-benchmark)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+            <polyline points={points(v.lasts.line.rest)} fill="none" stroke="var(--color-terra)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+          </svg>
+          {v.lasts.line.all.map((p) => (
+            <span key={`b${p.year}`} className="dot b" style={{ left: `${x(p.year)}%`, top: `${yAt(p.value)}%` }} />
           ))}
-        </tbody>
-      </table>
-      <p className="note">{T.lasts.note}</p>
+          {v.lasts.line.rest.map((p) => (
+            <span key={p.year} className="dot" style={{ left: `${x(p.year)}%`, top: `${yAt(p.value)}%` }} />
+          ))}
+        </div>
+        <div className="lx">
+          <span style={{ left: 0 }}>{T.lasts.x.open}</span>
+          <span style={{ left: "60%" }}>{T.lasts.x.three}</span>
+          <span style={{ left: "100%" }}>{T.lasts.x.five}</span>
+        </div>
+      </div>
+      <ul className="akey">
+        <li>
+          <i className="tc" />
+          {T.lasts.key.trade}
+        </li>
+        <li>
+          <i className="bm" />
+          {T.lasts.key.all}
+        </li>
+      </ul>
+      <Fold summary={T.lasts.fold}>
+        <table className="forms">
+          <caption className="sr">{T.lasts.caption}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{T.lasts.head.open}</th>
+              <th scope="col">{T.lasts.head.trade}</th>
+              <th scope="col">{T.lasts.head.all}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {v.lasts.years.map((y) => (
+              <tr key={y.key}>
+                <th scope="row">{T.lasts.years[y.key as keyof typeof T.lasts.years]}</th>
+                <td data-l={T.lasts.label.trade}>
+                  <S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, R, EU)}>{y.trade}</S>
+                </td>
+                <td data-l={T.lasts.label.all}>{y.all === null ? "–" : <S src={srcOf("DEMO", `survival_${y.key.slice(1)}y`, "all", EU)}>{y.all}</S>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="note">{T.lasts.note}</p>
+      </Fold>
     </Sub>
   );
 }
 
-function NextDoor({ v }: { v: IndustryV7 }) {
+function NextDoor({ v }: { v: IndustryV8 }) {
   const nd = v.nextDoor;
   const pct = (x: number) => `${((x / nd.scaleTop) * 100).toFixed(1)}%`;
   const name = (k: string) => T.nextDoor.names[k as keyof typeof T.nextDoor.names];
-  const aria = fill(T.nextDoor.aria, { list: nd.items.map((i) => `${name(i.key)} ${i.text}`).join(", "), all: nd.all.text });
+  const aria = fill(T.nextDoor.aria, { list: nd.items.map((i) => `${name(i.key)} ${i.text}`).join(", ") });
   return (
     <Sub
       id="next-door"
@@ -332,6 +401,7 @@ function NextDoor({ v }: { v: IndustryV7 }) {
         </p>
       }
     >
+      {/* bare since v8 (Round B on v7): one rank, one bar list, no all-businesses mark, no key, no dictionary fold */}
       <div className="rbars" data-kind="ranked-bars" data-visual="" role="img" aria-label={aria}>
         {nd.items.map((i) => (
           <div key={i.key} className="rb" {...(i.me ? { "data-focal": "" } : {})}>
@@ -341,41 +411,25 @@ function NextDoor({ v }: { v: IndustryV7 }) {
             </span>
             <span className="tr" data-bar="">
               <b style={{ width: pct(i.value) }} />
-              <i className="mk" style={{ left: pct(nd.all.value) }} />
             </span>
           </div>
         ))}
       </div>
-      <p className="mkkey">
-        <i />
-        {T.nextDoor.allKey}
-      </p>
-      <Fold summary={T.nextDoor.fold}>
-        {nd.items.map((i) => (
-          <p className="def2" key={i.key}>
-            <b>{name(i.key)}</b> {T.nextDoor.defs[i.key as keyof typeof T.nextDoor.defs]}
-          </p>
-        ))}
-      </Fold>
     </Sub>
   );
 }
 
 /* ------------------------------------------------------------------ chapter 01: how it makes money */
 
-function Split({ v }: { v: IndustryV7 }) {
+function Split({ v }: { v: IndustryV8 }) {
   const { trade: r, all: a } = v.split;
-  /* 11.7 once a section: all businesses keep the restaurants' own operating profit, said in words */
-  const bar = (name: string, p: { purchases: number; staff: number; left: number }, t: string, said: string, src: boolean) => {
+  const bar = (name: string, p: { purchases: number; staff: number; left: number }, t: string) => {
     const tot = p.purchases + p.staff + p.left;
     /* The three parts at their shares of 99.4 of the track, the two 2s of gap taking the rest (the target's own arithmetic). */
     const w = (x: number) => `${((x / tot) * 99.4).toFixed(2)}%`;
     return (
       <div>
-        <p className="kn">
-          {name}
-          <b {...(src ? { "data-src": srcOf("SBS", "gross_operating_rate", t, EU) } : {})}>{said}</b>
-        </p>
+        <p className="kn">{name}</p>
         <div className="kt" data-seg="">
           <span className="n3" style={{ width: w(p.purchases) }}>
             <i data-src={srcOf("SBS", "purchases_share", t, EU)}>{d1(p.purchases)}</i>
@@ -398,13 +452,13 @@ function Split({ v }: { v: IndustryV7 }) {
       per100
       fig={
         <p className="fig">
-          <S src={srcOf("SBS", "staff_cost_share", R, EU)}>{d1(r.staff)}</S> <Unit>{fill(T.split.unit, { all: d1(a.staff) })}</Unit>
+          <S src={srcOf("SBS", "gross_operating_rate", R, EU)}>{d1(r.left)}</S> <Unit>{T.split.unit}</Unit>
         </p>
       }
     >
       <div className="kbars" data-kind="part-bar" data-visual="" data-focal="" role="img" aria-label={aria}>
-        {bar(T.split.rows.trade, r, R, fill(T.split.said.trade, { k: d1(r.left) }), true)}
-        {bar(T.split.rows.all, a, "all", T.split.said.all, false)}
+        {bar(T.split.rows.trade, r, R)}
+        {bar(T.split.rows.all, a, "all")}
       </div>
       <ul className="akey">
         <li>
@@ -420,24 +474,20 @@ function Split({ v }: { v: IndustryV7 }) {
           {T.split.key.left}
         </li>
       </ul>
-      <p className="note">{T.split.note}</p>
+      <p className="note">
+        <Fill
+          text={T.split.note}
+          parts={{
+            s: <S src={srcOf("SBS", "staff_cost_share", R, EU)}>{d1(r.staff)}</S>,
+            all: <S src={srcOf("SBS", "staff_cost_share", "all", EU)}>{d1(a.staff)}</S>,
+          }}
+        />
+      </p>
     </Sub>
   );
 }
 
-/** A sentence with one money pair in it: the words before `{all}`, the pair, the words after. */
-function WithMoney({ text, m, src }: { text: string; m: Money; src: string }) {
-  const [before, after] = text.split("{all}");
-  return (
-    <>
-      {before}
-      <M m={m} src={src} />
-      {after}
-    </>
-  );
-}
-
-function Year({ v }: { v: IndustryV7 }) {
+function Year({ v }: { v: IndustryV8 }) {
   const y = v.year;
   return (
     <Sub
@@ -487,51 +537,30 @@ function Year({ v }: { v: IndustryV7 }) {
           },
         ]}
       />
+      {/* What it puts back and the small one's sales, the two notes (Round B on v7: their sections merged here) */}
       <p className="note">
-        <WithMoney text={T.year.note} m={y.allLeft} src={srcOf("ECON", "surplus_per_business", "all", EU)} />
+        <Fill
+          text={T.year.noteBack}
+          parts={{
+            share: <S src={srcOf("ECON", "investment_share_of_surplus", R, EU)}>{v.putsBack.share}</S>,
+            put: <M m={v.putsBack.put} src={srcOf("ECON", "investment_per_business", R, EU)} />,
+          }}
+        />
+      </p>
+      <p className="note">
+        <Fill
+          text={T.year.noteSmall}
+          parts={{
+            n: <S src={`derived:${srcOf("SBS", "size_class_share", R, EU)}:0 to 9`}>{v.smallBig.smallShare}</S>,
+            sales: <M m={v.smallBig.lead} src={srcOf("SIZE", "sales_per_business_by_size", R, EU, "0 to 9 persons employed")} />,
+          }}
+        />
       </p>
     </Sub>
   );
 }
 
-function Hour({ v }: { v: IndustryV7 }) {
-  const h = v.hour;
-  const pos = (x: number) => (x / h.scaleTop) * 100;
-  const aria = fill(T.hour.aria, { c: h.costs.toFixed(2), v: h.adds.toFixed(2), l: h.leaves.local.replace(/^\D+/, "") });
-  const at = (x: number) => `${pos(x).toFixed(1)}%`;
-  return (
-    <Sub
-      id="hour"
-      title={T.hour.title}
-      ask={T.hour.ask}
-      caption={T.eu}
-      fig={
-        <p className="fig">
-          <M m={h.leaves} src={srcOf("ECON", "surplus_per_hour", R, EU)} />{" "}
-          <Unit>
-            <WithMoney text={T.hour.unit} m={h.allLeaves} src={srcOf("ECON", "surplus_per_hour", "all", EU)} />
-          </Unit>
-        </p>
-      }
-    >
-      <div className="rstrip hstrip" data-kind="range-strip" data-visual="" role="img" aria-label={aria}>
-        <span className="rail" data-rail="" />
-        <span className="gap" data-focal="" style={{ left: at(h.costs), width: `${(pos(h.adds) - pos(h.costs)).toFixed(1)}%` }} />
-        <span className="mk" data-mark="" style={{ left: at(h.costs) }} />
-        <span className="mk" data-mark="" style={{ left: at(h.adds) }} />
-        <span className="lab r" style={{ left: at(h.costs) }}>
-          {T.hour.costs} <M m={h.costsMoney} src={srcOf("ECON", "wage_cost_per_hour", R, EU)} />
-        </span>
-        <span className="lab dn r" style={{ left: at(h.adds) }}>
-          {T.hour.adds} <M m={h.addsMoney} src={srcOf("ECON", "value_added_per_hour", R, EU)} />
-        </span>
-      </div>
-      <p className="note">{T.hour.note}</p>
-    </Sub>
-  );
-}
-
-function People({ v }: { v: IndustryV7 }) {
+function People({ v }: { v: IndustryV8 }) {
   const p = v.people;
   return (
     <Sub
@@ -541,94 +570,21 @@ function People({ v }: { v: IndustryV7 }) {
       caption={T.eu}
       fig={
         <p className="fig">
-          <S src={srcOf("SBS", "persons_per_business", R, EU)}>{fill(T.people.fig, { n: p.persons })}</S> <Unit>{fill(T.people.unit, { all: p.allPersons })}</Unit>
+          <S src={srcOf("SBS", "persons_per_business", R, EU)} focal>
+            {fill(T.people.fig, { n: p.persons })}
+          </S>{" "}
+          <Unit>{fill(T.people.unit, { all: p.allPersons })}</Unit>
         </p>
       }
     >
       <Rows
         rows={[
           { key: "wage", label: T.people.rows.wage, value: <S src={srcOf("ECON", "employees_per_business", R, EU)}>{p.wage}</S> },
-          {
-            key: "owners",
-            label: T.people.rows.owners,
-            value: (
-              <S src={srcOf("ECON", "owners_per_business", R, EU)} focal>
-                {p.owners}
-              </S>
-            ),
-          },
+          { key: "owners", label: T.people.rows.owners, value: <S src={srcOf("ECON", "owners_per_business", R, EU)}>{p.owners}</S> },
           { key: "jobs", label: T.people.rows.jobs, value: <S src={`derived:${srcOf("ECON", "employees_per_business", R, EU)}*fte_share`}>{p.jobs}</S> },
         ]}
       />
       <p className="note">{T.people.note}</p>
-    </Sub>
-  );
-}
-
-function PutsBack({ v }: { v: IndustryV7 }) {
-  const b = v.putsBack;
-  return (
-    <Sub
-      id="puts-back"
-      title={T.putsBack.title}
-      ask={T.putsBack.ask}
-      caption={T.eu}
-      fig={
-        <p className="fig">
-          <S src={srcOf("ECON", "investment_share_of_surplus", R, EU)}>{b.share}%</S> <Unit>{T.putsBack.unit}</Unit>
-        </p>
-      }
-    >
-      <Rows
-        rows={[
-          { key: "put", label: T.putsBack.rows.put, value: <M m={b.put} src={srcOf("ECON", "investment_per_business", R, EU)} /> },
-          {
-            key: "profit",
-            label: T.putsBack.rows.profit,
-            value: (
-              <span data-focal="">
-                <M m={b.left} src={srcOf("ECON", "surplus_per_business", R, EU)} />
-              </span>
-            ),
-          },
-          { key: "all", label: T.putsBack.rows.all, value: <S src={srcOf("ECON", "investment_share_of_surplus", "all", EU)}>{fill(T.putsBack.allValue, { n: b.allShare })}</S> },
-        ]}
-      />
-      <p className="note">{T.putsBack.note}</p>
-    </Sub>
-  );
-}
-
-/** Sales by size, his four sizes (FV 1679); the small one, the most of the restaurants, the section's focal part. */
-function SalesBySize({ v }: { v: IndustryV7 }) {
-  const s = v.salesBySize;
-  return (
-    <Sub
-      id="small-big"
-      title={T.salesBySize.title}
-      ask={T.salesBySize.ask}
-      caption={T.eu}
-      fig={
-        <p className="fig">
-          <M m={s.lead} src={s.rows[0].src} /> <Unit>{fill(T.salesBySize.unit, { n: s.smallShare })}</Unit>
-        </p>
-      }
-    >
-      <Rows
-        rows={s.rows.map((r) => ({
-          key: r.key,
-          label: T.salesBySize.sizes[r.key],
-          value:
-            r.key === "small" ? (
-              <span data-focal="">
-                <M m={r.money} src={r.src} />
-              </span>
-            ) : (
-              <M m={r.money} src={r.src} />
-            ),
-        }))}
-      />
-      <p className="note">{fill(T.salesBySize.note, { n: s.times })}</p>
     </Sub>
   );
 }
@@ -681,6 +637,7 @@ function RatioTable({ rows, caption }: { rows: Ratio[]; caption: string }) {
               {r.lo && r.hi ? (
                 <span className="lh">
                   <End e={r.lo} />
+                  <span className="to">{H.to}</span>
                   <End e={r.hi} />
                 </span>
               ) : (
@@ -694,7 +651,7 @@ function RatioTable({ rows, caption }: { rows: Ratio[]; caption: string }) {
   );
 }
 
-function OfficialRatios({ v }: { v: IndustryV7 }) {
+function OfficialRatios({ v }: { v: IndustryV8 }) {
   const O = T.ratios.official;
   const r = v.ratios;
   return (
@@ -715,7 +672,7 @@ function OfficialRatios({ v }: { v: IndustryV7 }) {
 }
 
 /** One line of "What they say": its words, each `{key}` (or `{key:all}`) the ratio's printed value with its provenance. */
-function SayLine({ text, v }: { text: string; v: IndustryV7 }) {
+function SayLine({ text, v }: { text: string; v: IndustryV8 }) {
   const parts = text.split(/(\{[\w:-]+\})/g).filter(Boolean);
   return (
     <li>
@@ -730,7 +687,7 @@ function SayLine({ text, v }: { text: string; v: IndustryV7 }) {
   );
 }
 
-function WhatTheySay({ v }: { v: IndustryV7 }) {
+function WhatTheySay({ v }: { v: IndustryV8 }) {
   const S_ = T.ratios.say;
   return (
     <Sub id="say" title={S_.title} ask={S_.ask} caption={T.eu} form="note-list">
@@ -808,22 +765,29 @@ function PeerCell({ label, children, win }: { label: string; children: React.Rea
   );
 }
 
-function Table({ v }: { v: IndustryV7 }) {
+function Table({ v }: { v: IndustryV8 }) {
   const t = v.table;
   const [hGor, hSales, hPeople, hOpen] = T.table.heads;
+  /* Each column's win, the European survey's best (Round B on v8: the United States counts hotels in with restaurants, and companies
+     with staff alone, so its 59.3% is never ticked against the survey; the United Kingdom's own count neither). More favours an
+     owner in all three ticked columns: the column says so where its table ticks it (data-best="high", the TICK law). */
+  const wins: Array<(r: V4Row) => boolean> = [
+    (r) => r.gor !== null && r.gor === t.best.gor,
+    (r) => r.ownSurvey === "EU" && r.salesUsd !== null && r.salesUsd === t.best.salesUsd,
+    () => false,
+    (r) => r.ownSurvey === "EU" && r.open5 !== null && r.open5 === t.best.open5,
+  ];
   const tr = (r: V4Row) => {
-    const eu = r.ownSurvey === "EU";
     /* Each row's own files (the v4 builder reads them): the European survey's, the UK's own and the US's own. */
     const f = r.ownSurvey === "EU" ? ({ gor: "SBS", sales: "SBS", people: "SBS", open: "DEMO" } as const) : r.ownSurvey === "GB" ? ({ gor: "UK_ABS", sales: "UK_ABS", people: "UK_ABS", open: "UK_DEMO" } as const) : ({ gor: "US_EC", sales: "US_EC", people: "US_EC", open: "US_BED" } as const);
     const src = (k: keyof typeof f, item: string) => srcOf(f[k], item, R, r.code);
     return (
       <tr key={r.code}>
         <th scope="row">{r.name}</th>
-        {/* Each column's best over every row (the review: the United States' 59.3% ticked); sales within the European survey. */}
-        <PeerCell label={hGor[0]} win={r.gor !== null && r.gor === t.best.gor}>
+        <PeerCell label={hGor[0]} win={wins[0](r)}>
           {r.gor === null ? null : <S src={src("gor", "gross_operating_rate")}>{d1(r.gor)}</S>}
         </PeerCell>
-        <PeerCell label={hSales[0]} win={eu && r.salesUsd !== null && r.salesUsd === t.best.salesUsd}>
+        <PeerCell label={hSales[0]} win={wins[1](r)}>
           {r.sales === null ? null : isUsdOnly(r.sales) ? (
             <span className="usd" data-src={src("sales", "sales_per_business")}>
               {r.sales.usdOnly}
@@ -833,21 +797,29 @@ function Table({ v }: { v: IndustryV7 }) {
           )}
         </PeerCell>
         <PeerCell label={hPeople[0]}>{r.people === null ? null : <S src={src("people", r.ownSurvey === "US" ? "employees_per_business" : "persons_per_business")}>{r.people}</S>}</PeerCell>
-        <PeerCell label={hOpen[0]} win={r.open5 !== null && r.open5 === t.best.open5}>
+        <PeerCell label={hOpen[0]} win={wins[3](r)}>
           {r.open5 === null ? null : <S src={src("open", "survival_5y")}>{`${d1(r.open5)}%`}</S>}
         </PeerCell>
       </tr>
     );
   };
-  /* The first table holds the European survey's seven, then a second tbody, the countries from their own counts (the target's group). */
-  const table = (rows: V4Row[], caption: string, own?: V4Row[]) => (
+  /* The three tables on one set of columns (table-layout fixed, the colgroup), so their own counts read under the survey's; a column
+     names its direction where this table ticks it (TICK: the tick is the table's own highest). */
+  const table = (rows: V4Row[], caption: string) => (
     <table className="peers" data-archetype="compare-table">
       <caption className="sr">{caption}</caption>
+      <colgroup>
+        <col className="c0" />
+        <col />
+        <col />
+        <col />
+        <col />
+      </colgroup>
       <thead>
         <tr>
           <th scope="col">{T.table.country}</th>
-          {T.table.heads.map(([a, b]) => (
-            <th scope="col" key={a}>
+          {T.table.heads.map(([a, b], i) => (
+            <th scope="col" key={a} {...(rows.some(wins[i]) ? { "data-best": "high" } : {})}>
               {a}
               <small>{b}</small>
             </th>
@@ -855,16 +827,6 @@ function Table({ v }: { v: IndustryV7 }) {
         </tr>
       </thead>
       <tbody>{rows.map(tr)}</tbody>
-      {own ? (
-        <tbody className="own">
-          <tr className="grp">
-            <th scope="colgroup" colSpan={5}>
-              {T.table.own}
-            </th>
-          </tr>
-          {own.map(tr)}
-        </tbody>
-      ) : null}
     </table>
   );
   return (
@@ -872,7 +834,9 @@ function Table({ v }: { v: IndustryV7 }) {
       <div className="tsw">
         <CurrencySwitch3 label={T.currency.group} />
       </div>
-      {table(t.first, fill(T.table.captionFirst, { n: String(t.first.length) }), t.own)}
+      {table(t.first, fill(T.table.captionFirst, { n: String(t.first.length) }))}
+      {/* their own counts as their own small table under its title, its head read by a screen reader (the stylesheet hides it) */}
+      <Group title={T.table.own}>{table(t.own, T.table.captionOwn)}</Group>
       <Fold summary={fill(T.table.fold, { n: String(t.rest.length) })}>{table(t.rest, fill(T.table.captionRest, { n: String(t.rest.length) }))}</Fold>
       <p className="key">
         <Tick />
@@ -886,9 +850,9 @@ function Table({ v }: { v: IndustryV7 }) {
   );
 }
 
-/* ------------------------------------------------------------------ chapter 04: what the trade is like */
+/* ------------------------------------------------------------------ chapter 04: season, crowd and size */
 
-function Months({ v }: { v: IndustryV7 }) {
+function Months({ v }: { v: IndustryV8 }) {
   const m = v.months;
   const h = (x: number) => `${((x / m.scaleTop) * 100).toFixed(1)}%`;
   const aria = fill(T.months.aria, { list: m.shape.map((x, i) => `${T.months.names[i]} ${d1(x)}`).join(", ") });
@@ -906,17 +870,12 @@ function Months({ v }: { v: IndustryV7 }) {
         </p>
       }
     >
-      {/* Every month grey but the busiest (the section's focal part, its figure over it), the quietest hollow, a line at the year's
-          average (100) named Average: the stylesheet draws the line at --avg, the average's height on the columns' scale. */}
+      {/* Every month grey but the busiest (the section's focal part; one figure a month since v8, the swing carries the section),
+          the quietest hollow, a line at the year's average (100) named Average, at --avg on the columns' scale. */}
       <div className="vchart" data-kind="month-columns" data-visual="" style={{ "--avg": h(100) } as React.CSSProperties} role="img" aria-label={aria}>
         {m.shape.map((x, i) => (
           <div className={`vcol${i === m.quietest ? " low" : ""}`} key={i} {...(i === m.busiest ? { "data-focal": "" } : {})}>
             <div className="vb">
-              {i === m.busiest ? (
-                <span className="vv" data-src={srcOf("SEASON", "season_index_month", R, EU)}>
-                  {m.busiestText}
-                </span>
-              ) : null}
               {i === 0 ? <span className="avgl">{T.months.average}</span> : null}
               <b style={{ height: h(x) }} />
             </div>
@@ -932,9 +891,8 @@ function Months({ v }: { v: IndustryV7 }) {
   );
 }
 
-function Density({ v }: { v: IndustryV7 }) {
+function Density({ v }: { v: IndustryV8 }) {
   const d = v.density;
-  const label = (r: { name: string; end: "low" | "high" | null }) => (r.end === "low" ? fill(T.density.lowest, { name: r.name }) : r.end === "high" ? fill(T.density.highest, { name: r.name }) : r.name);
   return (
     <Sub
       id="density"
@@ -943,21 +901,34 @@ function Density({ v }: { v: IndustryV7 }) {
       caption={T.density.caption}
       fig={
         <p className="fig">
-          <S src={`derived:${srcOf("SBS", "business_count", R, EU)}/${srcOf("POP", "population_1jan", "all", EU)}`} focal>
+          <S src={d.src} focal>
             {d.eu}
           </S>{" "}
-          <Unit>{fill(T.density.unit, { level: T.density.levels[d.level], n: String(d.count) })}</Unit>
+          <Unit>{T.density.unit}</Unit>
         </p>
       }
     >
-      <Rows rows={d.rows.map((r) => ({ key: r.name, label: label(r), value: <S src={`derived:${srcOf("SBS", "business_count", R, r.name)}/population_1jan`}>{r.value}</S> }))} />
+      {/* people for every restaurant, most first; the EU in bold among the countries it sums (the target's own insertion) */}
+      <Rows
+        rows={d.rows.map((r) => ({
+          key: r.name,
+          label: r.eu ? <b>{r.name}</b> : r.name,
+          value: r.eu ? (
+            <b>
+              <S src={r.src}>{r.people}</S>
+            </b>
+          ) : (
+            <S src={r.src}>{r.people}</S>
+          ),
+        }))}
+      />
     </Sub>
   );
 }
 
 /** The page's one donut, 144 across, the parts clockwise from the top; the small ones the section's focal part, in terracotta. Each
- *  size named over its range (his sizes, FV 1679). */
-function Donut({ v }: { v: IndustryV7 }) {
+ *  size named over its range (his sizes, FV 1679); What one sells in a year behind the fold (Round B on v7). */
+function Donut({ v }: { v: IndustryV8 }) {
   const parts = v.donut.parts;
   const tone = { small: "var(--color-terra)", medium: "var(--color-ink-2)", large: "var(--color-faint)", corporate: "var(--color-n3)" } as const;
   const key = { small: "tc", medium: "ink2", large: "fa", corporate: "n3" } as const;
@@ -1005,7 +976,16 @@ function Donut({ v }: { v: IndustryV7 }) {
           }))}
         />
       </div>
-      <p className="note">{T.donut.note}</p>
+      {/* What one sells in a year, his four sizes (the Sales by size section merged here, Round B on v7) */}
+      <Fold summary={T.donut.fold}>
+        <Rows
+          rows={v.salesBySize.rows.map((s) => ({
+            key: s.key,
+            label: T.donut.sizes[s.key],
+            value: <M m={s.money} src={s.src} />,
+          }))}
+        />
+      </Fold>
     </Sub>
   );
 }
@@ -1014,22 +994,36 @@ function Donut({ v }: { v: IndustryV7 }) {
 
 const dateText = (iso: string) => new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 
-function Close({ v, path }: { v: IndustryV7; path: string }) {
+/** The exit as the kit's informative cards (kit3.exit_cards, info_card; his approved example 19): the photograph, the kicker with
+ *  its icon, the title, one line, and the foot with where it leads; the whole card the link. */
+function Close({ v, path }: { v: IndustryV8; path: string }) {
+  const doorKey = (d: (typeof T.close.cards)[number]) => d.city ?? (d.href === "/compare" ? "compare" : "hotels");
+  const lands = (d: (typeof T.close.cards)[number]) => (d.city ? SURFACE_ANSWERS.cell : d.href === "/compare" ? SURFACE_ANSWERS.compare : SURFACE_ANSWERS.industry);
   return (
     <section className="chapter close tint" aria-labelledby="c9" data-close="">
       <div className="wrap">
         <div className="chead">
           <h2 id="c9">{T.close.title}</h2>
         </div>
-        <div className="doors" data-archetype="terminus" data-target="kit">
-          {T.close.doors.map((d, i) => (
-            /* London lands on the trade's own page there (a cell), Hotels on its trade page (an industry page), the countries on the compare tool. */
-            <a key={d.kind} className="door" data-surface="card" {...(i === 2 ? { "data-tone": "ink" } : {})} href={v.doors[i].href} data-door={d.city ?? (d.href === "/compare" ? "compare" : "hotels")} data-lands={d.city ? SURFACE_ANSWERS.cell : d.href === "/compare" ? SURFACE_ANSWERS.compare : SURFACE_ANSWERS.industry}>
-              <span className="dk">{d.kind}</span>
-              <h3>{fill(d.title, { n: String(v.table.count) })}</h3>
-              <p>{d.line}</p>
-              <span className="round">
-                <Icon id="arrow" />
+        <div className="icards" data-archetype="terminus" data-target="kit">
+          {T.close.cards.map((d, i) => (
+            <a key={d.title} className="icard" data-surface="card" href={v.doors[i].href} data-door={doorKey(d)} data-lands={lands(d)}>
+              <span className={`icimg${d.img.length > 1 ? " split" : ""}`} data-media="">
+                {d.img.map((img, j) => (
+                  <img key={img} src={`/spine/${img}.webp`} alt={d.alt[j]} loading="lazy" />
+                ))}
+              </span>
+              <span className="icbody">
+                <span className="ickick">
+                  <Icon id={d.icon as keyof typeof GLYPH} />
+                  {d.kicker}
+                </span>
+                <h3>{fill(d.title, { n: String(v.table.count) })}</h3>
+                <span className="icline">{d.line}</span>
+                <span className="icfoot">
+                  <span className="icgo">{d.go}</span>
+                  <Icon id="arrow" />
+                </span>
               </span>
             </a>
           ))}
@@ -1048,7 +1042,7 @@ function Close({ v, path }: { v: IndustryV7; path: string }) {
 
 /* ------------------------------------------------------------------ the page */
 
-export function SpineIndustryV7Body({ v, path }: { v: IndustryV7; path: string }) {
+export function SpineIndustryV8Body({ v, path }: { v: IndustryV8; path: string }) {
   return (
     <div className="kit3 k-industry" data-spine-body="" data-composition="kit" data-kit="3" data-page="industry">
       {/* Version 3's tokens for this page (design-tokens.ts kit3; the header says why at :root). */}
@@ -1070,20 +1064,12 @@ export function SpineIndustryV7Body({ v, path }: { v: IndustryV7; path: string }
           </div>
         </div>
       </section>
+      {/* An hour of work cut on his word of 2026-10-22 ("Cut An hour of work from the industry page."): the three left share one band. */}
       <Chapter num="01" id="c1" title={T.chapters.money} tint>
-        <div className="band-stack">
-          <div className="pair w75">
-            <Split v={v} />
-            <Year v={v} />
-          </div>
-          <div className="pair">
-            <Hour v={v} />
-            <People v={v} />
-          </div>
-          <div className="pair">
-            <PutsBack v={v} />
-            <SalesBySize v={v} />
-          </div>
+        <div className="cluster c3">
+          <Split v={v} />
+          <Year v={v} />
+          <People v={v} />
         </div>
       </Chapter>
       <Chapter num="02" id="c2" title={T.chapters.ratios}>

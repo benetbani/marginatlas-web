@@ -1062,7 +1062,7 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
      of countries, and no figure stands under it. The target prints it so and he approved the chapter as built (FOUNDER-VERDICTS
      2026-10-21, "The ratios chapter in v6 is right as it is." and "v6 is the approved industry target."; v7, which carries the chapter, approved in its place). One key, by path; the same
      word over a column of figures still reds. */
-  const NAME_COLUMN_HEADS = new Set(["COPY.industryV7.ratios.official.head.ratio"]);
+  const NAME_COLUMN_HEADS = new Set(["COPY.industryV8.ratios.official.head.ratio"]);
   for (const [where, text] of heads) {
     if (NAME_COLUMN_HEADS.has(where)) continue;
     const why = bannedConstruction(text);
