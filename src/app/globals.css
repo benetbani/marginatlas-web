@@ -3773,6 +3773,9 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
    plain words, against the average business." measures 360 against 352 in a column of 355, and wraps. The questions are tightened by a
    hundredth of an em so each stays one line at 1280, as in the target (the ALIGN law, his FV 2109). */
 .kit3.k-industry .sub .ask { letter-spacing: -0.01em; }
+/* ...and the figure's unit line the same: the split's "of every 100 is operating profit, as in all businesses" measures 327 of 333
+   in the target's Geist and wraps in the site's, which the LOADED law reads as a second line under the answer (one at most at 1280). */
+.kit3.k-industry .fig .unit { letter-spacing: -0.01em; }
 /* The site's reset takes a list's markers away; the target's "What they say" keeps the browser's discs. */
 .kit3.k-industry ul.says { list-style: disc; }
 /* The site's reset takes a link's underline away; the target's links keep the browser's (the doors, cards, take theirs off). */
