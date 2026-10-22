@@ -784,7 +784,7 @@ export const kit = {
  * KIT-VERSION 3'S TOKENS: sheets/kit/v3/tokens.json, the one source of version 3's look (his "The gallery is right: move the pages onto
  * kit version 3, each at its next version.", 2026-10-21), copied here group for group so a page drawn on version 3 reads every colour,
  * distance, corner, size, shadow and motion from the site's tokens. First reader: the industry page (v6, his "v6 is the approved industry
- * target.", 2026-10-21; v7 in its place, FOUNDER-VERDICTS "v7 approved"), src/components/spine/industry/kit3-view.tsx, which sets them as the kit's own CSS variables (`kit3CssVars`:
+ * target.", 2026-10-21; v8 in its place, FOUNDER-VERDICTS "v8 is the approved industry target."), src/components/spine/industry/kit3-view.tsx, which sets them as the kit's own CSS variables (`kit3CssVars`:
  * `--color-ink`, `--space-24`, `--font-size-focal`, `--shadow-card` ...) for globals.css, THE KIT 3 PAGE: THE INDUSTRY (`.kit3.k-industry`).
  * Its own group: version 2's `kit` above stays exactly as the v4 port and London v9 read it. A colour version 2 already holds is named
  * from it, never typed twice. The type-ladder gate holds `type` to tokens.json's ladder.
@@ -803,7 +803,11 @@ export const kit3 = {
   gap: {
     labelFigure: "4px", figureLine: "8px", titleQuestion: "4px", group: "24px", caption: "12px", rowPad: "12px", listList: "24px",
     pair: "64px", pairTablet: "48px", stack: "24px", cardPad: "24px", cardPadPhone: "16px", panelPad: "16px", panelPadPhone: "12px",
-    platePad: "24px", platePadPhone: "16px", facePad: "16px", band: "64px", bandTablet: "48px", chapterHead: "24px",
+    platePad: "24px", platePadPhone: "16px", facePad: "16px", band: "64px", bandTablet: "48px",
+    /* the kit of 2a83eca (tokens.json sha256:7302ecf366227259), the v8 target's: rows 8 above and below their hairline, the value
+       column 24 after the longest label (his words of 2026-10-21, evening), a chapter's title 48 above its first section (it was 24,
+       which read as the first section's kicker; his ratios, the same evening) */
+    row: "8px", labelValue: "24px", chapterHead: "48px",
   },
   radius: { card: "8px", plate: "12px", tiny: "2px", round: "999px" },
   /* The ladder (REFORM-PLAN 3.3): six sizes, each with its one line; the display sizes only on [data-display]. */
