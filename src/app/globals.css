@@ -3650,7 +3650,7 @@ main :where(p, li, blockquote, dd) {
 .kit3.k-industry .vchart .vb { position: relative; flex-direction: column; align-items: center; justify-content: flex-end; }
 .kit3.k-industry .vchart .vb::after { content: ""; position: absolute; left: calc(var(--space-2) * -1); right: calc(var(--space-2) * -1); bottom: var(--avg); border-top: var(--border-hairline) solid var(--color-ink-2); }
 .kit3.k-industry .vcol.low .vb b { background: transparent; border: var(--border-hairline) solid var(--color-ink-2); box-sizing: border-box; }
-.kit3.k-industry .vchart .vv { font: 600 var(--type-small) var(--font-family-figure); color: var(--color-terra); }
+.kit3.k-industry .vchart .vv { font: 600 var(--type-small) var(--font-family-figure); color: var(--color-terra); font-variant-numeric: tabular-nums; }
 .kit3.k-industry .vchart .avgl { position: absolute; left: 0; bottom: calc(var(--avg) + var(--space-4)); z-index: 1; font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); white-space: nowrap; }
 /* the sizes: each name over its range */
 .kit3.k-industry .kv .sz small { margin-left: var(--space-4); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
@@ -3745,4 +3745,8 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
    the page under 1024, and free at 1024 and over, where version 3 keeps each question to its one line. */
 .kit3.k-industry :is(.note, .key > span, .def2) { max-width: min(32em, var(--measure-half)); }
 @media (max-width: 1023px) { .kit3.k-industry .sub > header .ask { max-width: var(--measure-half); } }
+/* ...and a section's figure line at half the page under 1024 too: v7 stacks the opening band below 960 (the target's rule), where
+   Trades next door's line ("4th of five trades that serve food, drink or a bed, by operating profit") would run 406 of 720 at 768
+   (the page laws' TEXT WIDE, clause 51). */
+@media (max-width: 1023px) { .kit3.k-industry .sfig > .fig { max-width: var(--measure-half); } }
 .kit3.k-industry :is(.av .big, .fig) > .m :is(.p, .s), .kit3.k-industry[data-cur="usd"] :is(.av .big, .fig) > .m :is(.p, .s) { font-variant-numeric: tabular-nums; }
