@@ -3166,13 +3166,15 @@ export const COPY = {
     },
   },
   /**
-   * THE INDUSTRY PAGE v6 (his "v6 is the approved industry target.", 2026-10-21): its words, as the target prints them
-   * (sheets/industry/v6/src/build_industry_v6.py, every string). v6 keeps v4's words but where v6 changed them (How many last's head
-   * and note, An hour of work's note, the table's seven countries, the months, How crowded it is, Who makes the sales) and adds
-   * chapter 02, "The ratios it runs on". Drawn by src/components/spine/industry/kit3-view.tsx. A `{name}` is filled by the view from
-   * the builder's figures (src/lib/spine/industry_v6.ts); no figure is typed here.
+   * THE INDUSTRY PAGE v7 (FOUNDER-VERDICTS "The industry page (/industries/restaurants) v7 approved, his choice delegated"): its
+   * words, as the target prints them (sheets/industry/v7/src/build_industry_v7.py, every string). v7 is v6's words with the kit
+   * review's tips: one name a quantity (operating profit, never "left" or "operating surplus"; purchases, never "bought in"; all
+   * businesses, never "All" or "the average business"; his sizes Small, Medium, Large, Corporate, FV 1679), the review's questions, the
+   * receipt, the country table's own counts, chapter 04 "Season, crowd and size", the close's Hotels and 34 countries. v6's words are
+   * gone: this is the page's one block. Drawn by src/components/spine/industry/kit3-view.tsx. A `{name}` is filled by the view from the
+   * builder's figures (src/lib/spine/industry_v7.ts); no figure is typed here.
    */
-  industryV6: {
+  industryV7: {
     hero: {
       kicker: "A trade",
       name: "Restaurants",
@@ -3182,28 +3184,32 @@ export const COPY = {
       answerUnit: "of every 100 of sales",
       basis: "The European Union's restaurants, before tax, interest and the owner's own pay",
       cells: { high: "Highest country", low: "Lowest country", all: "All businesses", next: "Bars and cafes" },
+      /* each cell with its unit (the review); all businesses keep the answer's own figure, said in words (one 11.7 a section) */
+      unit: "of 100",
+      unitPlace: "of 100, {name}",
+      same: "The same",
       place: "European Union, 2026.",
       how: "How the figures are calculated",
     },
     openingTitle: "How the trade fares",
-    chapters: { money: "How it makes money", ratios: "The ratios it runs on", where: "Where it pays best", like: "What the trade is like" },
+    chapters: { money: "How it makes money", ratios: "The ratios it runs on", where: "Where it pays best", like: "Season, crowd and size" },
     eu: "European Union, 2026.",
     lasts: {
       title: "How many last",
-      ask: "Of every 100 restaurants that open, how many are still open.",
+      ask: "How many are still open after five years?",
       unit: "are still open after five years",
       caption: "Still open, of every 100 that open",
-      head: { open: "Still open", trade: "Restaurants", all: "All" },
+      head: { open: "Still open", trade: "Restaurants", all: "All businesses" },
       label: { trade: "Restaurants", all: "All businesses" },
       years: { y1: "After 1 year", y2: "After 2 years", y3: "After 3 years", y5: "After 5 years" },
-      note: "Counted for restaurants, cafes and bars together. All is every business of any kind, and no five-year count is published for it.",
+      note: "Restaurants, cafes and bars counted together. No five-year count for all businesses.",
     },
     nextDoor: {
       title: "Trades next door",
       ask: "What each of five nearby trades keeps of every 100 of sales.",
       unit: "of five trades that serve food, drink or a bed, by operating profit",
       aria: "Operating profit of every 100 of sales: {list}, all businesses {all}",
-      allKey: "All businesses, {all}",
+      allKey: "All businesses",
       fold: "What they do",
       names: { hotels: "Hotels", eventCatering: "Event catering", barsCafes: "Bars and cafes", restaurants: "Restaurants", canteens: "Canteens" },
       defs: {
@@ -3216,76 +3222,80 @@ export const COPY = {
     },
     split: {
       title: "Where each 100 goes",
-      ask: "Of every 100 of sales, what goes on purchases, on staff, and what is operating profit.",
+      ask: "Where does each 100 of sales go?",
       unit: "of every 100 goes on staff, nearly twice the {all} of all businesses",
       aria: "Of every 100 of sales: restaurants purchases {p}, staff {s}, operating profit {k}, all businesses {ap}, {as}, {ak}",
       rows: { trade: "Restaurants", all: "All businesses" },
+      said: { trade: "{k} operating profit", all: "The same" },
       key: { purchases: "Purchases", staff: "Staff", left: "Operating profit" },
-      note: "Purchases are stock, rent and bills. Operating profit is before tax, interest and the owner's own pay.",
+      note: "Purchases are food, drink, rent and bills.",
     },
     year: {
       title: "What a year leaves",
       ask: "A typical restaurant's year in money, before the owner is paid.",
-      unit: "left a year, from which come the owner's own pay, the loan, the kitchen's wear and the tax",
-      rows: { sales: "Sales", bought: "Bought in", staff: "Staff", left: "Left" },
-      note: "Bought in is food, drink, rent and bills. In the average business of any kind {all} is left.",
+      unit: "operating profit a year, before the owner's pay, the loan, wear and tax",
+      /* a receipt (the review): sales, less purchases, less staff, a sum line, operating profit */
+      rows: { sales: "Sales", purchases: "Purchases", staff: "Staff", profit: "Operating profit" },
+      minus: "−",
+      note: "In all businesses, {all} operating profit a year.",
     },
     hour: {
       title: "An hour of work",
       ask: "What an hour of staff time costs, and what it brings in.",
-      unit: "is what a staff hour leaves, against {all} in the average business",
+      unit: "operating profit a staff hour, against {all} in all businesses",
       costs: "Costs",
       adds: "Adds",
-      aria: "An hour of staff time costs {c} euros and adds {v} euros, so it leaves {l}",
-      note: "What an hour brings in is its share of sales once food, drink, rent and bills are paid. The coloured stretch is what is left for the owner, the loan, the kitchen and the tax.",
+      aria: "An hour of staff time costs {c} euros and adds {v} euros: {l} euros of operating profit",
+      note: "Adds is sales after purchases. The coloured stretch is operating profit.",
     },
     people: {
       title: "Who works in it",
       ask: "How many people work in a typical restaurant, the owner included.",
       fig: "{n} people",
-      unit: "in a typical restaurant, against {all} in the average business",
+      unit: "in a typical restaurant, against {all} across all businesses",
       rows: { wage: "On a wage", owners: "Owner or family", jobs: "Full-time jobs" },
-      note: "The ones on a wage add up to {jobs} full-time jobs: much of the work is part-time. The owner and family are paid only from what is left.",
+      note: "Much of the work is part-time. Owners are paid from operating profit.",
     },
     putsBack: {
       title: "What it puts back",
       ask: "What goes back into the kitchen, the fittings and the building each year.",
-      unit: "of what is left goes back into equipment, fittings and the building",
-      rows: { put: "Put back a year", left: "Left a year", all: "All businesses" },
+      unit: "of operating profit goes back into equipment, fittings and the building",
+      rows: { put: "Put back a year", profit: "Operating profit a year", all: "All businesses" },
       allValue: "{n}% put back",
-      note: "Set against what is left, before the owner is paid. A loan can pay for it instead, and then the loan is paid from what is left.",
+      note: "A loan can pay instead, then operating profit repays the loan.",
     },
-    smallBig: {
-      title: "Small and big",
+    salesBySize: {
+      title: "Sales by size",
       ask: "What a restaurant sells in a year, by the people it employs.",
-      unit: "a year for one under 10 people, as {n} of every 100 restaurants are",
-      sizes: ["Under 10 people", "10 to 19 people", "20 to 49 people", "50 to 249 people", "250 or more"],
-      note: "One with 20 to 49 people sells about {n} times as much as one under 10.",
+      unit: "a year for a small one, as {n} of every 100 restaurants are",
+      /* his sizes (FV 1679): "1 to 9 small businesses, 10 to 49 medium, 50 to 249 large, 250 or more corporate" */
+      sizes: { small: "Small, under 10", medium: "Medium, 10 to 49", large: "Large, 50 to 249", corporate: "Corporate, 250 or more" },
+      note: "A medium one sells about {n} times as much as a small one.",
     },
     ratios: {
       official: {
         title: "The official ratios",
         ask: "What restaurants run on, beside all businesses and the countries.",
-        head: { ratio: "Ratio", trade: "Restaurants", all: "All", range: "Lowest to highest" },
+        head: { ratio: "Ratio", trade: "Restaurants", all: "All businesses", range: "Lowest to highest" },
         label: { trade: "Restaurants", all: "All businesses", range: "Lowest to highest" },
         captionFirst: "The first eight official ratios of restaurants",
         fold: "{n} more ratios",
         hour: { title: "An hour of staff time", caption: "Four official ratios of an hour of staff time" },
         trade: { title: "The business and the trade", caption: "Five official ratios of the business and the trade" },
         swingNote: "The EU's season swing is an estimate.",
-        note: "All is every business of any kind. No five-year survival is published for all businesses.",
+        note: "No five-year survival is published for all businesses.",
       },
       say: {
         title: "What they say",
-        ask: "The ratios in plain words, against the average business.",
+        ask: "The ratios in plain words, against all businesses.",
         lines: [
-          "Restaurants keep what the average business keeps: {operating-margin} of sales against {operating-margin:all}.",
-          "They buy in less, {bought-in-ratio} against {bought-in-ratio:all}, and spend it on people instead.",
-          "Staff take {staff-cost-ratio} of every sale, against {staff-cost-ratio:all} in the average business.",
+          "Restaurants keep {operating-margin} of sales as operating profit, as all businesses do.",
+          "Purchases take less, {bought-in-ratio} against {bought-in-ratio:all}, and the difference goes on people.",
+          "Staff take {staff-cost-ratio} of every sale, against {staff-cost-ratio:all} in all businesses.",
           "Of what the kitchen and the floor add, {wage-share} goes on wages, against {wage-share:all}.",
-          "A staff hour sells {sales-per-staff-hour} here, {third} of what it sells in the average business.",
+          "A staff hour sells {sales-per-staff-hour} here, {third} of what it sells in all businesses.",
           "Staff work {full-time-share} of full-time hours, against {full-time-share:all}: much of the work is part-time.",
-          "{reinvestment-ratio} of what is left goes back into the place, against {reinvestment-ratio:all}.",
+          "{reinvestment-ratio} of operating profit goes back into the place, against {reinvestment-ratio:all}.",
           "Five years on, {five-year-survival} of restaurants are still open.",
         ],
         third: { under: "under a third", about: "about a third" },
@@ -3304,10 +3314,10 @@ export const COPY = {
         items: [
           { name: "Food cost", formula: "food bought ÷ food sold", answer: "How much of a plate's price goes on what is on it. It moves with portion sizes, waste and spoilage, what suppliers charge and the menu's prices." },
           { name: "Drink cost", formula: "drink bought ÷ drink sold", answer: "How much of a drink's price goes on the drink. It moves with pour sizes, drinks given away or spilt, bottles against draught and house wine, and the prices." },
-          { name: "Prime cost", formula: "(food and drink bought + staff cost) ÷ sales", answer: "The two bills an owner can change week by week. It moves with the rota against the covers, waste and which dishes sell. The official bought-in ratio also holds rent, so it is a different number." },
+          { name: "Prime cost", formula: "(food and drink bought + staff cost) ÷ sales", answer: "The two bills an owner can change week by week. It moves with the rota against the covers, waste and which dishes sell. The official purchases ratio also holds rent, so it is a different number." },
           { name: "Rent ratio", formula: "rent ÷ sales", answer: "How much of every sale goes to the landlord. The rent stays the same every month, so the ratio moves with sales: low in the busy months, high in the quiet ones." },
-          { name: "Break-even sales", formula: "fixed costs ÷ (1 − variable costs ÷ sales)", answer: "The sales a month needs before anything is left. Rent and salaried staff stay fixed. Food, drink and hourly staff move with sales. Prices change what each sale leaves." },
-          { name: "Payback", formula: "cost to open ÷ what is left a year", answer: "The years until the money put in comes back. It moves with what the fit-out cost, what is left each year, and the owner's own pay taken out first." },
+          { name: "Break-even sales", formula: "fixed costs ÷ (1 − variable costs ÷ sales)", answer: "The sales a month needs before there is any operating profit. Rent and salaried staff stay fixed. Food, drink and hourly staff move with sales. Prices change what each sale leaves." },
+          { name: "Payback", formula: "cost to open ÷ operating profit a year", answer: "The years until the money put in comes back. It moves with what the fit-out cost, the operating profit each year, and the owner's own pay taken out first." },
         ],
       },
       guests: {
@@ -3328,23 +3338,25 @@ export const COPY = {
       ask: "What a restaurant keeps, sells and employs, and how many last, in {n} countries.",
       country: "Country",
       heads: [["Operating profit", "of every 100"], ["Sales", "a year"], ["People", "a business"], ["Open", "after 5 years"]],
-      captionFirst: "Restaurants in the {n} countries that keep the most, and the United States",
+      captionFirst: "Restaurants in the {n} European countries that keep the most, then the United Kingdom and the United States",
+      own: "From their own counts",
       fold: "{n} more countries",
-      captionRest: "Restaurants in the other {n} countries",
-      key: "The best of the European survey in each column. Sales in thousands. The United Kingdom and the United States from their own counts.",
-      usNote: "The United States counts companies with staff and their employees only, and how many last together with hotels.",
+      captionRest: "Restaurants in the other {n} European countries",
+      key: "The best in each column. Sales in thousands, compared within the European survey.",
+      usNote: "The United States counts companies with staff, and how many last with hotels.",
       caption: "Europe and the United States, 2026.",
     },
     currency: { group: "Currency shown first" },
     months: {
       title: "Busy and quiet months",
       tag: "Estimate",
-      ask: "Each month's sales against the year's average.",
+      ask: "When does the money come in?",
       unit: "more sales in {busiest}, the busiest month, than in {quietest}, the quietest",
-      aria: "Sales each month against the year's average: {list}",
+      aria: "Sales each month against the year's average, 100: {list}",
+      average: "Average",
       names: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       letters: "JFMAMJJASOND",
-      note: "Restaurants, cafes and bars together, in {n} EU countries, each weighted by its restaurants' sales.",
+      note: "Restaurants, cafes and bars together, in {n} EU countries, weighted by sales.",
     },
     density: {
       title: "How crowded it is",
@@ -3357,19 +3369,23 @@ export const COPY = {
     },
     donut: {
       title: "Who makes the sales",
-      ask: "Each size's share of every 100 of sales.",
+      ask: "Do the small ones sell the most?",
       unit: "of sales are made by small restaurants, under 10 people",
-      parts: { small: "Under 10", medium: "10 to 49", large: "50 to 249", corporate: "250 or more" },
+      /* his sizes (FV 1679), each name over its range */
+      parts: { small: "Small", medium: "Medium", large: "Large", corporate: "Corporate" },
+      ranges: { small: "under 10", medium: "10 to 49", large: "50 to 249", corporate: "250 or more" },
       aria: "Of every 100 of sales: {list}",
-      note: "Sizes by the people each employs. 10 to 49 adds two published groups, 10 to 19 and 20 to 49.",
+      note: "Medium adds two published groups, 10 to 19 and 20 to 49.",
     },
     close: {
       title: "Where to next",
       doors: [
-        /* Each city door names its place here, beside the words that name it (the hardcoded-place gate), as v4's do. */
-        { kind: "A city", title: "Restaurants in London", line: "What one takes in, and what it keeps.", country: "gb", city: "london" },
-        { kind: "A city", title: "Restaurants in Manchester", line: "The same measures, for Manchester.", country: "gb", city: "manchester" },
-        { kind: "Side by side", title: "Restaurants in seven UK cities", line: "One trade, city by city.", country: null, city: null },
+        /* The city door names its place here, beside the words that name it (the hardcoded-place gate), as v4's do. Hotels goes to the
+           site's own hotels trade page (/industries/* in src/lib/routing/route_shapes.ts, the slug hotels-lodging); the countries side by
+           side to the compare tool (the site holds no page of one trade in every country), as v6's third door; its count is the table's. */
+        { kind: "A city", title: "Restaurants in London", line: "What one takes in, and what it keeps.", country: "gb", city: "london", href: null },
+        { kind: "A trade", title: "Hotels", line: "The nearby trade that keeps the most.", country: null, city: null, href: "/industries/hotels-lodging" },
+        { kind: "Side by side", title: "Restaurants in {n} countries", line: "One trade, country by country.", country: null, city: null, href: "/compare" },
       ],
       how: "How the figures are calculated",
       report: "Report a mistake",

@@ -413,12 +413,12 @@ function sectionsOf(file: string): Section[] {
     const kicker = kickerOf(block, copyAliases(scope));
     out.push({ page: pageOf(file), file: basename(file), id: reg === EVERY ? EVERY : id, component: fn?.name ?? "", kicker: reg && reg !== EVERY && kicker === "def.heading" ? reg.heading : kicker, archetype, builder: reg && reg !== EVERY ? PLAN_BUILDERS.get(reg.id) ?? builder : builder, at });
   }
-  /* A KIT VIEW'S CARDS (a view that exports LOUD_SEATS_KIT: the industry page v6, src/components/spine/industry/kit3-view.tsx, which
-     replaced the v4 view on 2026-10-21, his "v6 is the approved industry target."): it draws no Box; its sections are its own `Sub`
+  /* A KIT VIEW'S CARDS (a view that exports LOUD_SEATS_KIT: the industry page, src/components/spine/industry/kit3-view.tsx, v6 from
+     2026-10-21 (his "v6 is the approved industry target."), v7 in its place since (FOUNDER-VERDICTS, "v7 approved")): it draws no Box; its sections are its own `Sub`
      (v4's `Card`) called with a literal id, and cards stamped with a literal `data-block` (the hero's answer card). Each is a section of
-     its page, its kicker the call's `title` as written, its builder the one whose type the view reads (buildIndustryV6, else V4). */
+     its page, its kicker the call's `title` as written, its builder the one whose type the view reads (buildIndustryV7, else V4). */
   if (/export\s+const\s+LOUD_SEATS_KIT\b/.test(src)) {
-    const kitBuilder = /\bIndustryV6\b/.test(src) ? "buildIndustryV6" : "buildIndustryV4";
+    const kitBuilder = /\bIndustryV7\b/.test(src) ? "buildIndustryV7" : "buildIndustryV4";
     const kitRe = /<(?:Card|Sub)\s+id="([a-z][a-z0-9-]*)"|<(?:div|article)\b[^>]*?\sdata-block="([a-z][a-z0-9-]*)"/g;
     let km: RegExpExecArray | null;
     while ((km = kitRe.exec(src))) {
