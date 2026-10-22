@@ -46,8 +46,8 @@ import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
 import { SpineCityV9Body } from "../../src/components/spine/city/sourced-view";
 import { buildCityV9 } from "../../src/lib/spine/city_v9";
-import { SpineIndustryV6Body } from "../../src/components/spine/industry/kit3-view";
-import { buildIndustryV6 } from "../../src/lib/spine/industry_v6";
+import { SpineIndustryV8Body } from "../../src/components/spine/industry/kit3-view";
+import { buildIndustryV8 } from "../../src/lib/spine/industry_v8";
 import { SpineHoodBody } from "../../src/components/spine/hood/hood-view";
 import { SpineShell } from "../../src/components/spine/shell";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
@@ -102,8 +102,8 @@ async function renderOne(surface: string, slugs: string[]): Promise<string | nul
     /* The route's own choice (src/app/(site)/cities/[slug]/city_spine.tsx): v9 where buildCityV9 holds the city, else the spine. */
     case "city": { const v9 = buildCityV9(slugs[0]); if (v9) { C = (p: { data: unknown }) => React.createElement(SpineCityV9Body, { v: p.data as any, path: `/cities/${slugs[0]}` }); data = v9; } else { C = SpineCityBody; data = await buildSpineCitySeed(slugs[0]); } break; }
     case "cell": C = SpineCellBody; data = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); break;
-    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v6 where buildIndustryV6 holds the trade, else the spine. */
-    case "industry": { const v6 = buildIndustryV6(slugs[0]); if (v6) { C = (p: { data: unknown }) => React.createElement(SpineIndustryV6Body, { v: p.data as any, path: `/industries/${slugs[0]}` }); data = v6; } else { C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); } break; }
+    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v8 where buildIndustryV8 holds the trade, else the spine. */
+    case "industry": { const v8 = buildIndustryV8(slugs[0]); if (v8) { C = (p: { data: unknown }) => React.createElement(SpineIndustryV8Body, { v: p.data as any, path: `/industries/${slugs[0]}` }); data = v8; } else { C = SpineIndustryBody; data = await buildSpineIndustrySeed(slugs[0]); } break; }
     case "hood": C = SpineHoodBody; data = await buildSpineHoodSeed(slugs[0]); selfShelled = true; break;
     case "howto": C = HowToBody; data = { iso2: slugs[0].toUpperCase() }; break;
     /* The home page on the band page (masterplan step 32): its slug is the country it leads with. */

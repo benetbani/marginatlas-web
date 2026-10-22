@@ -96,8 +96,8 @@ import { isSpineReformEnabledFor } from "@/lib/feature_flags";
 import { SpineShell } from "@/components/spine/shell";
 import { SpineIndustryBody } from "@/components/spine/industry/industry-view";
 import { buildSpineIndustrySeed } from "@/lib/spine/adapt_industry";
-import { buildIndustryV6, drawsIndustryV6 } from "@/lib/spine/industry_v6";
-import { SpineIndustryV6Body } from "@/components/spine/industry/kit3-view";
+import { buildIndustryV8, drawsIndustryV8 } from "@/lib/spine/industry_v8";
+import { SpineIndustryV8Body } from "@/components/spine/industry/kit3-view";
 import { robotsFor } from "@/lib/seo/indexable";
 import { industryCanonicalPath } from "@/lib/seo/alias_canonical";
 
@@ -163,8 +163,9 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
     /* Indexed only where his rule allows (milestone 1, M10; src/lib/seo/indexable.ts): a UK page, or a page at its floor. */
     robots: robotsFor(canonical),
     /* A page drawn in KIT-VERSION 3's forms says so (`<meta name="ma:kit" content="3">`, kit3.py page()), which binds the KIT 3 laws on
-       it: the industry page v6 alone (his "v6 is the approved industry target.", 2026-10-21), where the route below draws it. */
-    ...(isSpineReformEnabledFor("industry") && drawsIndustryV6(industry) ? { other: { "ma:kit": "3" } } : {}),
+       it: the industry page v7 alone (FOUNDER-VERDICTS "The industry page (/industries/restaurants) v7 approved"), where the route below
+       draws it. */
+    ...(isSpineReformEnabledFor("industry") && drawsIndustryV8(industry) ? { other: { "ma:kit": "3" } } : {}),
     // title, description and images are all repeated below rather than
     // inherited. Next resolves metadata per KEY by replacement, not by deep
     // merge, so declaring openGraph at all discards the root layout's
@@ -194,15 +195,15 @@ export default async function IndustryPage({ params }: { params: Promise<Params>
   // never the bundled illustrative seed. A slug that resolves to no industry falls
   // through to notFound(), matching the non-spine page. Flag OFF path untouched.
   if (isSpineReformEnabledFor("industry")) {
-    /* THE INDUSTRY PAGE v6 (his "v6 is the approved industry target.", 2026-10-21, FOUNDER-VERDICTS "The industry page
-       (/industries/restaurants) v6 approved"; v6 replaces v4, which this branch drew before it): a trade whose every v6 section fills
-       from data/sourced/ draws v6 (src/lib/spine/industry_v6.ts says which: restaurants today); every other trade draws the September
-       spine below, unchanged. The harness (scripts/harness/render_page.tsx) and the floor census ask the same question. */
-    const v6 = buildIndustryV6(industry);
-    if (v6) {
+    /* THE INDUSTRY PAGE v8 (FOUNDER-VERDICTS "v8 is the approved industry target."; his "Yes: port v8 onto the site on the server
+       once the v7 port is done."; v8 replaces v7, which this branch drew before it): a trade whose every v8 section fills from
+       data/sourced/ draws v8 (src/lib/spine/industry_v8.ts says which: restaurants today); every other trade draws the
+       September spine below, unchanged. The harness (scripts/harness/render_page.tsx) and the floor census ask the same question. */
+    const v8 = buildIndustryV8(industry);
+    if (v8) {
       return (
         <SpineShell>
-          <SpineIndustryV6Body v={v6} path={`/industries/${industry.toLowerCase()}`} />
+          <SpineIndustryV8Body v={v8} path={`/industries/${industry.toLowerCase()}`} />
         </SpineShell>
       );
     }

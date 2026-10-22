@@ -1057,12 +1057,12 @@ function collectCopyHeads(node: unknown, path: string, out: Array<[string, strin
     console.log(`hood pages: every composed string swept on ${hoodPages} page(s) of ${spineHoodCities().length} admitted city(ies)`);
   }
 
-  /* A NAME COLUMN'S HEAD NAMES ITS ROWS, NOT A UNIT. The industry page v6's official ratios table heads its first column, the column of
-     the ratios' names ("Operating margin", "Wage share" ...), "Ratio": there the word is what each row is, as "Country" heads a column
+  /* A NAME COLUMN'S HEAD NAMES ITS ROWS, NOT A UNIT. The industry page's official ratios table (v6's chapter, kept by v7) heads its
+     first column, the column of the ratios' names ("Operating profit", "Wage share" ...), "Ratio": there the word is what each row is, as "Country" heads a column
      of countries, and no figure stands under it. The target prints it so and he approved the chapter as built (FOUNDER-VERDICTS
-     2026-10-21, "The ratios chapter in v6 is right as it is." and "v6 is the approved industry target."). One key, by path; the same
+     2026-10-21, "The ratios chapter in v6 is right as it is." and "v6 is the approved industry target."; v7, which carries the chapter, approved in its place). One key, by path; the same
      word over a column of figures still reds. */
-  const NAME_COLUMN_HEADS = new Set(["COPY.industryV6.ratios.official.head.ratio"]);
+  const NAME_COLUMN_HEADS = new Set(["COPY.industryV8.ratios.official.head.ratio"]);
   for (const [where, text] of heads) {
     if (NAME_COLUMN_HEADS.has(where)) continue;
     const why = bannedConstruction(text);

@@ -391,6 +391,11 @@ const collect = () => {
        how a chip row reads: the button IS the cell. */
     const cells = (r, i) => (width ? r.children[i] : r);
     for (let i = 0; i < Math.max(1, width); i++) {
+      /* On a kit render, a band's sections share four rows and the fourth is the caption "Place, 2026." (kit3.card's anatomy,
+         his FV 2109: "the sections of one band share four rows"); the approved v8 industry render prints the same place caption
+         on each of a band's three sections (FOUNDER-VERDICTS 2026-10-22, "v8 is the approved industry target."). A shared
+         caption is the band's anatomy, not a repeated content row; any other same-for-all column still counts. */
+      if (rows.every((r) => { const c = cells(r, i); return c !== r && !!c.matches && c.matches("p.caption") && !!c.closest('[data-composition="kit"]'); })) continue;
       const texts = rows.map((r) => (cells(r, i).textContent || "").trim().replace(/\s+/g, " "));
       if (texts[0].length <= 3) continue;
       if (texts.every((t) => t === texts[0])) sameForAll.push(`${rows.length} rows all read "${texts[0].slice(0, 40)}"`);

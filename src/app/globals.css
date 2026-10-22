@@ -3470,10 +3470,12 @@ main :where(p, li, blockquote, dd) {
 }
 @media (prefers-reduced-motion: reduce) { .kit4 .k-seeall svg { transition: none; } }
 /* =============================================================================
-   THE KIT 3 PAGE: THE INDUSTRY. The industry page v6 (his "v6 is the approved industry target.", 2026-10-21, FOUNDER-VERDICTS "The
-   industry page (/industries/restaurants) v6 approved"), drawn by src/components/spine/industry/kit3-view.tsx in KIT-VERSION 3's
-   forms (his "The gallery is right: move the pages onto kit version 3, each at its next version.", 2026-10-21). The rules are
-   sheets/kit/v3/kit3.css and the target builder's own CSS (sheets/industry/v6/src/build_industry_v6.py, EXTRA_CSS), section for
+   THE KIT 3 PAGE: THE INDUSTRY. The industry page v8 (FOUNDER-VERDICTS "v8 is the approved industry target.", 2026-10-22; v7 and
+   v6 before it), drawn by
+   src/components/spine/industry/kit3-view.tsx in KIT-VERSION 3's forms (his "The gallery is right: move the pages onto kit version 3,
+   each at its next version.", 2026-10-21). The rules are sheets/kit/v3/kit3.css as the v8 target carries it (the kit of 2a83eca:
+   the lists, the tables at 14, the informative card, a chapter's title 48 above its first section) and the target builder's own CSS
+   (sheets/industry/v8/src/build_industry_v8.py, EXTRA_CSS), section for
    section, every selector under the page's one root `.kit3.k-industry`, so nothing here reaches another page and THE KIT PAGE above
    (version 2, which the v4 view and London v9 read) is untouched. The class names are the kit's own (`.sub`, `.fig`, `.pair`,
    `.caption` ...): the KIT 3 laws (probe_laws.mjs) read some of them, and the site's rules of those names all live under `.av2`.
@@ -3597,30 +3599,42 @@ main :where(p, li, blockquote, dd) {
 .kit3.k-industry [data-surface="plate"] { background: var(--color-white); border-radius: var(--radius-plate); padding: var(--pad-plate); box-shadow: var(--shadow-plate); }
 .kit3.k-industry [data-surface="overlay"] { background: var(--color-white); border: var(--border-hairline) solid var(--color-line); border-radius: var(--radius-plate); padding: var(--gap-panel-pad); box-shadow: var(--shadow-overlay); }
 /* a section's focal part (data-focal): terracotta in its forms (his FV 2109, FV 2128) */
-/* ---------- 8. Rows: a label column of fixed width, the value beside it, rows 12 apart; a list under a list has its own title ---------- */
-.kit3.k-industry dl.kv { display: grid; gap: var(--gap-row-pad); }
-.kit3.k-industry .kv > div { display: grid; grid-template-columns: minmax(0, 22ch) minmax(0, 1fr); column-gap: var(--space-24); align-items: baseline; }
-.kit3.k-industry .kv dt { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
-.kit3.k-industry .kv dd { font: 600 var(--type-lead) var(--font-family-figure); font-variant-numeric: tabular-nums; }
-.kit3.k-industry .kv.facts dd { font: 600 var(--type-title) var(--font-family-figure); }
+/* ---------- 8. Rows: the value beside its label (his words of 2026-10-21, evening: "the spacing between elements that are left and
+   right with each other"). The value column starts 24 after the longest label, never at a fixed place in the section: a value that
+   sits further from its own label than the next section sits from it reads with the wrong neighbour (the lists measured 120 to 300
+   from label to value against a 64 gutter). Label and value at 14, the value in the figure face and 600; rows 8 above and below a
+   hairline; a list is as wide as its longest row. A list under a list has its own title ---------- */
+/* auto tracks: each as wide as its longest line while the list fits, both wrapping once it would pass its section (a value that is a
+   sentence ran out of its section on max-content tracks) */
+.kit3.k-industry dl.kv { display: grid; grid-template-columns: auto auto; justify-content: start; column-gap: var(--gap-label-value); width: fit-content; max-width: 100%; }
+.kit3.k-industry .kv > div > :nth-child(n + 3) { grid-column: 1 / -1; }   /* a row's third part (a note under the pair) takes the row's width */
+.kit3.k-industry .kv > div { display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; padding-block: var(--gap-row);
+  border-top: var(--border-hairline) solid var(--color-line); }
+.kit3.k-industry .kv > div:first-child { border-top: 0; padding-top: 0; }
+.kit3.k-industry .kv > div:last-child { padding-bottom: 0; }
+.kit3.k-industry .kv dt { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); max-width: 30ch; }
+.kit3.k-industry .kv dd { font: 600 var(--type-small) var(--font-family-figure); font-variant-numeric: tabular-nums; text-align: right; }
+.kit3.k-industry .kv.facts dd { font: 600 var(--type-small) var(--font-family-figure); }   /* a table's figure is never large (same evening) */
+.kit3.k-industry .kv .tot { border-top-color: var(--color-line-2); }   /* a total row: the darker rule above it, as a receipt's */
 .kit3.k-industry .kv .tot :is(dt, dd) { color: var(--color-ink); font-weight: 600; }
 .kit3.k-industry .kv .k { display: inline-block; width: 12px; height: 12px; border-radius: var(--radius-tiny); margin-right: var(--space-8); vertical-align: -1px; }
 .kit3.k-industry .kv .of { display: block; font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
 .kit3.k-industry .kv .none dd { color: var(--color-muted); }
-.kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv > div { grid-template-columns: minmax(0, 1fr) auto; }
-.kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv dd { text-align: right; }
-.kit3.k-industry .kv.stack > div, .kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv.stack > div { grid-template-columns: 1fr; row-gap: var(--gap-label-figure); }
-.kit3.k-industry .kv.stack dd, .kit3.k-industry :is(.ringrow, .unitrow, .nestrow, .month) .kv.stack dd { text-align: left; }
-/* ---------- 9. Tables: a row 12 above and below its text with a hairline, the head rule, figures right and tabular ---------- */
+.kit3.k-industry dl.kv.stack { grid-template-columns: minmax(0, 1fr); width: auto; }
+.kit3.k-industry .kv.stack > div { row-gap: var(--gap-label-figure); }
+.kit3.k-industry .kv.stack dd { text-align: left; }
+/* ---------- 9. Tables: a row 8 above and below its text with a hairline, the head rule, figures right and tabular ---------- */
+/* a table reads at 14 throughout (his words of 2026-10-21, evening: "the numbers on the table are big without the reason to be that
+   big"): its figures in the figure face at 500, a row's name at 600, the money pair on one line, rows 8 above and below their rule */
 .kit3.k-industry table.peers, .kit3.k-industry table.forms { width: 100%; border-collapse: collapse; }
-.kit3.k-industry :is(.peers, .forms) :is(th, td) { padding: var(--gap-row-pad) var(--space-8); border-bottom: var(--border-hairline) solid var(--color-line); text-align: right; vertical-align: top; }
+.kit3.k-industry :is(.peers, .forms) :is(th, td) { padding: var(--gap-row) var(--space-12); border-bottom: var(--border-hairline) solid var(--color-line); text-align: right; vertical-align: top; }
 .kit3.k-industry :is(.peers, .forms) thead th { border-bottom-color: var(--color-line-2); vertical-align: bottom; font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); }
 .kit3.k-industry :is(.peers, .forms) thead th small { display: block; font-weight: 400; color: var(--color-muted); }
 .kit3.k-industry :is(.peers, .forms) :is(thead th:first-child, tbody th) { text-align: left; padding-left: 0; }
-.kit3.k-industry :is(.peers, .forms) tbody th { font: 600 var(--type-lead) var(--font-family-text); }
-.kit3.k-industry :is(.peers, .forms) td { font: 500 var(--type-lead) var(--font-family-figure); font-variant-numeric: tabular-nums; }
-.kit3.k-industry :is(.peers, .forms) td .m { flex-direction: column; align-items: flex-end; row-gap: 0; }
-.kit3.k-industry[data-cur="usd"] :is(.peers, .forms) td .m { flex-direction: column-reverse; }
+.kit3.k-industry :is(.peers, .forms) tbody th { font: 600 var(--type-small) var(--font-family-text); }
+.kit3.k-industry :is(.peers, .forms) td { font: 500 var(--type-small) var(--font-family-figure); font-variant-numeric: tabular-nums; }
+.kit3.k-industry :is(.peers, .forms) td .m { flex-direction: row; justify-content: flex-end; align-items: baseline; column-gap: var(--space-4); }
+.kit3.k-industry[data-cur="usd"] :is(.peers, .forms) td .m { flex-direction: row-reverse; }
 .kit3.k-industry .peers tr.me :is(th, td) { background: var(--color-paper); }
 .kit3.k-industry section.chapter.tint .peers tr.me :is(th, td) { background: var(--color-white); }
 .kit3.k-industry .peers td.win { color: var(--color-terra); font-weight: 600; }
@@ -3711,6 +3725,15 @@ main :where(p, li, blockquote, dd) {
 /* areas: nested-squares, each a share of the one around it by area, on one corner */
 .kit3.k-industry .nestrow { display: grid; grid-template-columns: minmax(0, 200px) minmax(0, 1fr); gap: var(--space-24); align-items: end; }
 /* lines: line, its plot 96 tall; words and dots laid over a stretched SVG */
+.kit3.k-industry .lplot { position: relative; height: 96px; }
+.kit3.k-industry .lplot svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.kit3.k-industry .lplot .dot { position: absolute; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: var(--radius-round); background: var(--color-ink); }
+.kit3.k-industry .lplot .dot.b { background: var(--color-benchmark); }
+.kit3.k-industry .lplot[data-focal] .dot:not(.b) { background: var(--color-terra); }
+.kit3.k-industry .lx { position: relative; height: 20px; margin-top: var(--space-8); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .lx span { position: absolute; top: 0; transform: translateX(-50%); white-space: nowrap; }
+.kit3.k-industry .lx span:first-child { transform: none; }
+.kit3.k-industry .lx span:last-child { transform: translateX(-100%); }
 /* ---------- 13. The spine hero: a bright photograph, the name on a plate, the answer and the eight cells on a plate ---------- */
 .kit3.k-industry .city-hero { position: relative; }
 .kit3.k-industry .pano { position: absolute; left: 0; right: 0; top: 0; height: 700px; overflow: hidden; background: var(--color-photo-ground); }
@@ -3722,31 +3745,58 @@ main :where(p, li, blockquote, dd) {
 .kit3.k-industry .lede { font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); }
 .kit3.k-industry .fig-card { grid-column: 2; display: grid; gap: var(--gap-group); }
 .kit3.k-industry .answer { display: flex; justify-content: space-between; gap: var(--space-16); align-items: flex-start; }
-.kit3.k-industry .answer > div { display: grid; gap: var(--gap-label-figure); }
+/* the switch keeps its row (the kit's review, 2026-10-21; a9c7023) */
+.kit3.k-industry .answer > div:not(.switch) { display: grid; gap: var(--gap-label-figure); }
 .kit3.k-industry .al { font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
 .kit3.k-industry .av { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--space-8); font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink-2); }
 .kit3.k-industry .av .big { font: 600 var(--type-answer) var(--font-family-figure); letter-spacing: -0.02em; color: var(--color-terra); }
 .kit3.k-industry .as { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
 .kit3.k-industry .cells { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-8); }
 .kit3.k-industry .cell { min-width: 0; display: grid; gap: var(--space-8); align-content: start; }
-.kit3.k-industry .cl { display: flex; align-items: center; gap: var(--space-8); font: 600 var(--type-small) var(--font-family-text); color: var(--color-ink); }
+/* a cell's title at 16 with its icon at 24 inline (his FV 1785, "a little bit bigger and darker"; the kit's fixes of a9c7023); the icon
+   above it from 961 to 1199, where the answer plate is narrow; at 14 under the icon on a phone (section 17) */
+.kit3.k-industry .cl { display: flex; align-items: center; gap: var(--space-8); font: 600 var(--type-lead) var(--font-family-text); color: var(--color-ink); }
 .kit3.k-industry .cv { font: 600 var(--type-title) var(--font-family-figure); letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
 .kit3.k-industry .cap { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-12); align-items: center; font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
 .kit3.k-industry .cap a { color: var(--color-ink); font-weight: 600; min-height: 44px; display: inline-flex; align-items: center; }
-/* ---------- 14. Cards: the exit's doors, cities, reading cards; the source line ---------- */
-.kit3.k-industry .doors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-24); }
-.kit3.k-industry .door { gap: var(--space-8); min-height: 176px; padding-bottom: 72px; }
-.kit3.k-industry .door .dk { font: 600 var(--type-small) var(--font-family-text); color: var(--color-muted); }
-.kit3.k-industry .door h3 { font: 600 var(--type-title) var(--font-family-text); }
-.kit3.k-industry .door p { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
-.kit3.k-industry .door .round { position: absolute; right: var(--space-24); bottom: var(--space-24); }
-.kit3.k-industry .door[data-tone="ink"] :is(p, .dk) { color: var(--color-n3); }
-.kit3.k-industry .door[data-tone="ink"] .round { border-color: var(--color-white); }
+/* ---------- 14. The informative card (his words of 2026-10-21, evening: "an image and three or four elements", cohesive, an icon
+   where it means something, nothing overstated). One anatomy for every card pressed to go somewhere, a door, a city, a reading:
+   its photograph, then four parts in one order: the kicker with its icon, the title, one line, and the foot (where it leads) with
+   the arrow. The whole card is the link. The 3.0 doors' rules left this page with v8's exit (the page draws .icard alone). ---------- */
+.kit3.k-industry .icards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-24); }
+.kit3.k-industry .icard { padding: 0; overflow: hidden; }   /* the photograph full bleed, the words 16 in: one left edge for every part */
+.kit3.k-industry .icard .icline { margin-top: calc(var(--gap-title-question) - var(--space-8)); }   /* the line belongs to its title: 4 under it */
+.kit3.k-industry .icard .icimg, .kit3.k-industry .icard .icpanel { display: block; aspect-ratio: 16 / 10; background: var(--color-photo-ground); }
+.kit3.k-industry .icard .icimg img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.kit3.k-industry .icard .icimg.split { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); background: var(--color-white); }   /* two places compared */
+.kit3.k-industry .icard .icimg.split img { min-width: 0; }
+.kit3.k-industry .icard .icpanel { display: grid; place-items: center; background: var(--color-paper); color: var(--color-ink-2); }
+.kit3.k-industry .icard .icbody { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-16); flex: 1; }
+.kit3.k-industry .icard .ickick { display: flex; align-items: center; gap: var(--space-8); font: 600 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .icard .ickick svg { color: var(--color-ink-2); flex: none; }
+.kit3.k-industry .icard h3 { font: 600 var(--type-title) var(--font-family-text); letter-spacing: -0.01em; text-wrap: balance; }
+.kit3.k-industry .icard .icline { font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .icard .icfoot { margin-top: auto; padding-top: var(--space-12); border-top: var(--border-hairline) solid var(--color-line); display: flex;
+  align-items: center; justify-content: space-between; gap: var(--space-12); font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+.kit3.k-industry .icard .icfoot svg { flex: none; color: var(--color-ink); }
+.kit3.k-industry .icard .icgo { font-weight: 600; color: var(--color-ink); }
 .kit3.k-industry .srcline { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-24); align-items: center; margin-top: var(--space-24); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
 .kit3.k-industry .srcline a { color: var(--color-ink-2); min-height: 44px; display: inline-flex; align-items: center; }
 /* ---------- 15. The home's pieces: the question box, the marks, the photograph card, a collection's head, the band ---------- */
 /* ---------- 16. The foot: the email row, the footer ---------- */
 /* ---------- 17. Widths: 1080, 1024, 960, 768, 640, 560 ---------- */
+/* each cell title on one line (a9c7023) */
+@media (min-width: 1200px) {
+  .kit3.k-industry .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 576px); }
+}
+@media (min-width: 961px) and (max-width: 1199px) {
+  .kit3.k-industry .cl { flex-direction: column; align-items: flex-start; }
+}
+/* a tablet: the title plate as wide as the name (law ALONE; the country conversation's fix of /gb v20, 9395c6c, moved into the kit
+   for every country and city hero; this hero carries no flag, the rule is the kit's) */
+@media (min-width: 561px) and (max-width: 960px) {
+  .kit3.k-industry .city-hero .title-plate { width: max-content; max-width: 100%; }
+}
 @media (max-width: 1080px) {
   .kit3.k-industry .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); }
 }
@@ -3759,7 +3809,7 @@ main :where(p, li, blockquote, dd) {
   .kit3.k-industry .title-plate { position: relative; left: auto; top: auto; transform: none; margin-top: -48px; max-width: none; }
   .kit3.k-industry .title-plate h1 { font-size: var(--font-display-plate-name-country); }
   .kit3.k-industry .fig-card { margin-top: var(--space-16); }
-  .kit3.k-industry .doors { grid-template-columns: 1fr; }
+  .kit3.k-industry .icards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
   /* sections stack: 24, a hairline, 24 */
@@ -3783,11 +3833,11 @@ main :where(p, li, blockquote, dd) {
 }
 @media (max-width: 560px) {
   .kit3.k-industry { --pad-card: var(--gap-card-pad-phone); --pad-panel: var(--gap-panel-pad-phone); --pad-plate: var(--gap-plate-pad-phone); }
-  .kit3.k-industry .cl { flex-direction: column; align-items: flex-start; }
+  .kit3.k-industry .cl { flex-direction: column; align-items: flex-start; font: 600 var(--type-small) var(--font-family-text); }
   .kit3.k-industry .cl svg { width: var(--icon-medium); height: var(--icon-medium); }
   .kit3.k-industry .title-plate h1 { font-size: var(--font-display-plate-name-phone); }
-  .kit3.k-industry .kv > div { grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-12); }
-  .kit3.k-industry .kv dd { text-align: right; }
+  /* one column: the row's end is near */
+  .kit3.k-industry dl.kv:not(.stack) { width: 100%; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-12); }
   .kit3.k-industry .vb b { width: 12px; }
   .kit3.k-industry .vm .ml { display: none; }
   .kit3.k-industry .vm .ms { display: inline; }
@@ -3800,11 +3850,15 @@ main :where(p, li, blockquote, dd) {
   .kit3.k-industry .forms td::before { content: attr(data-l); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); text-align: left; }
   .kit3.k-industry .forms td .m { flex-direction: row; }
   .kit3.k-industry[data-cur="usd"] .forms td .m { flex-direction: row-reverse; }
+  /* a phone: one card a row, the photograph beside the words, so a page of cards stays short */
+  .kit3.k-industry .icards { grid-template-columns: minmax(0, 1fr); }
+  .kit3.k-industry .icards .icard { flex-direction: row; }
+  .kit3.k-industry .icards .icard :is(.icimg, .icpanel) { width: 112px; flex: none; aspect-ratio: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .kit3.k-industry *, .kit3.k-industry *::before, .kit3.k-industry *::after { transition: none !important; animation: none !important; }
 }
-/* ---- the page's own: sheets/industry/v6/src/build_industry_v6.py EXTRA_CSS, scoped ---- */
+/* ---- the page's own: sheets/industry/v8/src/build_industry_v8.py EXTRA_CSS (v7's through the section filter), scoped ---- */
 /* the industry hero: no money in the answer, so no switch; the hero as tall as its photograph; the card at its content */
 .kit3.k-industry .city-hero.ind .hero-grid { min-height: 700px; box-sizing: border-box; }
 .kit3.k-industry .city-hero.ind .pano img { object-position: 50% 90%; }
@@ -3813,29 +3867,50 @@ main :where(p, li, blockquote, dd) {
 /* the opening band at five to seven, the ratios at two to one */
 .kit3.k-industry .pair.w57 { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 .kit3.k-industry .pair.w21 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
-/* the trades next door: all businesses marked on every track */
-.kit3.k-industry .rb .tr .mk { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--color-ink); }
-.kit3.k-industry .mkkey { display: flex; align-items: center; gap: var(--space-8); font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
-.kit3.k-industry .mkkey i { width: 2px; height: 16px; background: var(--color-ink); }
-.kit3.k-industry .def2 { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
-.kit3.k-industry .def2 b { color: var(--color-ink); }
 /* the part bar's profit and its key */
 .kit3.k-industry .kt .tc, .kit3.k-industry .akey i.tc { background: var(--color-terra); }
+/* the receipt: the two costs with their minus, a sum line, operating profit in terracotta */
+.kit3.k-industry .kv.year > div:last-child { border-top: var(--border-hairline) solid var(--color-line-2); }
 .kit3.k-industry .kv.year > div:last-child :is(dt, dd) { color: var(--color-ink); font-weight: 700; }
-/* an hour of work: what the hour leaves between the two marks, the section's focal part */
-.kit3.k-industry .hstrip .gap { position: absolute; top: 26px; height: 8px; background: var(--color-terra); }
-.kit3.k-industry .hstrip .lab { width: max-content; }
-.kit3.k-industry .hstrip .lab .m { flex-wrap: nowrap; font-family: var(--font-family-figure); }
+.kit3.k-industry .kv.year dd [data-focal] { color: var(--color-terra); }
+.kit3.k-industry .kv.year .mi { margin-right: var(--space-4); color: var(--color-ink-2); }
+.kit3.k-industry .kv dd [data-focal] .m .p, .kit3.k-industry .kv dd span[data-focal], .kit3.k-industry .fig > [data-focal] { color: var(--color-terra); }
+.kit3.k-industry .ratios thead th { white-space: nowrap; }
+/* the months: every month grey but the busiest, the quietest hollow, a line at the year's average */
+.kit3.k-industry .vchart .vb { position: relative; flex-direction: column; align-items: center; justify-content: flex-end; }
+.kit3.k-industry .vchart .vb::after { content: ""; position: absolute; left: calc(var(--space-2) * -1); right: calc(var(--space-2) * -1); bottom: var(--avg); border-top: var(--border-hairline) solid var(--color-ink-2); }
+.kit3.k-industry .vcol.low .vb b { background: transparent; border: var(--border-hairline) solid var(--color-ink-2); box-sizing: border-box; }
+.kit3.k-industry .vchart .vv { font: 600 var(--type-small) var(--font-family-figure); color: var(--color-terra); font-variant-numeric: tabular-nums; }
+.kit3.k-industry .vchart .avgl { position: absolute; left: 0; bottom: calc(var(--avg) + var(--space-4)); z-index: 1; font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); white-space: nowrap; }
+/* the sizes: each name over its range */
+.kit3.k-industry .kv .sz small { margin-left: var(--space-4); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+@media (max-width: 1100px) {
+  .kit3.k-industry .kv .sz small { display: block; margin-left: 0; }
+}
+/* the country table: its three tables on one set of columns, so their own counts read under the survey's; their own head
+   read by a screen reader, not shown twice */
+.kit3.k-industry .sub.wide table.peers { table-layout: fixed; }
+.kit3.k-industry .sub.wide table.peers col.c0 { width: 30%; }
+@media (max-width: 960px) {
+  .kit3.k-industry .sub.wide table.peers col.c0 { width: 22%; }
+}
+.kit3.k-industry .sub.wide .group table.peers thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+/* the money pair on one line from 961 */
+@media (min-width: 961px) {
+  .kit3.k-industry .peers td .m { flex-direction: row; align-items: baseline; column-gap: var(--space-4); }
+  .kit3.k-industry[data-cur="usd"] .peers td .m { flex-direction: row-reverse; }
+}
 /* the ratios: the name opens its glossary entry, the formula under it */
 .kit3.k-industry .ratios th[scope="row"] { padding-right: var(--space-12); }
 .kit3.k-industry .ratios .rname { display: block; color: var(--color-ink); text-underline-offset: 3px; }
-.kit3.k-industry .ratios .rf { display: block; margin-top: var(--space-4); font: 400 var(--type-small) var(--font-family-text); color: var(--color-muted); }
+.kit3.k-industry .ratios .rf { display: block; margin-top: var(--space-4); color: var(--color-muted); }
 .kit3.k-industry .ratios td { white-space: nowrap; }
 /* the range: the lowest country over the highest, right-aligned as every figure of the table */
 .kit3.k-industry .ratios td.rng { text-align: right; }
-.kit3.k-industry .ratios .lh { display: inline-grid; gap: var(--space-4); justify-items: end; }
-.kit3.k-industry .ratios .lh > span { display: inline-flex; align-items: baseline; gap: var(--space-8); }
-.kit3.k-industry .ratios .lh .cn { font: 400 var(--type-small) var(--font-family-text); color: var(--color-ink-2); }
+/* the range on one line, the lowest country to the highest (the kit's tables: one type, short rows) */
+.kit3.k-industry .ratios .lh { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; align-items: baseline; column-gap: var(--space-8); row-gap: var(--space-8); }
+.kit3.k-industry .ratios .lh > span { display: inline-flex; align-items: baseline; gap: var(--space-4); }
+.kit3.k-industry .ratios .lh .cn, .kit3.k-industry .ratios .lh .to { color: var(--color-ink-2); }
 .kit3.k-industry .ratios .lh .m { font-variant-numeric: tabular-nums; }
 .kit3.k-industry .says { padding-left: var(--space-16); display: grid; gap: var(--space-12); font: 400 var(--type-lead) var(--font-family-text); color: var(--color-ink); }
 .kit3.k-industry .says .m { font-family: var(--font-family-figure); font-weight: 600; }
@@ -3844,16 +3919,16 @@ main :where(p, li, blockquote, dd) {
 /* the table's currency switch above it */
 .kit3.k-industry .tsw { display: flex; justify-content: flex-end; }
 .kit3.k-industry .akey i.fa, .kit3.k-industry .kv .k.fa { background: var(--color-faint); }
-/* below 960 the ratios' pair stacks as the kit stacks a pair below 768; the months take their one-letter labels */
+/* below 960 the ratios' pair and the opening band stack as the kit stacks a pair below 768; the months take their one-letter labels */
 @media (max-width: 960px) {
-  .kit3.k-industry .pair.w21 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
-  .kit3.k-industry .pair.w21 > .sub + .sub { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
+  .kit3.k-industry .pair.w21, .kit3.k-industry .pair.w57 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .kit3.k-industry :is(.pair.w21, .pair.w57) > .sub + .sub { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
   .kit3.k-industry .vm .ml { display: none; }
   .kit3.k-industry .vm .ms { display: inline; }
   .kit3.k-industry .city-hero.ind .hero-grid { min-height: 0; }
-}
-@media (max-width: 767px) {
-  .kit3.k-industry .pair.w57 { grid-template-columns: minmax(0, 1fr); }
+  /* the third band's three sections stack below 960, as the kit stacks a pair below 768 (their lists need the width) */
+  .kit3.k-industry .cluster.c3 { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; }
+  .kit3.k-industry .cluster.c3 > .sub + .sub { margin-top: var(--gap-stack); padding-top: var(--gap-stack); border-top: var(--border-hairline) solid var(--color-line); }
 }
 /* on a phone the range stands under its label, the lowest over the highest */
 @media (max-width: 560px) {
@@ -3891,6 +3966,9 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
    plain words, against the average business." measures 360 against 352 in a column of 355, and wraps. The questions are tightened by a
    hundredth of an em so each stays one line at 1280, as in the target (the ALIGN law, his FV 2109). */
 .kit3.k-industry .sub .ask { letter-spacing: -0.01em; }
+/* ...and the figure's unit line the same: the split's "of every 100 is operating profit, as in all businesses" measures 327 of 333
+   in the target's Geist and wraps in the site's, which the LOADED law reads as a second line under the answer (one at most at 1280). */
+.kit3.k-industry .fig .unit { letter-spacing: -0.01em; }
 /* The site's reset takes a list's markers away; the target's "What they say" keeps the browser's discs. */
 .kit3.k-industry ul.says { list-style: disc; }
 /* The site's reset takes a link's underline away; the target's links keep the browser's (the doors, cards, take theirs off). */
@@ -3905,6 +3983,10 @@ body:has(.kit3.k-industry) { overflow-x: clip; }
 /* The reading measure on this page (his "narrow the words, keep the pictures wide", 2026-08-21; the readability gate's 78 a line and
    the page laws' half a page under 1024): a note and the table's key at 32em, never past half the page; a section's question at half
    the page under 1024, and free at 1024 and over, where version 3 keeps each question to its one line. */
-.kit3.k-industry :is(.note, .key > span, .def2) { max-width: min(32em, var(--measure-half)); }
+.kit3.k-industry :is(.note, .key > span) { max-width: min(32em, var(--measure-half)); }
 @media (max-width: 1023px) { .kit3.k-industry .sub > header .ask { max-width: var(--measure-half); } }
+/* ...and a section's figure line at half the page under 1024 too: v7 stacks the opening band below 960 (the target's rule), where
+   Trades next door's line ("4th of five trades that serve food, drink or a bed, by operating profit") would run 406 of 720 at 768
+   (the page laws' TEXT WIDE, clause 51). */
+@media (max-width: 1023px) { .kit3.k-industry .sfig > .fig { max-width: var(--measure-half); } }
 .kit3.k-industry :is(.av .big, .fig) > .m :is(.p, .s), .kit3.k-industry[data-cur="usd"] :is(.av .big, .fig) > .m :is(.p, .s) { font-variant-numeric: tabular-nums; }

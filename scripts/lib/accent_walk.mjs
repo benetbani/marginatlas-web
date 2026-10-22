@@ -61,8 +61,20 @@ export function accentWalk({ ids = [] } = {}) {
   const kit3Root = document.querySelector(".kit3");
   const kit3Rgb = kit3Root ? (() => { const d = document.createElement("div"); d.style.color = "var(--color-terra)"; kit3Root.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; })() : null;
   const isAccent = (c) => c === accentRgb || (kitRgb !== null && c === kitRgb) || (kit3Rgb !== null && c === kit3Rgb);
+  /* A SECTION'S FOCAL PART ON KIT-VERSION 3 is not a loud seat. Version 3 moved the page's terracotta onto each section's one focal
+     part, marked `data-focal` (sheets/kit/v3/MOVING.md: "terracotta on each section's focal part inside data-focal, one a section
+     (FOCAL)"; his FV 2109 and FV 2128, 2026-10-21), and the industry page v7 (FOUNDER-VERDICTS "v7 approved") puts it on figures as
+     well as drawings (42.3%, the receipt's operating profit, 21.3 ...). Such a figure is read as its section's focal part, not an
+     accent, only on a `.kit3` root and only where its section holds that one `data-focal`: a second focal part in a section, or a
+     terracotta figure outside any, still counts. A page with no `.kit3` root reads exactly as before. */
+  const kit3Focal = (el) => {
+    const f = el.closest("[data-focal]");
+    if (!f || !f.closest(".kit3")) return false;
+    const card = f.closest(CARD);
+    return !!card && card.querySelectorAll("[data-focal]").length === 1;
+  };
   const accents = !accentReadable ? [] : [...document.querySelectorAll("main *")]
-    .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && isAccent(getComputedStyle(el).color))
+    .filter((el) => el.getClientRects().length && el.children.length === 0 && (el.textContent || "").trim() && !el.closest("[data-founder-accent]") && !kit3Focal(el) && isAccent(getComputedStyle(el).color))
     .map((el) => ({ card: el.closest(CARD)?.id || el.closest(CLUSTER)?.id || el.closest(FIELD)?.id || "card", text: (el.textContent || "").trim().slice(0, 16) }));
   const fields = [...document.querySelectorAll("main " + FIELD)].filter((z) => z.getClientRects().length).map((z) => ({ id: z.id || "", label: z.getAttribute("data-zone-label") || "" }));
   const cards = {};

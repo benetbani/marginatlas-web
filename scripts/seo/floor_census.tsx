@@ -33,8 +33,8 @@ import { SpineCountryBody } from "../../src/components/spine/country/country-vie
 import { SpineCityBody } from "../../src/components/spine/city/city-view";
 import { SpineCellBody } from "../../src/components/spine/cell/cell-view";
 import { SpineIndustryBody } from "../../src/components/spine/industry/industry-view";
-import { SpineIndustryV6Body } from "../../src/components/spine/industry/kit3-view";
-import { buildIndustryV6 } from "../../src/lib/spine/industry_v6";
+import { SpineIndustryV8Body } from "../../src/components/spine/industry/kit3-view";
+import { buildIndustryV8 } from "../../src/lib/spine/industry_v8";
 import { SpineShell } from "../../src/components/spine/shell";
 import { GUTTER } from "../../src/lib/nav";
 import { HowToBody } from "../../src/components/spine/country/how-to-view";
@@ -69,8 +69,8 @@ async function render(surface: Surface, slugs: string[]): Promise<Rendered | nul
     if (surface === "country") { const d = await buildSpineCountrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCountryBody as any, { data: d })) : null; }
     if (surface === "howto") el = shelled(React.createElement(HowToBody as any, { iso2: slugs[0].toUpperCase() }));
     if (surface === "city") { const d = await buildSpineCitySeed(slugs[0]); el = d ? shelled(React.createElement(SpineCityBody as any, { data: d })) : null; }
-    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v6 where buildIndustryV6 holds the trade, else the spine. */
-    if (surface === "industry") { const v6 = buildIndustryV6(slugs[0]); if (v6) el = shelled(React.createElement(SpineIndustryV6Body, { v: v6, path: `/industries/${slugs[0]}` })); else { const d = await buildSpineIndustrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineIndustryBody as any, { data: d })) : null; } }
+    /* The route's own choice (src/app/(site)/industries/[industry]/page.tsx): v8 where buildIndustryV8 holds the trade, else the spine. */
+    if (surface === "industry") { const v8 = buildIndustryV8(slugs[0]); if (v8) el = shelled(React.createElement(SpineIndustryV8Body, { v: v8, path: `/industries/${slugs[0]}` })); else { const d = await buildSpineIndustrySeed(slugs[0]); el = d ? shelled(React.createElement(SpineIndustryBody as any, { data: d })) : null; } }
     if (surface === "cell") { const d = await buildSpineCellSeed(slugs[0], slugs[1], slugs[2]); label = d?.meta?.trade ?? null; el = d ? shelled(React.createElement(SpineCellBody as any, { data: d })) : null; }
     if (!el) return null;
     const html = renderToStaticMarkup(el);
