@@ -146,24 +146,24 @@ Loud today: 3 of 3, as `LOUD_SEATS` in cell-view.tsx declares (a LIT seat is unl
 
 | section id | component | kicker | archetype | builder |
 |---|---|---|---|---|
-| lasts | LastsCard / Lasts | How many survive | WorkedFigure or kit | buildIndustryV6 |
-| split | SplitCard / Split | Where each $100 goes / Costs and margin | IncomeBreakdown or kit | buildIndustryV6 |
-| channels | ChannelsCard (MixCard) / Donut | Where sales come from | Donut or kit | buildIndustryV6 |
+| lasts | LastsCard / Lasts | How many survive | WorkedFigure or kit | buildIndustryV7 |
+| split | SplitCard / Split | Where each $100 goes / Costs and margin | IncomeBreakdown or kit | buildIndustryV7 |
+| channels | ChannelsCard (MixCard) / Donut | Where sales come from | Donut or kit | buildIndustryV7 |
 | close | CloseCard |  | Terminus |  |
-| take | Hero / Masthead |  | kit or AnswerCard | buildIndustryV6 |
-| next-door | NextDoor | T.nextDoor.title | kit | buildIndustryV6 |
-| year | Year | T.year.title | kit | buildIndustryV6 |
-| hour | Hour | T.hour.title | kit | buildIndustryV6 |
-| people | People | T.people.title | kit | buildIndustryV6 |
-| puts-back | PutsBack | T.putsBack.title | kit | buildIndustryV6 |
-| small-big | SmallBig | T.smallBig.title | kit | buildIndustryV6 |
-| ratios | OfficialRatios | O.title | kit | buildIndustryV6 |
-| say | WhatTheySay | S_.title | kit | buildIndustryV6 |
-| money | MoneyList | L.title | kit | buildIndustryV6 |
-| guests | Guests | L.title | kit | buildIndustryV6 |
-| places | Table / PlacesTable | T.table.title | kit or CompareTable or BlockedSeat | buildIndustryV6 |
-| months | Months | T.months.title | kit | buildIndustryV6 |
-| density | Density | T.density.title | kit | buildIndustryV6 |
+| take | Hero / Masthead |  | kit or AnswerCard | buildIndustryV7 |
+| next-door | NextDoor | T.nextDoor.title | kit | buildIndustryV7 |
+| year | Year | T.year.title | kit | buildIndustryV7 |
+| hour | Hour | T.hour.title | kit | buildIndustryV7 |
+| people | People | T.people.title | kit | buildIndustryV7 |
+| puts-back | PutsBack | T.putsBack.title | kit | buildIndustryV7 |
+| small-big | SalesBySize | T.salesBySize.title | kit | buildIndustryV7 |
+| ratios | OfficialRatios | O.title | kit | buildIndustryV7 |
+| say | WhatTheySay | S_.title | kit | buildIndustryV7 |
+| money | MoneyList | L.title | kit | buildIndustryV7 |
+| guests | Guests | L.title | kit | buildIndustryV7 |
+| places | Table / PlacesTable | T.table.title | kit or CompareTable or BlockedSeat | buildIndustryV7 |
+| months | Months | T.months.title | kit | buildIndustryV7 |
+| density | Density | T.density.title | kit | buildIndustryV7 |
 | benchmark | BenchmarkCard | Similar trades | BentoMetric or RankedBars |  |
 | open | OpenCard | Licences you need | BentoMetric or KvGrid |  |
 | pays | PaysBand |  | BentoBand |  |
