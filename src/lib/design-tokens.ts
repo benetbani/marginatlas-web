@@ -783,8 +783,8 @@ export const kit = {
 /**
  * KIT-VERSION 3'S TOKENS: sheets/kit/v3/tokens.json, the one source of version 3's look (his "The gallery is right: move the pages onto
  * kit version 3, each at its next version.", 2026-10-21), copied here group for group so a page drawn on version 3 reads every colour,
- * distance, corner, size, shadow and motion from the site's tokens. First reader: the industry page v6 (his "v6 is the approved industry
- * target.", 2026-10-21), src/components/spine/industry/kit3-view.tsx, which sets them as the kit's own CSS variables (`kit3CssVars`:
+ * distance, corner, size, shadow and motion from the site's tokens. First reader: the industry page (v6, his "v6 is the approved industry
+ * target.", 2026-10-21; v7 in its place, FOUNDER-VERDICTS "v7 approved"), src/components/spine/industry/kit3-view.tsx, which sets them as the kit's own CSS variables (`kit3CssVars`:
  * `--color-ink`, `--space-24`, `--font-size-focal`, `--shadow-card` ...) for globals.css, THE KIT 3 PAGE: THE INDUSTRY (`.kit3.k-industry`).
  * Its own group: version 2's `kit` above stays exactly as the v4 port and London v9 read it. A colour version 2 already holds is named
  * from it, never typed twice. The type-ladder gate holds `type` to tokens.json's ladder.
@@ -794,10 +794,10 @@ export const kit3 = {
     white: kit.color.white, paper: kit.color.paper, "paper-2": kit.color.paper2, line: kit.color.line, "line-2": kit.color.n4, n3: kit.color.n3,
     faint: kit.color.faint, benchmark: "#8a969f", muted: kit.color.muted, "ink-2": kit.color.ink2, ink: kit.color.ink, terra: kit.color.terra,
     "terra-soft": "#f9ebe9", band: "#c11c00",
-    /* tokens.json's photo-ground (#dfe7ee, behind a photograph while it loads) is a blue at 31% saturation, which his palette rule
-       ("terracotta plus cool neutrals only ... no exceptions", 2026-08-09; the palette-membership gate) does not admit: the site draws
-       the kit's own paper-2 there instead, a neutral the reader sees for the moment the photograph loads. */
-    "photo-ground": kit.color.paper2,
+    /* tokens.json's photo-ground (behind a photograph while it loads): the line's grey since the kit's fixes of a9c7023 (the v7 target,
+       tokens.json sha256:4386cf44e042bcde). v6 drew paper-2 there, holding back the kit's earlier blue (#dfe7ee), which his palette rule
+       ("terracotta plus cool neutrals only ... no exceptions", 2026-08-09; the palette-membership gate) does not admit; the grey it does. */
+    "photo-ground": kit.color.line,
   },
   space: { 2: "2px", 4: "4px", 8: "8px", 12: "12px", 16: "16px", 24: "24px", 32: "32px", 48: "48px", 64: "64px", 96: "96px", 128: "128px" },
   gap: {
